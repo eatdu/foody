@@ -24,4 +24,3 @@ public class RecipeVO {
  	private int print;
 //	private int temp; //임시저장
 }
-

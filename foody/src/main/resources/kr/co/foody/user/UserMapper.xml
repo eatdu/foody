@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.foody.user.UserMapper">
+	
+	<!-- 인덱스로 하나의 행 가져오기 -->
+	<select id="selectOne" parameterType="int" resultType="kr.co.foody.user.UserVO">
+		SELECT * FROM user WHERE no = #{no}
+	</select>
+	
+	<!-- 회원가입 -->
+	<insert id="insert" parameterType="kr.co.foody.user.UserVO">
+		INSERT INTO user (
+			name, birth, nik_name, selfi, email, tel, pwd, addr1, addr2, height, weight, activity, intro
+		) VALUES (
+			#{name}, #{birth}, #{nik_name}, #{selfi}, #{email}, #{tel}, #{pwd}, #{addr1}, #{addr2}, #{height}, #{weight}, #{activity}, #{intro}
+		)
+	</insert>
+	
+	<!-- 이메일 찾기 -->
+	<select id="findEmail" parameterType="kr.co.foody.user.UserVO" resultType="kr.co.foody.user.UserVO">
+		SELECT * FROM user WHERE tel=#{tel} AND name=#{name}
+	</select>
+	
+	<!-- 비밀번호 찾기 -->
+	<select id="findPwd" parameterType="kr.co.foody.user.UserVO" resultType="kr.co.foody.user.UserVO">
+		SELECT * FROM user WHERE email=#{email} AND tel=#{tel} AND name=#{name}
+	</select>
+	
+	<update id="updateTempPwd" parameterType="kr.co.foody.user.UserVO">
+		UPDATE user SET pwd=#{pwd} WHERE email=#{email} AND tel=#{tel} AND name=#{name}  
+	</update>
+	
+	<!-- 로그인 체크 -->
+	<select id="loginCheck" parameterType="kr.co.foody.user.UserVO" resultType="kr.co.foody.user.UserVO">
+		SELECT * FROM user WHERE email=#{email} AND pwd=#{pwd}
+	</select>
+	
+	<!-- 이메일 중복체크 -->
+	<select id="emailDupCheck" parameterType="string" resultType="int">
+		SELECT count(*) from user WHERE email = #{email}
+	</select>
+	
+	<!-- 닉네임 중복체크 -->
+	<select id="nik_nameDupCheck" parameterType="string" resultType="int">
+		SELECT count(*) from user WHERE nik_name = #{nik_name}
+	</select>
+	
+	<!-- 전화번호 중복체크 -->
+	<select id="telDupCheck" parameterType="string" resultType="int">
+		SELECT count(*) from user WHERE tel = #{tel}
+	</select>
+
+</mapper>

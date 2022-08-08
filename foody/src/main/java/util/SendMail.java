@@ -26,7 +26,7 @@ public class SendMail  {
 		Session session = Session.getDefaultInstance(prop, new Authenticator() {
 			@Override
 			protected PasswordAuthentication getPasswordAuthentication() {
-				return new PasswordAuthentication("2do2023","!Engus101");
+				return new PasswordAuthentication("2do2023","!anjajrwh101");
 			}
 		});
 		session.setDebug(true);

@@ -1,6 +1,10 @@
 package kr.co.foody.recipe;
 
 import java.sql.Timestamp;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -10,7 +14,7 @@ import lombok.ToString;
 @Setter
 @ToString
 public class RecipeVO {
-
+	
 	private int no;
 //	private int user_no; //NULL
 	private String name;
@@ -23,4 +27,6 @@ public class RecipeVO {
 	private Timestamp regdate;
  	private int print;
 //	private int temp; //임시저장
+ 	private int viewcount;
+ 	
 }

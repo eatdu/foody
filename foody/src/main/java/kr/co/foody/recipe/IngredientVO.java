@@ -8,4 +8,8 @@ public class IngredientVO {
 	private double fat;
 	private int large_cate;
 	private int print;
+	
+	//레시피-재료 매핑하여 가져올 때 레시피에 필요한 수량 정보
+	private double weight;
+	private String quantity;
 }

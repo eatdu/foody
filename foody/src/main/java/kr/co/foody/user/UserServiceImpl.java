@@ -80,6 +80,16 @@ public class UserServiceImpl implements UserService {
 		}
 	}
 
+	@Override
+	public int prefer(UserVO vo) {
+		return mapper.prefer(vo);
+	}
+
+	@Override
+	public int signUpNext(UserVO vo) {
+		return mapper.insertAdd(vo);
+	}
+
 
 
 	

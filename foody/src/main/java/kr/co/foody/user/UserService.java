@@ -12,4 +12,7 @@ public interface UserService {
 	boolean loginCheck(UserVO vo, HttpSession sess);
 	UserVO findEmail(UserVO vo);
 	UserVO findPwd(UserVO vo);
+	int prefer(UserVO vo);
+	int signUpNext(UserVO vo);
+	
 }

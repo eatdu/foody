@@ -24,13 +24,13 @@ public class RecipeMapperTests {
 	@Test
 	public void selectRcpListTest() {
 		Map cri = new HashMap();
-		String[] keywordArr = {"당근", "감자"};
-		int[] allergyArr = {0};
+		String[] keywordArr = {"쌀", "감자"};
+		int[] allergyArr = null;
 		int[] ingreCateArr = {1,2,3,4,5,6};
 		int[] rcpCateArr = {1};
-		//cri.put("keywordArr", keywordArr);
+		cri.put("keywordArr", keywordArr);
 		cri.put("allergyArr", allergyArr);
-		//cri.put("ingreCateArr", ingreCateArr);
+		cri.put("ingreCateArr", ingreCateArr);
 		cri.put("rcpCateArr", rcpCateArr);
 		
 		log.info(mapper.selectRecipeListWithCri(cri));

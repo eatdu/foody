@@ -27,7 +27,7 @@
 	
 	<bean id="hikariConfig" class="com.zaxxer.hikari.HikariConfig">
 	 	<property name="driverClassName" value="net.sf.log4jdbc.sql.jdbcapi.DriverSpy"/>
-		<property name="jdbcUrl" value="jdbc:log4jdbc:log4jdbc:mysql://3.39.187.177:3306/recipe"/> <!-- Mysql 방식 -->
+		<property name="jdbcUrl" value="jdbc:log4jdbc:log4jdbc:mysql://3.36.255.55:3306/recipe"/> <!-- Mysql 방식 -->
 		<property name="username" value="recipe"/>
 		<property name="password" value="root1234"/>
 	</bean>

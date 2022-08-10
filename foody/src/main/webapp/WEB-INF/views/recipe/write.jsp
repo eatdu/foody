@@ -5,8 +5,15 @@
 <head>
 <meta charset="UTF-8">
 <title>레시피 등록</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script>
+	$(function(){
+		$("#large_cate").change(function(){
+			console.log($(this).val());
+		});
+	});
+</script>
 </head>
-
 <body>
 <form method="post" action="write.do">
    요리명: <input type="text" name = "name" ><br>
@@ -35,7 +42,7 @@
    </select><br>
    소요시간: <input type="number" name = "time" min ="1">분<br>
    재료:
-   <select name="large_cate">
+   <select id="large_cate">
     <option value="none">===대분류===</option>
    	<option value=1>곡류 및 그 제품</option>
    	<option value=2>감자 및 전분류</option>

@@ -37,22 +37,26 @@
 				map.recipe_no, count(*) cnt
 			FROM
 				ingre_recipe_map map, (
-				SELECT name, no ingre_no, allergy_no FROM ingre
-				<where>
+				SELECT
+					name, no ingre_no, allergy_no
 				<!-- 재료 키워드로 검색 -->
 				<if test='keywordArr != null'>
-					name IN 
+					, (name IN 
 					<foreach collection="keywordArr" item="name" open="(" close=")" separator=",">#{name}</foreach>
+					) keywordCnt
 				</if>
+				<!-- 재료 분류로 필터링 -->
+		        <if test='ingreCateArr != null'>
+					, (large_cate IN  
+					<foreach collection="ingreCateArr" item="ingreCateNo" open="(" close=")" separator=",">#{ingreCateNo}</foreach>
+					) ingreCateCnt
+				</if>
+				FROM ingre
+				<where>
 				<!-- 알러지 분류로 필터링 -->
 				<if test='allergyArr != null'>
 					AND allergy_no NOT IN  
 					<foreach collection="allergyArr" item="allergy" open="(" close=")" separator=",">#{allergy}</foreach>
-				</if>
-		        <!-- 재료 분류로 필터링 -->
-		        <if test='ingreCateArr != null'>
-					AND large_cate IN  
-					<foreach collection="ingreCateArr" item="ingreCateNo" open="(" close=")" separator=",">#{ingreCateNo}</foreach>
 				</if>
 				</where>
 				) result

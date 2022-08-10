@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.foody.recipe.RecipeMapper">
+
+	<insert id="insert" parameterType="kr.co.foody.recipe.RecipeVO">
+		INSERT INTO recipe (
+			name, intro, type, time, tip, serving, regdate
+		) VALUES (
+			#{name}, #{intro}, #{type}, #{time}, #{tip}, #{serving}, NOW()
+		)
+	</insert>
+	
+	<!-- 레시피no로 해당 레시피에 필요한 재료 리스트 조회하는 sql -->
+	<select id='selectIngreList' parameterType="int" resultType="kr.co.foody.recipe.IngredientVO">
+		SELECT
+			map.no, map.quantity, map.weight, name, carbo, protein, fat, large_cate, print
+		FROM
+			ingre, (
+			SELECT ingredient_no AS no, quantity, weight
+			FROM ingre_recipe_map 
+			WHERE recipe_no = #{no}
+			) map
+		WHERE
+			ingre.no = map.no;
+	</select>
+	
+	<!-- 레시피no로 해당 레시피 조리과정 리스트로 조회하는 sql -->
+	<select id='selectProcessList' parameterType="int">
+		
+	</select>
+	
+	<!-- 검색조건(cri)로 select하는 sql, 검색조건 : (레시피 분류 and 재료 분류) or 재료 검색어(중첩가능, 겹치는 갯수 순) -->
+	<select id='selectRecipeListWithCri' parameterType="map" resultType="kr.co.foody.recipe.RecipeVO">
+		SELECT * FROM
+		    recipe, (
+			SELECT
+				map.recipe_no, count(*) cnt
+			FROM
+				ingre_recipe_map map, (
+				SELECT
+					name, no ingre_no, allergy_no
+				<!-- 재료 키워드로 검색 -->
+				<if test='keywordArr != null'>
+					, (name IN 
+					<foreach collection="keywordArr" item="name" open="(" close=")" separator=",">#{name}</foreach>
+					) keywordCnt
+				</if>
+				<!-- 재료 분류로 필터링 -->
+		        <if test='ingreCateArr != null'>
+					, (large_cate IN  
+					<foreach collection="ingreCateArr" item="ingreCateNo" open="(" close=")" separator=",">#{ingreCateNo}</foreach>
+					) ingreCateCnt
+				</if>
+				FROM ingre
+				<where>
+				<!-- 알러지 분류로 필터링 -->
+				<if test='allergyArr != null'>
+					AND allergy_no NOT IN  
+					<foreach collection="allergyArr" item="allergy" open="(" close=")" separator=",">#{allergy}</foreach>
+				</if>
+				</where>
+				) result
+			WHERE
+				result.ingre_no = map.ingredient_no
+			GROUP BY
+				map.recipe_no
+			ORDER BY
+				count(*) DESC
+			) li
+		WHERE
+			recipe.no = li.recipe_no
+			<!-- 레시피 분류로 필터링 -->
+		    <if test='rcpCateArr != null'>
+				AND type IN  
+				<foreach collection="rcpCateArr" item="rcpCateNo" open="(" close=")" separator=",">#{rcpCateNo}</foreach>
+			</if> 
+		ORDER BY
+			li.cnt DESC, regdate DESC <!-- 기본 정렬 조건 -->
+		    <!-- ,viewcount DESC, 별점 DESC, 댓글cnt DESC 조건으로 정렬 -->
+	</select>
+	
+	<!-- 재료 검색어로 재료no 리스트 조회하는 sql -->
+	
+</mapper>

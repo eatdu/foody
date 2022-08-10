@@ -207,8 +207,8 @@
     				url : "telDupCheck.do",
     				type : "get",
     				data : {tel: tel},
-    				success : function(result){
-    					if(result == 0){
+    				success : function(res){
+    					if(res == 'true'){
     						$("#tel").html('이미 사용중인 전화번호입니다.');
     						$("#tel").attr('color','red');
     					} else{

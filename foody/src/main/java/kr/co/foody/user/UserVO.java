@@ -21,4 +21,7 @@ public class UserVO {
 	private String intro;
 	private int print;
 	private int exit;
+	
+	private int allergy[];
+	private int prefer[];
 }

@@ -20,7 +20,7 @@ function loginCheck(){
 		$("#pwd").focus();
 		return false; 
 	}		
-}    
+}  
 </script>
 <body>
 	<form action="login.do" method="post" id="loginFrm1" name="loginFrm1" onsubmit="return loginCheck();">

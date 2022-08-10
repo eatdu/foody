@@ -5,3 +5,21 @@ function makeArr(name){
     });
 	return tempArr;
 }
+
+function makeComboBox(origin, target){
+	$.ajax({
+		url: "/foody/comboBox.do",
+		method: "post",
+		contentType: 'application/json; charset=utf-8',
+        data: JSON.stringify({
+        	name: origin,
+        	data: $('select[name="' + origin + '"]').val()
+        	}),
+		success: function(result){
+			$('select[name="' + target + '"]').html(result);
+		},
+		error: function(e){
+			console.log(e);
+		}
+	});
+}

@@ -6,22 +6,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class RecipeServiceImpl implements RecipeService {
+public class IngredientServiceImpl implements IngredientService {
 
 	@Autowired
-	RecipeMapper mapper;
-	
-	@Autowired
-	IngredientMapper mapper2;
-	
-	@Override
-	public int insert(RecipeVO vo){
-		return mapper.insert(vo);
-	}
+	IngredientMapper mapper;
 	
 	@Override
 	public List<String> large_cate(int i) {
-		return mapper2.large_cate(i);
+		return mapper.large_cate(i);
 	}
 
 }

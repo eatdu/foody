@@ -2,9 +2,8 @@ package kr.co.foody.recipe;
 
 import java.util.List;
 
-public interface RecipeService {
+public interface IngredientService {
 	
-	int insert(RecipeVO vo);
 	List<String> large_cate(int i);
 
 }

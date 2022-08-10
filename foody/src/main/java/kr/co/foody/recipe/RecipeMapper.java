@@ -6,5 +6,5 @@ import org.apache.ibatis.annotations.Mapper;
 public interface RecipeMapper {
 
 	int insert(RecipeVO vo);
-
+	
 }

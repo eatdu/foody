@@ -50,11 +50,18 @@ public class UserMapperTests {
 
 
 	
-	@Test 
+	//@Test 
 	public void selectOne() { // idx 번호로 해당행 가져오기
 		UserVO vo = new UserVO();
 		mapper.selectOne(2);
 		log.info(vo);
+	}
+	
+	@Test
+	public void prefer() {
+		UserVO vo = new UserVO();
+		mapper.prefer(vo);
+		
 	}
 	
 	//@Test

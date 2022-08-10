@@ -13,4 +13,6 @@ public interface UserMapper {
 	UserVO findEmail(UserVO vo);
 	UserVO pwdEmail(UserVO vo);
 	int updateTempPwd(UserVO vo);
+	int prefer(UserVO vo);
+	int insertAdd(UserVO vo);
 }

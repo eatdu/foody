@@ -1,5 +1,8 @@
 package kr.co.foody.user;
 
+import java.util.List;
+import java.util.Map;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -89,6 +92,23 @@ public class UserServiceImpl implements UserService {
 	public int signUpNext(UserVO vo) {
 		return mapper.insertAdd(vo);
 	}
+
+	@Override
+	public int userAllergy(UserVO vo) {
+		return mapper.userAllergy(vo);
+	}
+	
+	@Override
+	public int userPrefer(UserVO vo) {
+		return mapper.userPrefer(vo);
+	}
+
+	@Override
+	public List<String> getAllergy() {
+		return mapper.getAllergy();
+	}
+
+
 
 
 

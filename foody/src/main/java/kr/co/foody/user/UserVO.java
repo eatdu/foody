@@ -22,6 +22,23 @@ public class UserVO {
 	private int print;
 	private int exit;
 	
-	private int allergy[];
-	private int prefer[];
+	private int allergy_no;
+	private int prefer_no;
+	private String allergy;
+	
+	public void setHeight(String height) {
+		try {
+			this.height = Double.valueOf(height);
+		} catch (Exception e) {
+			this.height = 0;
+		}
+	}
+	public void setWeight(String weight) {
+		try {
+			this.weight = Double.valueOf(weight);
+		} catch (Exception e) {
+			
+		}
+		this.weight = 0;
+	}
 }

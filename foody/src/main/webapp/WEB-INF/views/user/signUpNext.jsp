@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -36,10 +37,10 @@
 </script>
 </head>
 <body>
- 	${loginInfo.no}
+ 	${signUp.no}
    	<h3>회원가입</h3>
 	<form action="signUpNext.do" method="post" name="frm" id="frm" enctype="multipart/form-data">
- 	<input type="hidden" name="no" value="${loginInfo.no}">
+ 	<input type="hidden" name="no" value="${signUp.no}">
 	    <div class="jb-wrap">
 	    	<h5>프로필사진</h5>
 		    <input type="hidden" name="selfi">
@@ -79,19 +80,19 @@
 	        </tr>
         </tbody>
         </table>
+        <div>
+	        <h5>선호음식</h5>
+	        <input type="hidden" name="prefer">
+	    	<c:forEach var="rcpCate" items="${rcpCateArr}" varStatus="idx">
+				<label><input type="checkbox" name="prefer_no" value="${idx.count}"/>${rcpCate}</label>
+			</c:forEach>
+        </div>
 		<div>
 			<h5>알레르기</h5>
 			<input type="hidden" name="allergy">
-			<label>계란<input type="checkbox" name="allergy1" value="1"/></label>
-			<label>우유<input type="checkbox" name="allergy2" value="2"/></label>
-			<label>밀<input type="checkbox" name="allergy3" value="3"/></label>
-			<label>갑각류<input type="checkbox" name="allergy4" value="4"/></label>
-			<label>생선<input type="checkbox" name="allergy5" value="5"/></label>
-			<label>호두<input type="checkbox" name="allergy6" value="6"/></label>
-			<label>돼지고기<input type="checkbox" name="allergy7" value="7"/></label>
-			<label>땅콩<input type="checkbox" name="allergy8" value="8"/></label>
-			<label>조개<input type="checkbox" name="allergy9" value="9"/></label>
-			<label>복숭아<input type="checkbox" name="allergy10" value="10"/></label>
+			<c:forEach var="allergy" items="${allergy}">
+				<label><input type="checkbox" name="allergy_no" value="${allergy.no}"/>${allergy.allergy}</label>
+			</c:forEach>
 		</div>
 	</form>
 	<button type="button" id="goBackBtn" name="goBackBtn" onclick="history.back();">돌아가기</button>

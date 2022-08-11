@@ -101,19 +101,26 @@ public class UserController {
 		out.flush();
 	}
 	
-	@PostMapping("/user/signUp.do") // 회원가입 필수입력 
+	@PostMapping("/user/signUp.do") // 회원가입 추가입력 
 	public String signUp(UserVO vo, Model model, HttpServletRequest req) {
 		if(service.insert(vo) > 0) {
-			HttpSession sess = req.getSession();
-			sess.setAttribute("signUp", vo);
-			model.addAttribute("msg", "정상적으로 회원가입되었습니다.");
-			model.addAttribute("url", "login.do");
+			if ("login".equals(req.getParameter("route"))) {
+				model.addAttribute("msg", "회원가입되었습니다");
+				model.addAttribute("url", "login.do");
+			} else {
+				HttpSession sess = req.getSession();
+				sess.setAttribute("signUp", vo);
+				model.addAttribute("msg", "회원가입되었습니다 추가정보를 입력하세요.");
+				model.addAttribute("url", "signUpNext.do");
+			}
+			
 			return "common/alert"; 
 		} else {
 			model.addAttribute("msg", "회원가입 오류");
 			return "common/alert";
 		}
 	}
+	
 	
 	@PostMapping("/user/findEmail.do") // 이메일 찾기
 	public void findEmail(HttpServletResponse res, UserVO param) throws IOException {
@@ -138,16 +145,18 @@ public class UserController {
 	public String signUpNext(Model model, UserVO vo
 			, @RequestParam MultipartFile chooseFile
 			,HttpServletRequest req) {
-		String[] allergy_no = req.getParameterValues("allergy_no");
-		for(int i=0; i<allergy_no.length; i++) {
-			vo.setAllergy_no(Integer.parseInt(allergy_no[i]));
-			service.userAllergy(vo);
-		}
-		String[] prefer_no = req.getParameterValues("prefer_no");
-		for(int i=0; i<prefer_no.length; i++) {
-			vo.setPrefer_no(Integer.parseInt(prefer_no[i]));
-			service.userPrefer(vo);
-		}
+		try {
+			String[] allergy_no = req.getParameterValues("allergy_no");
+			for(int i=0; i<allergy_no.length; i++) {
+				vo.setAllergy_no(Integer.parseInt(allergy_no[i]));
+				service.userAllergy(vo);
+			}
+			String[] prefer_no = req.getParameterValues("prefer_no");
+			for(int i=0; i<prefer_no.length; i++) {
+				vo.setPrefer_no(Integer.parseInt(prefer_no[i]));
+				service.userPrefer(vo);
+			}
+		} catch (Exception e) {}
 		System.out.println(vo);
 		if(!chooseFile.isEmpty()) {
 			// 파일명 초기화

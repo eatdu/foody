@@ -33,12 +33,20 @@ public class RecipeController {
 		return "recipe/write";
 	}
 	
-	@ResponseBody
 	@PostMapping(value = "search.do", consumes = MediaType.APPLICATION_JSON_VALUE, produces = "application/json;charset=UTF-8")
-	public List<RecipeVO> search(@RequestBody Map cri){
-		return service.selectRecipeListWithCri(cri);
+	public String search(@RequestBody Map cri, Model model){
+		model.addAttribute("result", service.search(cri));
+		return "common/rcpList";
 	}
 	
+	@PostMapping(value = "comboBox.do", consumes = MediaType.APPLICATION_JSON_VALUE, produces = "application/json;charset=UTF-8")
+	public String comboBox(@RequestBody Map cri, Model model){
+		if(cri.get("name").equals("ingreCateDrop")) {
+			model.addAttribute("list", service.makeIngreNameList(Integer.parseInt((String)cri.get("data"))));
+		}
+		return "common/comboBox";
+	}
+		
 	@GetMapping("search.do")
 	public String search(Model model) {
 		model.addAttribute("rcpCateArr", RecipeCategory.RcpCateArr);

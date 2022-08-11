@@ -1,4 +1,4 @@
-package kr.co.recipe.user;
+package kr.co.foody.user;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -36,8 +36,6 @@ public class UserMapperTests {
 		vo.setPwd("10101");
 		vo.setAddr1("서울");
 		vo.setAddr2("서울");
-		vo.setHeight(174);
-		vo.setWeight(66);
 		vo.setActivity(1);
 		vo.setIntro("안녕하세요");
 		mapper.insert(vo);
@@ -57,28 +55,14 @@ public class UserMapperTests {
 		log.info(vo);
 	}
 	
-	@Test
+	//@Test
 	public void prefer() {
 		UserVO vo = new UserVO();
 		mapper.prefer(vo);
 		
 	}
 	
-	//@Test
-//	public void list() { // 리스트 출력
-//		UserVO vo = new UserVO();
-////		Map map = new HashMap();
-////		map.put("stype", "title");
-////		map.put("sword", "1");
-////		map.put("startIdx", 0);
-////		map.put("pageRow", 10);
-//		vo.setTitle("제목");
-//		vo.setContent("1");
-//		vo.setStartIdx(0);
-//		vo.setPageRow(10);
-//		List<UserVO> list = mapper.list(vo);
-//		list.forEach(vo ->log.info(vo));
-//	}
+	
 
 	
 	

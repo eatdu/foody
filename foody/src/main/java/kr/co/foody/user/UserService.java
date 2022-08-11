@@ -1,5 +1,7 @@
 package kr.co.foody.user;
 
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 
 public interface UserService {
@@ -14,5 +16,7 @@ public interface UserService {
 	UserVO findPwd(UserVO vo);
 	int prefer(UserVO vo);
 	int signUpNext(UserVO vo);
-	
+	List<String> getAllergy();
+	int userAllergy(UserVO vo);
+	int userPrefer(UserVO vo);
 }

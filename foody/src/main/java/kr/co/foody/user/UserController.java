@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Date;
+import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -17,6 +19,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import kr.co.foody.constants.RecipeCategory;
+
 @Controller
 public class UserController {
 
@@ -29,7 +33,11 @@ public class UserController {
 	}
 	
 	@GetMapping("/user/signUpNext.do") // 회원가입창(추가) 이동
-	public String signUpNext() {
+	public String signUpNext(Model model) {
+		List<String> allergy = service.getAllergy();
+		String[] rcpCateArr = RecipeCategory.RcpCateArr;
+		model.addAttribute("rcpCateArr", rcpCateArr);
+		model.addAttribute("allergy",allergy);
 		return "user/signUpNext";
 	}
 	
@@ -97,9 +105,9 @@ public class UserController {
 	public String signUp(UserVO vo, Model model, HttpServletRequest req) {
 		if(service.insert(vo) > 0) {
 			HttpSession sess = req.getSession();
-			sess.setAttribute("loginInfo", vo);
+			sess.setAttribute("signUp", vo);
 			model.addAttribute("msg", "정상적으로 회원가입되었습니다.");
-			model.addAttribute("url", "signUpNext.do");
+			model.addAttribute("url", "login.do");
 			return "common/alert"; 
 		} else {
 			model.addAttribute("msg", "회원가입 오류");
@@ -130,11 +138,21 @@ public class UserController {
 	public String signUpNext(Model model, UserVO vo
 			, @RequestParam MultipartFile chooseFile
 			,HttpServletRequest req) {
+		String[] allergy_no = req.getParameterValues("allergy_no");
+		for(int i=0; i<allergy_no.length; i++) {
+			vo.setAllergy_no(Integer.parseInt(allergy_no[i]));
+			service.userAllergy(vo);
+		}
+		String[] prefer_no = req.getParameterValues("prefer_no");
+		for(int i=0; i<prefer_no.length; i++) {
+			vo.setPrefer_no(Integer.parseInt(prefer_no[i]));
+			service.userPrefer(vo);
+		}
 		System.out.println(vo);
 		if(!chooseFile.isEmpty()) {
 			// 파일명 초기화
 			String org = chooseFile.getOriginalFilename();
-			String ext = org.substring(org.lastIndexOf(".")); // 확장자 ex) .png, .jpg
+			String ext = org.substring(org.lastIndexOf("."));
 			String real = new Date().getTime()+ext;
 			
 			// 파일저장

@@ -142,6 +142,11 @@
     			return;
     		}
     		$("#frm").submit();
+    		function goSaveNext() {
+    			document.frm.action="/user/signUpNext.do";
+    			document.frm.method="post";
+    			document.frm.submit();
+    		}
     	}
     	$(function(){
     		$('#tel2').on('keyup', function() { // 전화번호2번 4자리 입력시 전화번호3번칸으로 자동이동
@@ -256,7 +261,7 @@
                     }
                     // 표시할 참고항목이 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
                     if(extraAddr !== ''){
-                        extraAddr = ' (' + extraAddr + ')';
+                        extraAddr = '(' + extraAddr + ')';
                     }
                     // 조합된 참고항목을 해당 필드에 넣는다.
                 	addr += extraAddr;
@@ -273,98 +278,97 @@
 </script>
 </head>
 <body>
-    
-        <div class="sub">
-            <div class="size">
-                <h3 class="sub_title">회원가입</h3>
-                <form name="frm" id="frm" action="signUp.do" method="post"><!-- enctype="multipart/form-data" -->
-                <table class="board_write">
-                    <caption>회원가입</caption>
-                    <colgroup>
-                        <col width="20%" />
-                        <col width="*" />
-                    </colgroup>
-                    <tbody>
-                        <tr>
-                            <th>*이메일</th>
-                            <td>
-                                <input type="text" name="email" id="email" class="" style="float:left;" maxlength="30" required>
-                                <span class="email_check"><a href="javascript:;"  class="" style="float:left; width:auto; clear:none;" id="dupCheckBtnEmail">중복확인</a></span>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th>*닉네임</th>
-                            <td>
-                                <input type="text" name="nik_name" id="nik_name" class="" style="width:90px;float:left;" maxlength="10" required>
-                                <span class="nik_name_check"><a href="javascript:;" class="" style="float:left; width:auto; clear:none;" id="dupCheckBtnNik">중복확인</a></span>
-			                </td>
-                        </tr>
-                        <tr>
-                            <th>*이름</th>
-                            <td>
-                                <input type="text" name="name" id="name" class="" style="width:90px;float:left;" maxlength="5" required>
-			                </td>
-                        </tr>
-                        <tr>
-                            <th>*전화번호</th>
-                            <td>
-                          		<input type="hidden" name="tel">
-                            	<select name="tel1" style="height:22px;">
-                            		<option value="010">010</option>
-                            		<option value="011">011</option>
-                            		<option value="012">012</option>
-                            	</select> - 
-                            	<input type="text" name="tel2" id="tel2" class="" style="width:35px;" maxlength="4" required> -
-                            	<input type="text" name="tel3" id="tel3" class="" style="width:35px;" maxlength="4" required>
-			                </td>
-                        </tr>
-                        <tr>
-                            <th>*주민번호</th>
-                            <td>
-                                <input type="hidden" name="birth">
-                                <input type="text" name="birth1" id="birth1" class="" style="width:70px;" maxlength="6" required>-
-                                <input type="password" name="birth2" id="birth2" class="" style="width:7px;"maxlength="1" required><span>******</span>
-			                </td>
-                        </tr>
-                        <tr>
-                            <th>*비밀번호</th>
-                            <td><input type="password" name="pwd" id="pwd" style="float:left;" required>&nbsp;
-                            <span class="">비밀번호는 숫자, 영문 조합으로 8자 이상으로 입력해주세요.</span></td>
-                        </tr>
-                        <tr>
-                            <th>*비밀번호<span>확인</span></th>
-                            <td><input type="password" name="pwd_check" id="pwd_check" style="float:left;" required></td>
-                        </tr>
-                        <tr>
-                            <th rowspan="3">주소</th>
-                            <td>
-                                <input type="text" name="zipcode" id="zipcode" class="inNextBtn" style="float:left;" readonly>
-                                <span class="email_check"><a href="javascript:zipcode();"  class="btn bgGray" style="float:left; width:auto; clear:none;">우편번호</a></span>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                            	<input type="text" name="addr1" id="addr1" style="width:80%" readonly>
-                            </td>
-                       	</tr>
-                        <tr>
-                            <td>
-                            	<input type="text" name="addr2" id="addr2" style="width:80%">
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-                        <input type="hidden" name="checkEmail" id="checkEmail" value="0"/>
-                </form>
-                <!-- //write--->
-                <div class="btnSet clear">
-                    <div>
-	                    <button type="button" id="goBackBtn" name="goBackBtn" onclick="history.back();">돌아가기</button>
-	                    <button type="button" id="goNextBtn" name="goNextBtn" onclick="goSave();">가입하기</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-        
+	<div class="sub">
+	    <div class="size">
+	        <h3 class="sub_title">회원가입</h3>
+	        <form name="frm" id="frm" action="signUp.do" method="post">
+	        <table class="board_write">
+	            <caption>회원가입</caption>
+	            <colgroup>
+	                <col width="20%" />
+	                <col width="*" />
+	            </colgroup>
+	            <tbody>
+	                <tr>
+	                    <th>*이메일</th>
+	                    <td>
+	                        <input type="text" name="email" id="email" class="" style="float:left;" maxlength="30" required>
+	                        <span class="email_check"><a href="javascript:;"  class="" style="float:left; width:auto; clear:none;" id="dupCheckBtnEmail">중복확인</a></span>
+	                    </td>
+	                </tr>
+	                <tr>
+	                    <th>*닉네임</th>
+	                    <td>
+	                        <input type="text" name="nik_name" id="nik_name" class="" style="width:90px;float:left;" maxlength="10" required>
+	                        <span class="nik_name_check"><a href="javascript:;" class="" style="float:left; width:auto; clear:none;" id="dupCheckBtnNik">중복확인</a></span>
+	           </td>
+	                </tr>
+	                <tr>
+	                    <th>*이름</th>
+	                    <td>
+	                        <input type="text" name="name" id="name" class="" style="width:90px;float:left;" maxlength="5" required>
+	           </td>
+	                </tr>
+	                <tr>
+	                    <th>*전화번호</th>
+	                    <td>
+	                  		<input type="hidden" name="tel">
+	                    	<select name="tel1" style="height:22px;">
+	                    		<option value="010">010</option>
+	                    		<option value="011">011</option>
+	                    		<option value="012">012</option>
+	                    	</select> - 
+	                    	<input type="text" name="tel2" id="tel2" class="" style="width:35px;" maxlength="4" required> -
+	                    	<input type="text" name="tel3" id="tel3" class="" style="width:35px;" maxlength="4" required>
+	           </td>
+	                </tr>
+	                <tr>
+	                    <th>*주민번호</th>
+	                    <td>
+	                        <input type="hidden" name="birth">
+	                        <input type="text" name="birth1" id="birth1" class="" style="width:70px;" maxlength="6" required>-
+	                        <input type="password" name="birth2" id="birth2" class="" style="width:7px;"maxlength="1" required><span>******</span>
+	           </td>
+	                </tr>
+	                <tr>
+	                    <th>*비밀번호</th>
+	                    <td><input type="password" name="pwd" id="pwd" style="float:left;" required>&nbsp;
+	                    <span class="">비밀번호는 숫자, 영문 조합으로 8자 이상으로 입력해주세요.</span></td>
+	                </tr>
+	                <tr>
+	                    <th>*비밀번호<span>확인</span></th>
+	                    <td><input type="password" name="pwd_check" id="pwd_check" style="float:left;" required></td>
+	                </tr>
+	                <tr>
+	                    <th rowspan="3">주소</th>
+	                    <td>
+	                        <input type="text" name="zipcode" id="zipcode" class="inNextBtn" style="float:left;" readonly>
+	                        <span class="email_check"><a href="javascript:zipcode();"  class="btn bgGray" style="float:left; width:auto; clear:none;">우편번호</a></span>
+	                    </td>
+	                </tr>
+	                <tr>
+	                    <td>
+	                    	<input type="text" name="addr1" id="addr1" style="width:80%" readonly>${userVO.addr1}
+	                    </td>
+	               	</tr>
+	                <tr>
+	                    <td>
+	                    	<input type="text" name="addr2" id="addr2" style="width:80%">
+	                    </td>
+	                </tr>
+	            </tbody>
+	        </table>
+	                <input type="hidden" name="checkEmail" id="checkEmail" value="0"/>
+	        </form>
+	        <!-- //write--->
+	        <div class="btnSet clear">
+	            <div>
+	             <button type="button" id="goBackBtn" name="goBackBtn" onclick="history.back();">돌아가기</button>
+	             <button type="button" id="goNextBtn" name="goNextBtn" onclick="goSaveNext();">프로필등록</button>
+	             <button type="button" id="goFinish" name="goFinish" onclick="goSave();">가입완료</button>
+	            </div>
+	        </div>
+	    </div>
+	</div>
 </body>
 </html>

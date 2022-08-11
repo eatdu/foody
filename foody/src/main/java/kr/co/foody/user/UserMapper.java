@@ -1,4 +1,6 @@
 package kr.co.foody.user;
+import java.util.List;
+
 import org.apache.ibatis.annotations.Mapper;
 
 @Mapper
@@ -15,4 +17,7 @@ public interface UserMapper {
 	int updateTempPwd(UserVO vo);
 	int prefer(UserVO vo);
 	int insertAdd(UserVO vo);
+	List<String> getAllergy();
+	int userAllergy(UserVO vo);
+	int userPrefer(UserVO vo);
 }

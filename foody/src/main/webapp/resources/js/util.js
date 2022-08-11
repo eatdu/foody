@@ -13,7 +13,7 @@ function makeComboBox(origin, target){
 		contentType: 'application/json; charset=utf-8',
         data: JSON.stringify({
         	name: origin,
-        	data: $('select[name="' + origin + '"]').val()
+        	data: $('#' + origin).val()
         	}),
 		success: function(result){
 			$('select[name="' + target + '"]').html(result);

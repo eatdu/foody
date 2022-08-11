@@ -44,6 +44,9 @@ public class RecipeController {
 		if(cri.get("name").equals("ingreCateDrop")) {
 			model.addAttribute("list", service.makeIngreNameList(Integer.parseInt((String)cri.get("data"))));
 		}
+		if(cri.get("name").equals("keyword")) {
+			model.addAttribute("list", service.makeIngreNameList((String)cri.get("data")));
+		}
 		return "common/comboBox";
 	}
 		

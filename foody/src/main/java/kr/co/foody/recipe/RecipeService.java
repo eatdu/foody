@@ -10,5 +10,6 @@ public interface RecipeService {
 	Map search(Map cri); 
 	
 	List<Map> makeIngreNameList(int no);
+	List<Map> makeIngreNameList(String keyword);
 	
 }

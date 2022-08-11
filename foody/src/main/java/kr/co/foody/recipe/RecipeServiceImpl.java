@@ -31,6 +31,20 @@ public class RecipeServiceImpl implements RecipeService {
 		}
 		return list;
 	}
+	
+	@Override
+	public List<Map> makeIngreNameList(String keyword) {
+		List<String> result = mapper.selectIngreNameList2(keyword);
+		List<Map> list = new ArrayList<Map>();
+		for (String name : result) {
+			Map map = new HashMap();
+			map.put("text", name);
+			map.put("value", name);
+			list.add(map);
+		}
+		return list;
+	}
+	
 
 	@Override
 	public Map search(Map cri) {
@@ -41,11 +55,10 @@ public class RecipeServiceImpl implements RecipeService {
 		boolean ingre = ingreCateArr.size() == 0;
 		boolean rcp = rcpCateArr.size() == 0;
 		Map result = new HashMap();
-		System.out.println(keyword && ingre && rcp);
 		
 		//조건없이 검색
 		if (keyword && ingre && rcp) {
-			result.put("list1", mapper.selectAll());
+			result.put("list1", mapper.selectAll(cri));
 			result.put("list1Name", "모든 레시피");
 		}
 		//키워드로 검색
@@ -127,5 +140,6 @@ public class RecipeServiceImpl implements RecipeService {
 		
 		return result;
 	}
-	
+
+
 }

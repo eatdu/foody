@@ -32,7 +32,13 @@
 	<!-- 검색조건(cri)로 select하는 sql, 검색조건 : (레시피 분류 and 재료 분류) or 재료 검색어(중첩가능, 겹치는 갯수 순) -->
 	<!-- 조건없이 전체 조회 -->
 	<select id="selectAll" resultType="kr.co.foody.recipe.RecipeVO">
-		SELECT * FROM recipe
+		SELECT a.*
+		FROM (
+			SELECT @ROWNUM := @ROWNUM + 1 AS rownum, recipe.* 
+			FROM recipe, (select @rownum := 0) b
+			) a
+		WHERE
+			rownum between #{startNo} and #{endNo}
 	</select>
 	
 	
@@ -102,6 +108,12 @@
 		WHERE large_cate = #{no}
 		ORDER BY name
 	</select>
-	<!-- 재료 검색어로 재료no 리스트 조회하는 sql -->
+	
+	<!-- 재료 검색어로 재료명 리스트 조회하는 sql -->
+	<select id='selectIngreNameList2' parameterType="string" resultType="string">
+		SELECT DISTINCT name FROM ingre
+		WHERE name LIKE '%${keyword}%'
+			OR detail LIKE '%${keyword}%'
+	</select>
 	
 </mapper>

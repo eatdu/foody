@@ -23,3 +23,25 @@ function makeComboBox(origin, target){
 		}
 	});
 }
+
+function search(pageNo, target, type){
+	$.ajax({
+		url: "/foody/search.do",
+		method: "post",
+		contentType: 'application/json; charset=utf-8',
+        data: JSON.stringify({
+        	keywordArr: ingreNameArr,
+        	ingreCateArr: ingreArr,
+        	rcpCateArr: rcpArr,
+        	startNo: (pageNo - 1) * 12 + 1,
+        	endNo: pageNo * 12,
+			type: type
+        	}),
+		success: function(result){
+			$("#" + target).empty().append(result);
+		},
+		error: function(e){
+			console.log(e);
+		}
+	});
+}

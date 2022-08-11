@@ -50,10 +50,15 @@ public class RecipeController {
 		return "common/comboBox";
 	}
 		
-	@GetMapping("search.do")
+	@GetMapping("/recipe/search.do")
 	public String search(Model model) {
 		model.addAttribute("rcpCateArr", RecipeCategory.RcpCateArr);
 		model.addAttribute("ingreCateArr", IngredientCategory.IngreCateArr);
 		return "recipe/search";
+	}
+	
+	@GetMapping("/recipe/main.do")
+	public String main() {
+		return "recipe/main";
 	}
 }

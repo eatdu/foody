@@ -2,15 +2,8 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>    
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>레시피 등록</title>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-<script type="text/javascript" src="./resources/js/util.js"></script>
-<!-- CSS only -->
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
+<%@ include file="../common/config.jsp" %>
+
 <script>
 var rcpArr = new Array();
 var ingreArr = new Array();
@@ -47,26 +40,6 @@ function removeIngre(idx){
 	console.log(ingreNameArr);
 }
 
-function search(pageNo){
-	$.ajax({
-		url: "/foody/search.do",
-		method: "post",
-		contentType: 'application/json; charset=utf-8',
-        data: JSON.stringify({
-        	keywordArr: ingreNameArr,
-        	ingreCateArr: ingreArr,
-        	rcpCateArr: rcpArr,
-        	startNo: (pageNo - 1) * 12 + 1,
-        	endNo: pageNo * 12
-        	}),
-		success: function(result){
-			$("#rcpArea").empty().append(result);
-		},
-		error: function(e){
-			console.log(e);
-		}
-	});
-}
 
 function checkName() {
 	var value = $("select[name='ingreNameList']").val();
@@ -94,7 +67,7 @@ function checkName() {
 }
 
 </style>
-
+<title>상세 검색</title>
 </head>
 <body>
 <%@ include file="../common/navBar.jsp" %>
@@ -111,7 +84,7 @@ function checkName() {
 		<h3>재료분류</h3>
 		<c:forEach var="ingreCate" items="${ingreCateArr}" varStatus="idx">
 		<div class="form-check form-check-inline">
-			<input class="form-check-input" style='zoom:0.8;' type="checkbox" name="rcpCate" value=${idx.count}>
+			<input class="form-check-input" style='zoom:0.8;' type="checkbox" name="ingreCate" value=${idx.count}>
 			<label class="form-check-label" for="flexCheckDefault"><span class='checklist'>${ingreCate}</span></label>
 		</div>
 		</c:forEach>
@@ -145,7 +118,7 @@ function checkName() {
 		<div id="ingreArea">
 		</div>
 		<h3>레시피 검색</h3>
-		<button class="btn btn-primary" type="button" onclick="javascript:search(1);">검색</button>
+		<button class="btn btn-primary" type="button" onclick="javascript:search(1,'rcpArea','search');">검색</button>
 	</div>
 </form>
 <div class="container text-center" id="rcpArea">

@@ -36,7 +36,7 @@ public class RecipeController {
 	@PostMapping(value = "search.do", consumes = MediaType.APPLICATION_JSON_VALUE, produces = "application/json;charset=UTF-8")
 	public String search(@RequestBody Map cri, Model model){
 		model.addAttribute("result", service.search(cri));
-		return "common/rcpList";
+		return (String)cri.get("jsp");
 	}
 	
 	@PostMapping(value = "comboBox.do", consumes = MediaType.APPLICATION_JSON_VALUE, produces = "application/json;charset=UTF-8")

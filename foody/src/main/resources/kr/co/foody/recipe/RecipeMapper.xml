@@ -1,107 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="kr.co.foody.recipe.RecipeMapper">
+<mapper namespace="kr.co.recipe.recipe.RecipeMapper">
 
-	<insert id="insert" parameterType="kr.co.foody.recipe.RecipeVO">
-		INSERT INTO recipe (
+	<insert id="insert" parameterType="kr.co.recipe.recipe.RecipeVO">
+		INSERT INTO practice (
 			name, intro, type, time, tip, serving, regdate
 		) VALUES (
 			#{name}, #{intro}, #{type}, #{time}, #{tip}, #{serving}, NOW()
 		)
 	</insert>
-	
-	<!-- 레시피no로 해당 레시피에 필요한 재료 리스트 조회하는 sql -->
-	<select id='selectIngreList' parameterType="int" resultType="kr.co.foody.recipe.IngredientVO">
-		SELECT
-			map.no, map.quantity, map.weight, name, carbo, protein, fat, large_cate, print
-		FROM
-			ingre, (
-			SELECT ingredient_no AS no, quantity, weight
-			FROM ingre_recipe_map 
-			WHERE recipe_no = #{no}
-			) map
-		WHERE
-			ingre.no = map.no;
-	</select>
-	
-	<!-- 레시피no로 해당 레시피 조리과정 리스트로 조회하는 sql -->
-	<select id='selectProcessList' parameterType="int">
-		
-	</select>
-	
-	<!-- 검색조건(cri)로 select하는 sql, 검색조건 : (레시피 분류 and 재료 분류) or 재료 검색어(중첩가능, 겹치는 갯수 순) -->
-	<!-- 조건없이 전체 조회 -->
-	<select id="selectAll" resultType="kr.co.foody.recipe.RecipeVO">
-		SELECT * FROM recipe
-	</select>
-	
-	
-	<!-- 1. 재료분류, 키워드중 한가지 조건이 걸린 경우 + (재료분류 or 재료키워드), 요리분류 -->
-	<select id='selectIngreOrKey' parameterType="map" resultType="kr.co.foody.recipe.RecipeVO">
-		SELECT
-			*
-		FROM
-			recipe, (
-			SELECT
-				map.recipe_no no, count(*) cnt
-			FROM
-				ingre_recipe_map map, (
-					SELECT
-						name, no ingre_no, allergy_no, large_cate
-					FROM
-						ingre
-		 			<where>
-			 			<if test='keywordArr != null'>
-			 				name IN (
-			 			<foreach collection="keywordArr" item="name" separator=",">
-			 				#{name}
-			 			</foreach>
-			 				)
-			 			</if>
-			 			<if test='ingreCateArr != null'>
-			 				AND large_cate IN (
-			 			<foreach collection="ingreCateArr" item="no" separator=",">
-			 				#{no}
-			 			</foreach>
-			 				)
-			 			</if>
-		 			</where>
-				) result
-			WHERE
-				result.ingre_no = map.ingredient_no
-			GROUP BY
-				map.recipe_no
-			) li
-		WHERE recipe.no = li.no
-		<if test='rcpCateArr != null'>
-			AND type IN (
-		<foreach collection="rcpCateArr" item="no" separator=",">
-			#{no}
-		</foreach>
-			)
-		</if>
-		ORDER BY cnt DESC
-	</select>
-	
-	<!-- 2. 요리분류 조건이 걸린 경우 -->
-	<select id="selectR" parameterType="map" resultType="kr.co.foody.recipe.RecipeVO">
-		SELECT * FROM recipe
-		WHERE type IN (
-			<foreach collection="rcpCateArr" item="no" separator=",">
-				#{no}
-			</foreach>
-				)
-	</select> 
-	
-	<!-- 3. 재료분류, 음식분류 조건이 걸린 경우 -->
-	
-	
-	<!-- 재료 분류로 재료명 리스트 조회하는 sql -->
-	<select id="selectIngreNameList" parameterType="int" resultType="string">
-		SELECT distinct name FROM ingre
-		WHERE large_cate = #{no}
-		ORDER BY name
-	</select>
-	<!-- 재료 검색어로 재료no 리스트 조회하는 sql -->
-	
+
 </mapper>

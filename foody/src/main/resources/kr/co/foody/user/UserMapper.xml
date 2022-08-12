@@ -14,6 +14,7 @@
 		) VALUES (
 			#{name}, #{birth}, #{nik_name}, #{selfi}, #{email}, #{tel}, #{pwd}, #{addr1}, #{addr2}, #{height}, #{weight}, #{activity}, #{intro}
 		)
+		<!-- 회원데이터 저장후 해당 no가져오기 -->
 		<selectKey keyProperty="no" resultType="int" order="AFTER">
 			SELECT LAST_INSERT_ID()
 		</selectKey>
@@ -34,6 +35,7 @@
 		SELECT * FROM user WHERE email=#{email} AND tel=#{tel} AND name=#{name}
 	</select>
 	
+	<!-- 비밀번호 업데이트 -->
 	<update id="updateTempPwd" parameterType="kr.co.foody.user.UserVO">
 		UPDATE user SET pwd=#{pwd} WHERE email=#{email} AND tel=#{tel} AND name=#{name}  
 	</update>
@@ -58,19 +60,27 @@
 		SELECT COUNT(*) FROM user WHERE tel = #{tel}
 	</select>
 	
-	<!-- <insert id="prefer" parameterType="kr.co.foody.user.UserVO">
-		INSERT INTO perfer (
-			(SELECT no FROM user WHERE no=preger.user_no) as user_no,
-			prefer_food
-		) VALUES (
-			no=#{loginInfo.no}, prefer_food=#{prefer_food}
-		)
-	</insert> -->	
+	<!-- 알러지 항목 가져오기 -->
+	<select id="getAllergy" resultType="kr.co.foody.user.UserVO">
+		SELECT * FROM allergy
+	</select>
 	
-	<insert id="prefer" parameterType="kr.co.foody.user.UserVO">
-		insert into prefer (user_no, prefer_food) 
-			select no, prefer from user
-		where no = 1 and prefer = "국";
+	<!-- 유저알러지 정보 입력 -->
+	<insert id="userAllergy" parameterType="kr.co.foody.user.UserVO">
+		INSERT INTO u_allergy (
+			user_no, user_allergy
+		) VALUES ( 
+			#{no}, #{allergy_no}
+		)
+	</insert>
+	
+	<!-- 유저선호음식 정보 입력 -->
+	<insert id="userPrefer" parameterType="kr.co.foody.user.UserVO">
+		INSERT INTO prefer (
+			user_no, prefer_food
+		) VALUES ( 
+			#{no}, #{prefer_no}
+		)
 	</insert>
 	
 	

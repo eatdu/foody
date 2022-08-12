@@ -12,7 +12,7 @@ public class IngredientCategory {
                                  , "어패류 및 기타 수산물", "해조류", "우유 및 유제품류", "유지류", "차류"
                                  , "음료류", "주류", "조미료류", "조리가공품류", "기타"
                                  , "갑각류", "두족류", "수산가공품", "어류", "패류"}; 
-			
+	
 	public static Map getIngreCate() {
         ingreCate.put("곡류 및 그 제품", 1);
         ingreCate.put("감자 및 전분류", 2);

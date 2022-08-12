@@ -30,55 +30,90 @@
 	</select>
 	
 	<!-- 검색조건(cri)로 select하는 sql, 검색조건 : (레시피 분류 and 재료 분류) or 재료 검색어(중첩가능, 겹치는 갯수 순) -->
-	<select id='selectRecipeListWithCri' parameterType="map" resultType="kr.co.foody.recipe.RecipeVO">
-		SELECT * FROM
-		    recipe, (
+	<!-- 조건없이 전체 조회 -->
+	<select id="selectAll" resultType="kr.co.foody.recipe.RecipeVO">
+		SELECT a.*
+		FROM (
+			SELECT @ROWNUM := @ROWNUM + 1 AS rownum, recipe.* 
+			FROM recipe, (select @rownum := 0) b
+			) a
+		WHERE
+			rownum between #{startNo} and #{endNo}
+	</select>
+	
+	
+	<!-- 1. 재료분류, 키워드중 한가지 조건이 걸린 경우 + (재료분류 or 재료키워드), 요리분류 -->
+	<select id='selectIngreOrKey' parameterType="map" resultType="kr.co.foody.recipe.RecipeVO">
+		SELECT
+			*
+		FROM
+			recipe, (
 			SELECT
-				map.recipe_no, count(*) cnt
+				map.recipe_no no, count(*) cnt
 			FROM
 				ingre_recipe_map map, (
-				SELECT
-					name, no ingre_no, allergy_no
-				<!-- 재료 키워드로 검색 -->
-				<if test='keywordArr != null'>
-					, (name IN 
-					<foreach collection="keywordArr" item="name" open="(" close=")" separator=",">#{name}</foreach>
-					) keywordCnt
-				</if>
-				<!-- 재료 분류로 필터링 -->
-		        <if test='ingreCateArr != null'>
-					, (large_cate IN  
-					<foreach collection="ingreCateArr" item="ingreCateNo" open="(" close=")" separator=",">#{ingreCateNo}</foreach>
-					) ingreCateCnt
-				</if>
-				FROM ingre
-				<where>
-				<!-- 알러지 분류로 필터링 -->
-				<if test='allergyArr != null'>
-					AND allergy_no NOT IN  
-					<foreach collection="allergyArr" item="allergy" open="(" close=")" separator=",">#{allergy}</foreach>
-				</if>
-				</where>
+					SELECT
+						name, no ingre_no, allergy_no, large_cate
+					FROM
+						ingre
+		 			<where>
+			 			<if test='keywordArr != null'>
+			 				name IN (
+			 			<foreach collection="keywordArr" item="name" separator=",">
+			 				#{name}
+			 			</foreach>
+			 				)
+			 			</if>
+			 			<if test='ingreCateArr != null'>
+			 				AND large_cate IN (
+			 			<foreach collection="ingreCateArr" item="no" separator=",">
+			 				#{no}
+			 			</foreach>
+			 				)
+			 			</if>
+		 			</where>
 				) result
 			WHERE
 				result.ingre_no = map.ingredient_no
 			GROUP BY
 				map.recipe_no
-			ORDER BY
-				count(*) DESC
 			) li
-		WHERE
-			recipe.no = li.recipe_no
-			<!-- 레시피 분류로 필터링 -->
-		    <if test='rcpCateArr != null'>
-				AND type IN  
-				<foreach collection="rcpCateArr" item="rcpCateNo" open="(" close=")" separator=",">#{rcpCateNo}</foreach>
-			</if> 
-		ORDER BY
-			li.cnt DESC, regdate DESC <!-- 기본 정렬 조건 -->
-		    <!-- ,viewcount DESC, 별점 DESC, 댓글cnt DESC 조건으로 정렬 -->
+		WHERE recipe.no = li.no
+		<if test='rcpCateArr != null'>
+			AND type IN (
+		<foreach collection="rcpCateArr" item="no" separator=",">
+			#{no}
+		</foreach>
+			)
+		</if>
+		ORDER BY cnt DESC
 	</select>
 	
-	<!-- 재료 검색어로 재료no 리스트 조회하는 sql -->
+	<!-- 2. 요리분류 조건이 걸린 경우 -->
+	<select id="selectR" parameterType="map" resultType="kr.co.foody.recipe.RecipeVO">
+		SELECT * FROM recipe
+		WHERE type IN (
+			<foreach collection="rcpCateArr" item="no" separator=",">
+				#{no}
+			</foreach>
+				)
+	</select> 
+	
+	<!-- 3. 재료분류, 음식분류 조건이 걸린 경우 -->
+	
+	
+	<!-- 재료 분류로 재료명 리스트 조회하는 sql -->
+	<select id="selectIngreNameList" parameterType="int" resultType="string">
+		SELECT distinct name FROM ingre
+		WHERE large_cate = #{no}
+		ORDER BY name
+	</select>
+	
+	<!-- 재료 검색어로 재료명 리스트 조회하는 sql -->
+	<select id='selectIngreNameList2' parameterType="string" resultType="string">
+		SELECT DISTINCT name FROM ingre
+		WHERE name LIKE '%${keyword}%'
+			OR detail LIKE '%${keyword}%'
+	</select>
 	
 </mapper>

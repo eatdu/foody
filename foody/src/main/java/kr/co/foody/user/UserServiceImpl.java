@@ -1,5 +1,8 @@
 package kr.co.foody.user;
 
+import java.util.List;
+import java.util.Map;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,7 +42,7 @@ public class UserServiceImpl implements UserService {
 	}
 	
 	@Override
-	public boolean loginCheck(UserVO vo, HttpSession sess) {
+	public boolean loginCheck(UserVO vo, HttpSession sess) { // 로그인성공시 세션에 회원데이터 저장
 		boolean r = false;
 		UserVO loginInfo = mapper.loginCheck(vo);
 		if(mapper.loginCheck(vo) != null) {
@@ -50,12 +53,12 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public UserVO findEmail(UserVO vo) {
+	public UserVO findEmail(UserVO vo) { // 이메일 찾기
 		return mapper.findEmail(vo);
 	}
 
 	@Override
-	public UserVO findPwd(UserVO vo) {
+	public UserVO findPwd(UserVO vo) { // 비밀번호 재설정(해당이메일로 임시비밀번호 전송 및 DB저장)
 		// update
 		UserVO mv = mapper.findEmail(vo);
 		if(mv != null) {
@@ -81,7 +84,7 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public int prefer(UserVO vo) {
+	public int prefer(UserVO vo) { 
 		return mapper.prefer(vo);
 	}
 
@@ -89,6 +92,23 @@ public class UserServiceImpl implements UserService {
 	public int signUpNext(UserVO vo) {
 		return mapper.insertAdd(vo);
 	}
+
+	@Override
+	public int userAllergy(UserVO vo) {
+		return mapper.userAllergy(vo);
+	}
+	
+	@Override
+	public int userPrefer(UserVO vo) {
+		return mapper.userPrefer(vo);
+	}
+
+	@Override
+	public List<String> getAllergy() {
+		return mapper.getAllergy();
+	}
+
+
 
 
 

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="kr.co.recipe.recipe.RecipeMapper">
+<mapper namespace="kr.co.foody.recipe.RecipeMapper">
 
-	<insert id="insert" parameterType="kr.co.recipe.recipe.RecipeVO">
+	<insert id="insert" parameterType="kr.co.foody.recipe.RecipeVO">
 		INSERT INTO practice (
 			name, intro, type, time, tip, serving, regdate
 		) VALUES (

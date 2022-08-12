@@ -19,7 +19,6 @@ public class RecipeController {
 	
 	@GetMapping("write.do")
 	public String write() {
-		
 		return "recipe/write";
 	}
 	
@@ -38,14 +37,12 @@ public class RecipeController {
 	@ResponseBody
 	@PostMapping(value = "ingredientName_drop.action", produces="application/json; charset=UTF-8")	
 	public Object selMediumcate (@RequestParam String name) {
-
 		return service2.detail_cate(name);
 	}
 	
 	@ResponseBody
 	@PostMapping(value = "searchName_drop.action", produces="application/json; charset=UTF-8")
 	public Object nameSearchList() {
-		
 		return service2.nameSearch();
 	}
 	

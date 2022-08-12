@@ -17,11 +17,8 @@ $(function(){
   rel="stylesheet"
   href="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.css"
 />
-
 <!-- Demo styles -->
 <style>
-
-
 .swiper {
 	width: 100%;
 	height: 300px;

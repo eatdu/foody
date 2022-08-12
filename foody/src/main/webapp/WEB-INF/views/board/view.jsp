@@ -3,7 +3,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
-
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -19,7 +18,6 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     
 <script>
-	
 	
 	function del(no) {
 		if (confirm('삭제하시겠습니까?')) {
@@ -45,13 +43,14 @@
 		getComment(1);
 	});
 	
+						console.log("전송 성공");
 	function goSave() {
-		<c:if test="{empty loginInfo}">
+		<c:if test="${empty loginInfo}">
 			alert('로그인 후 댓글을 작성하실 수 있습니다.');
 			location.href='/foody/user/login.do';
 		</c:if>
-		<c:if test="{!empty loginInfo}">
-			if (confirm('댓글을 저장하시겠습니까?') {
+		<c:if test="${!empty loginInfo}">
+			if (confirm('댓글을 저장하시겠습니까?')) {
 				
 				$.ajax ({
 					url: "/foody/comment/insert.do",
@@ -60,17 +59,16 @@
 						tablename: 'board',
 						content: $("#contents").val(),
 						user_no: ${loginInfo.no}
-					}
+					},
 					success: function(res) {
-						console.log("전송 성공");
-						if (res.trim == "1") {
+						if (res.trim() == "1") {
 							alert('댓글이 정상적으로 등록되었습니다.');
 							$("#contents").val('');
 							getComment(1);
 						}
 					}
 				});
-			})
+			}
 		</c:if>
 	}
 	
@@ -139,4 +137,5 @@
         	</div>
         </div>
 </body>
+
 </html>

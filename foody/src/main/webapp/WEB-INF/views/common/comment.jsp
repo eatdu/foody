@@ -22,7 +22,7 @@
 		<c:forEach items="${comment.list}" var="list" varStatus="status">
             <tr>
                 <!-- 총개수-인덱스-(현재페이지번호-1)*페이지당개수 -->
-                <td>${list.totalCount - status.index - (commentVO.page - 1) * commentVO.pageRow}</td>
+                <td>${list.no}</td>
                 <td class="txt_l">
                 	${list.content}</td>
                 <td class="writer">
@@ -47,7 +47,7 @@
            	</c:if>
             <c:forEach var="num" begin="${comment.startPage}" end="${comment.endPage}">
                 <li><a href='javascript:getComment(${num})'>
-                <c:if test='javascript:getComment(${commentVO.page == num})'>class='current'</c:if>>${num}</a></li>
+                <c:if test='javascript:getComment(${commentVO.page == num})'>class='current'</c:if>${num}</a></li>
             </c:forEach>
             <c:if test="${data.next == true}">
            		<li><a href="javascript:getComment(${comment.endPage+1})">next</a>

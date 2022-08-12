@@ -10,6 +10,7 @@ var ingreArr = new Array();
 var ingreNameArr = new Array();
 var ingreIdx = 1;
 $(function(){
+	searchBtn(1);
 	$("input[type='checkbox']").change(function(){
 		var name = $(this).attr("name");
 		if (name === 'rcpCate') rcpArr = makeArr(name);
@@ -62,66 +63,117 @@ function checkName() {
 	display: none
 }
 
-.checklist {
-	font-size: 15px
+.fixedCol {
+	width: 100px;
+	max-width: 100px;
+	min-width: 100px;
 }
 
+.rcpTable {
+	float: left;
+	width: 250px;
+	height: 270px;
+	border: 1px solid black;
+}
+.rcpTable .imgCell {
+	height: 150px;
+}
+.rcpTable .introCell{
+	height: 40px;
+}
+.rcpTable .nameCell{
+	width: 125px;
+	height: 40px;
+}
+.rcpTable .timeCell{
+	width: 125px;
+	height: 40px;
+}
+.row {
+	display: inline-block;
+}
+
+
+
 </style>
+
 <title>상세 검색</title>
 </head>
 <body>
-<%@ include file="../common/navBar.jsp" %>
+ 
+<!-- include file="../common/navBar.jsp" -->
+
 <form method="post" action="">
-	<h1 class="text-center">검색조건</h1>
-	<div class="container">
-		<div><h3>음식분류</h3></div>
+	<h1 class="tc">검색조건</h1>
+	<div class="">
+	<table>
+		<tr>
+		<td rowspan='2'><h3>음식분류</h3></td>
 		<c:forEach var="rcpCate" items="${rcpCateArr}" varStatus="idx">
-		<div class="form-check form-check-inline">
-			<input class="form-check-input" style='zoom:0.8;' type="checkbox" name="rcpCate" value=${idx.count}>
-			<label class="form-check-label" for="flexCheckDefault"><span class='checklist'>${rcpCate}</span></label>
-		</div>
+			<td class='fixedCol'>
+				<input style='zoom:0.8;' type="checkbox" name="rcpCate" value=${idx.count}>
+				<label><span class=''>${rcpCate}</span></label>
+			</td>
+			<c:if test='${idx.count == 13}'>
+			</tr><tr>
+			</c:if>
 		</c:forEach>
-		<h3>재료분류</h3>
-		<c:forEach var="ingreCate" items="${ingreCateArr}" varStatus="idx">
-		<div class="form-check form-check-inline">
-			<input class="form-check-input" style='zoom:0.8;' type="checkbox" name="ingreCate" value=${idx.count}>
-			<label class="form-check-label" for="flexCheckDefault"><span class='checklist'>${ingreCate}</span></label>
-		</div>
-		</c:forEach>
-		<h3>재료추가</h3>
-		<div class='row justify-content-start'>
-			<div class="col-1">분류로 검색</div>
-			<div class="col-2">
-			<select id="ingreCateDrop" class='form-select' name="ingreCateDrop" onchange="javascript:makeComboBox('ingreCateDrop', 'ingreNameList');">
-			    <option value="0" selected>==분류==</option>
-		   		<c:forEach var="ingreCate" items="${ingreCateArr}" varStatus="idx">
-				<option value=${idx.count}>${ingreCate}</option>
-				</c:forEach>
-			</select>
-			</div>
-			<div class="col-1"> 검색어 </div>
-			<div class="col-2">
-				<input type="text" id="keyword" class="form-control form-control-sm input-lg rounded-pill" placeholder="검색어 입력">
-			</div>
-			<div class="col-1">
-				<button class="btn btn-primary" type="button" onclick="javascript:makeComboBox('keyword', 'ingreNameList');">검색</button>
-			</div>
-			<div class="col-2">
-			<select class='form-select' name="ingreNameList">
-			    <option value="" selected>==재료명==</option>
-			</select>
-			</div>
-			<div class="col-1">
-			<button class="btn btn-primary" type="button" onclick="javascript:addIngre();">추가</button>
-			</div>
-		</div>
-		<div id="ingreArea">
-		</div>
-		<h3>레시피 검색</h3>
-		<button class="btn btn-primary" type="button" onclick="javascript:search(1,'rcpArea','search');">검색</button>
+		</tr>
+		<tr>
+			<td rowspan='2'><h3>재료분류</h3></td>
+			<c:forEach var="ingreCate" items="${ingreCateArr}" varStatus="idx">
+				<td class='fixedCol'>
+					<input class="" style='zoom:0.8;' type="checkbox" name="ingreCate" value=${idx.count}>
+					<label class=""><span class=''>${ingreCate}</span></label>
+				</td>
+				<c:if test='${idx.count == 13}'>
+				</tr><tr>
+				</c:if>
+			</c:forEach>
+		</tr>
+		<tr>
+			<td><h3>재료추가</h3></td>
+			<td>분류로 검색</td>
+			<td colspan='2'>
+				<select id="ingreCateDrop" class='' name="ingreCateDrop" onchange="javascript:makeComboBox('ingreCateDrop', 'ingreNameList');">
+				    <option value="0" selected>==분류==</option>
+			   		<c:forEach var="ingreCate" items="${ingreCateArr}" varStatus="idx">
+					<option value=${idx.count}>${ingreCate}</option>
+					</c:forEach>
+				</select>
+			</td>
+			<td> 검색어 </td>
+			<td colspan='2'>
+				<input type="text" id="keyword" class="" placeholder="검색어 입력">
+			</td>
+			<td>
+				<button class="" type="button" onclick="javascript:makeComboBox('keyword', 'ingreNameList');">검색</button>
+			</td>
+			<td colspan='2'>
+				<select class='' name="ingreNameList">
+			    	<option value="" selected>==재료명==</option>
+				</select>
+			</td>
+			<td>
+				<button class="" type="button" onclick="javascript:addIngre();">추가</button>
+			</td>
+		<td>레시피 검색</td>
+		<td>
+			<button class="" type="button" onclick="javascript:searchBtn(1);">검색</button>
+		</td>
+		</tr>
+		<td colspan='14' id="ingreArea">
+		<td>
+	</table>
 	</div>
 </form>
-<div class="container text-center" id="rcpArea">
+<div class="" id="rcpArea1">
+</div>
+<div class="" id="rcpArea2">
+</div>
+<div class="" id="rcpArea3">
+</div>
+<div class="" id="rcpArea4">
 </div>
 </body>
 </html>

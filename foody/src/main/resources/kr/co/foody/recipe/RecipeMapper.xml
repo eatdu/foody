@@ -37,8 +37,10 @@
 			SELECT @ROWNUM := @ROWNUM + 1 AS rownum, recipe.* 
 			FROM recipe, (select @rownum := 0) b
 			) a
+		<!-- 페이징 처리
 		WHERE
 			rownum between #{startNo} and #{endNo}
+		 -->
 	</select>
 	
 	
@@ -98,8 +100,6 @@
 			</foreach>
 				)
 	</select> 
-	
-	<!-- 3. 재료분류, 음식분류 조건이 걸린 경우 -->
 	
 	
 	<!-- 재료 분류로 재료명 리스트 조회하는 sql -->

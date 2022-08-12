@@ -19,10 +19,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     
 <script>
-	function goSave() {
-		alert('로그인 후 댓글을 작성하실 수 있습니다.');
-		location.href='/foody/user/login.do';
-	}
+	
 	
 	function del(no) {
 		if (confirm('삭제하시겠습니까?')) {
@@ -39,7 +36,7 @@
 				page: page
 			},
 			success: function(res) {
-				$(#commentArea).html(res);
+				$("#commentArea").html(res);
 			}
 		});
 	}
@@ -47,6 +44,35 @@
 	$(function() {
 		getComment(1);
 	});
+	
+	function goSave() {
+		<c:if test="{empty loginInfo}">
+			alert('로그인 후 댓글을 작성하실 수 있습니다.');
+			location.href='/foody/user/login.do';
+		</c:if>
+		<c:if test="{!empty loginInfo}">
+			if (confirm('댓글을 저장하시겠습니까?') {
+				
+				$.ajax ({
+					url: "/foody/comment/insert.do",
+					data: {
+						board_no: ${param.no},
+						tablename: 'board',
+						content: $("#contents").val(),
+						user_no: ${loginInfo.no}
+					}
+					success: function(res) {
+						console.log("전송 성공");
+						if (res.trim == "1") {
+							alert('댓글이 정상적으로 등록되었습니다.');
+							$("#contents").val('');
+							getComment(1);
+						}
+					}
+				});
+			})
+		</c:if>
+	}
 	
 </script>
 
@@ -70,6 +96,7 @@
                         <dl class="file">
                             <dt>첨부파일 </dt>
                             <dd>
+                            <img src="/foody/upload/${data.filename_real}" style="width:100px; height:100px;">
                             <a href="/foody/common/download.jsp?oName=${URLEncoder.encode(data.filename_org, 'UTF-8')}&sName=${data.filename_real}"
                             target="_blank">${data.filename_org} </a></dd>
                         </dl>
@@ -77,10 +104,11 @@
                             <div class="fl_l">
                             <a href="index.do" class="btn">목록으로</a>
                             <a href="edit.do?no=${data.no}" class="btn">수정</a>
-                            <a href="javascript:del(${data.no})" class="btn">삭제</a>
+                            <a href="javascript:del(${data.no});" class="btn">삭제</a>
                         	</div>
                     	</div>
                 	</div>
+                	<!-- 댓글 영역 -->
                 	<div>
 	                	<form method="post" name="frm" id="frm" action="" enctype="multipart/form-data" >
 	                        <table class="board_write">

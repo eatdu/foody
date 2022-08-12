@@ -46,11 +46,11 @@
            		<li><a href="javascript:getComment(${comment.startPage-1})">prev</a>
            	</c:if>
             <c:forEach var="num" begin="${comment.startPage}" end="${comment.endPage}">
-                <li><a href='index.do?page=${num}'
-                <c:if test="${commentVO.page == num}">class='current'</c:if>>${num}</a></li>
+                <li><a href='javascript:getComment(${num})'>
+                <c:if test='javascript:getComment(${commentVO.page == num})'>class='current'</c:if>>${num}</a></li>
             </c:forEach>
             <c:if test="${data.next == true}">
-           		<li><a href="index.do?page=${comment.endPage+1}">next</a>
+           		<li><a href="javascript:getComment(${comment.endPage+1})">next</a>
            	</c:if>
         	</ul>
         </div>

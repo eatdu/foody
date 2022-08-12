@@ -14,6 +14,7 @@ public class CommentVO {
 	private String tablename;
 	private String photo;
 	private String content;
+	private String user_name;
 	private Timestamp updatedate;
 	
 	private int startIdx;

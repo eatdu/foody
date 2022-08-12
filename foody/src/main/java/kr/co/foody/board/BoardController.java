@@ -38,19 +38,19 @@ public class BoardController {
 	public String write() {
 		return "board/write";
 	}
-	
+	    
 	// 등록처리
 	@PostMapping("/board/insert.do")
 	public String insert(BoardVO vo, Model model,
 			@RequestParam MultipartFile file,
 			HttpServletRequest req) {
 		
-		if (!file.isEmpty()) {
+		if (!file.isEmpty()) {  
 			String org = file.getOriginalFilename();
 			String ext = org.substring(org.lastIndexOf("."));
 			String real = new Date().getTime()+ext;
 			
-			String path = req.getRealPath("/upload");
+			String path = req.getRealPath("/upload/");
 			try {
 				file.transferTo(new File(path+real)); // 파일 저장
 			} catch (Exception e) {}

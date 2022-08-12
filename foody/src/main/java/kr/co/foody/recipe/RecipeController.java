@@ -23,7 +23,6 @@ public class RecipeController {
 	
 	@GetMapping("write.do")
 	public String write() {
-		
 		return "recipe/write";
 	}
 	
@@ -49,6 +48,12 @@ public class RecipeController {
 		}
 		return "common/comboBox";
 	}
+	
+//	@ResponseBody
+//	@PostMapping(value = "ingredientName_drop.action", produces="application/json; charset=UTF-8")	
+//	public Object selMediumcate (@RequestParam String name) {
+//		return service2.detail_cate(name);
+//	}
 		
 	@GetMapping("/recipe/search.do")
 	public String search(Model model) {
@@ -56,6 +61,12 @@ public class RecipeController {
 		model.addAttribute("ingreCateArr", IngredientCategory.IngreCateArr);
 		return "recipe/search";
 	}
+	
+//	@ResponseBody
+//	@PostMapping(value = "searchName_drop.action", produces="application/json; charset=UTF-8")
+//	public Object nameSearchList() {
+//		return service2.nameSearch();
+//	}
 	
 	@GetMapping("/recipe/main.do")
 	public String main() {

@@ -16,6 +16,7 @@ public class RecipeController {
 	RecipeService service;
 	@Autowired
 	IngredientService service2;
+	/////
 	
 	@GetMapping("write.do")
 	public String write() {

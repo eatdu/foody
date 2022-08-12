@@ -1,4 +1,4 @@
-package kr.co.recipe.recipe;
+package kr.co.foody.recipe;
 
 import org.apache.ibatis.annotations.Mapper;
 

@@ -12,7 +12,7 @@ public class RecipeCategory {
 	        , "튀김/커틀릿", "찌개/전골/스튜", "도시락/간식", "부침", "샌드위치/햄버거"
 	        , "빵/과자", "양념장", "음료", "그라탕/리조또"
 	};
-	
+
 	public static Map getRcpCate() {
         rcpCate.put("밥", 1);
         rcpCate.put("떡/한과", 2);

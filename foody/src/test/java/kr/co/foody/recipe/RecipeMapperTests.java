@@ -21,6 +21,35 @@ public class RecipeMapperTests {
 	@Autowired
 	RecipeMapper mapper;
 	
+
+	public String telMaker() {
+		int a = 1000 + (int)(Math.random() * 9000);
+		int b = 1000 + (int)(Math.random() * 9000);
+		return "010" + a + b;
+	}
 	
+//	public void birthMaker() {
+//		int yy = 60 + (int)(Math.random() * 40);
+//		int mm = (int)(Math.random() * 12);
+//		
+//		
+//		int mm 
+//	}
+	
+	//@Test
+	public void insertUser() {
+		for (int i=0; i<100; i++) {
+			Map user = new HashMap();
+			user.put("email", RandomUserInsertTest.emailArr[i]);
+			user.put("nik_name", RandomUserInsertTest.nickArr1[i/10] + RandomUserInsertTest.nickArr1[i%10]);
+			user.put("name", RandomUserInsertTest.nameArr[i]);
+			user.put("intro", RandomUserInsertTest.intro);
+			user.put("pwd", "test1234");
+			user.put("tel", telMaker());
+			
+		}
+		
+		
+	}
 	
 }

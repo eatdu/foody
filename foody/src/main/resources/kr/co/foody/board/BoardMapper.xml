@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.foody.board.BoardMapper">
+
+<!-- 게시글 등록 -->
+<insert id="insert" parameterType="kr.co.foody.board.BoardVO">
+	insert into board (
+		user_no, title, content, viewcount, regdate, filename_org, filename_real
+	) values (
+		#{user_no}, #{title}, #{content}, 0, now(), #{filename_org}, #{filename_real}
+	)
+</insert>
+
+<!-- 게시글 수 조회 -->
+<select id="count" parameterType="kr.co.foody.board.BoardVO" resultType="int">
+	select count(*) from board
+	<where>
+		<if test="stype != null and stype != ''">
+			<if test="stype != 'all'">
+				${stype} like '%${sword}%'
+			</if>
+			<if test="stype == 'all'">
+				title like '%${sword}%' or content like '%${sword}%'
+			</if>
+		</if>
+	</where>
+</select>
+
+<!-- 전체 게시글 조회 -->
+<select id="list" parameterType="kr.co.foody.board.BoardVO" resultType="kr.co.foody.board.BoardVO">
+	select *,
+		(select name from user where no = board.user_no) as user_name,
+		(select count(*) from comment where board_no = board.no and tablename = 'board') as comment_count
+	from board
+	<where>
+		<if test="stype != null and stype != ''">
+			<if test="stype != 'all'">
+				${stype} like '%${sword}%'
+			</if>
+			<if test="stype == 'all'">
+				title like '%${sword}%' or content like '%${sword}%'
+			</if>
+		</if>
+	</where>
+	order by regdate desc
+	limit ${startIdx}, ${pageRow}
+</select>
+
+<!-- 게시글 상세보기 -->
+<select id="view" parameterType="int" resultType="kr.co.foody.board.BoardVO">
+	select * from board where no=#{no}
+</select>
+
+<!-- 조회수 -->
+<update id="updateViewcount" parameterType="int">
+	update board set viewcount = viewcount+1 where no=#{no}
+</update>
+
+<!-- 수정 -->
+<update id="update" parameterType="kr.co.foody.board.BoardVO">
+	update board set
+		title = #{title}, content = #{content}
+		<if test="filename_org != null">
+			, filename_org = #{filename_org}, filename_real = #{filename_real}
+		</if>
+	where no = #{no}
+</update>
+
+<!-- 삭제 -->
+<delete id="delete" parameterType="int">
+	delete from board where no=#{no}
+</delete>
+
+</mapper>

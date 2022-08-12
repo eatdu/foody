@@ -1,12 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<%@ include file="../common/config.jsp" %>
 <style type="text/css">
-	#header {
+
+	.userMain {
 		width: 1200px;
 		height: 200px;
 		border: 5px solid #f2f2f2;
@@ -36,6 +33,9 @@
     border-bottom: 20px solid slateblue;
     cursor: pointer;
   }
+  .abc{
+  display: inline-block;
+  }
 </style>
 <script>
 $(function(){
@@ -57,9 +57,10 @@ $(function(){
 <title>Insert title here</title>
 </head>
 <body>
+<%@ include file="../common/navBar.jsp" %>
 <h1>마이페이지</h1>
 <div id="userInfo">
-	<div id="header">
+	<div id="userMain" class="userMain">
 		<table border="1" >
 			<tr>
 				<td>
@@ -88,12 +89,14 @@ $(function(){
 	<div id="container">
 		<div id="category_wrap">
 			<div id="mypage_category">
-				<ul id="mypage_category_list" class="list_category">
-					<li ><a id="myRecipe" class="category_item">나의 레시피</a></li>
-					<li ><a id="recentRecipe" class="category_item">최근 본 레시피</a></li>
-					<li ><a id="likeRecipe" class="category_item">즐겨찾기 레시피</a></li>
-					<li ><a id="myInfo" class="category_item">회원정보 관리</a></li>
-				</ul>
+				<div class="abc">
+					<ul id="mypage_category_list" class="list_category">
+						<li><a id="myRecipe" class="category_item">나의 레시피</a></li>
+						<li><a id="recentRecipe" class="category_item">최근 본 레시피</a></li>
+						<li><a id="likeRecipe" class="category_item">즐겨찾기 레시피</a></li>
+						<li><a id="myInfo" class="category_item">회원정보 관리</a></li>
+					</ul>
+				</div>
 				<div id="contents"></div>	
 			</div>
 		</div>

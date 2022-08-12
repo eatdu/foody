@@ -301,7 +301,7 @@ textarea{border:1px solid #cccccc;}
 
 /* ============================================================================================================== */
 /*세로 중앙정렬 (for IE6,7)*/
-div.photo img{ .margin-top:expression( verticalAlign(this) ); }
+div.photo img{ margin-top:expression( verticalAlign(this) ); }
 /*max-width,max-height (for IE6)
 가로,세로입니다. 0을 주면 자동 맞춤이 되구요.*/
 *html div.photo{ width:expression( maxSize(this,0,0) ); }

@@ -101,7 +101,7 @@ function checkName() {
 </head>
 <body>
  
-<!-- include file="../common/navBar.jsp" -->
+<%@ include file="../common/navBar.jsp"  %>
 
 <form method="post" action="">
 	<h1 class="tc">검색조건</h1>

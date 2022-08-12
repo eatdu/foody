@@ -1,0 +1,27 @@
+@charset "utf-8";
+/* CSS Document */
+
+@import url(/project/css/admin/basic.css);
+
+#login{position:relative; wisth:100%; height:100%; font-family:"맑은 고딕","돋움"; }
+#login .title{position:relative; background:#333; height:350px; width:100%; font-family:"맑은 고딕","돋움"; }
+#login .title h1{width:1000px; margin:0 auto; text-align:center; padding-top:200px; font-size:46px; letter-spacing:-2px; color:#fff; font-family:"맑은 고딕","돋움"; font-weight:normal;}
+#login .title h1 span{font-weight:bold; color:#d01b5d;}
+#login .title p{font-size:12px; color:#797979; width:1000px; margin:0 auto; text-align:center; padding-top:20px;}
+
+#login .login{position:relative; width:430px; margin:50px auto;}
+
+
+#login .infoBox{float:left; width:300px; padding:0 0 0 30px;}
+#login .infoBox dl{padding:0 20px 8px 0px; float:left;}
+#login .infoBox dt{float:left; width:70px; padding:2px 0 0 10px; color:#333; font-weight:bold; vertical-align:middle;}
+#login .infoBox dd{float:left; vertical-align:middle;}
+/*input*/
+#login .infoBox input{width:190px;  vertical-align:middle;}
+
+#login .joinList{padding:20px  0 0 30px; clear:both;  overflow:hidden; color:#656565; line-height:100%; }
+
+#login .footer{position:fixed; bottom:0; left:0; width:100%; height:20px; padding:10px 0; background:#e1e1e1; text-align:center; color:#999; font-size:10px;}
+#login .footer a:link{font-size:10px; color:#656565;}
+#login .footer a:hover{font-size:10px; color:#d01b5d;}
+#login .footer a:visited{font-size:10px; color:#656565;}

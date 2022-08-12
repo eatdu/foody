@@ -116,4 +116,9 @@
 			OR detail LIKE '%${keyword}%'
 	</select>
 	
+	<!-- 랜덤 회원정보 인서트 -->
+	<insert id="insertRandomUser" parameterType="map">
+		insert into user(email, nik_name, name, birth, tel, pwd, intro, height, weight)
+		values (#{email}, #{nik_name}, #{name}, #{birth}, #{tel}, #{pwd}, #{intro}, #{height}, #{weight})
+	</insert>
 </mapper>

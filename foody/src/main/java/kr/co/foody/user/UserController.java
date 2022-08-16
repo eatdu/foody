@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -69,6 +68,15 @@ public class UserController {
 			model.addAttribute("msg", "이메일 비밀번호를 확인해 주세요.");
 			return "common/alert";
 		}
+	}
+	
+	@GetMapping("/user/logout.do") // 로그아웃
+	public String logout(Model model, HttpServletRequest req) {
+		HttpSession sess = req.getSession();
+		sess.invalidate();
+		model.addAttribute("msg", "로그아웃");
+		model.addAttribute("url", "/foody/recipe/main.do");
+		return "common/alert";
 	}
 	
 	@GetMapping("/user/emailDupCheck.do") // 이메일 중복체크

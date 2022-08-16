@@ -1,5 +1,7 @@
 package kr.co.foody.user;
 
+import javax.servlet.http.HttpSession;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,8 +9,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
-import kr.co.foody.user.UserMapper;
-import kr.co.foody.user.UserVO;
+import kr.co.foody.mypage.MypageVO;
 import lombok.extern.log4j.Log4j;
 
 @WebAppConfiguration
@@ -61,6 +62,8 @@ public class UserMapperTests {
 		mapper.prefer(vo);
 		
 	}
+	
+	
 	
 	
 

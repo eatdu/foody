@@ -19,7 +19,7 @@
 							<span>${loginInfo.nik_name} 님</span><br>
 							<span>email: ${loginInfo.email}</span><br>
 							<a href="/foody/mypage/mypage.do"><button type="button" id="mypage">마이페이지</button></a>
-							<button type="button" id="logout">로그아웃</button>
+							<a href="/foody/user/logout.do"><button type="button" id="logout">로그아웃</button></a>
 						</div>
 					</c:if>
 					<c:if test="${empty loginInfo}">

@@ -30,7 +30,9 @@
 							알레르기
 						</td>
 						<td>
-						
+							<c:forEach var="allergy" items="${myInfo.allergyList}" varStatus="status">
+								${allergy}
+							</c:forEach>
 						</td>
 					</tr>
 					<tr>

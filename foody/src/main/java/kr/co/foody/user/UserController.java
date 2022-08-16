@@ -64,7 +64,7 @@ public class UserController {
 	@PostMapping("/user/login.do") // 로그인 이메일 비밀번호 일치 확인
 	public String login(UserVO vo, HttpSession sess, Model model) {
 		if(service.loginCheck(vo, sess)) {
-			return "redirect:/user/login.do";
+			return "redirect:/recipe/main.do";
 		} else {
 			model.addAttribute("msg", "이메일 비밀번호를 확인해 주세요.");
 			return "common/alert";

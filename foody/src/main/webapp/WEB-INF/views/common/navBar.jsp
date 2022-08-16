@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <div id="header">
 	<div class="header_inner">
 		<h1>Foody</h1>
@@ -8,10 +9,31 @@
 			<ul>
 				<li>
 				<div class='info'>
-					<div class="name">
-						<span>유저 닉네임</span>
-					</div>
-					<div class="img"></div>
+					<c:if test="${!empty loginInfo}">
+						<div class="userImg" id="userImg" style='background:url(/foody/resources/img/emoji-smile.svg)'></div>
+						<div class="userName">
+							<span>${loginInfo.nik_name}</span>
+						</div>
+						<div class="userInfo" id="userInfo">
+							<img src='/foody/resources/img/emoji-smile.svg' style='width:50px; height:50px'><br>
+							<span>${loginInfo.nik_name} 님</span><br>
+							<span>email: ${loginInfo.email}</span><br>
+							<a href="/foody/mypage/mypage.do"><button type="button" id="mypage">마이페이지</button></a>
+							<button type="button" id="logout">로그아웃</button>
+						</div>
+					</c:if>
+					<c:if test="${empty loginInfo}">
+						<div class="userImg" id="userImg" style='background:url(/foody/resources/img/emoji-smile.svg)'></div>
+						<div class="userName">
+							<span>Guest</span>
+						</div>
+						<div class="userInfo" id="userInfo">
+							<img src='/foody/resources/img/emoji-smile.svg' style='width:50px; height:50px'><br>
+							<span>손님</span><br>
+							<a href="/foody/user/signUp.do"><button type="button">회원가입</button></a>
+							<a href="/foody/user/login.do"><button type="button">로그인</button></a>
+						</div>
+					</c:if>
 				</div>
 				</li>
 			</ul>
@@ -37,3 +59,17 @@
 	</div>
 	<!-- //header_inner -->
 </div>
+<script>
+	$(function(){
+		$("#userImg").on("click", function(){
+			dis($("#userInfo"));
+		});
+	});
+    function dis(obj){
+        if($(obj).css('display') == 'none'){
+	        $(obj).show();
+	    }else{
+	        $(obj).hide();
+	    }
+    }
+</script>

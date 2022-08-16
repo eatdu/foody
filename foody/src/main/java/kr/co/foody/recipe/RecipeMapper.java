@@ -17,4 +17,6 @@ public interface RecipeMapper {
 	List<RecipeVO> selectAll(Map cri);
 	List<RecipeVO> selectIngreOrKey(Map cri);
 	List<RecipeVO> selectR(Map cri);
+	
+	int insertRandomUser(Map user);
 }

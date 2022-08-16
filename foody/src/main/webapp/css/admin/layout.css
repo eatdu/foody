@@ -1,0 +1,194 @@
+@charset "utf-8";
+/* CSS Document */
+body{position:relative; height:100%;}
+
+
+#wrap{position:relative; width:100%; height:100%;  min-width:1000px; }
+#canvas{position:relative; width:100%; height:100%; z-index:100; color:#2d2f34; min-width:1000px; margin-bottom:0 0 50px 0;}
+
+
+/*header*/
+#header{position:relative; width:100%; min-width:1000px; line-height:100%; height:108px; background:url(/project/img/admin/header_bg.gif) repeat-x left top; z-index:999;}
+#header .header_inner{position:relative; width:100%; min-width:1000px; height:108px; margin:0 auto;}
+#header .header_inner h1{position:absolute; top:25px; left:17px; color:#fff; font-weight:bold; font-size:24px;}
+#header .header_inner h1 span a{color:#c1c1c1; font-size:12px; font-weight:normal;}
+
+#header .header_inner .login_name{position:absolute; right:10px; top:17px; color:#c1c1c1;}
+
+#header .header_inner .site_go{position:absolute; left:380px; top:15px; height:26px;}
+#header .header_inner .site_go ul{overflow:hidden; margin:7px 0 0 0;}
+#header .header_inner .site_go ul li{float:left; width:115px; height:21px; margin:0 10px 0 0px; padding:5px 0 0 15px; color:#fff; background:url(/project/img/admin/link_go_bg.gif) no-repeat left center;}
+#header .header_inner .site_go ul li a{color:#fff; font-size:12px;}
+
+#header .header_inner .util{position:absolute; right:10px; top:43px; height:28px;}
+#header .header_inner .util ul{overflow:hidden; float:right; margin:4px 0 0 0;}
+#header .header_inner .util ul li{float:left; margin:0 0px 0 0px; padding:0 11px 0 11px; background:url(/project/img/admin/util_bar.gif) no-repeat left center;}
+#header .header_inner .util ul li.frist{background:none; padding-left:0;}
+#header .header_inner .util ul li a{color:#fff; font-size:11px;}
+
+
+/* menu::base========================================== */
+div#menu {position:relative; top:73px; width:100%; min-width:1000px; height:36px; background:url(/project/img/admin/gnb_bottom_line.gif) repeat-x left bottom;  }
+div#menu ul {float:left; width:100%; min-width:1000px; margin:0; padding:0; /* border-bottom:3px solid #307dd4; */ }
+div#menu ul.menu {
+    /*padding-left:10px;*/
+}
+div#menu li { 
+	width:8.4%; 
+	min-width:80px;
+    position: relative;
+    z-index: 9;
+    margin: 0;
+    padding: 0;
+    display: block;
+    float: left;
+    color:#dddddd;
+}
+
+div#menu li.menu05, div#menu li.menu10{ width:12%; min-width:110px; }   
+
+div#menu li:hover>ul {
+    /*left: -2px;*/
+}
+
+div#menu li div { 
+    list-style: none;
+/*    float: left;*/
+    position: absolute;
+    top: 36px;
+    right: 0px;
+	width:100%;
+	min-width:150px;
+    z-index: 11;
+    visibility: hidden;
+    background: url(/project/img/admin/submenu-bottom.png) no-repeat 7px bottom;
+    _background-image: url(/project/img/admin/submenu-bottom.gif);
+    margin: 0 0 0 0px;
+    
+}
+
+div#menu li div.standard_left{left:0 !important;} 
+
+div#menu li:hover>div { 
+    visibility: visible;
+}
+
+div#menu li.current a {}
+
+/* menu::level1 */
+div#menu a { width:100%; 
+    position: relative;
+    z-index: 10;
+    height: 36px;
+    display: block;
+    float: left;	
+    line-height: 30px;
+    text-decoration: none;
+}
+div#menu span { text-align:center;
+    font: normal 12px 'Lucida Sans Unicode','Lucida Grande',Helvetica,Arial,sans-serif;
+    padding: 9px 0;
+    color: #c8c8c8;
+    font-weight:bold;
+    text-transform:uppercase;
+    display: block;
+    cursor: pointer;
+    background-repeat: no-repeat;	
+
+}
+div#menu ul a:hover span {
+    color: #FFFFFF;
+    /* background:#307dd4; */
+    background:#f25533;
+}
+
+/* 메뉴 클릭시 현 상태 유지 */
+div#menu .bg{
+    color: #FFFFFF;
+    background:#f25533;
+}
+
+div#menu li { background: url(/project/img/admin/nav_separator.png) top left no-repeat;}
+div#menu li.last span{
+    background: url(/project/img/admin/nav_separator.png) top right no-repeat;
+    padding: 0;
+}
+
+/* menu::level2 */
+div#menu ul ul li {
+   
+    background: url(/project/img/admin/nav_dropdown_sep.gif) left bottom repeat-x;
+    padding: 0px 0;
+    z-index: 9;	
+}
+div#menu ul ul { 
+	width:100%;
+	min-width:150px;
+    z-index: 12;
+    padding: 0;
+    background: rgb(106,107,112) url(/project/img/admin/nav_dropdown_grad.png) right top no-repeat;
+    margin-top:0;
+    margin-left:0;
+    margin-right:0;
+    border-bottom:none;
+   
+}
+div#menu ul ul a { 
+	padding:0;
+    height: auto;
+    float: none;
+    display: block;
+    background:none;
+   	/*margin:2px 10px;*/
+    z-index: -1;
+  
+}
+div#menu ul ul a span { text-align:left; 
+	padding: 9px 0px 9px 9px;
+    line-height: 20px;
+    color: #dddddd;
+    font-weight:bold;
+    text-transform: none;
+    background:none;	
+}
+div#menu ul ul a:hover {
+    background:#333438;
+   
+}
+div#menu ul ul a:hover span {
+    background:#333438;
+    color: #6ab4f9;
+    font-weight:bold;
+    
+}
+
+div#menu ul ul li.last { background: none; }
+div#menu ul ul li {
+    width: 100%;
+}
+/* menu::level3 */
+div#menu ul ul div {
+    width: 208px;
+    margin: -50px 0 0 190px !important;
+    height: auto;
+  
+}
+div#menu ul ul ul {
+	_padding-right:1px;
+}
+
+/* lava lamp */
+div#menu li.back {
+}
+div#menu li.back .left {
+}
+/* //menu::base========================================== */
+
+
+/*content*/
+#container{position:relative; width:100%;}
+#container #content{position:relative; top:0px; width:100%; min-width:1000px; margin:0 auto;}
+#container #content .con_tit{width:99%; height:56px; padding:0 0 0 1%; background:url(/project/img/admin/con_tit_bg.gif) repeat-x left top;}
+#container #content .con_tit h2{height:56px; *height:44px; padding:0px 0 0 23px; *padding:12px 0 0 23px; background:url(/project/img/admin/con_tit_bullet.gif) no-repeat left center; display:table-cell; vertical-align:middle; font-size:20px; color:#307dd4; }
+#container #content .con{position:relative; width:96%; min-width:960px; padding:20px 2%;}
+

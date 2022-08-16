@@ -14,11 +14,19 @@ public class RecipeServiceImpl implements RecipeService {
 	@Autowired
 	RecipeMapper mapper;
 	
+	@Autowired
+	IngredientMapper mapper2;
+	
 	@Override
 	public int insert(RecipeVO vo){
 		return mapper.insert(vo);
 	}
 
+	@Override
+	public List<String> large_cate(int i) {
+		return mapper2.large_cate(i);
+	}
+	
 	@Override
 	public List<Map> makeIngreNameList(int no) {
 		List<String> result = mapper.selectIngreNameList(no);

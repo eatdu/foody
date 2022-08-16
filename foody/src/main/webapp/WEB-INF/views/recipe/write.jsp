@@ -115,13 +115,8 @@
 					},
 					success: function(data){
 						for(var i=0; i< data.length; i++){
-							var searchOption_str ="<option data-no="+data[i].no+">"+data[i].name; //이름검색 드롭다운 옵션에 넣을 스트링
+							var searchOption_str ="<option data-no="+data[i].no+" value='"+data[i].name+"("+data[i].detail+")'>"; //이름검색 드롭다운 옵션에 넣을 스트링
 							
-							if(data[i].detail == ""){
-								searchOption_str += "</option>";
-							}else{
-								searchOption_str += "("+data[i].detail+")</option>";
-							}
 							
 							$("#searchName_drop").append(searchOption_str);
 						}

@@ -46,8 +46,7 @@ $(function(){
 			type: "get",
 			dataType: "html",
 			success: function(res){
-				$("#contents").empty(res);
-				$("#contents").append(res);
+				$("#contents").html(res);
 			}
 		
 		})

@@ -26,11 +26,7 @@ public class MypageServiceImpl implements MypageService {
 		map.put("list", list);
 		
 		
-		return map;
-	}
-
-	@Override
-	public Map<String, Object> myInfo(HttpSession sess) {
+		try {
 			// 회원에 대한 하루평균섭취 칼로리 산식(세션에서 회원데이터 받음)
 			UserVO uv = (UserVO)sess.getAttribute("loginInfo");
 			String gVal = uv.getBirth().substring(6, 7);
@@ -39,8 +35,8 @@ public class MypageServiceImpl implements MypageService {
 				g = 22;
 			}
 			int cal = (int)(uv.getHeight()/100 * uv.getHeight()/100 * g * uv.getActivity());
-			Map<String, Object> map = new HashMap<String, Object>();
 			map.put("cal", cal);
+		} catch (Exception e) {}
 		
 		return map;
 	}

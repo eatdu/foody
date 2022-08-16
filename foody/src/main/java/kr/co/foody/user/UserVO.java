@@ -37,8 +37,7 @@ public class UserVO {
 		try {
 			this.weight = Double.valueOf(weight);
 		} catch (Exception e) {
-			
+			this.weight = 0;
 		}
-		this.weight = 0;
 	}
 }

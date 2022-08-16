@@ -64,7 +64,7 @@
 	        <tr>
 	            <th>몸무게</th>
 	            <td>
-	                <input type="text" id="weight" name="weight"> kg
+	                <input type="text" name="weight" id="weight"> kg
 	            </td>
 	        </tr>
 	        <tr>
@@ -72,9 +72,9 @@
 	            <td>
 	            
 	            <select name="activity" style="height:22px;">
-		        	<option value="1">앉아서 주로 생활하거나 활동량이 적은 경우,25</option>
-		        	<option value="2">규칙적인 생활로 보통의 활동량을 가진 경우,35</option>
-		        	<option value="3">육체노동 등 평소 신체 활동량이 많은 경우,45</option>
+		        	<option value="30">앉아서 주로 생활하거나 활동량이 적은 경우</option>
+		        	<option value="35">규칙적인 생활로 보통의 활동량을 가진 경우</option>
+		        	<option value="40">육체노동 등 평소 신체 활동량이 많은 경우</option>
 		        </select>
 	            </td>
 	        </tr>
@@ -90,8 +90,8 @@
 		<div>
 			<h5>알레르기</h5>
 			<input type="hidden" name="allergy">
-			<c:forEach var="allergy" items="${allergy}">
-				<label><input type="checkbox" name="allergy_no" value="${allergy.no}"/>${allergy.allergy}</label>
+			<c:forEach var="list" items="${allergy}">
+				<label><input type="checkbox" name="allergy_no" value="${list.no}"/>${list.allergy}</label>
 			</c:forEach>
 		</div>
 	</form>

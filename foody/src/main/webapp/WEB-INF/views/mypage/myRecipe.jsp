@@ -18,7 +18,7 @@
 		display:inline-block;
 	}
 </style>
-<title>Insert title here</title>
+<title>나의 레시피</title>
 </head>
 <body>
 <h2>나의 레시피</h2>

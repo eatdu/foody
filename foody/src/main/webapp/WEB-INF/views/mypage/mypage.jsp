@@ -54,7 +54,7 @@ $(function(){
 	});
 });
 </script>
-<title>Insert title here</title>
+<title>마이페이지</title>
 </head>
 <body>
 <%@ include file="../common/navBar.jsp" %>

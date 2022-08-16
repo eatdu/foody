@@ -121,4 +121,12 @@
 		insert into user(email, nik_name, name, birth, tel, pwd, intro, height, weight)
 		values (#{email}, #{nik_name}, #{name}, #{birth}, #{tel}, #{pwd}, #{intro}, #{height}, #{weight})
 	</insert>
+	
+	<!-- 랜덤 회원 알러지 인서트 -->
+	<insert id="insertAllergyUser" parameterType="map">
+		insert into prefer(user_no, prefer_food)
+		values (#{userNo}, #{preferFood})
+	</insert>
+	
+	
 </mapper>

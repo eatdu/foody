@@ -19,4 +19,5 @@ public interface RecipeMapper {
 	List<RecipeVO> selectR(Map cri);
 	
 	int insertRandomUser(Map user);
+	int insertAllergyUser(Map user);
 }

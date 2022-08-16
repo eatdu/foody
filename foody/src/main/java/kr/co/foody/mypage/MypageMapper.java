@@ -9,7 +9,6 @@ public interface MypageMapper {
 
 	List<MypageVO> myRecipe(MypageVO vo);
 	
-	int bookmark(int rno);
 	
 	
 	

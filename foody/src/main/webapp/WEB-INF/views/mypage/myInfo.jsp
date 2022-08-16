@@ -2,16 +2,8 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-</head>
-<body>
 <h2>회원 정보관리</h2>
-	<div class="myinfo">
+	<div class="loginInfo">
 		<div class="userInfo">
 			<div class="profile">
 				<table border="1">
@@ -66,7 +58,7 @@
 							${loginInfo.name}님의 하루권장섭취 칼로리
 						</td>
 						<td>
-							${myRecipe.cal}kcal
+							${myInfo.cal}kcal
 						</td>
 					</tr>
 					<tr>
@@ -91,5 +83,3 @@
 			</div>
 		</div>
 	</div>
-</body>
-</html>

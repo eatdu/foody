@@ -193,8 +193,8 @@ div#menu li.back .left {
 #container #content .con{position:relative; width:96%; min-width:960px; padding:20px 2%;}
 
 /* 로그인 정보*/
-div.info {display: inline-block; position: absolute; left: -250px;}
-div.userInfo {background-color: grey; width: 250px; height: 120px; position: relative; top: 35px; display: none;}
-div.userInfo span {color: white; font-size: 18px;}
-div.userName {float: left;}
-div.userImg {float: left; width:30px; height:30px;}}
+div.navInfo {display: inline-block; position: absolute; left: -250px;}
+div.navUserInfo {background-color: grey; width: 250px; height: 120px; position: relative; top: 35px; display: none;}
+div.navUserInfo span {color: white; font-size: 18px;}
+div.navUserName {float: left;}
+div.navUserImg {float: left; width:30px; height:30px;}

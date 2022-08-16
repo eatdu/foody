@@ -8,13 +8,13 @@
 		<div class="util">
 			<ul>
 				<li>
-				<div class='info'>
+				<div class='navInfo'>
 					<c:if test="${!empty loginInfo}">
-						<div class="userImg" id="userImg" style='background:url(/foody/resources/img/emoji-smile.svg)'></div>
-						<div class="userName">
+						<div class="navUserImg" id="navUserImg" style='background:url(/foody/resources/img/emoji-smile.svg)'></div>
+						<div class="navUserName">
 							<span>${loginInfo.nik_name}</span>
 						</div>
-						<div class="userInfo" id="userInfo">
+						<div class="navUserInfo" id="navUserInfo">
 							<img src='/foody/resources/img/emoji-smile.svg' style='width:50px; height:50px'><br>
 							<span>${loginInfo.nik_name} 님</span><br>
 							<span>email: ${loginInfo.email}</span><br>
@@ -23,11 +23,11 @@
 						</div>
 					</c:if>
 					<c:if test="${empty loginInfo}">
-						<div class="userImg" id="userImg" style='background:url(/foody/resources/img/emoji-smile.svg)'></div>
-						<div class="userName">
+						<div class="navUserImg" id="navUserImg" style='background:url(/foody/resources/img/emoji-smile.svg)'></div>
+						<div class="navUserName">
 							<span>Guest</span>
 						</div>
-						<div class="userInfo" id="userInfo">
+						<div class="navUserInfo" id="navUserInfo">
 							<img src='/foody/resources/img/emoji-smile.svg' style='width:50px; height:50px'><br>
 							<span>손님</span><br>
 							<a href="/foody/user/signUp.do"><button type="button">회원가입</button></a>
@@ -61,8 +61,8 @@
 </div>
 <script>
 	$(function(){
-		$("#userImg").on("click", function(){
-			dis($("#userInfo"));
+		$("#navUserImg").on("click", function(){
+			dis($("#navUserInfo"));
 		});
 	});
     function dis(obj){

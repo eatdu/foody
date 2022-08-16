@@ -25,7 +25,7 @@ public class RecipeMapperTests {
 	@Test
 	public void test() {
 		System.out.println(RecipeCategory.RcpCateArr[15-1]);
-
+	}
 	public String telMaker() {
 		int a = 1000 + (int)(Math.random() * 9000);
 		int b = 1000 + (int)(Math.random() * 9000);

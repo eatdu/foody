@@ -10,6 +10,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
+import kr.co.foody.constants.RecipeCategory;
 import lombok.extern.log4j.Log4j;
 
 @WebAppConfiguration
@@ -21,6 +22,9 @@ public class RecipeMapperTests {
 	@Autowired
 	RecipeMapper mapper;
 	
-	
+	@Test
+	public void test() {
+		System.out.println(RecipeCategory.RcpCateArr[15-1]);
+	}
 	
 }

@@ -31,14 +31,12 @@ function addIngre(){
 		$("#ingreArea").append(html);
 		ingreIdx++;
 		ingreNameArr = makeArr('ingreName');
-		console.log(ingreNameArr);
 	}
 }
 
 function removeIngre(idx){
 	$("#"+idx).remove();
 	ingreNameArr = makeArr('ingreName');
-	console.log(ingreNameArr);
 }
 
 

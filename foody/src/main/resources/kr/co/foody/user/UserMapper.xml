@@ -83,6 +83,19 @@
 		)
 	</insert>
 	
+	<!-- 유저의 알레르기 no 출력 -->
+	<select id="allergyNoList" parameterType="int" resultType="int">
+		SELECT user_allergy 
+		FROM u_allergy 
+		WHERE user_no=#{no}
+	</select>
+	
+	<!-- 유저의 알레르기 no 출력 -->
+	<select id="preferNoList" parameterType="int" resultType="int">
+		SELECT prefer_food 
+		FROM prefer 
+		WHERE user_no=#{no}
+	</select>
 	
 	
 

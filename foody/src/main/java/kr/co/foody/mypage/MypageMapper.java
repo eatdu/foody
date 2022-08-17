@@ -9,10 +9,9 @@ public interface MypageMapper {
 
 	List<MypageVO> myRecipe(MypageVO vo);
 	
+	List<MypageVO> allergyList(int no);
 	
-	
-	
-	MypageVO allergyList(MypageVO vo); 
+	List<MypageVO> preferList(int no);
 	
 }
 	

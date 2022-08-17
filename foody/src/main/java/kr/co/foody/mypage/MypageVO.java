@@ -23,8 +23,10 @@ public class MypageVO {
 	
 	//private RecipeVO recipe;
  	
- 	private int allergy;
- 	private int prefer;
+ 	private String allergy;
+ 	private int prefer_food;
  	
  	private int bookmark;
+
+
 }

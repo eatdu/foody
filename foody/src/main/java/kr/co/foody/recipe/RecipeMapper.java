@@ -17,4 +17,10 @@ public interface RecipeMapper {
 	List<RecipeVO> selectAll(Map cri);
 	List<RecipeVO> selectIngreOrKey(Map cri);
 	List<RecipeVO> selectR(Map cri);
+	List<RecipeVO> selectWithFilter(Map cri);
+	
+	List<Integer> selectIngreNo(String str);
+	
+	int insertRandomUser(Map user);
+	int insertAllergyUser(Map user);
 }

@@ -50,16 +50,17 @@ function search(data, targetId){
 		}
 	);
 }
-//메인화면 - 추천 레시피 검색
+//메인화면 - 추천 레시피 검색 - 알러지 필터, 선호도 필터
 function searchPrefer() {
 	var data = {};
 	data.jsp = 'common/swipeRcpList';
 
-	data.type = 'all'; //수정필요, 임시로 all 해놓음
+	data.type = 'prefer'; //수정필요, 임시로 all 해놓음
 	data.title = '추천 레시피';
+
 	search(data, 'preferRcpArea');	
 }
-//메인화면 - 인기 레시피 검색
+//메인화면 - 인기 레시피 검색 - 알러지 필터, 인기순 정렬
 function searchBest() {
 	var data = {};
 	data.jsp = 'common/swipeRcpList';
@@ -153,7 +154,7 @@ function searchBtn(pageNo){
 		search(data, 'rcpArea2');
 	} else if (!flagI && flagR && !flagK) {
 		//R
-		data.type = 'onlyR';
+		data.type = 'common';
 		data.title = 'R';
 		search(data, 'rcpArea1');
 	} else if (flagI && !flagR && !flagK) {
@@ -168,7 +169,7 @@ function searchBtn(pageNo){
 		search(data, 'rcpArea1');
 	} else if (!flagI && !flagR &&! flagK) {
 		//selectAll
-		data.type = 'all';
+		data.type = 'common';
 		data.title = 'all';
 		search(data, 'rcpArea1');
 	}

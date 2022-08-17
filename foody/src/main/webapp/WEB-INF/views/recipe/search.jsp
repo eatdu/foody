@@ -31,14 +31,12 @@ function addIngre(){
 		$("#ingreArea").append(html);
 		ingreIdx++;
 		ingreNameArr = makeArr('ingreName');
-		console.log(ingreNameArr);
 	}
 }
 
 function removeIngre(idx){
 	$("#"+idx).remove();
 	ingreNameArr = makeArr('ingreName');
-	console.log(ingreNameArr);
 }
 
 
@@ -101,7 +99,7 @@ function checkName() {
 </head>
 <body>
  
-<!-- include file="../common/navBar.jsp" -->
+<%@ include file="../common/navBar.jsp"  %>
 
 <form method="post" action="">
 	<h1 class="tc">검색조건</h1>

@@ -29,7 +29,6 @@
 		
 	</select>
 	
-	<!-- 검색조건(cri)로 select하는 sql, 검색조건 : (레시피 분류 and 재료 분류) or 재료 검색어(중첩가능, 겹치는 갯수 순) -->
 	<!-- 조건없이 전체 조회 -->
 	<select id="selectAll" resultType="kr.co.foody.recipe.RecipeVO">
 		SELECT a.*
@@ -43,6 +42,73 @@
 		 -->
 	</select>
 	
+	<!-- 재료 검색어로 ingre_no 리스트 가져오기 -->
+	<select id='selectIngreNo' parameterType="string" resultType="int">
+		SELECT no FROM ingre 
+		WHERE name REGEXP ${str}
+			OR detail REGEXP ${str}
+	</select>
+	
+	<!-- 0. 재료 단어, 재료 분류, 음식 분류, 알러지 필터 모두 적용 -->
+	<select id='selectWithFilter' parameterType="map" resultType="kr.co.foody.recipe.RecipeVO">
+		SELECT recipe.*
+		FROM recipe, (
+			SELECT a.rcpno
+			<if test='allergyArr != null'>
+				, sum(algF) algCnt
+			</if>
+			<if test='keywordArr != null'>
+	        	, sum(keyF) keyCnt
+	        </if>
+	        <if test='ingreCateArr != null'>
+	        	, sum(icateF) icateCnt
+	        </if>
+			FROM (
+				SELECT map.recipe_no rcpno
+				<if test='allergyArr != null'>
+	 				, (ingre.allergy_no IN (
+	 			<foreach collection="allergyArr" item="no" separator=",">
+	 				#{no}
+	 			</foreach>
+	 				)) algF
+	 			</if>
+	 			<if test='keywordArr != null'>
+	 				, (ingre.no IN (
+	 			<foreach collection="keywordArr" item="no" separator=",">
+	 				#{no}
+	 			</foreach>
+	 				)) keyF
+	 			</if>
+	 			<if test='ingreCateArr != null'>
+	 				, (ingre.large_cate IN (
+	 			<foreach collection="ingreCateArr" item="no" separator=",">
+	 				#{no}
+	 			</foreach>
+	 				)) icateF
+	 			</if>
+				FROM ingre_recipe_map map, ingre
+				WHERE ingre.no = map.ingredient_no
+				) a
+			GROUP BY rcpno
+			) b
+		WHERE b.rcpno = recipe.no
+		<if test='rcpCateArr != null'>
+			AND recipe.type IN (
+		<foreach collection="rcpCateArr" item="no" separator=",">
+			#{no}
+		</foreach>
+			)
+		</if>
+	    <if test='allergyArr != null'>
+		    AND algCnt = 0
+	    </if>
+	    <if test='keywordArr != null'>
+		    AND keyCnt > 0
+	    </if>
+	    <if test='ingreCateArr != null'>
+		    AND icateCnt > 0
+		</if>
+	</select>
 	
 	<!-- 1. 재료분류, 키워드중 한가지 조건이 걸린 경우 + (재료분류 or 재료키워드), 요리분류 -->
 	<select id='selectIngreOrKey' parameterType="map" resultType="kr.co.foody.recipe.RecipeVO">
@@ -51,11 +117,19 @@
 		FROM
 			recipe, (
 			SELECT
-				map.recipe_no no, count(*) cnt
+				map.recipe_no no, count(*) cnt, sum(algchk) algCnt
 			FROM
 				ingre_recipe_map map, (
 					SELECT
-						name, no ingre_no, allergy_no, large_cate
+						name, no ingre_no, 
+						<if test='allergyArr != null'>
+			 				(allergy_no IN (
+			 			<foreach collection="allergyArr" item="no" separator=",">
+			 				#{no}
+			 			</foreach>
+			 				)) algchk,
+			 			</if>
+						large_cate
 					FROM
 						ingre
 		 			<where>
@@ -69,6 +143,13 @@
 			 			<if test='ingreCateArr != null'>
 			 				AND large_cate IN (
 			 			<foreach collection="ingreCateArr" item="no" separator=",">
+			 				#{no}
+			 			</foreach>
+			 				)
+			 			</if>
+			 			<if test='allergyArr != null'>
+			 				OR allergy_no IN (
+			 			<foreach collection="allergyArr" item="no" separator=",">
 			 				#{no}
 			 			</foreach>
 			 				)
@@ -88,6 +169,9 @@
 		</foreach>
 			)
 		</if>
+		<if test='allergyArr != null'>
+			AND li.algCnt = 0
+		</if>
 		ORDER BY cnt DESC
 	</select>
 	
@@ -100,6 +184,9 @@
 			</foreach>
 				)
 	</select> 
+	
+	<!--  3. 추천 레시피 - 알러지 필터, 선호 음식 분류 -->
+	
 	
 	
 	<!-- 재료 분류로 재료명 리스트 조회하는 sql -->
@@ -115,5 +202,18 @@
 		WHERE name LIKE '%${keyword}%'
 			OR detail LIKE '%${keyword}%'
 	</select>
+	
+	<!-- 랜덤 회원정보 인서트 -->
+	<insert id="insertRandomUser" parameterType="map">
+		insert into user(email, nik_name, name, birth, tel, pwd, intro, height, weight)
+		values (#{email}, #{nik_name}, #{name}, #{birth}, #{tel}, #{pwd}, #{intro}, #{height}, #{weight})
+	</insert>
+	
+	<!-- 랜덤 회원 알러지 인서트 -->
+	<insert id="insertAllergyUser" parameterType="map">
+		insert into prefer(user_no, prefer_food)
+		values (#{userNo}, #{preferFood})
+	</insert>
+	
 	
 </mapper>

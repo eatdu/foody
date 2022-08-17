@@ -46,15 +46,14 @@ $(function(){
 			type: "get",
 			dataType: "html",
 			success: function(res){
-				$("#contents").empty(res);
-				$("#contents").append(res);
+				$("#contents").html(res);
 			}
 		
 		})
 	});
 });
 </script>
-<title>Insert title here</title>
+<title>마이페이지</title>
 </head>
 <body>
 <%@ include file="../common/navBar.jsp" %>

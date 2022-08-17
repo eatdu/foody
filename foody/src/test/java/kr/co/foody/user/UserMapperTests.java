@@ -63,6 +63,13 @@ public class UserMapperTests {
 		
 	}
 	
+	@Test
+	public void allergyNo() {
+		log.info(mapper.allergyNoList(124));
+		log.info(mapper.preferNoList(124));
+		
+	}
+	
 	
 	
 	

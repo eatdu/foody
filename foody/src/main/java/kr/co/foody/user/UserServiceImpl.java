@@ -1,13 +1,14 @@
 package kr.co.foody.user;
 
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import kr.co.foody.mypage.MypageMapper;
+import kr.co.foody.mypage.MypageVO;
 import util.SendMail;
 
 @Service
@@ -15,6 +16,9 @@ public class UserServiceImpl implements UserService {
 
 	@Autowired
 	UserMapper mapper;
+	
+	@Autowired
+	MypageMapper Mymapper;
 	
 	@Override
 	public int insert(UserVO vo) { // 회원가입
@@ -48,6 +52,13 @@ public class UserServiceImpl implements UserService {
 		if(mapper.loginCheck(vo) != null) {
 			r = true;
 			sess.setAttribute("loginInfo", loginInfo);
+			
+			// 로그인 성공시 회원에 대한 알레르기 정보 세션에 저장
+			UserVO uv = (UserVO)sess.getAttribute("loginInfo");
+			List<Integer> allergyNo = mapper.allergyNoList(uv.getNo());
+			List<Integer> preferNo = mapper.preferNoList(uv.getNo());
+			sess.setAttribute("allergyNo", allergyNo);
+			sess.setAttribute("preferNo", preferNo);
 		}
 		return r;
 	}

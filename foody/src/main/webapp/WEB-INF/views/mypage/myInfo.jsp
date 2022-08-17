@@ -27,11 +27,11 @@
 							${loginInfo.name}
 						</td>
 						<td>
-							알레르기
+							선호음식
 						</td>
 						<td>
-							<c:forEach var="allergy" items="${myInfo.allergyList}" varStatus="status">
-								${allergy}
+							<c:forEach var="prefer" items="${myInfo.preferList}" varStatus="status">
+								${prefer}<c:if test="${status.last eq false}">,</c:if>
 							</c:forEach>
 						</td>
 					</tr>
@@ -43,10 +43,12 @@
 							${loginInfo.email}
 						</td>
 						<td>
-							선호음식
+							알레르기
 						</td>
 						<td>
-							
+							<c:forEach var="allergyList" items="${myInfo.allergyList}" varStatus="status">
+								${allergyList.allergy}<c:if test="${status.last eq false}">,</c:if>
+							</c:forEach>
 						</td>
 					</tr>
 					<tr>

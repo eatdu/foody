@@ -85,6 +85,10 @@ $(function(){
 </head>
 <body>
 <%@ include file="../common/navBar.jsp" %>
+<div>
+preferNo: ${preferNo}<br>
+allergy: ${allergyNo}
+</div>
 <h1 class='title tc'>Foody</h1>
 <select id="type" name="type">
 <option value="0" selected>==검색조건==</option>

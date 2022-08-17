@@ -87,7 +87,8 @@ $(function(){
 <%@ include file="../common/navBar.jsp" %>
 <div>
 preferNo: ${preferNo}<br>
-allergy: ${allergyNo}
+allergy: ${allergyNo}<br>
+하루권장섭취 칼로리 : ${cal}kcal
 </div>
 <h1 class='title tc'>Foody</h1>
 <select id="type" name="type">

@@ -55,10 +55,21 @@ public class UserServiceImpl implements UserService {
 			
 			// 로그인 성공시 회원에 대한 알레르기 정보 세션에 저장
 			UserVO uv = (UserVO)sess.getAttribute("loginInfo");
+			
+			String gVal = uv.getBirth().substring(6, 7);
+			// 기본값으로 21 / 비교한 값(성별)이 1,3 이면 남성(22) 
+			int g = 21;
+			if (gVal.equals("1") || gVal.equals("3")) {
+				g = 22;
+			}
+			// 하루평균권장 섭취량 공식 : 키/100 * 키/100 * g(남성=22/여성=21) * 활동지수
+			int cal = (int)(uv.getHeight()/100 * uv.getHeight()/100 * g * uv.getActivity());
+			
 			List<Integer> allergyNo = mapper.allergyNoList(uv.getNo());
 			List<Integer> preferNo = mapper.preferNoList(uv.getNo());
 			sess.setAttribute("allergyNo", allergyNo);
 			sess.setAttribute("preferNo", preferNo);
+			sess.setAttribute("cal", cal);
 		}
 		return r;
 	}

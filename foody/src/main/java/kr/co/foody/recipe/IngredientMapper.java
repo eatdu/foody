@@ -14,4 +14,7 @@ public interface IngredientMapper {
 	List<IngredientVO> detail_cate(String detail_cate);
 	List<IngredientVO>nameSearch();
 	
+	IngredientVO ingreInfo(int no);
+	IngredientVO ingreInfoWithName(int no);
+	
 }

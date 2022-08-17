@@ -21,19 +21,41 @@
         <c:if test="${!empty comment.list}">
 		<c:forEach items="${comment.list}" var="list" varStatus="status">
             <tr>
-                <!-- 총개수-인덱스-(현재페이지번호-1)*페이지당개수 -->
-                <td>${list.no}</td>
-                <td class="txt_l">
-                	${list.content}</td>
-                <td class="writer">
-                    ${list.user_name}
-                </td>
-                <td class="date">
-                	<fmt:formatDate pattern="yyyy-MM-dd HH:mm" value="${list.regdate }" />
-                </td>
+               	<td>${list.no}</td>
+               	<td class="txt_l" style="text-align:left">
+               		${list.content}
+               		<c:if test="${loginInfo.no == list.user_no}">
+	               		<a href="javascript:commentDel(${list.no});">[삭제]</a></c:if>
+	               		<a href="javascript:addBox(${list.no});">[답글달기]</a>
+               		</td>
+               	<td class="writer">
+                   ${list.user_name}
+               	</td>
+               	<td class="date">
+               	<fmt:formatDate pattern="yyyy-MM-dd HH:mm" value="${list.regdate}" />
+               	</td>
             </tr>
+            <form id="frm${list.no}" method="post" enctype="multipart/form-data">
+            		<input type="hidden" name="gno" value="${list.gno}">
+                	<input type="hidden" name="ono" value="${list.ono}">
+                	<input type="hidden" name="depth" value="${list.depth}">
+            <tr class="add_reCmt${list.no}" style="display:none; width:100%;">
+                <td colspan="3">
+                    <textarea name="content" id="content" placeholder="댓글을 입력해 주세요."
+                    onfocus="this.placeholder=''" onblur="this.placeholder='댓글을 입력해 주세요.'"
+                    style="height:50px; width:100%;"></textarea>
+                </td>
+                <td>
+                    <div class="btnSet" style="text-align:left;">
+						<input type="file" name="uploadFile" id="uploadFile">
+                    		<a class="btn" href="javascript:insert_reCmt(${list.no});">저장 </a>
+                    </div>
+                </td>
+             </tr>
+             </form>
 		</c:forEach>
         </c:if>
+        
         </tbody>
  	</table>
  	

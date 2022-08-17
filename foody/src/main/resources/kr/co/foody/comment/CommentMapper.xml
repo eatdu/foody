@@ -11,6 +11,26 @@
 	)
 </insert>
 
+<!-- 대댓글 등록 -->
+<insert id="insert_reCmt" parameterType="kr.co.foody.comment.CommentVO">
+	insert into comment (
+		user_no, board_no, regdate, tablename, photo, content, gno, ono, depth
+	) values (
+		#{user_no}, #{board_no}, now(), #{tablename}, #{photo}, #{content}, #{gno}, #{ono}, #{depth}
+	)
+	<selectKey keyProperty="no" resultType="int" order="AFTER">
+		select last_insert_id()
+	</selectKey>
+</insert>
+
+<update id="gnoUpdate" parameterType="int">
+	update comment set gno=#{gno} where no=#{gno}
+</update>
+
+<update id="onoUpdate" parameterType="kr.co.foody.comment.CommentVO">
+	update comment set ono=ono+1 where gno={gno} and ono>#{ono}
+</update>
+
 <!-- 댓글 수 조회 -->
 <select id="count" parameterType="kr.co.foody.comment.CommentVO" resultType="int">
 	select count(*) from comment

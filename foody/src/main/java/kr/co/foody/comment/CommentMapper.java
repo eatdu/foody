@@ -12,5 +12,9 @@ public interface CommentMapper {
 	List<CommentVO> list(CommentVO vo);
 	int update(CommentVO vo);
 	int delete(int no);
+	
+	int insert_reCmt(CommentVO vo);
+	int gnoUpdate(int no);
+	int onoUpdate(CommentVO vo);
 
 }

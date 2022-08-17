@@ -15,9 +15,20 @@ public class CommentServiceImpl implements CommentService {
 	@Autowired
 	CommentMapper mapper;
 
-	@Override
+	@Override // 댓글 등록
 	public int insert(CommentVO vo) {
-		return mapper.insert(vo);
+		int r = mapper.insert(vo);
+		if (r == 1) mapper.gnoUpdate(vo.getNo()); // 등록되면 gno를 no로 업뎃
+		return r;
+	}
+	
+	@Override // 대댓글 등록
+	public int insert_reCmt(CommentVO vo) {
+		mapper.onoUpdate(vo);
+		vo.setOno(vo.getOno()+1);
+		vo.setDepth(vo.getDepth()+1);
+		int r = mapper.insert_reCmt(vo);
+		return r;
 	}
 
 	@Override
@@ -60,5 +71,5 @@ public class CommentServiceImpl implements CommentService {
 		
 		return map;
 	}
-	
+
 }

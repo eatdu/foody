@@ -48,8 +48,8 @@
 				<li><a href="" class="parent"><span>게시판</span></a>
 					<div class="standard_left">
 					<ul>
-						<li><a href=""><span>자유</span></a></li>
-						<li><a href=""><span>Q&A</span></a></li>
+						<li><a href="/foody/board/index.do"><span>자유</span></a></li>
+						<li><a href="/foody/board/qna.do"><span>Q&A</span></a></li>
 					</ul>
 					</div>
 				</li>

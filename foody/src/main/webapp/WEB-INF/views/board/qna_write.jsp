@@ -33,6 +33,16 @@
                             </td>
                         </tr>
                         <tr>
+                            <th>질문유형</th>
+                            <td>
+	                            <select id="qSelect" name="qType" class="qSelect" title="질문유형 선택">
+	                                <option value="1">이용방법</option>
+	                                <option value="2">회원정보</option>
+	                                <option value="3">기타</option>
+	                            </select>
+                            </td>
+                        </tr>
+                        <tr>
                             <th>내용</th>
                             <td>
                                 <textarea name="content" id="content"></textarea>
@@ -48,7 +58,7 @@
                     </table>
                     <div class="btnSet"  style="text-align:right;">
                         <a class="btn" href="javascript:goSave();">저장 </a>
-                        <a class="btn" href="index.do">취소 </a>
+                        <a class="btn" href="qna.do">취소 </a>
                     </div>
                     </form>
                 </div>

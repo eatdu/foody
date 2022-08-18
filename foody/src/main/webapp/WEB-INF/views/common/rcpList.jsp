@@ -29,5 +29,21 @@
 	</c:forEach>
 	</div>
 </div>
-	
-
+<div id='bbs'>
+<div class='page'>
+	<c:forEach items="${result.paging}" var='pageNo' varStatus='idx'>
+	<c:if test="${result.prev eq true && idx.first}">
+		<a href="javascript:searchBtn(${pageNo - 1});">앞으로</a>
+	</c:if>
+	<c:if test="${pageNo eq result.curNo}">
+		<strong href="javascript:searchBtn(${pageNo});">${pageNo}</strong>
+	</c:if>
+	<c:if test="${pageNo != result.curNo}">
+		<a href="javascript:searchBtn(${pageNo});">${pageNo}</a>
+	</c:if>
+	<c:if test="${result.next eq true && idx.last}">
+		<a href="javascript:searchBtn(${pageNo + 1});">다음으로</a>
+	</c:if>
+	</c:forEach>
+</div>
+</div>

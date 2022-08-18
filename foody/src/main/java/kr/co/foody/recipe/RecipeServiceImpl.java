@@ -26,7 +26,7 @@ public class RecipeServiceImpl implements RecipeService {
 	public List<String> large_cate(int i) {
 		return mapper2.large_cate(i);
 	}
-	
+	//재료명 리스트 - 재료 분류 번호
 	@Override
 	public List<Map> makeIngreNameList(int no) {
 		List<String> result = mapper.selectIngreNameList(no);
@@ -39,7 +39,7 @@ public class RecipeServiceImpl implements RecipeService {
 		}
 		return list;
 	}
-	
+	//재료명 리스트 - 검색어
 	@Override
 	public List<Map> makeIngreNameList(String keyword) {
 		List<String> result = mapper.selectIngreNameList2(keyword);
@@ -52,14 +52,26 @@ public class RecipeServiceImpl implements RecipeService {
 		}
 		return list;
 	}
-	
+	//재료 상세 리스트
+	@Override
+	public List<Map> makeIngreDetailList(String keyword) {
+		List<IngredientVO> result = mapper.selectIngreDetail(keyword);
+		List<Map> list = new ArrayList<Map>();
+		for (IngredientVO vo : result) {
+			Map map = new HashMap();
+			map.put("text", vo.getDetail());
+			map.put("value", vo.getNo());
+			list.add(map);
+		}
+		return list;
+	}
 
 	@Override
 	public Map search(Map cri) {
 		if (cri.get("keywordArr") != null) {
 			String str = "'" + (String)((List)cri.get("keywordArr")).get(0);
 			for (int i=1; i<((List)cri.get("keywordArr")).size(); i++) {
-				str += (String)((List)cri.get("keywordArr")).get(i);
+				str += '|' + (String)((List)cri.get("keywordArr")).get(i);
 			}
 			str += "'";
 			cri.put("keywordArr", mapper.selectIngreNo(str));
@@ -68,17 +80,54 @@ public class RecipeServiceImpl implements RecipeService {
 		result.put("title", (String)cri.get("title"));
 
 		if(cri.get("type").equals("common")) {
+			//검색조건 하에서 총 게시물 수
+			int count = mapper.countWithFilter(cri);
+
+			//받아올것 : 현재 페이지 - pageNo / 페이지당 12개 / 블럭당 5개
+			int pageNo = (int)cri.get("pageNo");
+			
+			//sql로 넘길것 : rno 검색조건
+			int startRno = (pageNo - 1) * 12 + 1;
+			int endRno = pageNo * 12;
+			cri.put("startRno", startRno);
+			cri.put("endRno", endRno);
+
+			//(첫 페이지, 끝 페이지) - 배열로 넘김
+			int startNo = (pageNo - 1) / 5 * 5 + 1;
+			int endNo = startNo + 4;
+			//이전 여부
+			if (startNo == 1) result.put("prev", false);
+			else result.put("prev", true);
+			//다음 여부
+			if (endNo > (count - 1) / 12 + 1) {
+				result.put("next", false);
+				endNo = (count - 1) / 12 + 1;
+			}
+			else result.put("next", true);
+			
+			List<Integer> paging = new ArrayList();
+			for(int i = startNo; i <= endNo; i++) {
+				paging.add(i);
+			}
+			result.put("paging", paging);
+			//현재 페이지
+			result.put("curNo", pageNo);
 			result.put("list", mapper.selectWithFilter(cri));
 		} else if (cri.get("type").equals("best")) {
-			cri.put("startNo", 1);
-			cri.put("endNo", 20);
-			result.put("list1", mapper.selectAll(cri));
-			result.put("list1Name", "인기 레시피");
+			//인기레시피 - 알러지 필터, 인기순 정렬
+			cri.put("startRno", 1);
+			cri.put("endRno", 20);
+			result.put("list", mapper.selectWithFilter(cri));
 		} else if (cri.get("type").equals("prefer")) {
-			cri.put("rcpCateArr", cri.get("preferArr"));
+			//추천레시피 - 알러지 필터, 개인 선호도 필터
+			//cri.put("rcpCateArr", cri.get("preferArr"));
+			cri.put("startRno", 1);
+			cri.put("endRno", 20);
 			result.put("list", mapper.selectWithFilter(cri));
 		}
 		return result;
 	}
+
+
 
 }

@@ -21,4 +21,8 @@ public class IngredientVO {
 	//레시피-재료 매핑하여 가져올 때 레시피에 필요한 수량 정보
 	private double weight;
 	private String quantity;
+	//알러지 no로 조회하여 가져온 알러지 명
+	private String allergyName;
+	//분류 no로 조회하여 가져온 분류 명
+	private String cateName;
 }

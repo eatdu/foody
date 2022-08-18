@@ -12,5 +12,6 @@ public interface RecipeService {
 	
 	List<Map> makeIngreNameList(int no);
 	List<Map> makeIngreNameList(String keyword);
+	List<Map> makeIngreDetailList(String keyword);
 	
 }

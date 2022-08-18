@@ -15,5 +15,18 @@
 	<select id="nameSearch" resultType ="kr.co.foody.recipe.IngredientVO">
 		select * from ingre
 	</select>
+	<!-- 알러지명 없이 조회 -->	
+	<select id="ingreInfo" parameterType="int" resultType ="kr.co.foody.recipe.IngredientVO">
+		select * from ingre where no = #{no}
+	</select>
+	<!-- 알러지명 같이 조회 -->
+	<select id="ingreInfoWithName" parameterType="int" resultType ="kr.co.foody.recipe.IngredientVO">
+		SELECT ingre.*, allergy.allergy allergyName
+		FROM ingre, allergy
+		WHERE ingre.allergy_no = allergy.no 
+			AND ingre.no = #{no}
+	</select>
+	
+	
 	
 </mapper>

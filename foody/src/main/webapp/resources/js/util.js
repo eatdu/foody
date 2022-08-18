@@ -39,6 +39,20 @@ function sendAjax(reqUrl, data, callback){
 		}
 	});
 }
+
+//ajax로 재료 정보 수정
+function updateIngre(){
+	var data = {};
+
+	sendAjax(
+		"/admin/ingreUpdate.do",
+		data,
+		function(result){
+			$("#" + targetId).empty().append(result);
+		}
+	);
+}
+
 //ajax로 검색하는 함수
 function search(data, targetId){
 	
@@ -57,7 +71,6 @@ function searchPrefer() {
 
 	data.type = 'prefer'; //수정필요, 임시로 all 해놓음
 	data.title = '추천 레시피';
-
 	search(data, 'preferRcpArea');	
 }
 //메인화면 - 인기 레시피 검색 - 알러지 필터, 인기순 정렬
@@ -65,7 +78,7 @@ function searchBest() {
 	var data = {};
 	data.jsp = 'common/swipeRcpList';
 
-	data.type = 'all'; //수정필요, 임시로 all 해놓음
+	data.type = 'best'; //수정필요, 임시로 all 해놓음
 	data.title = '인기 레시피';
 	search(data, 'bestRcpArea');	
 }

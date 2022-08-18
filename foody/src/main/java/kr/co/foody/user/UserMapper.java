@@ -23,7 +23,13 @@ public interface UserMapper {
 	int userAllergy(UserVO vo);
 	int userPrefer(UserVO vo);
 	
+	
+	// 회원의 알레르기, 선호음식 no 조회
 	List<Integer> allergyNoList(int no);
 	List<Integer> preferNoList(int no);
+	
+	// 회원의 알레르기, 선호음식 리스트 조회
+	List<MypageVO> allergyList(int no);
+	List<MypageVO> preferList(int no);
 	
 }

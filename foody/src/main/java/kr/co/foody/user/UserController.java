@@ -55,9 +55,14 @@ public class UserController {
 		return "user/findPwd";
 	}
 	
-	@GetMapping("/user/kcal.do") // 칼로리 계산기 모달창
-	public String kcal() {
-		return "user/kcal";
+	@GetMapping("/user/modify.do") // 회원정보수정 페이지
+	public String modify(Model model, HttpSession sess) {
+		List<String> allergy = service.getAllergy();
+		String[] rcpCateArr = RecipeCategory.RcpCateArr;
+		model.addAttribute("modify", service.modify(sess));
+		model.addAttribute("rcpCateArr", rcpCateArr);
+		model.addAttribute("allergy",allergy);
+		return "user/modify";
 	}
 	
 	@PostMapping("/user/login.do") // 로그인 이메일 비밀번호 일치 확인
@@ -140,14 +145,14 @@ public class UserController {
 		}
 	}
 	
-	@PostMapping("/user/findPwd.do")
-	public String findPwd(Model model, UserVO param) {
-		UserVO vo = service.findPwd(param);
-		if (vo != null) {
-			model.addAttribute("result" ,vo.getPwd());
-		}
-		return "common/return";
-	}
+//	@PostMapping("/user/findPwd.do")
+//	public String findPwd(Model model, UserVO param) {
+//		UserVO vo = service.findPwd(param);
+//		if (vo != null) {
+//			model.addAttribute("result" ,vo.getPwd());
+//		}
+//		return "common/return";
+//	}
 	
 	@PostMapping("/user/signUpNext.do")
 	public String signUpNext(Model model, UserVO vo

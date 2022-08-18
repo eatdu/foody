@@ -1,24 +1,23 @@
 package kr.co.foody.user;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import kr.co.foody.mypage.MypageMapper;
+import kr.co.foody.constants.RecipeCategory;
 import kr.co.foody.mypage.MypageVO;
-import util.SendMail;
 
 @Service
 public class UserServiceImpl implements UserService {
 
 	@Autowired
 	UserMapper mapper;
-	
-	@Autowired
-	MypageMapper Mymapper;
 	
 	@Override
 	public int insert(UserVO vo) { // 회원가입
@@ -65,7 +64,9 @@ public class UserServiceImpl implements UserService {
 			// 하루평균권장 섭취량 공식 : 키/100 * 키/100 * g(남성=22/여성=21) * 활동지수
 			int cal = (int)(uv.getHeight()/100 * uv.getHeight()/100 * g * uv.getActivity());
 			
+			// 알러지no 세션에 저장
 			List<Integer> allergyNo = mapper.allergyNoList(uv.getNo());
+			// 선호음식no 세션에 저장
 			List<Integer> preferNo = mapper.preferNoList(uv.getNo());
 			sess.setAttribute("allergyNo", allergyNo);
 			sess.setAttribute("preferNo", preferNo);
@@ -79,31 +80,31 @@ public class UserServiceImpl implements UserService {
 		return mapper.findEmail(vo);
 	}
 
-	@Override
-	public UserVO findPwd(UserVO vo) { // 비밀번호 재설정(해당이메일로 임시비밀번호 전송 및 DB저장)
-		// update
-		UserVO mv = mapper.findEmail(vo);
-		if(mv != null) {
-			// 임시비밀번호 생성
-			// 영문두자리, 숫자두자리
-			String temp = "";
-			for (int i=0; i<2; i++) {
-				temp += (char)(Math.random()*26+65);
-			}
-			for (int i=0; i<2; i++) {
-				temp += (int)(Math.random()*9);
-			}
-			// 임시비밀번호 update
-			vo.setPwd(temp); // 임시비밀번호를 DB에 저장
-			mapper.updateTempPwd(vo);
-			
-			// email발송
-			SendMail.sendMail("2do2023@naver.com", vo.getEmail(), "[더좋은]임시비밀번호", "임시비밀번호:"+temp);
-			return mv;
-		} else {
-			return null;
-		}
-	}
+//	@Override
+//	public UserVO findPwd(UserVO vo) { // 비밀번호 재설정(해당이메일로 임시비밀번호 전송 및 DB저장)
+//		// update
+//		UserVO mv = mapper.findEmail(vo);
+//		if(mv != null) {
+//			// 임시비밀번호 생성
+//			// 영문두자리, 숫자두자리
+//			String temp = "";
+//			for (int i=0; i<2; i++) {
+//				temp += (char)(Math.random()*26+65);
+//			}
+//			for (int i=0; i<2; i++) {
+//				temp += (int)(Math.random()*9);
+//			}
+//			// 임시비밀번호 update
+//			vo.setPwd(temp); // 임시비밀번호를 DB에 저장
+//			mapper.updateTempPwd(vo);
+//			
+//			// email발송
+//			SendMail.sendMail("2do2023@naver.com", vo.getEmail(), "[더좋은]임시비밀번호", "임시비밀번호:"+temp);
+//			return mv;
+//		} else {
+//			return null;
+//		}
+//	}
 
 	@Override
 	public int prefer(UserVO vo) { 
@@ -128,6 +129,30 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public List<String> getAllergy() {
 		return mapper.getAllergy();
+	}
+
+	@Override
+	public Map<String, Object> modify(HttpSession sess) {
+		UserVO uv = (UserVO)sess.getAttribute("loginInfo");
+		
+		// 회원가입시 유저가 선택한 알레르기에 대한 값들을 List에 담는다
+		List<MypageVO> allergy = mapper.allergyList(uv.getNo());
+		
+		// 회원가입시 유저가 선택한 선호음식에 대한 값들을 List에 preferNo를 담는다
+		List<MypageVO> preferNo = mapper.preferList(uv.getNo());
+		List<String> prefer = new ArrayList<String>();
+		// for문을 preferNo만큼 실행한다.
+		for(int i=0; i<preferNo.size(); i++) {
+			// 선택된 해당값들만 RcpCateArr배열에 index(-1)로 담는다
+			prefer.add(RecipeCategory.RcpCateArr[(preferNo.get(i).getPrefer_food()) - 1]);		
+		}
+		
+		// 출력된 값들을 map에 담아서 리턴해준다
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("allergyList", allergy); 
+		map.put("preferList", prefer);
+		
+		return map;
 	}
 
 

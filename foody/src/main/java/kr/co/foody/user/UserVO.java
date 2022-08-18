@@ -1,5 +1,8 @@
 package kr.co.foody.user;
 
+import java.util.List;
+
+import kr.co.foody.mypage.MypageVO;
 import lombok.Data;
 
 @Data
@@ -13,6 +16,7 @@ public class UserVO {
 	private String email;
 	private String tel;
 	private String pwd;
+	private String zipcode;
 	private String addr1;
 	private String addr2;
 	private double height;
@@ -25,6 +29,11 @@ public class UserVO {
 	private int allergy_no;
 	private int prefer_no;
 	private String allergy;
+	
+	private List<MypageVO> mypageList;
+	
+	
+	
 	
 	public void setHeight(String height) {
 		try {

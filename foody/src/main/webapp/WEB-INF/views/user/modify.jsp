@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -9,7 +10,7 @@
 <meta name="format-detection" content="telephone=no, address=no, email=no">
 <meta name="keywords" content="">
 <meta name="description" content="">
-<title>회원가입</title>
+<title>회원수정</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
@@ -231,43 +232,80 @@
    		})
    	})
 </script>
-<%@ include file="../common/addrAPI.jsp" %>
+<script>
+    function zipcode() {
+        new daum.Postcode({
+            oncomplete: function(data) {
+                var addr = ''; // 주소 변수
+                var extraAddr = ''; // 참고항목 변수
+
+                //사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
+                if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
+                    addr = data.roadAddress;
+                } else { // 사용자가 지번 주소를 선택했을 경우(J)
+                    addr = data.jibunAddress;
+                }
+
+                // 사용자가 선택한 주소가 도로명 타입일때 참고항목을 조합한다.
+                if(data.userSelectedType === 'R'){
+                    // 법정동명이 있을 경우 추가한다. (법정리는 제외)
+                    // 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
+                    if(data.bname !== '' && /[동|로|가]$/g.test(data.bname)){
+                        extraAddr += data.bname;
+                    }
+                    // 건물명이 있고, 공동주택일 경우 추가한다.
+                    if(data.buildingName !== '' && data.apartment === 'Y'){
+                        extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName);
+                    }
+                    // 표시할 참고항목이 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
+                    if(extraAddr !== ''){
+                        extraAddr = '(' + extraAddr + ')';
+                    }
+                    // 조합된 참고항목을 해당 필드에 넣는다.
+                	addr += extraAddr;
+                }
+
+                // 우편번호와 주소 정보를 해당 필드에 넣는다.
+                document.getElementById('zipcode').value = data.zonecode;
+                document.getElementById("addr1").value = addr;
+                // 커서를 상세주소 필드로 이동한다.
+                document.getElementById("addr2").focus();
+            }
+        }).open();
+    }
+</script>
 </head>
 <body>
 	<div class="sub">
 	    <div class="size">
-	        <h3 class="sub_title">회원가입</h3>
-	        <form name="frm" id="frm" action="signUp.do" method="post">
-	        <input type="hidden" name="route" id="route" value="login">
-	        <table class="board_write">
-	            <caption>회원가입</caption>
-	            <colgroup>
-	                <col width="20%" />
-	                <col width="*" />
-	            </colgroup>
+	        <h3 class="sub_title">회원수정</h3>
+	        <form name="frm" id="frm" action="modify.do" method="post">
+	        <input type="hidden" name="selfi">
+	        <div class="jb-image"><input type="file" id="chooseFile" name="chooseFile" class="img-input" style="diplay:none;"></div>
+	        <div class="img"><img src="/foody/upload/${loginInfo.selfi}" style="width:200px; height:200px; border-radius:50%;"></div>
+	        <table class="board_modify">
 	            <tbody>
 	                <tr>
-	                    <th>*이메일</th>
+	                    <th>닉네임</th>
 	                    <td>
-	                        <input type="text" name="email" id="email" class="" style="float:left;" maxlength="30" required>
-	                        <span class="email_check"><a href="javascript:;"  class="" style="float:left; width:auto; clear:none;" id="dupCheckBtnEmail">중복확인</a></span>
-	                    </td>
-	                </tr>
-	                <tr>
-	                    <th>*닉네임</th>
-	                    <td>
-	                        <input type="text" name="nik_name" id="nik_name" class="" style="width:90px;float:left;" maxlength="10" required>
+	                        <input type="text" name="nik_name" id="nik_name" class="" style="width:90px;float:left;" maxlength="10" value="${loginInfo.nik_name}">
 	                        <span class="nik_name_check"><a href="javascript:;" class="" style="float:left; width:auto; clear:none;" id="dupCheckBtnNik">중복확인</a></span>
 	         			</td>
 	                </tr>
 	                <tr>
-	                    <th>*이름</th>
+	                    <th>이메일</th>
 	                    <td>
-	                        <input type="text" name="name" id="name" class="" style="width:90px;float:left;" maxlength="5" required>
+	                        <input name="email" id="email" class="" style="float:left;" value="${loginInfo.email}" readonly="readonly">
+	                    </td>
+	                </tr>
+	                <tr>
+	                    <th>이름</th>
+	                    <td>
+	                        <input name="name" id="name" class="" style="width:90px;float:left;" maxlength="5" value="${loginInfo.name}" readonly="readonly">
 	          			</td>
 	                </tr>
 	                <tr>
-	                    <th>*전화번호</th>
+	                    <th>전화번호</th>
 	                    <td>
 	                  		<input type="hidden" name="tel">
 	                    	<select name="tel1" style="height:22px;">
@@ -280,37 +318,36 @@
 	           			</td>
 	                </tr>
 	                <tr>
-	                    <th>*주민번호</th>
-	                    <td>
-	                        <input type="hidden" name="birth">
-	                        <input type="text" name="birth1" id="birth1" class="" style="width:70px;" maxlength="6" required>-
-	                        <input type="password" name="birth2" id="birth2" class="" style="width:7px;"maxlength="1" required><span>******</span>
-	           			</td>
-	                </tr>
-	                <tr>
-	                    <th>*비밀번호</th>
-	                    <td><input type="password" name="pwd" id="pwd" style="float:left;" required>&nbsp;
-	                    <span class="">비밀번호는 숫자, 영문 조합으로 8자 이상으로 입력해주세요.</span></td>
-	                </tr>
-	                <tr>
-	                    <th>*비밀번호<span>확인</span></th>
-	                    <td><input type="password" name="pwd_check" id="pwd_check" style="float:left;" required></td>
-	                </tr>
-	                <tr>
 	                    <th rowspan="3">주소</th>
 	                    <td>
-	                        <input type="text" name="zipcode" id="zipcode" class="inNextBtn" style="float:left;" readonly>
+	                        <input type="text" name="zipcode" id="zipcode" class="inNextBtn" style="float:left;" value="${loginInfo.zipcode}" readonly>
 	                        <span class="email_check"><a href="javascript:zipcode();"  class="btn bgGray" style="float:left; width:auto; clear:none;">우편번호</a></span>
 	                    </td>
 	                </tr>
 	                <tr>
 	                    <td>
-	                    	<input type="text" name="addr1" id="addr1" style="width:80%" readonly>
+	                    	<input type="text" name="addr1" id="addr1" style="width:250px" value="${loginInfo.addr1}" readonly>
 	                    </td>
 	               	</tr>
 	                <tr>
 	                    <td>
-	                    	<input type="text" name="addr2" id="addr2" style="width:80%">
+	                    	<input type="text" name="addr2" id="addr2" style="width:250px" value="${loginInfo.addr2}">
+	                    </td>
+	                </tr>
+	                <tr>
+	                	<th>선호음식</th>
+	                    <td>
+	                    	<c:forEach var="rcCate" items="${rcpCateArr}" varStatus="status">
+								<label><input type="checkbox" name="allergy" value="${index.count}">${rcCate}</label>
+							</c:forEach>
+	                    </td>
+	                </tr>
+	                <tr>
+	                	<th>알레르기</th>
+	                    <td>
+	                    	<c:forEach var="alist" items="${allergy}" varStatus="status">
+									<label><input type="checkbox" name="allergy" value="<c:if test="${alist.count eq allergyNo}">checked</c:if>">${alist.allergy}</label>
+							</c:forEach>
 	                    </td>
 	                </tr>
 	            </tbody>
@@ -319,12 +356,13 @@
 	        <!-- //write--->
 	        <div class="btnSet clear">
 	            <div>
-		             <button type="button" id="goBackBtn" name="goBackBtn" onclick="history.back();">돌아가기</button>
-		             <button type="button" id="goFinish" name="goFinish" onclick="goSave('login');">가입완료</button>
-		             <button type="button" id="goFinish" name="goFinish" onclick="goSave('profile');">프로필</button>
+	          		 <a href="/foody/mypage/mypage.do"><button type="button">마이페이지</button></a>
+		             <button type="button" id="goFinish" name="goFinish" onclick="goSave();">저장</button>
 	            </div>
 	        </div>
 	    </div>
 	</div>
+<%@ include file="../common/addrAPI.jsp" %>
+<%@ include file="../common/profile.jsp" %>
 </body>
 </html>

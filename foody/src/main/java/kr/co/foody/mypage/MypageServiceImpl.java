@@ -31,7 +31,7 @@ public class MypageServiceImpl implements MypageService {
 	}
 
 	@Override // 회원에 대한 하루평균섭취 칼로리 산식(세션에서 회원데이터 받음)
-	public Map<String, Object> myInfo(MypageVO vo,HttpSession sess) {
+	public Map<String, Object> myInfo(HttpSession sess) {
 		// 회원의 로그인 정보를 세션에 저장
 		UserVO uv = (UserVO)sess.getAttribute("loginInfo");
 		// 회원의 주민번호 7번째 자리를 가져온다

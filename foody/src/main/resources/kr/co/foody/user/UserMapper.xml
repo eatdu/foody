@@ -10,9 +10,9 @@
 	<!-- 회원가입 -->
 	<insert id="insert" parameterType="kr.co.foody.user.UserVO">
 		INSERT INTO user (
-			name, birth, nik_name, selfi, email, tel, pwd, addr1, addr2, height, weight, activity, intro
+			name, birth, nik_name, selfi, email, tel, pwd, zipcode, addr1, addr2, height, weight, activity, intro
 		) VALUES (
-			#{name}, #{birth}, #{nik_name}, #{selfi}, #{email}, #{tel}, #{pwd}, #{addr1}, #{addr2}, #{height}, #{weight}, #{activity}, #{intro}
+			#{name}, #{birth}, #{nik_name}, #{selfi}, #{email}, #{tel}, #{pwd}, #{zipcode}, #{addr1}, #{addr2}, #{height}, #{weight}, #{activity}, #{intro}
 		)
 		<!-- 회원데이터 저장후 해당 no가져오기 -->
 		<selectKey keyProperty="no" resultType="int" order="AFTER">
@@ -83,6 +83,8 @@
 		)
 	</insert>
 	
+	<!-- 회원에 대한 정보조회 -->
+	
 	<!-- 유저의 알레르기 no 출력 -->
 	<select id="allergyNoList" parameterType="int" resultType="int">
 		SELECT user_allergy 
@@ -95,6 +97,22 @@
 		SELECT prefer_food 
 		FROM prefer 
 		WHERE user_no=#{no}
+	</select>
+	
+	<!-- 유저의 알레르기 정보 출력 -->
+	<select id="allergyList" parameterType="int" resultType="kr.co.foody.mypage.MypageVO">
+		SELECT
+			allergy
+		FROM allergy AS a JOIN u_allergy AS ua
+		ON a.no = ua.user_allergy
+		WHERE ua.user_no=${user_no}
+	</select>
+	
+	<!-- 유저의 선호음식 출력 -->
+ 	<select id="preferList" parameterType="int" resultType="kr.co.foody.mypage.MypageVO">
+		SELECT prefer_food 
+		FROM prefer 
+		WHERE user_no=${user_no}
 	</select>
 	
 	

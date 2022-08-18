@@ -35,8 +35,8 @@ public class MypageController {
 	}
 	
 	@GetMapping("mypage/myInfo")
-	public String myInfo(Model model, MypageVO vo, HttpSession sess) {
-		model.addAttribute("myInfo", service.myInfo(vo, sess));
+	public String myInfo(Model model, HttpSession sess) {
+		model.addAttribute("myInfo", service.myInfo(sess));
 		return "/mypage/myInfo";
 	}
 	

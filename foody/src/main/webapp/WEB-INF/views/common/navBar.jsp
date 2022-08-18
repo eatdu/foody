@@ -20,6 +20,7 @@
 							<span>email: ${loginInfo.email}</span><br>
 							<a href="/foody/mypage/mypage.do"><button type="button" id="mypage">마이페이지</button></a>
 							<a href="/foody/user/logout.do"><button type="button" id="logout">로그아웃</button></a>
+							<a href="/foody/user/modify.do"><button type="button" id="modify">회원정보수정</button></a>
 						</div>
 					</c:if>
 					<c:if test="${empty loginInfo}">
@@ -30,8 +31,8 @@
 						<div class="navUserInfo" id="navUserInfo">
 							<img src='/foody/resources/img/emoji-smile.svg' style='width:50px; height:50px'><br>
 							<span>손님</span><br>
-							<a href="/foody/user/signUp.do"><button type="button">회원가입</button></a>
 							<a href="/foody/user/login.do"><button type="button">로그인</button></a>
+							<a href="/foody/user/signUp.do"><button type="button">회원가입</button></a>
 						</div>
 					</c:if>
 				</div>
@@ -47,8 +48,8 @@
 				<li><a href="" class="parent"><span>게시판</span></a>
 					<div class="standard_left">
 					<ul>
-						<li><a href=""><span>자유</span></a></li>
-						<li><a href=""><span>Q&A</span></a></li>
+						<li><a href="/foody/board/index.do"><span>자유</span></a></li>
+						<li><a href="/foody/board/qna.do"><span>Q&A</span></a></li>
 					</ul>
 					</div>
 				</li>

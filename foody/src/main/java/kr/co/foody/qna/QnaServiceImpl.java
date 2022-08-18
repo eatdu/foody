@@ -22,8 +22,7 @@ public class QnaServiceImpl implements QnaService {
 		mapper.onoUpdate(vo);
 		vo.setOno(vo.getOno()+1);
 		vo.setDepth(vo.getDepth()+1);
-		int r = mapper.reply(vo);
-		return r;
+		return mapper.reply(vo);
 	}
 	
 	@Override

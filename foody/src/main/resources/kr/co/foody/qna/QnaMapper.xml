@@ -18,7 +18,7 @@
 	update qna set gno=#{gno} where no = #{gno}
 </update>
 
-<update id="onoUpdate" parameterType="kr.co.project.reply.ReplyVO">
+<update id="onoUpdate" parameterType="kr.co.foody.qna.QnaVO">
 	update qna set ono = ono+1 where gno = #{gno} and ono > #{ono}
 </update>
 
@@ -31,7 +31,7 @@
 	)
 </insert>
 
-<select id="count" parameterType="kr.co.project.qna.QnaVO" resultType="int">
+<select id="count" parameterType="kr.co.foody.qna.QnaVO" resultType="int">
 	select count(*) from qna
 	<where> <!-- where태그없이 쓰려면 -> where 1=1 -->
 		<if test="stype != null and stype != ''"> <!-- 빈값도 제외시켜야 함 -->
@@ -47,8 +47,7 @@
 
 <!-- FAQ 조회 -->
 <select id="getFaq" parameterType="kr.co.foody.qna.QnaVO" resultType="kr.co.foody.qna.QnaVO">
-	select *,
-		(select name from user where no = qna.user_no) as user_name,
+	select *
 	from qna
 	order by regdate desc
 	limit ${startIdx}, ${pageRow}

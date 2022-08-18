@@ -9,6 +9,9 @@
 	) values (
 		#{user_no}, #{board_no}, now(), #{tablename}, #{photo}, #{content}
 	)
+	<selectKey keyProperty="no" resultType="int" order="AFTER">
+		select last_insert_id()
+	</selectKey>
 </insert>
 
 <!-- 대댓글 등록 -->
@@ -18,9 +21,6 @@
 	) values (
 		#{user_no}, #{board_no}, now(), #{tablename}, #{photo}, #{content}, #{gno}, #{ono}, #{depth}
 	)
-	<selectKey keyProperty="no" resultType="int" order="AFTER">
-		select last_insert_id()
-	</selectKey>
 </insert>
 
 <update id="gnoUpdate" parameterType="int">
@@ -28,7 +28,7 @@
 </update>
 
 <update id="onoUpdate" parameterType="kr.co.foody.comment.CommentVO">
-	update comment set ono=ono+1 where gno={gno} and ono>#{ono}
+	update comment set ono=ono+1 where gno=#{gno} and ono>#{ono}
 </update>
 
 <!-- 댓글 수 조회 -->
@@ -43,7 +43,7 @@
 		(select name from user where no=comment.user_no) as user_name
 	from comment
 	where board_no = #{board_no} and tablename = #{tablename}
-	order by regdate desc
+	order by gno desc, ono asc
 	limit ${startIdx}, ${pageRow}
 </select>
 

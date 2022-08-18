@@ -79,7 +79,7 @@
 	
 	function commentDel(no) {
 		if (confirm('정말로 삭제하시겠습니까?')) {
-			
+			console.log('여기');
 			$.ajax({
 				url: '/foody/comment/delete.do?no='+no,
 				success: function(res) {

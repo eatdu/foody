@@ -1,8 +1,5 @@
 package kr.co.foody.qna;
 
-import java.io.File;
-import java.util.Date;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -27,20 +24,21 @@ public class QnaController {
 	QnaService service;
 	
 	// 목록보기
-	@GetMapping("/qna/qna.do")
-	public String index(QnaVO vo, Model model) {
+	@GetMapping("/board/qna.do")
+	public String getFaq(QnaVO vo, Model model) {
 		model.addAttribute("data", service.getFaq(vo));
+		model.addAttribute("getMyQna", service.getMyQna(vo));
 		return "board/qna";
 	}
 	
 	// 등록폼
-	@GetMapping("/board/write.do")
+	@GetMapping("/board/qna_write.do")
 	public String write() {
-		return "board/write";
+		return "board/qna_write";
 	}
 	
 	// 등록처리
-	@PostMapping("/board/insert.do")
+	@PostMapping("/qna/insert.do")
 	public String insert(QnaVO vo, Model model,
 			@RequestParam MultipartFile file,
 			HttpServletRequest req) {
@@ -59,8 +57,35 @@ public class QnaController {
 		}
 	}
 	
+	// 답변폼
+	@GetMapping("/qna/reply.do")
+	public String reply(QnaVO vo, Model model) {
+		QnaVO data = service.edit(vo.getNo());
+		model.addAttribute("data", data);
+		return "reply/reply";
+	}
+	
+	// 답변처리
+	@PostMapping("/qna/reply.do")
+	public String reply(QnaVO vo, Model model, HttpServletRequest req) {
+		
+		// member_no 저장 // write.jsp 에서 하기보다 안전
+		HttpSession sess = req.getSession();
+		UserVO mv = (UserVO)sess.getAttribute("loginInfo"); // 세션에서 loginInfo 꺼내
+		if (mv != null) vo.setUser_no(mv.getNo()); // mv에 있는 no만 꺼내 vo에 set
+		
+		if (service.reply(vo) == 1) { // 여기 수정해야 새글 아닌 답변이 등록됨
+			model.addAttribute("msg", "정상적으로 저장되었습니다.");
+			model.addAttribute("url", "index.do"); // 저장 성공 후 게시판으로 이동
+			return "common/alert";
+		} else {
+			model.addAttribute("msg", "저장 실패했습니다.");
+			return "common/alert";
+		}
+	}
+	
 	// 상세보기
-	@GetMapping("/board/view.do")
+	@GetMapping("/qna/view.do")
 	public String view(QnaVO vo, Model model) {
 		QnaVO data = service.view(vo.getNo());
 		model.addAttribute("data", data);
@@ -68,7 +93,7 @@ public class QnaController {
 	}
 	
 	// 수정폼
-	@GetMapping("/board/edit.do")
+	@GetMapping("/qna/edit.do")
 	public String edit(QnaVO vo, Model model) {
 		QnaVO data = service.edit(vo.getNo());
 		model.addAttribute("data", data);
@@ -76,7 +101,7 @@ public class QnaController {
 	}
 	
 	// 수정처리
-	@PostMapping("board/update.do")
+	@PostMapping("qna/update.do")
 	public String update(QnaVO vo, Model model) {
 		
 		if (service.update(vo) == 1) {
@@ -90,7 +115,7 @@ public class QnaController {
 	}
 	
 	// 삭제처리
-	@GetMapping("board/delete.do")
+	@GetMapping("qna/delete.do")
 	public String delete(QnaVO vo, Model model) {
 		if (service.delete(vo.getNo())) {
 			model.addAttribute("msg", "게시물이 삭제되었습니다.");

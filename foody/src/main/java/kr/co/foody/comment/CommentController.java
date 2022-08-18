@@ -49,21 +49,9 @@ public class CommentController {
 		return "common/return";
 	}
 	
-	@PostMapping("/comment/update.do")
-	public String update(CommentVO vo, Model model) {
-		model.addAttribute("result", service.update(vo));
-		return "common/return";
-	}
-	
-	@GetMapping("/comment/delete.do")
-	public String delete(CommentVO vo, Model model) {
-		model.addAttribute("result", service.delete(vo));
-		return "common/return";
-	}
-	
 	@PostMapping("/comment/insert_reCmt.do")
 	public String insert_reCmt(CommentVO vo, Model model,
-							@RequestParam MultipartFile uploadFile, HttpServletRequest req) {
+			@RequestParam MultipartFile uploadFile, HttpServletRequest req) {
 		if (!uploadFile.isEmpty()) {
 			// 파일명 구하기
 			String org = uploadFile.getOriginalFilename(); // 사용자가 첨부한 첨부파일명
@@ -79,7 +67,20 @@ public class CommentController {
 			
 			vo.setPhoto(real);
 		}
-		model.addAttribute("comment", service.insert_reCmt(vo));
+		model.addAttribute("result", service.insert_reCmt(vo));
 		return "common/return";
 	}
+	
+	@PostMapping("/comment/update.do")
+	public String update(CommentVO vo, Model model) {
+		model.addAttribute("result", service.update(vo));
+		return "common/return";
+	}
+	
+	@GetMapping("/comment/delete.do")
+	public String delete(CommentVO vo, Model model) {
+		model.addAttribute("result", service.delete(vo));
+		return "common/return";
+	}
+	
 }

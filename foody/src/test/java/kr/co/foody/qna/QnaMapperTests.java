@@ -20,12 +20,13 @@ public class QnaMapperTests {
 	@Autowired
 	private QnaMapper mapper;
 	
-	@Test
+	//@Test
 	public void insert() { // 행삽입
 		QnaVO vo = new QnaVO();
 		vo.setUser_no(3);
 		vo.setCategory(1);
-		vo.setTitle("");
+		vo.setTitle("Q.FAQ 게시판 제목");
+		vo.setContent("FAQ 게시판 내용");
 		mapper.insert(vo);
 //		int r = 0;
 //		for(int i=0; i<200; i++) {

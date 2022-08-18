@@ -21,7 +21,7 @@
 <script>
 
 	function showContent(no) {
-		$(".a_part"+no).slideToggle(1000);
+		$(".a_part"+no).slideToggle("slow");
 		
 	}
 	

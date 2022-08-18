@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.foody.qna.QnaMapper">
+
+<!-- 사용자 질문 등록 -->
+<insert id="insert" parameterType="kr.co.foody.qna.QnaVO">
+	insert into qna (
+		user_no, category, title, content, regdate
+		) values (
+		#{user_no}, #{category}, #{title}, #{content}, now()
+	)
+	<selectKey keyProperty="no" resultType="int" order="AFTER">
+		select last_insert_id() <!-- 이 함수의 리턴값을 setno 해줌 -->
+	</selectKey>
+</insert>
+
+<update id="gnoUpdate" parameterType="int">
+	update qna set gno=#{gno} where no = #{gno}
+</update>
+
+<update id="onoUpdate" parameterType="kr.co.foody.qna.QnaVO">
+	update qna set ono = ono+1 where gno = #{gno} and ono > #{ono}
+</update>
+
+<!-- 관리자 답변 등록 -->
+<insert id="reply" parameterType="kr.co.foody.qna.QnaVO">
+	insert into qna (
+		user_no, manager_no, title, content, regdate, gno, ono, depth
+	) values (
+		#{user_no}, #{manager_no}, #{title}, #{content}, now(), #{gno}, #{ono}, #{depth}
+	)
+</insert>
+
+<select id="count" parameterType="kr.co.foody.qna.QnaVO" resultType="int">
+	select count(*) from qna
+	<where> <!-- where태그없이 쓰려면 -> where 1=1 -->
+		<if test="stype != null and stype != ''"> <!-- 빈값도 제외시켜야 함 -->
+			<if test="stype != 'all'">
+				${stype} like '%${sword}%'
+			</if>
+			<if test="stype == 'all'">
+				title like '%${sword}%' or content like '%${sword}%'
+			</if>
+	    </if>
+	</where>
+</select>
+
+<!-- FAQ 조회 -->
+<select id="getFaq" parameterType="kr.co.foody.qna.QnaVO" resultType="kr.co.foody.qna.QnaVO">
+	select *
+	from qna
+	order by regdate desc
+	limit ${startIdx}, ${pageRow}
+</select>
+
+<!-- 내가 한 질문 조회 -->
+<select id="getMyQna" parameterType="kr.co.foody.qna.QnaVO" resultType="kr.co.foody.qna.QnaVO">
+	select * from qna where user_no = #{user_no} order by regdate desc
+	limit ${startIdx}, ${pageRow}
+</select>
+
+<!-- 상세보기 -->
+<select id="view" parameterType="int" resultType="kr.co.foody.qna.QnaVO">
+	select * from qna where no=#{no}
+</select>
+
+<!-- 수정 -->
+<update id="update" parameterType="kr.co.foody.qna.QnaVO">
+	update qna set
+		title = #{title}, content = #{content}
+	where no = #{no}
+</update>
+
+<!-- 삭제 -->
+<delete id="delete" parameterType="int">
+	delete from qna where no=#{no}
+</delete>
+
+</mapper>

@@ -17,6 +17,10 @@ public class CommentVO {
 	private String user_name;
 	private Timestamp updatedate;
 	
+	private int gno;
+	private int ono;
+	private int depth;
+	
 	private int startIdx;
 	private int page;
 	private int pageRow;

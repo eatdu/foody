@@ -26,7 +26,7 @@ public class RecipeServiceImpl implements RecipeService {
 	public List<String> large_cate(int i) {
 		return mapper2.large_cate(i);
 	}
-	
+	//재료명 리스트 - 재료 분류 번호
 	@Override
 	public List<Map> makeIngreNameList(int no) {
 		List<String> result = mapper.selectIngreNameList(no);
@@ -39,7 +39,7 @@ public class RecipeServiceImpl implements RecipeService {
 		}
 		return list;
 	}
-	
+	//재료명 리스트 - 검색어
 	@Override
 	public List<Map> makeIngreNameList(String keyword) {
 		List<String> result = mapper.selectIngreNameList2(keyword);
@@ -52,120 +52,82 @@ public class RecipeServiceImpl implements RecipeService {
 		}
 		return list;
 	}
-	
+	//재료 상세 리스트
+	@Override
+	public List<Map> makeIngreDetailList(String keyword) {
+		List<IngredientVO> result = mapper.selectIngreDetail(keyword);
+		List<Map> list = new ArrayList<Map>();
+		for (IngredientVO vo : result) {
+			Map map = new HashMap();
+			map.put("text", vo.getDetail());
+			map.put("value", vo.getNo());
+			list.add(map);
+		}
+		return list;
+	}
 
 	@Override
 	public Map search(Map cri) {
-//		List keywordArr = (List)cri.get("keywordArr");
-//		List ingreCateArr = (List)cri.get("ingreCateArr");
-//		List rcpCateArr = (List)cri.get("rcpCateArr");
-//		boolean keyword = keywordArr.size() == 0;
-//		boolean ingre = ingreCateArr.size() == 0;
-//		boolean rcp = rcpCateArr.size() == 0;
-
+		if (cri.get("keywordArr") != null) {
+			String str = "'" + (String)((List)cri.get("keywordArr")).get(0);
+			for (int i=1; i<((List)cri.get("keywordArr")).size(); i++) {
+				str += '|' + (String)((List)cri.get("keywordArr")).get(i);
+			}
+			str += "'";
+			cri.put("keywordArr", mapper.selectIngreNo(str));
+		}
 		Map result = new HashMap();
-//		result.put("type", cri.get("type"));
 		result.put("title", (String)cri.get("title"));
 
 		if(cri.get("type").equals("common")) {
-			result.put("list", mapper.selectIngreOrKey(cri));
-		} else if (cri.get("type").equals("onlyR")){
-			result.put("list", mapper.selectR(cri));
-		} else if (cri.get("type").equals("all")){
-			result.put("list", mapper.selectAll(cri));
-//			//조건없이 검색
-//			if (keyword && ingre && rcp) {
-//				result.put("list1", mapper.selectAll(cri));
-//				result.put("list1Name", "모든 레시피");
-//			}
-//			//키워드로 검색
-//			if (!keyword && ingre && rcp) {
-//				cri.remove("ingreCateArr");
-//				cri.remove("rcpCateArr");
-//				result.put("list1", mapper.selectIngreOrKey(cri));
-//				result.put("list1Name", "재료 검색으로 검색한 결과");
-//			}
-//			//재료분류로 검색
-//			if (keyword && !ingre && rcp) {
-//				cri.remove("keywordArr");
-//				cri.remove("rcpCateArr");
-//				result.put("list1", mapper.selectIngreOrKey(cri));
-//				result.put("list1Name", "재료 분류로 검색한 결과");
-//			}
-//			//요리분류로 검색
-//			if (keyword && ingre && !rcp) {
-//				result.put("list1", mapper.selectR(cri));
-//				result.put("list1Name", "요리 분류로 검색한 결과");
-//			}
-//			//재료분류, 요리분류로 검색 -> IR -> I 조건 순
-//			if (keyword && !ingre && !rcp) {
-//				//IR
-//				cri.remove("keywordArr");
-//				result.put("list1", mapper.selectIngreOrKey(cri));
-//				result.put("list1Name", "재료 분류, 요리 분류로 검색한 결과");
-//				//I
-//				cri.remove("rcpCateArr");
-//				result.put("list2", mapper.selectIngreOrKey(cri));
-//				result.put("list2Name", "재료 분류로 검색한 결과");
-//			}
-//			//재료키워드, 요리분류로 검색 -> KR -> K 조건 순
-//			if (!keyword && ingre && !rcp) {
-//				//KR
-//				cri.remove("ingreCateArr");
-//				result.put("list1", mapper.selectIngreOrKey(cri));
-//				result.put("list1Name", "재료 키워드, 요리 분류로 검색한 결과");
-//				//K
-//				cri.remove("rcpCateArr");
-//				result.put("list2", mapper.selectIngreOrKey(cri));
-//				result.put("list2Name", "재료 키워드로 검색한 결과");
-//			}
-//			//재료키워드, 재료분류로 검색 -> KI -> K -> I 조건 순
-//			if (!keyword && !ingre && rcp) {
-//				//KI
-//				cri.remove("rcpCateArr");
-//				result.put("list1", mapper.selectIngreOrKey(cri));
-//				result.put("list1Name", "재료 분류, 재료 키워드로 검색한 결과");
-//				//K
-//				cri.remove("ingreCateArr");
-//				result.put("list2", mapper.selectIngreOrKey(cri));
-//				result.put("list2Name", "재료 키워드로 검색한 결과");
-//				//I
-//				cri.remove("keywordArr");
-//				cri.put("ingreCateArr", ingreCateArr);
-//				result.put("list3", mapper.selectIngreOrKey(cri));
-//				result.put("list3Name", "재료 분류 검색한 결과");
-//			}
-//			//재료키워드, 재료분류, 음식분류로 검색 -> KIR -> KI -> K -> I 조건 순
-//			if (!keyword && !ingre && !rcp) {
-//				//KIR
-//				result.put("list1", mapper.selectIngreOrKey(cri));
-//				result.put("list1Name", "재료 분류, 재료 키워드, 음식분류로 검색한 결과");
-//				//KI
-//				cri.remove("rcpCateArr");
-//				result.put("list2", mapper.selectIngreOrKey(cri));
-//				result.put("list2Name", "재료 분류, 재료 키워드로 검색한 결과");
-//				//K
-//				cri.remove("ingreCateArr");
-//				result.put("list3", mapper.selectIngreOrKey(cri));
-//				result.put("list3Name", "재료 키워드로 검색한 결과");
-//				//I
-//				cri.remove("keywordArr");
-//				cri.put("ingreCateArr", ingreCateArr);
-//				result.put("list4", mapper.selectIngreOrKey(cri));
-//				result.put("list4Name", "재료 분류 검색한 결과");
-//			}
+			//검색조건 하에서 총 게시물 수
+			int count = mapper.countWithFilter(cri);
+
+			//받아올것 : 현재 페이지 - pageNo / 페이지당 12개 / 블럭당 5개
+			int pageNo = (int)cri.get("pageNo");
+			
+			//sql로 넘길것 : rno 검색조건
+			int startRno = (pageNo - 1) * 12 + 1;
+			int endRno = pageNo * 12;
+			cri.put("startRno", startRno);
+			cri.put("endRno", endRno);
+
+			//(첫 페이지, 끝 페이지) - 배열로 넘김
+			int startNo = (pageNo - 1) / 5 * 5 + 1;
+			int endNo = startNo + 4;
+			//이전 여부
+			if (startNo == 1) result.put("prev", false);
+			else result.put("prev", true);
+			//다음 여부
+			if (endNo > (count - 1) / 12 + 1) {
+				result.put("next", false);
+				endNo = (count - 1) / 12 + 1;
+			}
+			else result.put("next", true);
+			
+			List<Integer> paging = new ArrayList();
+			for(int i = startNo; i <= endNo; i++) {
+				paging.add(i);
+			}
+			result.put("paging", paging);
+			//현재 페이지
+			result.put("curNo", pageNo);
+			result.put("list", mapper.selectWithFilter(cri));
 		} else if (cri.get("type").equals("best")) {
-			cri.put("startNo", 1);
-			cri.put("endNo", 20);
-			result.put("list1", mapper.selectAll(cri));
-			result.put("list1Name", "인기 레시피");
+			//인기레시피 - 알러지 필터, 인기순 정렬
+			cri.put("startRno", 1);
+			cri.put("endRno", 20);
+			result.put("list", mapper.selectWithFilter(cri));
 		} else if (cri.get("type").equals("prefer")) {
-			cri.put("startNo", 1);
-			cri.put("endNo", 20);
-			result.put("list1", mapper.selectAll(cri));
-			result.put("list1Name", "추천 레시피");
+			//추천레시피 - 알러지 필터, 개인 선호도 필터
+			//cri.put("rcpCateArr", cri.get("preferArr"));
+			cri.put("startRno", 1);
+			cri.put("endRno", 20);
+			result.put("list", mapper.selectWithFilter(cri));
 		}
 		return result;
 	}
+
+
 
 }

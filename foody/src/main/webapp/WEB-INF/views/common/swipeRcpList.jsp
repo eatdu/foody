@@ -22,7 +22,7 @@
 				</tr>
 				<tr><td colspan='2'>--출력 필요 X / no: ${l1.no} / type: ${l1.type}--</td></tr>
 			</table>
-			<c:if test="${idx.count % 4 == 0}">
+			<c:if test="${idx.count % 4 == 0 && !idx.last}">
 		</div>
 		<div class='swiper-slide'>
 			</c:if>

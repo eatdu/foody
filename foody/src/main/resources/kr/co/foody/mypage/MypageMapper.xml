@@ -2,6 +2,31 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.co.foody.mypage.MypageMapper">
 	
+	<!-- 레시피 리스트 출력 -->
+	<select id="myRecipe" parameterType="kr.co.foody.mypage.MypageVO" resultType="kr.co.foody.mypage.MypageVO">
+		SELECT *,
+			(SELECT COUNT(bookmark) FROM feedback WHERE recipe_no=recipe.no) AS bookmark
+		FROM recipe 
+		LIMIT 0,30
+	</select>
+	
+	<!-- 유저의 알레르기 정보 출력 -->
+	<select id="allergyList" parameterType="int" resultType="kr.co.foody.mypage.MypageVO">
+		SELECT
+			allergy
+		FROM allergy AS a JOIN u_allergy AS ua
+		ON a.no = ua.user_allergy
+		WHERE ua.user_no=${user_no}
+	</select>
+	
+	<!-- 유저의 선호음식 출력 -->
+ 	<select id="preferList" parameterType="int" resultType="kr.co.foody.mypage.MypageVO">
+		SELECT prefer_food 
+		FROM prefer 
+		WHERE user_no=${user_no}
+	</select>
+		
+	
 	
 
 </mapper>

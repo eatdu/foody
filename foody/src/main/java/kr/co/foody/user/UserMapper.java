@@ -3,6 +3,8 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import kr.co.foody.mypage.MypageVO;
+
 @Mapper
 public interface UserMapper {
 
@@ -20,4 +22,8 @@ public interface UserMapper {
 	List<String> getAllergy();
 	int userAllergy(UserVO vo);
 	int userPrefer(UserVO vo);
+	
+	List<Integer> allergyNoList(int no);
+	List<Integer> preferNoList(int no);
+	
 }

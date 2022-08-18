@@ -118,6 +118,7 @@
 					},
 					success: function(data){
 						for(var i=0; i< data.length; i++){
+
 							var searchOption_str ='<option data-no='+data[i].no+' value="'+data[i].name+'('+data[i].detail+')" ></option>'; //이름검색 드롭다운 옵션에 넣을 스트링
 							$("#searchName_drop").append(searchOption_str);
 						}
@@ -400,7 +401,7 @@
 					sum_protein += Number(sel_ingre[i].dataset.proteinkcal);
 					sum_fat += Number(sel_ingre[i].dataset.fatkcal);
 				}
-				sum_kcal = sum_carbo.toFixed(0)*4+ sum_protein.toFixed(0)*4 + sum_fat.toFixed(0)*9;
+				sum_kcal = sum_carbo*4+ sum_protein*4 + sum_fat*9;
 				
 				console.log("++++++++++");
 				console.log(sum_carbo);
@@ -425,7 +426,7 @@
 				
 				options={
 						title: {
-							text: "칼로리: "+sum_kcal+"kcal"
+							text: "칼로리: "+sum_kcal.toFixed(0)+"kcal"
 						},
 						data: [{
 							type: "doughnut",

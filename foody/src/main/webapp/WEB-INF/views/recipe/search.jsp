@@ -27,7 +27,7 @@ function addIngre(){
 			+ ' --bs-btn-padding-x: .10rem; --bs-btn-font-size: .30rem;" type="button"'
 			+ ' name="removeBtn" onclick="javascript:removeIngre(' + ingreIdx 
 			+ ');">X</button><input type="checkbox" class="hide" name="ingreName" value="'
-			+ name + '" checked="checked"></span>' 
+			+ name + '" checked="checked"></span>';
 		$("#ingreArea").append(html);
 		ingreIdx++;
 		ingreNameArr = makeArr('ingreName');

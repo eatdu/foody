@@ -34,4 +34,14 @@ public class IngredientServiceImpl implements IngredientService {
 	public List<IngredientVO> nameSearch(){
 		return mapper.nameSearch();
 	}
+
+	@Override
+	public boolean updateIngre(IngredientVO vo) {
+		return mapper.updateIngre(vo);
+	}
+	
+	@Override
+	public boolean insertIngre(IngredientVO vo) {
+		return mapper.insertIngre(vo);
+	}
 }

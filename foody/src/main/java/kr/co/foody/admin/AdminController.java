@@ -2,6 +2,8 @@ package kr.co.foody.admin;
 
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
@@ -33,6 +35,11 @@ public class AdminController {
 		model.addAttribute("ingreCateArr", IngredientCategory.IngreCateArr);
 		model.addAttribute("allergyList", ingreMapper.allergyList());
 		return "admin/ingre";
+	}
+	@GetMapping("/admin/main.do")
+	public String main(Model model, HttpSession sess) {
+		svc.userReport(sess);
+		return "admin/main";
 	}
 	
 	@PostMapping(value = "/admin/ingreInfo.do", consumes = MediaType.APPLICATION_JSON_VALUE, produces = "application/json;charset=UTF-8")

@@ -291,4 +291,12 @@
 		values (#{rcpNo}, #{userNo}, #{star}, #{bmk})
 	</insert>
 	
+	<!-- 랜덤 가입일자 업데이트 -->
+	<update id="randomReg" parameterType="int">
+		update user set regdate = (
+				SELECT FROM_UNIXTIME(FLOOR(unix_timestamp('2022-04-01 00:00:00')+(RAND()*(unix_timestamp('2022-08-31 00:00:00')-unix_timestamp('2022-04-01 00:00:00'))))) rand
+				)
+		where no = #{no};
+	</update>
+	
 </mapper>

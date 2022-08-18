@@ -89,6 +89,7 @@ function checkName() {
 }
 .row {
 	display: inline-block;
+	width: 1000px;
 }
 
 

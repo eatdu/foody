@@ -2,19 +2,10 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-
-<!DOCTYPE html>
-<html lang="ko">
-<head>
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, user-scalable=yes">
-<meta name="format-detection" content="telephone=no, address=no, email=no">
-<meta name="keywords" content="">
-<meta name="description" content="">
-<title>게시판 등록</title>
+<%@ include file="../common/config.jsp" %>
 <link rel="stylesheet" href="/foody/css/reset.css"/>
 <link rel="stylesheet" href="/foody/css/contents.css"/>
+<title>게시판 등록</title>
 
 
 
@@ -26,6 +17,7 @@
 </head>
 
 <body>
+<%@ include file="../common/navBar.jsp" %>
         <div class="sub">
             <div class="size">
                 <h3 class="sub_title">게시판</h3>

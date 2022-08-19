@@ -445,42 +445,86 @@
 			}
 			
 			// -----------이미지를 누르면 버튼이 눌리고 버튼이 눌리면 readURL함수 실행 JS-------------
-			$(function(){
+			/* $(function(){
 				$('#Imagebutton').click(function(){
 					$("#imgupload0").trigger('click');
 				});
 				$("#imgupload0").change(function() {
 					readURL(this);
 				});
-			});
+			}); */
 			
 			// -------------------버튼이 눌리면 이미지 프리뷰 코드(호출) JS----------------------
-			function readURL(input) {
+			
+			function readURL(input,num1) {
 				if (input.files && input.files[0]) {
 					var reader = new FileReader();
+					var id="processImg"+num1;
 					reader.onload = function(e) {
-						document.getElementById('processImg0').src = e.target.result;
+						console.log(e.target.result);
+						document.getElementById(id).src = e.target.result;
 					};
 					reader.readAsDataURL(input.files[0]);
+					console.log("if");
 				} else {
-					document.getElementById('processImg0').src = "";
+					document.getElementById(id).src = "";
+					console.log("else");
 				}
 			}
 			
+			
 			// -------------------조리과정 div 만드는 함수(호출)----------------------
-			/* function makeProcessDiv(input){
+			function makeProcessDiv(input){
 				$('#processList').append(
 						'<div id="process'+input+'" style="height: 150px; width: 1000px; padding:2.5px;">'
-						+'<input type="file" id="imgupload'+input+'"  style="display:none"/>'
-						+'<div id="Imagebutton'+input+'" style="padding-top:0px; height: 140px; width: 220px; float:left; background-color:#ECECEC; text-align: center;">'
+						+'<input type="file" id="imgupload'+input+'" style="display:none"/>'
+						+'<div id="Imagebutton'+input+'" onclick="clickevent('+input+')" style="padding-top:0px; height: 140px; width: 220px; float:left; background-color:#ECECEC; text-align: center;">'
+						+'<img id="processImg'+input+'" src="resources/img/PlusIcon.png" style="height: 140px; width: 220px; object-fit: cover;">'
+						+'</div>'
+						+'<textarea id="processText'+input+'" rows="5" cols="30" style="height: 140px; padding:0px; resize:none;"></textarea>'
 						+'</div>');
+			}
+			var uploadId;
+			function clickevent(input){
+				uploadId = "#imgupload"+input;
+				$(uploadId).trigger('click');
+			}
+			
+		/* 	function changeEvent(input){
+				uploadId = "#imgupload"+input;
+				readURL($(uploadId), input);
+			}
+			 */
+			$(function(){
 				
-					
-							<img id="processImg0" src="resources/img/PlusIcon.png" style="height: 140px; width: 220px; object-fit: cover;">
-						</div>
-						<textarea id="processText0" rows="5" cols="30" style="height: 140px; padding:0px; resize:none;"></textarea>
+				var i;
 				
-			} */
+				for(i=0; i<3; i++){
+					makeProcessDiv(i);
+				}
+				
+				/* /* $('#Imagebutton0').click(function(){
+					$("#imgupload0").trigger('click');
+				});*/
+				$("#imgupload0").change(function() {
+					readURL(this,0);
+				}); 
+				
+				/*  $('#Imagebutton1').click(function(){
+					$("#imgupload1").trigger('click');
+				}); */
+				$("#imgupload1").change(function() {
+					readURL(this,1);
+				}); 
+				/* 
+				$('#Imagebutton2').click(function(){
+					$("#imgupload2").trigger('click');
+				}); */
+				$("#imgupload2").change(function() {
+					readURL(this,2);
+				}); 
+				
+			});
 			
 			// -------------------조리과정 div 삭제하는 함수(호출)----------------------
 			
@@ -593,6 +637,9 @@
 			<!-- 조리 과정 style 먹인거 나중에 다 빼기 -->
 			조리과정:
 			<div id="processList"></div>
+			<div style="height: 140px; width: 220px;">
+				<img id="addProcessButton" src="resources/img/plusIcon3.png" style="object-fit: cover;">
+			</div>
 			
 			<!-- 팁(tip) -->
 			<div>

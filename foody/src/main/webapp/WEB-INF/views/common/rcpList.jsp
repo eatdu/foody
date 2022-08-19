@@ -3,7 +3,7 @@
 
 <div class='container'>
 	<h1 class='titlesm tc'>--- ${result.title} ---</h4>
-	<div class='row'>	
+	<div class='row' width=1000px>	
 	<c:forEach var="l1" items="${result.list}" varStatus="idx">
 		<table class="rcpTable" style='table-layout:fixed'>
 			<tr>

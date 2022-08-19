@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -16,32 +18,9 @@
 <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
 <script>
    	function goSave(route){
-   		$("#route").val(route);
-   		if($("#email").val().trim() == ''){ // 이메일공란 체크
-   			alert('이메일을 입력해 주세요.');
-   			$("#email").focus();
-   			return;
-   		}
-   		// 이메일 입력형식 체크
-   		/* var reg_email = /^([0-9a-zA-Z_\.-]+)@([0-9a-zA-Z_-]+)(\.[0-9a-zA-Z_-]+){1,2}$/;
-   		if(!reg_email.test($("#email").val())){
-   			alert('이메일 형식이 올바르지 않습니다.');
-   			return;
-   		} */
-   		// 이메일 중복확인
-   		var isCon = true;
-   		$.ajax({
-			url : 'emailDupCheck.do',
-			data : {email:$('#email').val()},
-			async : false,
-			success:function(res){
-				if(res == 'true'){
-					alert('입력한 이메일이 중복되었습니다. 다른 이메일을 입력해주세요.');
-					$("#email").focus();
-					isCon = false;
-				}
-			}
-		});
+   		var tel1 = '${fn:substring(modify.userInfo.tel,0,2)}';
+   		$("#tel1").val(tel1).prop("selected", true);
+   		
    		if(!isCon) return;
    		if($("#nik_name").val().trim() == ''){ // 닉네임공란 체크
    			alert('닉네임을 입력해 주세요.');
@@ -68,17 +47,6 @@
 				}
 			}
 		});
-   		if(!isCon) return;
-   		if($("#name").val().trim() == ''){ // 이름공란 체크
-   			alert('이름을 입력해 주세요.');
-   			$("#name").focus();
-   			return;
-   		}
-   		if($("#tel2").val().trim() == ''){ // 전화번호2공란 체크
-   			alert('전화번호를 입력해 주세요.');
-   			$("#tel2").focus();
-   			return;
-   		}
    		//var reg_tel = /^d{4}-\d{4}$/;
   			/* if(!reg_tel.test($("#tel2").val())){ // 전화번호2 숫자만 입력
    			alert('숫자만 입력해주세요.');
@@ -111,41 +79,18 @@
    			alert('한글로 입력해주세요.')
    			return;
    		} */
-   		if($("#birth1").val().trim() == ''){ // 주민번호공란 체크
-   			alert('주민번호를 입력해 주세요.');
-   			$("#birth1").focus();
-   			return;
-   		}
    		if($('#birth1').val().length != 6){ // 전화번호2 칸수제한
   			alert('주민번호 6자리를 입력해 주세요.');
   		    	$('#birth1').focus()
     		    return;
-    		}
-   		if($("#birth2").val().trim() == ''){ // 주민번호공란 체크
-   			alert('주민번호(성별)를 입력해 주세요.');
-   			$("#birth2").focus();
-   			return;
-   		}
-   		if($("#pwd").val().trim() == ''){ // 비밀번호공란 체크
-   			alert('비밀번호를 입력해 주세요.');
-   			$("#pwd").focus();
-   			return;
-   		}
-   		// 비밀번호 입력형식 체크
-   		/* var reg = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/;
-   		if(!reg.test($("#pwd").val())){
-   			alert('비밀번호는 영문,숫자,특수문자 조합으로 8자 이상 입력하세요.')
-   			return;
-   		} */
-   		// 비밀번호입력 및 비밀번호 확인란 중복 체크
-   		if($("#pwd").val() != $("#pwd_check").val()){
-   			alert('비밀번호가 일치하지 않습니다.');
-   			$("#pwd_check").focus();
-   			return;
-   		}
+    	}
    		$("#frm").submit();
    	}
    	
+   	$(function () {
+		tel1_val = $('select.tel1').attr('data-type');
+	   	$('select.tel1 option[value=' + tel1_val + ']').attr('selected', 'selected');
+   	});
    	$(function(){
    		$('#tel2').on('keyup', function() { // 전화번호2번 4자리 입력시 전화번호3번칸으로 자동이동
    		    if(this.value.length == 4) {
@@ -155,16 +100,6 @@
    		$('#tel3').on('keyup', function() { // 전화번호2번 4자리 입력시 주민번호칸으로 자동이동
    		    if(this.value.length == 4) {
    		       $('#birth1').focus()
-   		    }
-   		});
-   		$('#birth1').on('keyup', function() { // 주민번호 6자리 입력시 주민번호(성별)칸으로 자동이동
-   		    if(this.value.length == 6) {
-   		       $('#birth2').focus()
-   		    }
-   		});
-   		$('#birth2').on('keyup', function() { // 주민번호(성별) 입력시 비밀번호칸으로 자동이동
-   		    if(this.value.length == 1) {
-   		       $('#pwd').focus()
    		    }
    		});
    		$("#dupCheckBtnNik").click(function(){ // 닉네임 중복확인
@@ -185,24 +120,6 @@
     			});
    			}
    		}); 
-   		$("#dupCheckBtnEmail").click(function(){
-   			if($("#email").val().trim() == ''){
-   				alert('이메일을 입력해 주세요.');
-   				$("#email").focus();
-   			} else {
-    			$.ajax({
-    				url : 'emailDupCheck.do',
-    				data : {email:$('#email').val()},
-    				success:function(res){
-    					if(res == 'true'){
-    						alert('이미 사용중인 이메일입니다.');
-    					} else{
-    						alert('사용 가능한 이메일입니다.');
-    					}
-    				}
-    			});
-   			}
-   		});
    		$('#tel').focusout(function(){
    			let userId = $('#tel').val(); 
    			
@@ -228,126 +145,105 @@
    		$('#frm').click(function(){
    			var f = document.frm;
    			f.tel.value = f.tel1.value + f.tel2.value + f.tel3.value;
-   			f.birth.value = f.birth1.value + f.birth2.value;
-   		})
+	   	})
    	})
 </script>
-<script>
-    function zipcode() {
-        new daum.Postcode({
-            oncomplete: function(data) {
-                var addr = ''; // 주소 변수
-                var extraAddr = ''; // 참고항목 변수
-
-                //사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
-                if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
-                    addr = data.roadAddress;
-                } else { // 사용자가 지번 주소를 선택했을 경우(J)
-                    addr = data.jibunAddress;
-                }
-
-                // 사용자가 선택한 주소가 도로명 타입일때 참고항목을 조합한다.
-                if(data.userSelectedType === 'R'){
-                    // 법정동명이 있을 경우 추가한다. (법정리는 제외)
-                    // 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
-                    if(data.bname !== '' && /[동|로|가]$/g.test(data.bname)){
-                        extraAddr += data.bname;
-                    }
-                    // 건물명이 있고, 공동주택일 경우 추가한다.
-                    if(data.buildingName !== '' && data.apartment === 'Y'){
-                        extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName);
-                    }
-                    // 표시할 참고항목이 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
-                    if(extraAddr !== ''){
-                        extraAddr = '(' + extraAddr + ')';
-                    }
-                    // 조합된 참고항목을 해당 필드에 넣는다.
-                	addr += extraAddr;
-                }
-
-                // 우편번호와 주소 정보를 해당 필드에 넣는다.
-                document.getElementById('zipcode').value = data.zonecode;
-                document.getElementById("addr1").value = addr;
-                // 커서를 상세주소 필드로 이동한다.
-                document.getElementById("addr2").focus();
-            }
-        }).open();
-    }
-</script>
+<%@ include file="../common/profile.jsp" %>
+<%@ include file="../common/addrAPI.jsp" %>
 </head>
 <body>
 	<div class="sub">
 	    <div class="size">
 	        <h3 class="sub_title">회원수정</h3>
 	        <form name="frm" id="frm" action="modify.do" method="post">
+	        <input type="hidden" value="${modify.userInfo.no}">
 	        <input type="hidden" name="selfi">
 	        <div class="jb-image"><input type="file" id="chooseFile" name="chooseFile" class="img-input" style="diplay:none;"></div>
-	        <div class="img"><img src="/foody/upload/${loginInfo.selfi}" style="width:200px; height:200px; border-radius:50%;"></div>
+	        <div class="img"><img src="/foody/upload/${modify.userInfo.selfi}" style="width:200px; height:200px; border-radius:50%;"></div>
 	        <table class="board_modify">
 	            <tbody>
 	                <tr>
 	                    <th>닉네임</th>
 	                    <td>
-	                        <input type="text" name="nik_name" id="nik_name" class="" style="width:90px;float:left;" maxlength="10" value="${loginInfo.nik_name}">
+	                        <input type="text" name="nik_name" id="nik_name" class="" style="width:90px;float:left;" maxlength="10" value="${modify.userInfo.nik_name}">
 	                        <span class="nik_name_check"><a href="javascript:;" class="" style="float:left; width:auto; clear:none;" id="dupCheckBtnNik">중복확인</a></span>
 	         			</td>
 	                </tr>
 	                <tr>
 	                    <th>이메일</th>
 	                    <td>
-	                        <input name="email" id="email" class="" style="float:left;" value="${loginInfo.email}" readonly="readonly">
+	                        <input name="email" id="email" class="" style="float:left;" value="${modify.userInfo.email}" readonly="readonly">
 	                    </td>
 	                </tr>
 	                <tr>
 	                    <th>이름</th>
 	                    <td>
-	                        <input name="name" id="name" class="" style="width:90px;float:left;" maxlength="5" value="${loginInfo.name}" readonly="readonly">
+	                        <input name="name" id="name" class="" style="width:90px;float:left;" maxlength="5" value="${modify.userInfo.name}" readonly="readonly">
 	          			</td>
 	                </tr>
 	                <tr>
 	                    <th>전화번호</th>
 	                    <td>
+ 	                    	<c:set var="tel" value="${fn:substring(modify.userInfo.tel,0,3)}"/>
 	                  		<input type="hidden" name="tel">
-	                    	<select name="tel1" style="height:22px;">
-	                    		<option value="010">010</option>
-	                    		<option value="011">011</option>
-	                    		<option value="012">012</option>
-	                    	</select> - 
-	                    	<input type="text" name="tel2" id="tel2" class="" style="width:35px;" maxlength="4" required> -
-	                    	<input type="text" name="tel3" id="tel3" class="" style="width:35px;" maxlength="4" required>
+	                    	<select class="tel1" name="tel1" style="height:22px;">
+							    <option value="010" <c:if test ="${fn:substring(modify.userInfo.tel,0,3) eq 010}">selected="selected"</c:if>>010</option>
+							    <option value="011" <c:if test ="${fn:substring(modify.userInfo.tel,0,3) eq 011}">selected="selected"</c:if>>011</option>
+							    <option value="012" <c:if test ="${fn:substring(modify.userInfo.tel,0,3) eq 012}">selected="selected"</c:if>>012</option>
+							</select> -
+	                    	<input type="text" name="tel2" id="tel2" value="${fn:substring(modify.userInfo.tel,3,7)}" class="" style="width:35px;" maxlength="4"> -
+	                    	<input type="text" name="tel3" id="tel3" value="${fn:substring(modify.userInfo.tel,7,12)}" class="" style="width:35px;" maxlength="4">
 	           			</td>
 	                </tr>
 	                <tr>
 	                    <th rowspan="3">주소</th>
 	                    <td>
-	                        <input type="text" name="zipcode" id="zipcode" class="inNextBtn" style="float:left;" value="${loginInfo.zipcode}" readonly>
+	                        <input type="text" name="zipcode" id="zipcode" class="inNextBtn" style="float:left;" value="${modify.userInfo.zipcode}" readonly>
 	                        <span class="email_check"><a href="javascript:zipcode();"  class="btn bgGray" style="float:left; width:auto; clear:none;">우편번호</a></span>
 	                    </td>
 	                </tr>
 	                <tr>
 	                    <td>
-	                    	<input type="text" name="addr1" id="addr1" style="width:250px" value="${loginInfo.addr1}" readonly>
+	                    	<input type="text" name="addr1" id="addr1" style="width:250px" value="${modify.userInfo.addr1}" readonly>
 	                    </td>
 	               	</tr>
 	                <tr>
 	                    <td>
-	                    	<input type="text" name="addr2" id="addr2" style="width:250px" value="${loginInfo.addr2}">
+	                    	<input type="text" name="addr2" id="addr2" style="width:250px" value="${modify.userInfo.addr2}">
 	                    </td>
 	                </tr>
 	                <tr>
+			            <th>키</th>
+			            <td>
+			               	<input type="text" name="height" id="height" value="${modify.userInfo.height}"> cm
+			            </td>
+			        </tr>
+			        <tr>
+			            <th>몸무게</th>
+			            <td>
+			                <input type="text" name="weight" id="weight" value="${modify.userInfo.weight}"> kg
+			            </td>
+			        </tr>
+			        <tr>
+			            <th>활동지수</th>
+			            <td>
+				            <select name="activity" style="height:22px;">
+					        	<option value="30" <c:if test ="${modify.userInfo.activity eq 30}">selected="selected"</c:if>>앉아서 주로 생활하거나 활동량이 적은 경우</option>
+					        	<option value="35" <c:if test ="${modify.userInfo.activity eq 35}">selected="selected"</c:if>>규칙적인 생활로 보통의 활동량을 가진 경우</option>
+					        	<option value="40" <c:if test ="${modify.userInfo.activity eq 40}">selected="selected"</c:if>>육체노동 등 평소 신체 활동량이 많은 경우</option>
+					        </select>
+			            </td>
+			        </tr>
+	                <tr>
 	                	<th>선호음식</th>
 	                    <td>
-	                    	<c:forEach var="rcCate" items="${rcpCateArr}" varStatus="status">
-								<label><input type="checkbox" name="allergy" value="${index.count}">${rcCate}</label>
-							</c:forEach>
+	                    	${modify.prefer}
 	                    </td>
 	                </tr>
 	                <tr>
 	                	<th>알레르기</th>
 	                    <td>
-	                    	<c:forEach var="alist" items="${allergy}" varStatus="status">
-									<label><input type="checkbox" name="allergy" value="<c:if test="${alist.count eq allergyNo}">checked</c:if>">${alist.allergy}</label>
-							</c:forEach>
+	                    	${modify.allergy}
 	                    </td>
 	                </tr>
 	            </tbody>
@@ -362,7 +258,5 @@
 	        </div>
 	    </div>
 	</div>
-<%@ include file="../common/addrAPI.jsp" %>
-<%@ include file="../common/profile.jsp" %>
 </body>
 </html>

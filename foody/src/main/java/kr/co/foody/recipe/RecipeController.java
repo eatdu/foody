@@ -39,7 +39,7 @@ public class RecipeController {
 	}
 	
 	@PostMapping(value = "search.do", consumes = MediaType.APPLICATION_JSON_VALUE, produces = "application/json;charset=UTF-8")
-	public String search(@RequestBody Map cri, Model model){
+	public String search(@RequestBody Map cri, Model model, HttpSession sess){
 		//선호도, 알러지 임시로 세팅 / 실제로는 유저인포에서 받아와야 함
 //		if (cri.get("jsp").equals("common/swipeRcpList")) {
 //			int[] allergyArr = {3,5,7};
@@ -49,7 +49,7 @@ public class RecipeController {
 //		cri.put("preferArr", preferArr);
 //		cri.put("rcpCateArr", cri.get("preferArr"));
 		
-		model.addAttribute("result", service.search(cri));
+		model.addAttribute("result", service.search(cri, sess));
 		return (String)cri.get("jsp");
 	}
 	

@@ -638,7 +638,7 @@
 			조리과정:
 			<div id="processList"></div>
 			<div style="height: 140px; width: 220px;">
-				<img id="addProcessButton" src="resources/img/plusIcon3.png" style="object-fit: cover;">
+				<img id="addProcessButton" src="resources/img/PlusIcon3.png" style="object-fit: cover;">
 			</div>
 			
 			<!-- 팁(tip) -->

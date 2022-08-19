@@ -33,6 +33,13 @@ public interface UserMapper {
 	List<MypageVO> allergyList(int no);
 	List<MypageVO> preferList(int no);
 	
+	// 회원 데이터 수정
+	int modifyUserInfo(UserVO vo);
+	
+	int userAllergyDelete(int ano);
+	int userPreferDelete(int ano);
+	List<MypageVO> userAllergyNo(int no);
+	
 	// 회원 월별 통계(관리자)
 	int countAllUser();
 	List<Map> countUserWithPeriod();

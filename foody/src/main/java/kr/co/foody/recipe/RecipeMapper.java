@@ -27,4 +27,5 @@ public interface RecipeMapper {
 	int insertRandomUser(Map user);
 	int insertAllergyUser(Map user);
 	int insertFeedback(Map User);
+	int randomReg(int no);
 }

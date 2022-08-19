@@ -21,17 +21,21 @@ public class IngredientServiceImpl implements IngredientService {
 	@Override
 	public List<IngredientVO> detail_cate(String detail_cate){
 		
-//		List<IngredientVO> list = mapper.detail_cate(detail_cate);
-//		List<String> detailList = new ArrayList<>();
-//		
-//		for(int i=0; i<list.size(); i++) {	
-//			detailList.add(list.get(i).getDetail());
-//		}
 		return mapper.detail_cate(detail_cate);
 	}
 	
 	@Override
 	public List<IngredientVO> nameSearch(){
 		return mapper.nameSearch();
+	}
+
+	@Override
+	public boolean updateIngre(IngredientVO vo) {
+		return mapper.updateIngre(vo);
+	}
+	
+	@Override
+	public boolean insertIngre(IngredientVO vo) {
+		return mapper.insertIngre(vo);
 	}
 }

@@ -16,5 +16,10 @@ public interface IngredientMapper {
 	
 	IngredientVO ingreInfo(int no);
 	IngredientVO ingreInfoWithName(int no);
+	boolean updateIngre(IngredientVO vo);
+	boolean insertIngre(IngredientVO vo);
+	
+	List<String> allergyList();
+	
 	
 }

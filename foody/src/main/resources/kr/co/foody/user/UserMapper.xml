@@ -122,7 +122,22 @@
 			,addr2=#{selfi}, intro=#{intro}, height=#{height}, weight=#{weight}, activity=#{activity}
 		WHERE no=#{no}
 	</update>
+	<!-- 유저 전체 카운트(관리자) -->
+	<select id="countAllUser" resultType="int">
+		SELECT count(*) FROM user
+	</select>
 	
+	<!-- 월별 신규 유저 카운트(관리자) -->
+	<select id="countUserWithPeriod" resultType="map">
+		select *
+		from (
+			select @ROWNUM := @ROWNUM + 1 AS rownum, a.*
+			from (SELECT  DATE_FORMAT(regdate,'%Y-%m') month, COUNT(*) cnt
+				FROM user
+			GROUP BY month order by month desc) a , (select @rownum := 0) r
+		) b
+		where rownum between 1 and 5;
+	</select>
 
 </mapper>
 

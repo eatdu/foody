@@ -25,9 +25,13 @@ public class QnaController {
 	
 	// 목록보기
 	@GetMapping("/board/qna.do")
-	public String getFaq(QnaVO vo, Model model) {
+	public String getFaq(QnaVO vo, Model model, HttpSession sess) {
+		
 		model.addAttribute("data", service.getFaq(vo));
-		model.addAttribute("getMyQna", service.getMyQna(vo));
+		
+		UserVO uv = (UserVO)sess.getAttribute("loginInfo");
+		vo.setUser_no(uv.getNo());
+		model.addAttribute("myQna", service.getMyQna(vo));
 		return "board/qna";
 	}
 	
@@ -38,7 +42,7 @@ public class QnaController {
 	}
 	
 	// 등록처리
-	@PostMapping("/qna/insert.do")
+	@PostMapping("/board/qna_insert.do")
 	public String insert(QnaVO vo, Model model,
 			@RequestParam MultipartFile file,
 			HttpServletRequest req) {
@@ -49,7 +53,7 @@ public class QnaController {
 		
 		if (service.insert(vo) == 1) {
 			model.addAttribute("msg", "게시물이 저장되었습니다.");
-			model.addAttribute("url", "index.do");
+			model.addAttribute("url", "qna.do");
 			return "common/alert";
 		} else {
 			model.addAttribute("msg", "게시물을 저장할 수 없습니다.");
@@ -58,7 +62,7 @@ public class QnaController {
 	}
 	
 	// 답변폼
-	@GetMapping("/qna/reply.do")
+	@GetMapping("/board/qna_reply.do")
 	public String reply(QnaVO vo, Model model) {
 		QnaVO data = service.edit(vo.getNo());
 		model.addAttribute("data", data);
@@ -66,7 +70,7 @@ public class QnaController {
 	}
 	
 	// 답변처리
-	@PostMapping("/qna/reply.do")
+	@PostMapping("/board/qna_reply.do")
 	public String reply(QnaVO vo, Model model, HttpServletRequest req) {
 		
 		// member_no 저장 // write.jsp 에서 하기보다 안전
@@ -85,7 +89,7 @@ public class QnaController {
 	}
 	
 	// 상세보기
-	@GetMapping("/qna/view.do")
+	@GetMapping("/board/qna_view.do")
 	public String view(QnaVO vo, Model model) {
 		QnaVO data = service.view(vo.getNo());
 		model.addAttribute("data", data);
@@ -93,7 +97,7 @@ public class QnaController {
 	}
 	
 	// 수정폼
-	@GetMapping("/qna/edit.do")
+	@GetMapping("/board/qna_edit.do")
 	public String edit(QnaVO vo, Model model) {
 		QnaVO data = service.edit(vo.getNo());
 		model.addAttribute("data", data);
@@ -101,7 +105,7 @@ public class QnaController {
 	}
 	
 	// 수정처리
-	@PostMapping("qna/update.do")
+	@PostMapping("board/qna_update.do")
 	public String update(QnaVO vo, Model model) {
 		
 		if (service.update(vo) == 1) {
@@ -115,7 +119,7 @@ public class QnaController {
 	}
 	
 	// 삭제처리
-	@GetMapping("qna/delete.do")
+	@GetMapping("board/qna_delete.do")
 	public String delete(QnaVO vo, Model model) {
 		if (service.delete(vo.getNo())) {
 			model.addAttribute("msg", "게시물이 삭제되었습니다.");

@@ -20,9 +20,9 @@
 <%@ include file="../common/navBar.jsp" %>
         <div class="sub">
             <div class="size">
-                <h3 class="sub_title">게시판</h3>
+                <h3 class="sub_title">1:1 질문하기</h3>
                 <div class="bbs">
-                <form method="post" name="frm" id="frm" action="insert.do" enctype="multipart/form-data" >
+                <form method="post" name="frm" id="frm" action="qna_insert.do" enctype="multipart/form-data" >
                 <input type="hidden" name="user_no" value="${loginInfo.no}">
                     <table class="board_write" border="2">
                         <tbody>
@@ -35,7 +35,7 @@
                         <tr>
                             <th>질문유형</th>
                             <td>
-	                            <select id="qSelect" name="qType" class="qSelect" title="질문유형 선택">
+	                            <select id="qtype" name="qtype" class="qtype" title="질문유형 선택">
 	                                <option value="1">이용방법</option>
 	                                <option value="2">회원정보</option>
 	                                <option value="3">기타</option>

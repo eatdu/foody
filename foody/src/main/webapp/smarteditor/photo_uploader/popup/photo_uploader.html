@@ -1,0 +1,384 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="ko">
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="Content-Script-Type" content="text/javascript">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<title>사진 첨부하기</title>
+<style type="text/css">
+/* NHN Web Standard 1Team JJS 120106 */ 
+/* Common */
+body, p, h1, h2, h3, h4, h5, h6, ul, ol, li, dl, dt, dd, table, th, td, form, fieldset, legend, input, textarea, button, select {
+	margin: 0;
+	padding: 0
+}
+body, input, textarea, select, button, table {
+	font-family: '돋움', Dotum, Helvetica, sans-serif;
+	font-size: 12px
+}
+img, fieldset {
+	border: 0
+}
+ul, ol {
+	list-style: none
+}
+em, address {
+	font-style: normal
+}
+a {
+	text-decoration: none
+}
+a:hover, a:active, a:focus {
+	text-decoration: underline
+}
+/* Contents */
+.blind {
+	visibility: hidden;
+	position: absolute;
+	line-height: 0
+}
+#pop_wrap {
+	width: 407px;
+}
+#pop_header {
+	height: 26px;
+	padding: 14px 0 0 20px;
+	border-bottom: 1px solid #ededeb;
+	background: #f4f4f3
+}
+.pop_container {
+	padding: 11px 20px 0
+}
+#pop_footer {
+	margin: 21px 20px 0;
+	padding: 10px 0 16px;
+	border-top: 1px solid #e5e5e5;
+	text-align: center
+}
+h1 {
+	color: #333;
+	font-size: 14px;
+	letter-spacing: -1px
+}
+.btn_area {
+	word-spacing: 2px
+}
+.pop_container .drag_area {
+	overflow: hidden;
+	overflow-y: auto;
+	position: relative;
+	width: 365px;
+	height: 129px;
+	margin-top: 4px;
+	border: 1px solid #eceff2
+}
+.pop_container .drag_area .bg {
+	display: block;
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 365px;
+	height: 129px;
+	background: #fdfdfd url(../../img/photoQuickPopup/bg_drag_image.png) 0 0 no-repeat
+}
+.pop_container .nobg {
+	background: none
+}
+.pop_container .bar {
+	color: #e0e0e0
+}
+.pop_container .lst_type li {
+	overflow: hidden;
+	position: relative;
+	padding: 7px 0 6px 8px;
+	border-bottom: 1px solid #f4f4f4;
+	vertical-align: top
+}
+.pop_container :root .lst_type li {
+	padding: 6px 0 5px 8px
+}
+.pop_container .lst_type li span {
+	float: left;
+	color: #222
+}
+.pop_container .lst_type li em {
+	float: right;
+	margin-top: 1px;
+	padding-right: 22px;
+	color: #a1a1a1;
+	font-size: 11px
+}
+.pop_container .lst_type li a {
+	position: absolute;
+	top: 6px;
+	right: 5px
+}
+.pop_container .dsc {
+	margin-top: 10px;
+	color: #666;
+	line-height: 18px
+}
+.pop_container .dsc_v1 {
+	margin-top: 12px
+}
+.pop_container .dsc em {
+	color: #13b72a
+}
+.pop_container2 {
+	position: relative;
+	padding: 30px 30px 20px 30px;
+}
+.pop_container2 .dsc {
+	margin-top: 6px;
+	color: #666;
+	line-height: 18px
+}
+.pop_container2 .dsc strong {
+	color: #13b72a
+}
+.pop_container2 dl {
+	position: relative;
+	vertical-align: middle;
+}
+.pop_container2 dt {
+	width: 22%;
+	float: left;
+	vertical-align: middle;
+	padding-top: 10px;
+}
+.pop_container2 dd {
+	width: 75%;
+	float: left;
+	vertical-align: middle;
+}
+.pop_con {
+	margin: 5px 0;
+	height: 60px;
+}
+.popplus {
+	width: auto;
+	height: 50px;
+	margin: 10px 0;
+	padding: 10px 0;
+	overflow: hidden;
+	border-top: #CCC 1px dotted;
+}
+.upload {
+	margin: 4px 4px 0 0;
+	_margin: 0;
+	padding: 6px 0 4px 6px;
+	border: solid 1px #d5d5d5;
+	color: #a1a1a1;
+	font-size: 12px;
+	border-right-color: #efefef;
+	border-bottom-color: #efefef;
+	length: 300px;
+	width: 100%;
+}
+.upload_alt {
+	margin: 4px 4px 0px 0;
+	_margin: 0;
+	padding: 6px 0 4px 6px;
+	border: solid 1px #d5d5d5;
+	color: #a1a1a1;
+	font-size: 12px;
+	border-right-color: #efefef;
+	border-bottom-color: #efefef;
+	width: 100%;
+}
+.upload_width {
+	margin: 4px 4px 8px 0;
+	_margin: 0;
+	padding: 6px 0 4px 6px;
+	border: solid 1px #d5d5d5;
+	color: #a1a1a1;
+	font-size: 12px;
+	border-right-color: #efefef;
+	border-bottom-color: #efefef;
+	width: 100%;
+}
+:root .upload {
+	padding: 6px 0 2px 6px;
+}
+/* 버튼들(기본) */
+.btn_in, .btn_in * {
+	display: inline-block;
+	overflow: visible;
+	position: relative;
+	margin: 0;
+	padding: 0;
+	border: 0;
+	background: url(/img/btn_bg.gif) no-repeat;
+	font-size: 11px;
+	color: #797979;
+	text-decoration: none !important;
+	vertical-align: top;
+	white-space: nowrap;
+	font-weight: bold;
+}
+.btn_in {
+	margin: 0 2px 0 0px;
+}
+.btn_custom {
+	position: absolute;
+	right: 25px;
+	top: 35px;
+}
+.btn_in * {
+	left: 4px;
+	cursor: pointer;
+	_cursor: hand;
+}
+.btn_in.inbtn {
+	height: 26px;
+	line-height: 26px;
+	background-position: left 0;
+}
+.btn_in.inbtn * {
+	height: 26px;
+	line-height: 26px;
+	padding: 0 8px 0 4px;
+	background-position: right top;
+	font-size: 11px;
+}
+.btn_in.strong * {
+	font-weight: bold !important
+}
+</style>
+<script type="text/javascript" src="http://code.jquery.com/jquery-1.7.2.min.js"></script>
+<script type="text/javascript">
+var cnt = 1;
+var min = 1;
+var max = 10;
+
+jQuery(window).load(function(){
+	var _form = jQuery("#editor_upimage");
+	jQuery("#btn_plus").click(function(){
+		if(cnt != max){
+			_form.append("<div id='pop_content2_"+cnt+"' class='pop_con'></div>");
+			
+			var tag = "<dl><dt>첨부 "+(cnt+1)+". </dt><dd><input type='file' class='upload' id='uploadInputBox"+cnt+"' name='Filedata"+cnt+"'/></dd></dl>";
+			tag = tag + "<dl><dt>이미지설명</dt><dd><input type='text' class='upload_alt' id='img_alt"+cnt+"' name='image_alt' value='' onclick='blurAltInsert(this);'/></dd></dl>";
+			//tag = tag + "<dl><dt>width</dt><dd><input type='text' class='upload_width' id='width"+cnt+"' name='width' value=''/></dd></dl>";
+			
+			jQuery("#pop_content2_"+cnt).append(tag);
+			cnt++;
+		}else{
+			alert("더 이상 추가하실 수 없습니다.");
+		}
+	});
+	
+	jQuery("#btn_minus").click(function(){
+		if(cnt != min){
+			jQuery("#pop_content2_"+(cnt-1)).remove();
+			cnt--;
+		}else{
+			alert("더 이상 삭제하실 수 없습니다.");
+		}
+	});
+	
+	jQuery("#btn_confirm").click(function(){
+		
+		var pass = true; 
+		jQuery(".upload").each(function(){
+			var file = jQuery(this);
+			if(pass){
+				if(file.val().length == 0){
+					alert("파일을 첨부하여 주십시오.");
+					file.focus();
+					pass = false;
+					return false;
+				}
+				
+				//if(!/.*\.(jpg|png|bmp|gif|JPG|PNG|BMP|GIF).*/.test(file.val())){
+				//	alert("JPG, GIF, PNG, BMP 확장자만 가능합니다");
+				//	jQuery(this).val('');
+				//	pass = false;
+				//	return false;
+				//}
+				
+			} else {
+				return false;
+			}
+		});
+
+		if(pass){
+			jQuery("#fileCount").val(cnt);
+		}
+		
+	});
+});
+</script>
+</head>
+<body>
+<div id="pop_wrap"> 
+	<!-- header -->
+	<div id="pop_header">
+		<h1>사진 첨부하기</h1>
+	</div>
+	<!-- //header --> 
+	<!-- container --> 
+	
+	<!-- [D] HTML5인 경우 pop_container 클래스와 하위 HTML 적용
+	    	 그밖의 경우 pop_container2 클래스와 하위 HTML 적용      -->
+	<div id="pop_container2" class="pop_container2"> 
+		<!-- content -->
+		<p class="dsc" id="info"><strong>10MB</strong>이하의 이미지 파일만 등록할 수 있습니다.<br>
+			(JPG, GIF, PNG, BMP)</p>
+		<div class="btn_custom">
+			<div class="btn_area btnAll"> 
+				<strong class="btn_in inbtn"><input value="추가" type="button" id="btn_plus"/></strong> 
+				<strong class="btn_in inbtn"><input value="빼기" type="button" id="btn_minus"/></strong>
+			</div>
+		</div>
+		<form id="editor_upimage" name="editor_upimage" action="editor_upload.jsp" method="post" enctype="multipart/form-data" onSubmit="return false;">
+			<input type="hidden" name="fileCount" id="fileCount" value="1" />
+			<div id="pop_content2" class="pop_con">
+				<dl>
+					<dt>첨부 1.</dt>
+					<dd>
+						<input type="file" class="upload" id="uploadInputBox" name="Filedata0">
+					</dd>
+				</dl>
+				<dl>
+					<dt>이미지설명</dt>
+					<dd>
+						<input type="text" class="upload_alt" id="img_alt0" name="image_alt" value="" onclick="blurAltInsert(this);"/>
+					</dd>
+				</dl>
+			</div>
+		</form>
+		<!-- //content --> 
+		
+	</div>
+	<div id="pop_container" class="pop_container" style="display:none;"> 
+		<!-- content -->
+		<div id="pop_content">
+			<p class="dsc"><em id="imageCountTxt">0장</em>/10장 <span class="bar">|</span> <em id="totalSizeTxt">0MB</em>/50MB</p>
+			<!-- [D] 첨부 이미지 여부에 따른 Class 변화 
+            	 첨부 이미지가 있는 경우 : em에 "bg" 클래스 적용 //첨부 이미지가 없는 경우 : em에 "nobg" 클래스 적용   -->
+			
+			<div class="drag_area" id="drag_area">
+				<ul class="lst_type" >
+				</ul>
+				<em class="blind">마우스로 드래그해서 이미지를 추가해주세요.</em><span id="guide_text" class="bg"></span> </div>
+			<div style="display:none;" id="divImageList"></div>
+			<p class="dsc dsc_v1"><em>한 장당 10MB, 1회에 50MB까지, 10개</em>의 이미지 파일을<br>
+				등록할 수 있습니다. (JPG, GIF, PNG, BMP)</p>
+		</div>
+		<!-- //content --> 
+	</div>
+	<!-- //container --> 
+	
+	<!-- footer -->
+	<div id="pop_footer">
+		<div class="btn_area"> <a href="#"><img src="../../img/photoQuickPopup/btn_confirm.png" width="49" height="28" alt="확인" id="btn_confirm"></a> <a href="#"><img src="../../img/photoQuickPopup/btn_cancel.png" width="48" height="28" alt="취소" id="btn_cancel"></a> </div>
+	</div>
+	<!-- //footer --> 
+</div>
+<script type="text/javascript" src="jindo.min.js" charset="utf-8"></script> 
+<script type="text/javascript" src="jindo.fileuploader.js" charset="utf-8"></script> 
+<script type="text/javascript" src="attach_photo.js" charset="utf-8"></script>
+</body>
+</html>

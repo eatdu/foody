@@ -443,9 +443,52 @@
 					};
 				$("#chartContainer").CanvasJSChart(options); 
 			}
+			
+			// -----------이미지를 누르면 버튼이 눌리고 버튼이 눌리면 readURL함수 실행 JS-------------
+			$(function(){
+				$('#Imagebutton').click(function(){
+					$("#imgupload0").trigger('click');
+				});
+				$("#imgupload0").change(function() {
+					readURL(this);
+				});
+			});
+			
+			// -------------------버튼이 눌리면 이미지 프리뷰 코드(호출) JS----------------------
+			function readURL(input) {
+				if (input.files && input.files[0]) {
+					var reader = new FileReader();
+					reader.onload = function(e) {
+						document.getElementById('processImg0').src = e.target.result;
+					};
+					reader.readAsDataURL(input.files[0]);
+				} else {
+					document.getElementById('processImg0').src = "";
+				}
+			}
+			
+			// -------------------조리과정 div 만드는 함수(호출)----------------------
+			/* function makeProcessDiv(input){
+				$('#processList').append(
+						'<div id="process'+input+'" style="height: 150px; width: 1000px; padding:2.5px;">'
+						+'<input type="file" id="imgupload'+input+'"  style="display:none"/>'
+						+'<div id="Imagebutton'+input+'" style="padding-top:0px; height: 140px; width: 220px; float:left; background-color:#ECECEC; text-align: center;">'
+						+'</div>');
+				
+					
+							<img id="processImg0" src="resources/img/PlusIcon.png" style="height: 140px; width: 220px; object-fit: cover;">
+						</div>
+						<textarea id="processText0" rows="5" cols="30" style="height: 140px; padding:0px; resize:none;"></textarea>
+				
+			} */
+			
+			// -------------------조리과정 div 삭제하는 함수(호출)----------------------
+			
+			
 		</script>
+		
 	</head>
-
+	
 	<!-- 드롭다운 설명 텍스트 숨기기 -->
 	<style>
 		select option[value=""][disabled] {
@@ -549,24 +592,15 @@
 			
 			<!-- 조리 과정 style 먹인거 나중에 다 빼기 -->
 			조리과정:
-			<div id="processList">
-				<div id="process0" style="height: 100px; width: 1000px; padding:2.5px;">
-					<a style="float:left;">STEP 1</a>
-					<button style="height: 95px; width: 144px; float:left;"></button>
-					<textarea style="height: 90px; width: 450px; margin-left:5px;" rows="5" cols="50"></textarea>
-				</div>
-				<div id="process1" style="height: 100px; width: 1000px; padding:2.5px;">
-					<a style="float:left;">STEP 2</a>
-					<button style="height: 95px; width: 144px; float:left;"></button>
-					<textarea style="height: 90px; width: 450px; margin-left:5px;" rows="5" cols="50"></textarea>
-				</div>
-			</div>
+			<div id="processList"></div>
 			
 			<!-- 팁(tip) -->
-			요리tip! &nbsp <input type="text" name="tip" ><br>
+			<div>
+				요리tip! &nbsp <input type="text" name="tip" ><br>
 		
-			<!-- 등록버튼(submit) -->
-			<input type="submit" name ="submit">
+				<!-- 등록버튼(submit) -->
+				<input type="submit" name ="submit">
+			</div>
 		</form>
 	</body>
 </html>

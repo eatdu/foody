@@ -1,5 +1,6 @@
 package kr.co.foody.user;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
@@ -19,7 +20,7 @@ public interface UserMapper {
 	int updateTempPwd(UserVO vo);
 	int prefer(UserVO vo);
 	int insertAdd(UserVO vo);
-	List<String> getAllergy();
+	List<UserVO> getAllergy();
 	int userAllergy(UserVO vo);
 	int userPrefer(UserVO vo);
 	
@@ -31,5 +32,9 @@ public interface UserMapper {
 	// 회원의 알레르기, 선호음식 리스트 조회
 	List<MypageVO> allergyList(int no);
 	List<MypageVO> preferList(int no);
+	
+	// 회원 월별 통계(관리자)
+	int countAllUser();
+	List<Map> countUserWithPeriod();
 	
 }

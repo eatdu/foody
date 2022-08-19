@@ -62,7 +62,7 @@
 	
 	<!-- 알러지 항목 가져오기 -->
 	<select id="getAllergy" resultType="kr.co.foody.user.UserVO">
-		SELECT * FROM allergy
+		SELECT no AS allergy_no, allergy FROM allergy
 	</select>
 	
 	<!-- 유저알러지 정보 입력 -->
@@ -102,7 +102,7 @@
 	<!-- 유저의 알레르기 정보 출력 -->
 	<select id="allergyList" parameterType="int" resultType="kr.co.foody.mypage.MypageVO">
 		SELECT
-			allergy
+			a.no AS allergy_no, allergy
 		FROM allergy AS a JOIN u_allergy AS ua
 		ON a.no = ua.user_allergy
 		WHERE ua.user_no=${user_no}
@@ -115,7 +115,29 @@
 		WHERE user_no=${user_no}
 	</select>
 	
+	<!-- 회원정보 수정 -->
+	<update id="modifyUserInfo" parameterType="kr.co.foody.user.UserVO">
+		UPDATE user SET 
+			selfi=#{selfi}, nik_name=#{selfi}, tel=#{selfi}, zipcode=#{selfi}, addr1=#{selfi}
+			,addr2=#{selfi}, intro=#{intro}, height=#{height}, weight=#{weight}, activity=#{activity}
+		WHERE no=#{no}
+	</update>
+	<!-- 유저 전체 카운트(관리자) -->
+	<select id="countAllUser" resultType="int">
+		SELECT count(*) FROM user
+	</select>
 	
+	<!-- 월별 신규 유저 카운트(관리자) -->
+	<select id="countUserWithPeriod" resultType="map">
+		select *
+		from (
+			select @ROWNUM := @ROWNUM + 1 AS rownum, a.*
+			from (SELECT  DATE_FORMAT(regdate,'%Y-%m') month, COUNT(*) cnt
+				FROM user
+			GROUP BY month order by month desc) a , (select @rownum := 0) r
+		) b
+		where rownum between 1 and 5;
+	</select>
 
 </mapper>
 

@@ -17,7 +17,7 @@ public interface UserService {
 	//UserVO findPwd(UserVO vo);
 	int prefer(UserVO vo);
 	int signUpNext(UserVO vo);
-	List<String> getAllergy();
+	List<UserVO> getAllergy();
 	int userAllergy(UserVO vo);
 	int userPrefer(UserVO vo);
 	

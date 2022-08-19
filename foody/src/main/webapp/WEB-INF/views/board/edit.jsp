@@ -7,11 +7,18 @@
     <link rel="stylesheet" href="/foody/css/reset.css"/>
     <link rel="stylesheet" href="/foody/css/contents.css"/>
     
+    <script src="/foody/smarteditor/js/HuskyEZCreator.js"></script>
+	<script src="/foody/js/function.js"></script>
     
     <script>
     	function goSave() {
+    		editor.getById['content'].exec('UPDATE_CONTENTS_FIELD', []);
     		frm.submit();
     	}
+    	var editor; // 전역변수로 선언
+        $(function() {
+        	editor = setEditor('content'); // 문서 열리자마자 editor 객체에 담아줌
+        })
     </script>
 </head>
 

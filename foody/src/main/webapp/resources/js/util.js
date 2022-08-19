@@ -40,15 +40,72 @@ function sendAjax(reqUrl, data, callback){
 	});
 }
 
+//ajax로 재료 정보 추가
+function addIngre(){
+	var data = {};
+	if ($('#ingreAddArea select[name=large_cate]').val() == 0) {
+		alert("재료 분류를 선택해주세요.");
+		return;
+	}
+	data.no = $('#ingreAddArea input[name=no]').val();
+	data.allergy_no = $('#ingreAddArea select[name=allergy_no]').val();
+	data.name = $('#ingreAddArea input[name=name]').val();
+	data.carbo = $('#ingreAddArea input[name=carbo]').val();
+	data.protein = $('#ingreAddArea input[name=protein]').val();
+	data.fat = $('#ingreAddArea input[name=fat]').val();
+	data.large_cate = $('#ingreAddArea select[name=large_cate]').val();
+	data.detail = $('#ingreAddArea input[name=detail]').val();
+	data.print = 0;
+	if ($('#ingreAddArea input[name=print]').is(":checked") == false) {
+		data.print = 1;
+	}
+
+	sendAjax(
+		"/foody/admin/ingreInsert.do",
+		data,
+		function(result){
+			if(result == true) {
+				$('#ingreAddArea input').each(function(idx, obj){
+					$(this).val(' ');
+				});
+				$('#ingreAddArea input:checkbox').prop("checked", false);
+				$('#ingreAddArea select').each(function(idx, obj){
+					$(this).val('0');
+				});
+				alert("재료 정보 추가에 성공하였습니다.");
+			} else alert("재료 추가 실패");
+		}
+	);
+}
+
 //ajax로 재료 정보 수정
 function updateIngre(){
 	var data = {};
+	if ($('#ingreInfoArea select[name=large_cate]').val() == 0) {
+		alert("재료 분류를 선택해주세요.");
+		return;
+	}
+	data.no = $('#ingreInfoArea input[name=no]').val();
+	data.allergy_no = $('#ingreInfoArea select[name=allergy_no]').val();
+	data.name = $('#ingreInfoArea input[name=name]').val();
+	data.carbo = $('#ingreInfoArea input[name=carbo]').val();
+	data.protein = $('#ingreInfoArea input[name=protein]').val();
+	data.fat = $('#ingreInfoArea input[name=fat]').val();
+	data.large_cate = $('#ingreInfoArea select[name=large_cate]').val();
+	data.detail = $('#ingreInfoArea input[name=detail]').val();
+	data.print = 0;
+	if ($('#ingreInfoArea input[name=print]').is(":checked") == false) {
+		data.print = 1;
+	}
 
 	sendAjax(
-		"/admin/ingreUpdate.do",
+		"/foody/admin/ingreUpdate.do",
 		data,
 		function(result){
-			$("#" + targetId).empty().append(result);
+			if(result == true) {
+				alert("재료 정보 수정에 성공하였습니다.");
+				$("#ingreInfoArea").empty().append("조회할 재료를 선택해주세요.");
+			} else alert("재료 수정 실패");
 		}
 	);
 }

@@ -3,6 +3,8 @@ package kr.co.foody.admin;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,7 +22,7 @@ public class AdminServiceImpl implements AdminService {
 	
 	@Autowired
 	UserMapper userMapper;
-	
+	// 재료 정보 관련
 	@Override
 	public IngredientVO ingreInfo(int no) {
 		IngredientVO vo = ingreMapper.ingreInfo(no); 
@@ -44,4 +46,13 @@ public class AdminServiceImpl implements AdminService {
 		}
 		return result;
 	}
+	
+	//가입자 통계 관련
+	@Override
+	public boolean userReport(HttpSession sess) {
+		sess.setAttribute("countAllUser", userMapper.countAllUser());
+		sess.setAttribute("countUserWithPeriod", userMapper.countUserWithPeriod());
+		return false;
+	}
+	
 }

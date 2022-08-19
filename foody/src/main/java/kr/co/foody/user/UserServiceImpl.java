@@ -127,7 +127,7 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public List<String> getAllergy() {
+	public List<UserVO> getAllergy() {
 		return mapper.getAllergy();
 	}
 
@@ -135,22 +135,58 @@ public class UserServiceImpl implements UserService {
 	public Map<String, Object> modify(HttpSession sess) {
 		UserVO uv = (UserVO)sess.getAttribute("loginInfo");
 		
-		// 회원가입시 유저가 선택한 알레르기에 대한 값들을 List에 담는다
-		List<MypageVO> allergy = mapper.allergyList(uv.getNo());
+		UserVO uvl = mapper.selectOne(uv.getNo());
 		
+		// 회원가입시 유저가 선택한 알레르기
+		List<MypageVO> allergy = mapper.allergyList(uv.getNo());
+		// 전체알러지 출력
+		List<UserVO> allergyList = mapper.getAllergy();
+		String aHtml = "";
+		for(int i=0; i<allergyList.size(); i++) {
+			String chk = "";
+			for(int j=0; j<allergy.size(); j++) {
+				// 전체 알레르기 리스트와 회원이 체크한 알레르기를 비교하여 같은것만 체크
+				if(allergy.get(j).getAllergy_no() == allergyList.get(i).getAllergy_no()) {
+					chk = "checked";
+					break;
+				}
+			}
+			// 전체 리스트중에 회원이 체크한 알레르기만 체크되어 출력
+			aHtml += "<label for=\""+allergyList.get(i).getAllergy_no()+"\"><input type=\"checkbox\" id=\""+allergyList.get(i).getAllergy_no()+"\" name=\"allergy\" value=\""+allergyList.get(i).getAllergy_no()+"\""+chk+">"+allergyList.get(i).getAllergy()+"</label>\r\n";
+		}
+		
+		// 회원의 선호음식 체크박스 수정 리스트
+		// 선호음식 전체 배열
+		String[] rcpCateArr = RecipeCategory.RcpCateArr;
 		// 회원가입시 유저가 선택한 선호음식에 대한 값들을 List에 preferNo를 담는다
 		List<MypageVO> preferNo = mapper.preferList(uv.getNo());
+		String pHtml = "";
+		for(int i=0; i<rcpCateArr.length; i++) {
+			String chk = "";
+			for(int j=0; j<preferNo.size(); j++) {
+				// 전체 선호음식 리스트와 회원이 체크한 선호음식을 비교하여 같은것만 체크
+				if((int)(RecipeCategory.getRcpCate().get(rcpCateArr[i])) == preferNo.get(j).getPrefer_food()) {
+					chk = "checked";
+					break;
+				}
+			}
+			// 전체 리스트중에 회원이 체크한 선호음식만 체크되어 출력
+			pHtml += "<label for=\""+RecipeCategory.getRcpCate().get(rcpCateArr[i])+"\"><input type=\"checkbox\" id=\""+RecipeCategory.getRcpCate().get(rcpCateArr[i])+"\" name=\"allergy\" value=\""+RecipeCategory.getRcpCate().get(rcpCateArr[i])+"\""+chk+">"+rcpCateArr[i]+"</label>\r\n";
+		}
+
 		List<String> prefer = new ArrayList<String>();
-		// for문을 preferNo만큼 실행한다.
-		for(int i=0; i<preferNo.size(); i++) {
+		for(int i=0; i<preferNo.size(); i++) { // for문을 preferNo만큼 실행한다.
 			// 선택된 해당값들만 RcpCateArr배열에 index(-1)로 담는다
-			prefer.add(RecipeCategory.RcpCateArr[(preferNo.get(i).getPrefer_food()) - 1]);		
+		 	prefer.add(RecipeCategory.RcpCateArr[(preferNo.get(i).getPrefer_food()) - 1]);		
 		}
 		
 		// 출력된 값들을 map에 담아서 리턴해준다
 		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("allergyList", allergy); 
+		map.put("allergyList", allergyList);
 		map.put("preferList", prefer);
+		map.put("userInfo", uvl);
+		map.put("allergy", aHtml);
+		map.put("prefer", pHtml);
 		
 		return map;
 	}

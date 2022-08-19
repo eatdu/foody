@@ -28,7 +28,29 @@
 		WHERE ingre.allergy_no = allergy.no 
 			AND ingre.no = #{no}
 	</select>
-	
+	<!-- 재료정보 수정 -->
+	<update id="updateIngre" parameterType="kr.co.foody.recipe.IngredientVO">
+		UPDATE ingre
+		SET
+			allergy_no = #{allergy_no}
+		    , name = #{name}
+		    , carbo = #{carbo}
+		    , protein = #{protein}
+		    , fat = #{fat}
+		    , large_cate = #{large_cate}
+		    , detail = #{detail}
+		    , print = #{print}
+		WHERE no = #{no};
+	</update>
+	<!-- 재료정보 추가 -->
+	<insert id="insertIngre" parameterType="kr.co.foody.recipe.IngredientVO">
+		INSERT INTO ingre (allergy_no, name, carbo, protein, fat, large_cate, detail, print)
+		VALUES (#{allergy_no}, #{name}, #{carbo}, #{protein}, #{fat}, #{large_cate}, #{detail}, #{print})
+	</insert>
+	<!-- 알러지명 리스트 -->
+	<select id="allergyList" resultType="string">
+		SELECT allergy FROM allergy ORDER BY no
+	</select>
 	
 	
 </mapper>

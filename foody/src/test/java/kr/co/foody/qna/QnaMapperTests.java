@@ -24,7 +24,7 @@ public class QnaMapperTests {
 	public void insert() { // 행삽입
 		QnaVO vo = new QnaVO();
 		vo.setUser_no(3);
-		vo.setCategory(1);
+		vo.setQtype(1);
 		vo.setTitle("Q.FAQ 게시판 제목");
 		vo.setContent("FAQ 게시판 내용");
 		mapper.insert(vo);

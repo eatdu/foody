@@ -23,6 +23,13 @@ public class SampleDataMaker {
 	@Autowired
 	RecipeMapper mapper;
 	
+	@Test
+	public void randomReg() {
+		for (int i=4; i<=128; i++) {
+			mapper.randomReg(i);
+		}
+	}
+	
 	//@Test
 	public void feedbackMaker() {
 		// 회원번호 - 21~120 / 레시피 번호 - 1~200

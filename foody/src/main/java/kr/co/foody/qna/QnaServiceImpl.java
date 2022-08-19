@@ -57,7 +57,7 @@ public class QnaServiceImpl implements QnaService {
 	
 	@Override
 	public Map getMyQna(QnaVO vo) {
-		int totalCount = mapper.count(vo); // 총게시물수
+		int totalCount = mapper.count_myQna(vo); // 총게시물수
 		int totalPage = totalCount / vo.getPageRow(); // 총페이지수
 		if (totalCount % vo.getPageRow() > 0) totalPage++;
 		

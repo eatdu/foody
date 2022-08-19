@@ -13,7 +13,10 @@ public interface QnaMapper {
 	
 	int count(QnaVO vo);
 	List<QnaVO> getFaq(QnaVO vo);
+	
+	int count_myQna(QnaVO vo);
 	List<QnaVO> getMyQna(QnaVO vo);
+	
 	QnaVO view(int no);
 	int update(QnaVO vo);
 	boolean delete(int no);

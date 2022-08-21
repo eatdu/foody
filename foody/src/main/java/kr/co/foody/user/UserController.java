@@ -61,6 +61,19 @@ public class UserController {
 		return "user/modify";
 	}
 	
+	@PostMapping("/user/modify.do")
+	public String modify(UserVO uvo, Model model,HttpServletRequest req) {
+		if(service.userInfoUpdate(uvo,req) == true) {
+			model.addAttribute("msg", "업데이트 성공!!");
+			model.addAttribute("url", "/foody/mypage/mypage.do");
+			return "common/alert";
+		} else {
+			model.addAttribute("msg", "업데이트에 실패하였습니다.");
+			return "common/alert";
+		}
+	}
+	
+	
 	@PostMapping("/user/login.do") // 로그인 이메일 비밀번호 일치 확인
 	public String login(UserVO vo, HttpSession sess, Model model) {
 		if(service.loginCheck(vo, sess)) {
@@ -189,6 +202,9 @@ public class UserController {
 			return "common/alert";
 		}
 	}
+	
+	
+	
 	
 	
 	

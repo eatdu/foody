@@ -46,8 +46,6 @@ public class UserMapperTests {
 //		}
 		log.info(vo);
 	}
-
-
 	
 	//@Test 
 	public void selectOne() { // idx 번호로 해당행 가져오기
@@ -63,11 +61,32 @@ public class UserMapperTests {
 		
 	}
 	
-	@Test
+	//@Test
 	public void allergyNo() {
 		log.info(mapper.allergyNoList(124));
 		log.info(mapper.preferNoList(124));
-		
+	}
+	
+	//@Test
+	public void update() {
+		UserVO vo = new UserVO();
+		vo.setNo(2);
+		vo.setNik_name("이두현321");
+		vo.setTel("01033333333");
+		vo.setZipcode("02111");
+		vo.setIntro("1234141");
+		vo.setAddr1("서울시");
+		vo.setAddr2("송파구");
+		vo.setHeight("132");
+		vo.setWeight("54");
+		vo.setActivity(35);
+		mapper.modifyUserInfo(vo);
+	}
+	
+	@Test
+	public void deleteAllergy() {
+		UserVO vo = new UserVO();
+		mapper.userPreferDelete(3);
 	}
 	
 	

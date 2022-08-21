@@ -17,11 +17,7 @@
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
 <script>
-   	function goSave(route){
-   		var tel1 = '${fn:substring(modify.userInfo.tel,0,2)}';
-   		$("#tel1").val(tel1).prop("selected", true);
-   		
-   		if(!isCon) return;
+   	function goSave(){
    		if($("#nik_name").val().trim() == ''){ // 닉네임공란 체크
    			alert('닉네임을 입력해 주세요.');
    			$("#nik_name").focus();
@@ -34,7 +30,7 @@
    			return;
    		} */
    		// 닉네임 중복확인
-   		var isCon = true;
+   		/* var isCon = true;
    		$.ajax({
 			url : 'nik_nameDupCheck.do',
 			data : {nik_name:$('#nik_name').val()},
@@ -46,7 +42,7 @@
 					isCon = false;
 				}
 			}
-		});
+		}); */
    		//var reg_tel = /^d{4}-\d{4}$/;
   			/* if(!reg_tel.test($("#tel2").val())){ // 전화번호2 숫자만 입력
    			alert('숫자만 입력해주세요.');
@@ -79,18 +75,10 @@
    			alert('한글로 입력해주세요.')
    			return;
    		} */
-   		if($('#birth1').val().length != 6){ // 전화번호2 칸수제한
-  			alert('주민번호 6자리를 입력해 주세요.');
-  		    	$('#birth1').focus()
-    		    return;
-    	}
+   		var f = document.frm;
+		f.tel.value = f.tel1.value + f.tel2.value + f.tel3.value;
    		$("#frm").submit();
    	}
-   	
-   	$(function () {
-		tel1_val = $('select.tel1').attr('data-type');
-	   	$('select.tel1 option[value=' + tel1_val + ']').attr('selected', 'selected');
-   	});
    	$(function(){
    		$('#tel2').on('keyup', function() { // 전화번호2번 4자리 입력시 전화번호3번칸으로 자동이동
    		    if(this.value.length == 4) {
@@ -142,13 +130,9 @@
    			})
    			 
    		})
-   		$('#frm').click(function(){
-   			var f = document.frm;
-   			f.tel.value = f.tel1.value + f.tel2.value + f.tel3.value;
-	   	})
    	})
 </script>
-<%@ include file="../common/profile.jsp" %>
+<%-- <%@ include file="../common/profile.jsp" %> --%>
 <%@ include file="../common/addrAPI.jsp" %>
 </head>
 <body>
@@ -156,7 +140,7 @@
 	    <div class="size">
 	        <h3 class="sub_title">회원수정</h3>
 	        <form name="frm" id="frm" action="modify.do" method="post">
-	        <input type="hidden" value="${modify.userInfo.no}">
+	        <input type="hidden" name="no" value="${modify.userInfo.no}">
 	        <input type="hidden" name="selfi">
 	        <div class="jb-image"><input type="file" id="chooseFile" name="chooseFile" class="img-input" style="diplay:none;"></div>
 	        <div class="img"><img src="/foody/upload/${modify.userInfo.selfi}" style="width:200px; height:200px; border-radius:50%;"></div>
@@ -179,6 +163,12 @@
 	                    <th>이름</th>
 	                    <td>
 	                        <input name="name" id="name" class="" style="width:90px;float:left;" maxlength="5" value="${modify.userInfo.name}" readonly="readonly">
+	          			</td>
+	                </tr>
+	                <tr>
+	                    <th>한줄소개</th>
+	                    <td>
+	                        <input type="text" id="intro" name="intro" value="${modify.userInfo.intro}" style="width:200px;height:100px;">
 	          			</td>
 	                </tr>
 	                <tr>
@@ -253,7 +243,7 @@
 	        <div class="btnSet clear">
 	            <div>
 	          		 <a href="/foody/mypage/mypage.do"><button type="button">마이페이지</button></a>
-		             <button type="button" id="goFinish" name="goFinish" onclick="goSave();">저장</button>
+		             <input type="button" id="goFinish" name="goFinish" onclick="goSave();" value="저장">
 	            </div>
 	        </div>
 	    </div>

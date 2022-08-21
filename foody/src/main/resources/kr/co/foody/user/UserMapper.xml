@@ -83,7 +83,7 @@
 		)
 	</insert>
 	
-	<!-- 회원에 대한 정보조회 -->
+	<!-- 회원의 알레르기, 선호음식 정보조회 -->
 	
 	<!-- 유저의 알레르기 no 출력 -->
 	<select id="allergyNoList" parameterType="int" resultType="int">
@@ -110,18 +110,51 @@
 	
 	<!-- 유저의 선호음식 출력 -->
  	<select id="preferList" parameterType="int" resultType="kr.co.foody.mypage.MypageVO">
-		SELECT prefer_food 
+		SELECT 
+			<if test="prefer_food !=null">
+				prefer_food 
+			</if>
 		FROM prefer 
 		WHERE user_no=${user_no}
 	</select>
 	
 	<!-- 회원정보 수정 -->
+	
+	<!-- 회원의 기본정보 수정 -->
 	<update id="modifyUserInfo" parameterType="kr.co.foody.user.UserVO">
-		UPDATE user SET 
-			selfi=#{selfi}, nik_name=#{selfi}, tel=#{selfi}, zipcode=#{selfi}, addr1=#{selfi}
-			,addr2=#{selfi}, intro=#{intro}, height=#{height}, weight=#{weight}, activity=#{activity}
+		UPDATE user SET
+		 	<if test="selfi != null">
+				selfi=#{selfi},	
+			</if>
+				nik_name=#{nik_name}, tel=#{tel}, zipcode=#{zipcode}, addr1=#{addr1}
+				,addr2=#{addr2}, intro=#{intro}, height=#{height}, weight=#{weight}, activity=#{activity}
 		WHERE no=#{no}
 	</update>
+	
+	<!-- 유저가 가진 알러지의 no 받아오기 -->
+	<select id="userAllergyNo" parameterType="int" resultType="kr.co.foody.mypage.MypageVO">
+		SELECT no 
+		FROM u_allergy 
+		WHERE user_no=#{user_no}
+	</select>
+	
+	<!-- 가져온 회원의 알러지 삭제 -->
+	<delete id="userAllergyDelete" parameterType="int">
+		DELETE 
+		FROM u_allergy 
+		WHERE user_no=#{user_no}
+	</delete>
+	
+	<!-- 가져온 회원의 선호음식 삭제 -->
+	<delete id="userPreferDelete" parameterType="int">
+		DELETE 
+		FROM prefer 
+		WHERE user_no=#{user_no}
+	</delete>
+	
+	
+	<!-- 관리자페이지 필요데이터 -->
+	
 	<!-- 유저 전체 카운트(관리자) -->
 	<select id="countAllUser" resultType="int">
 		SELECT count(*) FROM user

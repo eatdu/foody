@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -131,7 +132,7 @@ public class UserServiceImpl implements UserService {
 		return mapper.getAllergy();
 	}
 
-	@Override
+	@Override // 회원정보 수정페이지 출력
 	public Map<String, Object> modify(HttpSession sess) {
 		UserVO uv = (UserVO)sess.getAttribute("loginInfo");
 		
@@ -152,7 +153,7 @@ public class UserServiceImpl implements UserService {
 				}
 			}
 			// 전체 리스트중에 회원이 체크한 알레르기만 체크되어 출력
-			aHtml += "<label for=\""+allergyList.get(i).getAllergy_no()+"\"><input type=\"checkbox\" id=\""+allergyList.get(i).getAllergy_no()+"\" name=\"allergy\" value=\""+allergyList.get(i).getAllergy_no()+"\""+chk+">"+allergyList.get(i).getAllergy()+"</label>\r\n";
+			aHtml += "<label for=\""+allergyList.get(i).getAllergy_no()+"\"><input type=\"checkbox\" id=\""+allergyList.get(i).getAllergy_no()+"\" name=\"allergy_no\" value=\""+allergyList.get(i).getAllergy_no()+"\""+chk+">"+allergyList.get(i).getAllergy()+"</label>\r\n";
 		}
 		
 		// 회원의 선호음식 체크박스 수정 리스트
@@ -171,7 +172,7 @@ public class UserServiceImpl implements UserService {
 				}
 			}
 			// 전체 리스트중에 회원이 체크한 선호음식만 체크되어 출력
-			pHtml += "<label for=\""+RecipeCategory.getRcpCate().get(rcpCateArr[i])+"\"><input type=\"checkbox\" id=\""+RecipeCategory.getRcpCate().get(rcpCateArr[i])+"\" name=\"allergy\" value=\""+RecipeCategory.getRcpCate().get(rcpCateArr[i])+"\""+chk+">"+rcpCateArr[i]+"</label>\r\n";
+			pHtml += "<label><input type=\"checkbox\" name=\"prefer_no\" value=\""+RecipeCategory.getRcpCate().get(rcpCateArr[i])+"\""+chk+">"+rcpCateArr[i]+"</label>";
 		}
 
 		List<String> prefer = new ArrayList<String>();
@@ -189,6 +190,33 @@ public class UserServiceImpl implements UserService {
 		map.put("prefer", pHtml);
 		
 		return map;
+	}
+	
+	@Override // 회원정보수정
+	public boolean userInfoUpdate(UserVO uvo, HttpServletRequest req) {
+		int result = 0;
+		try {
+			mapper.modifyUserInfo(uvo);
+			mapper.userAllergyDelete(uvo.getNo());
+			mapper.userPreferDelete(uvo.getNo());
+			String[] prefer_no = req.getParameterValues("prefer_no");
+			if(prefer_no.length >= 0) {
+				for(int i=0; i<prefer_no.length; i++) {
+					uvo.setPrefer_no(Integer.parseInt(prefer_no[i]));
+					mapper.userPrefer(uvo);
+				}
+			}
+			result++;
+			String[] allergy_no = req.getParameterValues("allergy_no");
+			if(allergy_no.length >= 0) {
+				for(int i=0; i<allergy_no.length; i++) {
+					uvo.setAllergy_no(Integer.parseInt(allergy_no[i]));
+					mapper.userAllergy(uvo);
+				}
+			}
+			result++;
+		} catch (Exception e) {e.printStackTrace();}
+		return result == 2 ? true : false;
 	}
 
 

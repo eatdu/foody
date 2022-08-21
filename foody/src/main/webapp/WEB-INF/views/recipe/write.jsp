@@ -444,46 +444,78 @@
 				$("#chartContainer").CanvasJSChart(options); 
 			}
 			
-			// -----------이미지를 누르면 버튼이 눌리고 버튼이 눌리면 readURL함수 실행 JS-------------
-			$(function(){
-				$('#Imagebutton').click(function(){
-					$("#imgupload0").trigger('click');
-				});
-				$("#imgupload0").change(function() {
-					readURL(this);
-				});
-			});
-			
 			// -------------------버튼이 눌리면 이미지 프리뷰 코드(호출) JS----------------------
-			function readURL(input) {
+			
+			function readURL(input,num1) {
 				if (input.files && input.files[0]) {
 					var reader = new FileReader();
+					var id="processImg"+num1;
 					reader.onload = function(e) {
-						document.getElementById('processImg0').src = e.target.result;
+						console.log(id);
+						document.getElementById(id).src = e.target.result;
 					};
 					reader.readAsDataURL(input.files[0]);
+					console.log("if");
 				} else {
-					document.getElementById('processImg0').src = "";
+					document.getElementById(id).src = "";
+					console.log("else");
 				}
 			}
 			
 			// -------------------조리과정 div 만드는 함수(호출)----------------------
-			/* function makeProcessDiv(input){
-				$('#processList').append(
-						'<div id="process'+input+'" style="height: 150px; width: 1000px; padding:2.5px;">'
-						+'<input type="file" id="imgupload'+input+'"  style="display:none"/>'
-						+'<div id="Imagebutton'+input+'" style="padding-top:0px; height: 140px; width: 220px; float:left; background-color:#ECECEC; text-align: center;">'
-						+'</div>');
+			var input = 0;
+			var count = 1;
+			var idx2 = 0;
+			function makeProcessDiv(){
+				var append_str = '<div class="process" id="process'+input+'" style="height: 150px; width: 1000px; padding:2.5px;">'
+								+'<div class="step" id="processStep'+input+'" data-val="'+input+'"></div>'
+								+'<input type="file" data-val="'+input+'" id="imgupload'+input+'" style="display:none"/>'
+								+'<div id="Imagebutton'+input+'" onclick="clickevent('+input+')" style="padding-top:0px; height: 140px; width: 220px; float:left; background-color:#ECECEC; text-align: center;">'
+								+'<img id="processImg'+input+'" src="resources/img/PlusIcon.png" style="height: 140px; width: 220px; object-fit: cover;">'
+								+'</div>'
+								+'<textarea id="processText'+input+'" rows="5" cols="30" style="height: 140px; padding:0px; resize:none;"></textarea>'
+				if(input>2){
+					append_str += '<input type="button" data-val="'+input+'" class="deleteProcess" value="삭제">'+'</div>'
+					count++;
+				}else{
+					append_str += '</div>'
+				}
+				$('#processList').append(append_str);
+				count++;
+				$(".deleteProcess").off('click');
+				$(".deleteProcess").click(function() {
+					var idx = $(this).index(".deleteProcess")+3;
+					console.log(idx+1);
+					$('.process').eq(idx).remove();
+					count--;
+				});
+				$("#imgupload"+input).change(function() {
+					readURL(this,$(this).data('val'));
+				}); 
 				
-					
-							<img id="processImg0" src="resources/img/PlusIcon.png" style="height: 140px; width: 220px; object-fit: cover;">
-						</div>
-						<textarea id="processText0" rows="5" cols="30" style="height: 140px; padding:0px; resize:none;"></textarea>
+				idx2 = $('.process').index();
 				
-			} */
+				input++;
+				console.log(idx2);
+			}
+			function makeProcessStepDiv(){
+					var appendStep = '<span>STEP</span>'
+					$('#processStep').html(appendStep);
+				}
 			
-			// -------------------조리과정 div 삭제하는 함수(호출)----------------------
 			
+			// ----------imgupload(input 이미지 고르는 창) 뜨게 하는 함수(호출) JS------------
+			function clickevent(input){
+				$("#imgupload"+input).trigger('click');
+			}
+			
+			
+			// -------------------조리과정 기본적으로 3개 만드는 함수 JS----------------------
+			$(function(){
+				for(var i=0; i<3; i++){
+					makeProcessDiv();
+				}
+			});
 			
 		</script>
 		
@@ -593,6 +625,9 @@
 			<!-- 조리 과정 style 먹인거 나중에 다 빼기 -->
 			조리과정:
 			<div id="processList"></div>
+			<div style="height: 40px; width: 180px;">
+				<img id="addProcessButton" onclick="makeProcessDiv()" src="resources/img/추가버튼.png" style="height: 40px; width: 180px;">
+			</div>
 			
 			<!-- 팁(tip) -->
 			<div>

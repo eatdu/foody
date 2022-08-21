@@ -6,9 +6,48 @@
     <link rel="stylesheet" href="/foody/css/reset.css"/>
     <link rel="stylesheet" href="/foody/css/contents.css"/>
     <title>게시판 상세</title>
-    
+
+
+<style>
+	.getStar li a img {
+		vertical-align: middle;
+		max-height: 25px;
+		max-width: 25px;
+		}
+</style>
+
+
 <script>
 	
+	/*
+	$(function() {
+		$(".getStar li a img").mouseenter(function() {
+			var idx = $(this).index()+1;
+			$(".getStar").removeClass();
+			$(".getStar").addClass("star"+idx);
+		});
+	});
+	
+	
+	<script type="text/javascript">
+	var a = $(".getStar li").get();
+	console.log("a");
+	*/
+	
+	// 일단 li 자리에 회색별 하나씩 놓고
+	// 마우스오버하면 해당 위치보다 숫자가 낮으면 모두 노란별로 바꿔주고
+	// 그대로 클릭시에는 ajax로 li의 value값을 서버로 넘겨준다
+	// 넘겨준 데이터 값은 VO에 담기고 sql문을 수정해 줘야 할 듯?
+	
+
+	
+	$(".getStar li a img").hover(function() {
+		$(this).attr("src", $(this).attr("src").replace(".jpg", "_on.png"));
+	}, function() {
+		$(this).attr("src", $(this).attr("src").replace("_on.png", ".jpg"));
+	});
+	
+	// 게시글 삭제 확인
 	function del(no) {
 		if (confirm('삭제하시겠습니까?')) {
 			location.href='delete.do?no='+no;
@@ -67,6 +106,7 @@
 		</c:if>
 	}
 	
+	// 댓글 삭제
 	function commentDel(no) {
 		if (confirm('정말로 삭제하시겠습니까?')) {
 			console.log('여기');
@@ -128,7 +168,7 @@
 <%@ include file="../common/navBar.jsp" %>
         <div class="sub">
             <div class="size">
-                <h3 class="sub_title">게시판</h3>
+                <h3 class="sub_title">자유게시판</h3>
                 <div class="bbs">
                     <div class="view">
                         <div class="title">
@@ -158,36 +198,44 @@
                     	</div>
                 	</div>
                 	<!-- 댓글 영역 -->
-                	<div class="insertComment">
+                	<div class="comment">
 	                	<form method="post" name="frm" id="frm" enctype="multipart/form-data" >
 	                        <table class="board_write">
 	                            <colgroup>
 	                                <col width="*" />
-	                                <col width="200px" />
+	                                <col width="250px" />
 	                            </colgroup>
 	                            <tbody>
 	                            <tr>
 	                                <td>
 	                                    <textarea name="content" id="content" placeholder="댓글을 입력해 주세요."
 	                                    onfocus="this.placeholder=''" onblur="this.placeholder='댓글을 입력해 주세요.'"
-	                                    style="height:50px;"></textarea>
+	                                    style="height:100px;"></textarea>
 	                                </td>
 	                                <td>
-	                                    <div class="btnSet" style="text-align:left;">
-											<input type="file" name="uploadFile" id="uploadFile">
+		                                <ul class="getStar" style="display:flex;">
+					                			<li style="list-style:none;" id="star1" value="10"><a href="#"><img src="/foody/img/star_icon.jpg"/></a></li>
+					                			<li style="list-style:none;" id="star2" value="20"><a href="#"><img src="/foody/img/star_icon.jpg"/></a></li>
+					                			<li style="list-style:none;" id="star3" value="30"><a href="#"><img src="/foody/img/star_icon.jpg"/></a></li>
+					                			<li style="list-style:none;" id="star4" value="40"><a href="#"><img src="/foody/img/star_icon.jpg"/></a></li>
+					                			<li style="list-style:none;" id="star5" value="50"><a href="#"><img src="/foody/img/star_icon.jpg"/></a></li>
+					                		</ul>
+					                		<br>
+										<input type="file" name="uploadFile" id="uploadFile">
+	                                     <div class="btnSet" style="text-align:left;">
 	                                        <a class="btn" href="javascript:goSave();">저장 </a>
-	                                    </div>
+	                                     </div>
+										
 	                                </td>
 	                            </tr>
 	                            </tbody>
 	                        </table>
 	                   	</form>
                         <div id="commentArea"></div>
-                	
+                	</div>
                 	</div>
             	</div>
         	</div>
-        </div>
 </body>
 
 </html>

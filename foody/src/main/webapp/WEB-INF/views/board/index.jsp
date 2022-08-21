@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="/foody/css/reset.css"/>
 <link rel="stylesheet" href="/foody/css/contents.css"/>
 <title>게시판목록</title>
+
 <script>
 	function goWrite() {
 		<c:if test="${empty loginInfo}">
@@ -40,7 +41,7 @@
                         </colgroup>
                         <thead>
                             <tr>
-                                <th>글번호</th>
+                                <th>번호</th>
                                 <th>제목</th>
                                 <th>작성자</th>
                                 <th>조회수</th>
@@ -65,7 +66,7 @@
                                 </td>
                                 <td> ${list.viewcount}</td>
                                 <td class="date">
-                                	<fmt:formatDate pattern="yyyy-MM-dd HH:mm" value="${list.regdate}"/>
+                                		<fmt:formatDate pattern="yyyy-MM-dd HH:mm" value="${list.regdate}"/>
                                 </td>
                             </tr>
                         </c:forEach>

@@ -29,7 +29,7 @@
                		<td style="text-align: right; width:100px;">
                		<c:if test="${loginInfo.no == list.user_no}">
 	               		<a href="javascript:commentDel(${list.no});">[삭제]</a></c:if>
-	               		<a href="javascript:addBox(${list.no});">[답글달기]</a>
+	               		<a href="javascript:addBox(${list.no});">[답글]</a>
 	               	</td>
                	</td>
                	<td class="writer" style="text-align:center;">

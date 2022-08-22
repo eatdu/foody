@@ -18,6 +18,7 @@ import kr.co.foody.constants.RecipeCategory;
 import kr.co.foody.recipe.IngredientMapper;
 import kr.co.foody.recipe.IngredientServiceImpl;
 import kr.co.foody.recipe.IngredientVO;
+import kr.co.foody.user.UserVO;
 
 @Controller
 public class AdminController {
@@ -28,6 +29,9 @@ public class AdminController {
 	IngredientServiceImpl ingreSvc;
 	@Autowired
 	IngredientMapper ingreMapper;
+	@Autowired
+	AdminService service;
+	
 	
 	@GetMapping("/admin/ingre.do")
 	public String ingre(Model model) {
@@ -65,6 +69,12 @@ public class AdminController {
 	@PostMapping(value = "/admin/ingreInsert.do", consumes = MediaType.APPLICATION_JSON_VALUE, produces = "application/json;charset=UTF-8")
 	public boolean ingreInsert(@RequestBody IngredientVO vo, Model model){
 		return ingreSvc.insertIngre(vo);
+	}
+	
+	@GetMapping("/admin/userList.do")
+	public String userList(Model model, UserVO vo) {
+		model.addAttribute("data", service.userList());
+		return "admin/userList";
 	}
 	
 	

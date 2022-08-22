@@ -23,7 +23,7 @@ public class SampleDataMaker {
 	@Autowired
 	RecipeMapper mapper;
 	
-	@Test
+	//@Test
 	public void randomReg() {
 		for (int i=4; i<=128; i++) {
 			mapper.randomReg(i);

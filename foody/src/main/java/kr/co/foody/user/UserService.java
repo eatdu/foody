@@ -26,5 +26,7 @@ public interface UserService {
 	
 	boolean userInfoUpdate(UserVO uvo, HttpServletRequest req);
 	
+	int userExit(int no);
+	
 	
 }

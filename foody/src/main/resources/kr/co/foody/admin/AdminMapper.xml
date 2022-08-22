@@ -2,6 +2,12 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.co.foody.admin.AdminMapper">
 
-
+	<select id="userList" resultType="kr.co.foody.user.UserVO" >
+		SELECT *,
+			(SELECT COUNT(user_no) FROM recipe WHERE user_no = user.no) AS recipe_count,
+			(select count(user_no) from comment where user_no = user.no) as comment_count
+		 FROM user 
+		 ORDER BY recipe_count DESC, comment_count DESC
+	</select>
 	
 </mapper>

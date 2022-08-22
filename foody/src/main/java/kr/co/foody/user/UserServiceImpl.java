@@ -219,6 +219,12 @@ public class UserServiceImpl implements UserService {
 		return result == 2 ? true : false;
 	}
 
+	@Override
+	public int userExit(int no) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
 
 
 

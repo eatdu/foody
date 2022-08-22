@@ -83,7 +83,7 @@
 					</tr>
 				</table>
 				<span class="userInfoModify" style="font-size:20px;"><a href="/foody/user/modify.do">회원정보수정</a></span>
-				<span class="userQuit" style="font-size:20px;"><a href="">회원탈퇴</a></span>
+				<span class="userQuit" style="font-size:20px;"><a href="foody/user/exit.do">회원탈퇴</a></span>
 			</div>
 		</div>
 	</div>

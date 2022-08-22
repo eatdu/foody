@@ -1,7 +1,9 @@
 package kr.co.foody.admin;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
@@ -22,6 +24,10 @@ public class AdminServiceImpl implements AdminService {
 	
 	@Autowired
 	UserMapper userMapper;
+	
+	@Autowired
+	AdminMapper adminMapper;
+	
 	// 재료 정보 관련
 	@Override
 	public IngredientVO ingreInfo(int no) {
@@ -54,5 +60,14 @@ public class AdminServiceImpl implements AdminService {
 		sess.setAttribute("countUserWithPeriod", userMapper.countUserWithPeriod());
 		return false;
 	}
-	
+
+	@Override
+	public Map<String, Object> userList() {
+		List<UserVO> list = adminMapper.userList();
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("list", list);
+		
+		return map;
+	}
 }

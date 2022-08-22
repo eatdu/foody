@@ -25,7 +25,7 @@
 <div id="container">
 	<div id="myRecipe">
 		<div id="reicpeView">
-			<div><a href="/mypage.do" class="btn">새로운 레시피</a></div>
+			<div><a href="/foody/write.do?no=${loginInfo.no}" class="btn">새로운 레시피</a></div>
 			<ul class="myRecipeList_ul">
 				<c:forEach var="recipe" items="${myRecipe.list}">
 					<li class="myRecipeList_li" style="width:300px;height:400px;">

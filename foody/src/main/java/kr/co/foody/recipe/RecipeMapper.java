@@ -24,8 +24,20 @@ public interface RecipeMapper {
 	
 	List<Integer> selectIngreNo(String str);
 	
+	
+	//관리자 관련 메소드
+	//1. 총 레시피 개수 집계
+	int count(String where);
+
+	
+	
+	
+	
+	//샘플 데이터 생성용
 	int insertRandomUser(Map user);
 	int insertAllergyUser(Map user);
 	int insertFeedback(Map User);
 	int randomReg(int no);
+	int randomRcpUser(Map map);
+	int insertRecent(Map map);
 }

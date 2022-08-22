@@ -117,7 +117,7 @@ function search(data, targetId){
 		"/foody/search.do",
 		data,
 		function(result){
-			$("#" + targetId).empty().append(result);
+			$("#" + targetId).html(result);
 		}
 	);
 }
@@ -125,6 +125,8 @@ function search(data, targetId){
 function searchPrefer() {
 	var data = {};
 	data.jsp = 'common/swipeRcpList';
+	data.orderBy = 'regdate';//정렬 순서 필요함
+	data.allergyChk = '1';
 
 	data.type = 'prefer'; //수정필요, 임시로 all 해놓음
 	data.title = '추천 레시피';
@@ -134,26 +136,94 @@ function searchPrefer() {
 function searchBest() {
 	var data = {};
 	data.jsp = 'common/swipeRcpList';
+	data.orderBy = 'regdate';//정렬 순서 필요함
+	data.allergyChk = '1';
 
 	data.type = 'best'; //수정필요, 임시로 all 해놓음
 	data.title = '인기 레시피';
 	search(data, 'bestRcpArea');	
 }
+//각 검색 결과에서 페이지 이동에 이용될 함수
+function movePage(title, pageNo, areaNo){
+	data = {};
+	data.orderBy = $('#rcpArea' + areaNo).find('#orderBy').val();
+	data.areaNo = areaNo;
+	data.title = title;
+	data.pageNo = pageNo;
+	data.jsp = 'common/rcpList';
+	data.type = 'common';
+	data.allergyChk = '0';
+	if ($('#allergyChk').is(':checked')) {
+		data.allergyChk = '1';
+	}
+
+	data.ingreCateArr = ingreArr;
+	data.rcpCateArr = rcpArr;
+	data.keywordArr = ingreNameArr;
+	//IRK
+	if(title == 'IRK'){
+		search(data, 'rcpArea'+areaNo);
+	}
+	//IR
+	if(title == 'IR'){
+		delete data.keywordArr;
+		search(data, 'rcpArea'+areaNo);
+	}
+	//IK
+	if(title == 'IK'){
+		delete data.rcpCateArr;
+		search(data, 'rcpArea'+areaNo);
+	}
+	//RK
+	if(title == 'RK'){
+		delete data.ingreCateArr;
+		search(data, 'rcpArea'+areaNo);
+	}
+	//I
+	if(title == 'I'){
+		delete data.rcpCateArr;
+		delete data.keywordArr;
+		search(data, 'rcpArea'+areaNo);
+	}
+	//R
+	if(title == 'R'){
+		delete data.keywordArr;
+		delete data.ingreCateArr;
+		search(data, 'rcpArea'+areaNo);
+	}
+	//K
+	if(title == 'K'){
+		delete data.rcpCateArr;
+		delete data.ingreCateArr;
+		search(data, 'rcpArea'+areaNo);
+	}
+	//all
+	if(title == 'all'){
+		delete data.ingreCateArr;
+		delete data.rcpCateArr;
+		delete data.keywordArr;
+		search(data, 'rcpArea'+areaNo);
+	}
+}
+
 //상세검색에서 pageNo추가하여 검색  
 function searchBtn(pageNo){
 	var flagI = false;
 	var flagR = false;
 	var flagK = false;
-	$("#rcpArea1").empty();
-	$("#rcpArea2").empty();
-	$("#rcpArea3").empty();
-	$("#rcpArea4").empty();
 
 	var data = {};
 	data.pageNo = pageNo;
+	data.areaNo = 1;
+	data.orderBy = 'regdate';
 	//컨트롤러가 리턴할 jsp
 	data.jsp = 'common/rcpList';
+	data.allergyChk = '0';
 
+	//알러지 필터 적용 여부
+	if ($('#allergyChk').is(':checked')) {
+		data.allergyChk = '1';
+	}
 	//I
 	if (ingreArr.length != 0) {
 		flagI = true;
@@ -180,15 +250,18 @@ function searchBtn(pageNo){
 		//IK(R제거)
 		delete data.rcpCateArr;
 		data.title = 'IK';
+		data.areaNo = 2;
 		search(data, 'rcpArea2');
 		//K(I제거)
 		delete data.ingreCateArr;
 		data.title = 'K';
+		data.areaNo = 3;
 		search(data, 'rcpArea3');
 		//I(K제거, I추가)
 		delete data.keywordArr;
 		data.ingreCateArr = ingreArr;
 		data.title = 'I';
+		data.areaNo = 4;
 		search(data, 'rcpArea4');
 	} else if (flagI && !flagR && flagK) {
 		//IK
@@ -198,11 +271,13 @@ function searchBtn(pageNo){
 		//K(I제거)
 		delete data.ingreCateArr;
 		data.title = 'K';
+		data.areaNo = 2;
 		search(data, 'rcpArea2');
 		//I(I제거, R추가)
 		delete data.keywordArr;
 		data.title = 'I';
 		data.ingreCateArr = ingreArr;
+		data.areaNo = 3;
 		search(data, 'rcpArea3');
 	} else if (!flagI && flagR && flagK) {
 		//RK
@@ -212,6 +287,7 @@ function searchBtn(pageNo){
 		//K(R제거)
 		delete data.rcpCateArr;
 		data.title = 'K';
+		data.areaNo = 2;
 		search(data, 'rcpArea2');
 	} else if (flagI && flagR && !flagK) {
 		//IR
@@ -221,6 +297,7 @@ function searchBtn(pageNo){
 		//I(R제거)
 		delete data.rcpCateArr;
 		data.title = 'I';
+		data.areaNo = 2;
 		search(data, 'rcpArea2');
 	} else if (!flagI && flagR && !flagK) {
 		//R

@@ -24,8 +24,33 @@ public class SampleDataMaker {
 	RecipeMapper mapper;
 	
 	//@Test
+	public void randomRecent() {
+		for(int user_no = 23; user_no <= 121; user_no++) {
+			for(int recipe_no = 1; recipe_no <= 200; recipe_no++) {
+				Map map = new HashMap();
+				map.put("user_no", user_no);
+				map.put("recipe_no", recipe_no);
+				if (Math.random() < 0.05) {
+					mapper.insertRecent(map);
+				}
+			}
+		}
+	}
+	
+	//@Test
+	public void randomRcpUser() {
+		for(int i = 1; i <= 200; i++) {
+			Map map = new HashMap();
+			map.put("userNo", 21 + (int)(Math.random() * 10));
+			map.put("no", i);
+			//System.out.println(map);
+			mapper.randomRcpUser(map);
+		}
+	}
+	
+	@Test
 	public void randomReg() {
-		for (int i=4; i<=128; i++) {
+		for (int i=22; i<=121; i++) {
 			mapper.randomReg(i);
 		}
 	}

@@ -15,6 +15,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.co.foody.constants.IngredientCategory;
 import kr.co.foody.constants.RecipeCategory;
+import kr.co.foody.qna.QnaMapper;
+import kr.co.foody.qna.QnaService;
+import kr.co.foody.qna.QnaVO;
 import kr.co.foody.recipe.IngredientMapper;
 import kr.co.foody.recipe.IngredientServiceImpl;
 import kr.co.foody.recipe.IngredientVO;
@@ -78,6 +81,20 @@ public class AdminController {
 	public boolean ingreInsert(@RequestBody IngredientVO vo, Model model){
 		return ingreSvc.insertIngre(vo);
 	}
+	
+	@Autowired
+	QnaService service;
+	@Autowired
+	QnaMapper mapper;
+	
+	// QnA 게시판 조회
+	@GetMapping("/admin/qna.do")
+	public String getQna(QnaVO vo, Model model) {
+		model.addAttribute("data", service.getFaq(vo));
+		return "admin/qna";
+	}
+	
+	
 	
 	
 }

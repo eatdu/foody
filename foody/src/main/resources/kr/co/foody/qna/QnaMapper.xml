@@ -31,6 +31,12 @@
 	)
 </insert>
 
+<!-- 답변시 답변여부 업뎃 -->
+<update id="updateRes" parameterType="kr.co.foody.qna.QnaVO">
+	update qna set response = response+1 where no = #{no}
+</update>
+
+
 <select id="count" parameterType="kr.co.foody.qna.QnaVO" resultType="int">
 	select count(*) from qna
 	<where> <!-- where태그없이 쓰려면 -> where 1=1 -->
@@ -47,9 +53,7 @@
 
 <!-- FAQ 조회 -->
 <select id="getFaq" parameterType="kr.co.foody.qna.QnaVO" resultType="kr.co.foody.qna.QnaVO">
-	select *
-	from qna
-	order by regdate desc
+	select * from qna order by regdate desc
 	limit ${startIdx}, ${pageRow}
 </select>
 

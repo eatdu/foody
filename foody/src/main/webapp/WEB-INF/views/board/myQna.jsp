@@ -82,8 +82,8 @@
                                 <td style="text-align: center;">${myQna.totalCount - status.index - (qnaVO.page - 1) * qnaVO.pageRow}</td>
                                 <td class="txt_l" style="text-align: left;">
 	                                	<!-- 답변 들여쓰기 -->
-	                                	<c:forEach begin="1" end="${list.depth }">&nbsp;&nbsp;&nbsp;</c:forEach>
-	                                	<c:if test="${list.depth > 0 }"><img src="/foody/img/answer_icon.gif"></c:if>
+	                                	<c:forEach begin="1" end="${list.depth}">&nbsp;&nbsp;&nbsp;</c:forEach>
+	                                	<c:if test="${list.depth > 0}"><img src="/foody/img/answer_icon.gif"></c:if>
 	                                    ${list.title}</a>
                                 </td>
                                 <td class="date" style="text-align: center;">

@@ -9,7 +9,9 @@ public interface QnaMapper {
 	int insert(QnaVO vo);
 	int gnoUpdate(int no);
 	int onoUpdate(QnaVO vo);
+	
 	int reply(QnaVO vo);
+	int updateRes(int no);
 	
 	int count(QnaVO vo);
 	List<QnaVO> getFaq(QnaVO vo);

@@ -28,9 +28,12 @@ table, td {
 	padding: 3px;
 }
 </style>
+<link rel="stylesheet" type="text/css" href="/foody/resources/css/leftMenu.css">
 <title>재료DB 조작 페이지</title>
 </head>
 <body>
+<%@ include file="../admin/leftMenu.jsp" %>
+<div class="adminContainer">
 재료 조작 페이지
 	<table>
 		<tr>
@@ -116,5 +119,6 @@ table, td {
 		</table>
 		<button id="editBtn" type="button" onclick="javascript:addIngre();">추가하기</button>
 	</div>
+</div>
 </body>
 </html>

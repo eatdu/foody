@@ -131,66 +131,83 @@
 	<!-- 0. 재료 단어, 재료 분류, 음식 분류, 알러지 필터 모두 적용 -->
 	<select id='selectWithFilter' parameterType="map" resultType="kr.co.foody.recipe.RecipeVO">
 		SELECT *
-		FROM (
-			SELECT @ROWNUM := @ROWNUM + 1 AS rownum, recipe.*
-			FROM recipe, (select @rownum := 0) r, (
-				SELECT a.rcpno
-				<if test='allergyArr != null'>
-					, sum(algF) algCnt
-				</if>
-				<if test='keywordArr != null'>
-		        	, sum(keyF) keyCnt
-		        </if>
-		        <if test='ingreCateArr != null'>
-		        	, sum(icateF) icateCnt
-		        </if>
-				FROM (
-					SELECT map.recipe_no rcpno
+		FROM 
+			(
+			SELECT @ROWNUM := @ROWNUM + 1 AS rownum, result.*
+			FROM (select @rownum := 0) r, (
+				SELECT recipe.*, IFNULL(bk.bmkCnt, 0) bookmark, IFNULL(s.star, 0) star
+				FROM recipe,  
+					(
+					SELECT a.rcpno
 					<if test='allergyArr != null'>
-		 				, (ingre.allergy_no IN (
-		 			<foreach collection="allergyArr" item="no" separator=",">
-		 				#{no}
-		 			</foreach>
-		 				)) algF
-		 			</if>
-		 			<if test='keywordArr != null'>
-		 				, (ingre.no IN (
-		 			<foreach collection="keywordArr" item="no" separator=",">
-		 				#{no}
-		 			</foreach>
-		 				)) keyF
-		 			</if>
-		 			<if test='ingreCateArr != null'>
-		 				, (ingre.large_cate IN (
-		 			<foreach collection="ingreCateArr" item="no" separator=",">
-		 				#{no}
-		 			</foreach>
-		 				)) icateF
-		 			</if>
-					FROM ingre_recipe_map map, ingre
-					WHERE ingre.no = map.ingredient_no
-					) a
-				GROUP BY rcpno
-				) b
-			WHERE b.rcpno = recipe.no
-			<if test='rcpCateArr != null'>
-				AND recipe.type IN (
-			<foreach collection="rcpCateArr" item="no" separator=",">
-				#{no}
-			</foreach>
-				)
-			</if>
-		    <if test='allergyArr != null'>
-			    AND algCnt = 0
-		    </if>
-		    <if test='keywordArr != null'>
-			    AND keyCnt > 0
-		    </if>
-		    <if test='ingreCateArr != null'>
-			    AND icateCnt > 0
-			</if>
-			ORDER BY regdate DESC
-			) result
+						, sum(algF) algCnt
+					</if>
+					<if test='keywordArr != null'>
+			        	, sum(keyF) keyCnt
+			        </if>
+			        <if test='ingreCateArr != null'>
+			        	, sum(icateF) icateCnt
+			        </if>
+					FROM 
+						(
+						SELECT map.recipe_no rcpno
+						<if test='allergyArr != null'>
+			 				, (ingre.allergy_no IN (
+			 			<foreach collection="allergyArr" item="no" separator=",">
+			 				#{no}
+			 			</foreach>
+			 				)) algF
+			 			</if>
+			 			<if test='keywordArr != null'>
+			 				, (ingre.no IN (
+			 			<foreach collection="keywordArr" item="no" separator=",">
+			 				#{no}
+			 			</foreach>
+			 				)) keyF
+			 			</if>
+			 			<if test='ingreCateArr != null'>
+			 				, (ingre.large_cate IN (
+			 			<foreach collection="ingreCateArr" item="no" separator=",">
+			 				#{no}
+			 			</foreach>
+			 				)) icateF
+			 			</if>
+						FROM ingre_recipe_map map, ingre
+						WHERE ingre.no = map.ingredient_no
+						) a
+					GROUP BY rcpno
+					) b
+					LEFT JOIN (SELECT recipe_no, COUNT(*) bmkCnt
+						FROM feedback
+						WHERE bookmark = 1
+						GROUP BY recipe_no) bk
+						ON b.rcpno = bk.recipe_no
+					LEFT JOIN (SELECT recipe_no, AVG(star) star
+						FROM feedback
+						WHERE star != -1
+						GROUP BY recipe_no) s
+						ON b.rcpno = s.recipe_no
+				WHERE b.rcpno = recipe.no
+				<if test='rcpCateArr != null'>
+					AND recipe.type IN (
+				<foreach collection="rcpCateArr" item="no" separator=",">
+					#{no}
+				</foreach>
+					)
+				</if>
+			    <if test='allergyArr != null'>
+				    AND algCnt = 0
+			    </if>
+			    <if test='keywordArr != null'>
+				    AND keyCnt > 0
+			    </if>
+			    <if test='ingreCateArr != null'>
+				    AND icateCnt > 0
+				</if>
+				ORDER BY 
+					${orderBy} DESC
+				) result
+			) result2
 		WHERE rownum BETWEEN #{startRno} AND #{endRno}
 		ORDER BY rownum
 	</select>
@@ -291,6 +308,40 @@
 			OR detail LIKE '%${keyword}%'
 	</select>
 	
+	<!-- 관리자 관련 -->
+	
+	<!-- 1. 총 레시피 개수 집계 -->
+	<select id='count' parameterType="string" resultType='int'>
+		SELECT COUNT(*) FROM recipe ${where}
+	</select>
+	
+	<!-- 레시피 검색 결과 -->
+	<select id='selectRcpAdmin' parameterType="map" resultType="kr.co.foody.recipe.RecipeVO">
+		SELECT *
+		FROM
+			(
+			SELECT
+				no, 
+				(
+				SELECT nik_name FROM user WHERE recipe.user_no = user.no
+				) nikname, name title, type, regdate, adminchk, print
+			FROM
+				recipe
+			) a
+		<where>
+			<if test='date != "all"'>
+			regdate >= date_add(now(), interval ${date})	
+			</if>
+			AND print = ${print}
+			AND adminchk = ${adminChk}
+			<if test='type != "all" and keyword != ""'>
+			AND ${type} like '%${keyword}%'
+			</if>
+		</where>
+		ORDER BY ${orderBy};
+	</select>
+	
+	<!-- 샘플 데이터 생성용 -->
 	<!-- 랜덤 회원정보 인서트 -->
 	<insert id="insertRandomUser" parameterType="map">
 		insert into user(email, nik_name, name, birth, tel, pwd, intro, height, weight)
@@ -309,6 +360,12 @@
 		values (#{rcpNo}, #{userNo}, #{star}, #{bmk})
 	</insert>
 	
+	<!-- 랜덤 조회기록 인서트 -->
+	<insert id="insertRecent" parameterType="map">
+		insert into recent(recipe_no, user_no, regdate)
+		values (#{recipe_no}, #{user_no}, (SELECT FROM_UNIXTIME(FLOOR(unix_timestamp('2022-08-21 00:00:00')+(RAND()*(unix_timestamp('2022-08-31 00:00:00')-unix_timestamp('2022-08-21 00:00:00')))))))
+	</insert>
+		
 	<!-- 랜덤 가입일자 업데이트 -->
 	<update id="randomReg" parameterType="int">
 		update user set regdate = (
@@ -317,4 +374,9 @@
 		where no = #{no};
 	</update>
 	
+	<!-- 랜덤 레시피 작성자 업데이트 -->
+	<update id="randomRcpUser" parameterType="map">
+		update recipe set user_no = #{userNo}
+		where no = #{no}
+	</update>
 </mapper>

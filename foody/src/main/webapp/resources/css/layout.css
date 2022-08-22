@@ -64,7 +64,6 @@ div#menu li div {
     background: url(/sample/img/admin/submenu-bottom.png) no-repeat 7px bottom;
     _background-image: url(/sample/img/admin/submenu-bottom.gif);
     margin: 0 0 0 0px;
-    
 }
 
 div#menu li div.standard_left{left:0 !important;} 

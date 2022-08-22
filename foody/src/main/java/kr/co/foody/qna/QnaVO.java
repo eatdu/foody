@@ -10,7 +10,7 @@ public class QnaVO {
 	private int no;
 	private int user_no;
 	private int manager_no;
-	private int category;
+	private int qtype; // category 대신 qType 으로 컬럼명 수정
 	private String title;
 	private String content;
 	private Timestamp regdate;

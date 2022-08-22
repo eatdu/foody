@@ -3,6 +3,7 @@ package kr.co.foody.user;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 public interface UserService {
@@ -17,9 +18,13 @@ public interface UserService {
 	//UserVO findPwd(UserVO vo);
 	int prefer(UserVO vo);
 	int signUpNext(UserVO vo);
-	List<String> getAllergy();
+	List<UserVO> getAllergy();
 	int userAllergy(UserVO vo);
 	int userPrefer(UserVO vo);
 	
 	Map<String, Object> modify(HttpSession sess);
+	
+	boolean userInfoUpdate(UserVO uvo, HttpServletRequest req);
+	
+	
 }

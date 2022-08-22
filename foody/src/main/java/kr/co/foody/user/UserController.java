@@ -33,7 +33,7 @@ public class UserController {
 	
 	@GetMapping("/user/signUpNext.do") // 회원가입창(추가) 이동
 	public String signUpNext(Model model) {
-		List<String> allergy = service.getAllergy();
+		List<UserVO> allergy = service.getAllergy();
 		String[] rcpCateArr = RecipeCategory.RcpCateArr;
 		model.addAttribute("rcpCateArr", rcpCateArr);
 		model.addAttribute("allergy",allergy);
@@ -57,13 +57,22 @@ public class UserController {
 	
 	@GetMapping("/user/modify.do") // 회원정보수정 페이지
 	public String modify(Model model, HttpSession sess) {
-		List<String> allergy = service.getAllergy();
-		String[] rcpCateArr = RecipeCategory.RcpCateArr;
 		model.addAttribute("modify", service.modify(sess));
-		model.addAttribute("rcpCateArr", rcpCateArr);
-		model.addAttribute("allergy",allergy);
 		return "user/modify";
 	}
+	
+	@PostMapping("/user/modify.do")
+	public String modify(UserVO uvo, Model model,HttpServletRequest req) {
+		if(service.userInfoUpdate(uvo,req) == true) {
+			model.addAttribute("msg", "업데이트 성공!!");
+			model.addAttribute("url", "/foody/mypage/mypage.do");
+			return "common/alert";
+		} else {
+			model.addAttribute("msg", "업데이트에 실패하였습니다.");
+			return "common/alert";
+		}
+	}
+	
 	
 	@PostMapping("/user/login.do") // 로그인 이메일 비밀번호 일치 확인
 	public String login(UserVO vo, HttpSession sess, Model model) {
@@ -159,15 +168,15 @@ public class UserController {
 			, @RequestParam MultipartFile chooseFile
 			,HttpServletRequest req) {
 		try {
-			String[] allergy_no = req.getParameterValues("allergy_no");
-			for(int i=0; i<allergy_no.length; i++) {
-				vo.setAllergy_no(Integer.parseInt(allergy_no[i]));
-				service.userAllergy(vo);
-			}
 			String[] prefer_no = req.getParameterValues("prefer_no");
 			for(int i=0; i<prefer_no.length; i++) {
 				vo.setPrefer_no(Integer.parseInt(prefer_no[i]));
 				service.userPrefer(vo);
+			}
+			String[] allergy_no = req.getParameterValues("allergy_no");
+			for(int i=0; i<allergy_no.length; i++) {
+				vo.setAllergy_no(Integer.parseInt(allergy_no[i]));
+				service.userAllergy(vo);
 			}
 		} catch (Exception e) {}
 		System.out.println(vo);
@@ -193,6 +202,9 @@ public class UserController {
 			return "common/alert";
 		}
 	}
+	
+	
+	
 	
 	
 	

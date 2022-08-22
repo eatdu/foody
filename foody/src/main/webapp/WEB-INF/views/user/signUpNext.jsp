@@ -90,8 +90,8 @@
 		<div>
 			<h5>알레르기</h5>
 			<input type="hidden" name="allergy">
-			<c:forEach var="list" items="${allergy}">
-				<label><input type="checkbox" name="allergy_no" value="${list.no}"/>${list.allergy}</label>
+			<c:forEach var="list" items="${allergy}" varStatus="idx">
+				<label><input type="checkbox" name="allergy_no" value="${idx.count}"/>${list.allergy}</label>
 			</c:forEach>
 		</div>
 	</form>

@@ -5,9 +5,9 @@
 <!-- 사용자 질문 등록 -->
 <insert id="insert" parameterType="kr.co.foody.qna.QnaVO">
 	insert into qna (
-		user_no, category, title, content, regdate
+		user_no, qtype, title, content, regdate
 		) values (
-		#{user_no}, #{category}, #{title}, #{content}, now()
+		#{user_no}, #{qtype}, #{title}, #{content}, now()
 	)
 	<selectKey keyProperty="no" resultType="int" order="AFTER">
 		select last_insert_id() <!-- 이 함수의 리턴값을 setno 해줌 -->
@@ -25,7 +25,7 @@
 <!-- 관리자 답변 등록 -->
 <insert id="reply" parameterType="kr.co.foody.qna.QnaVO">
 	insert into qna (
-		user_no, manager_no, title, content, regdate, gno, ono, depth
+		user_no, manager_no, title, content, replydate, gno, ono, depth
 	) values (
 		#{user_no}, #{manager_no}, #{title}, #{content}, now(), #{gno}, #{ono}, #{depth}
 	)
@@ -53,6 +53,10 @@
 	limit ${startIdx}, ${pageRow}
 </select>
 
+<!-- 내가 한 질문 개수 -->
+<select id="count_myQna" parameterType="kr.co.foody.qna.QnaVO" resultType="int">
+	select count(*) from qna where user_no = #{user_no}
+</select>
 <!-- 내가 한 질문 조회 -->
 <select id="getMyQna" parameterType="kr.co.foody.qna.QnaVO" resultType="kr.co.foody.qna.QnaVO">
 	select * from qna where user_no = #{user_no} order by regdate desc

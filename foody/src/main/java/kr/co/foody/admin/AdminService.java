@@ -14,4 +14,7 @@ public interface AdminService {
 	
 	//가입자 통계 관련
 	boolean userReport(HttpSession sess);
+	
+	//레시피 통계 관련
+	boolean rcpCount(Map cri, HttpSession sess);
 }

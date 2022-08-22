@@ -29,4 +29,13 @@ public class RecipeVO {
 //	private int temp; //임시저장
  	private int viewcount;
  	
+ 	//정렬기준
+ 	private int bookmark;
+ 	private double star;
+ 	private int reply;
+ 	
+ 	public double getStar() {
+ 		return (int)(star * 10) / 100.0;
+ 	}
+ 	
 }

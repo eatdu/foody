@@ -15,6 +15,7 @@
 	<div class='row'>	
 	<c:forEach var="l1" items="${result.list}" varStatus="idx">
 		<div class='rcpCard'>
+		<a href="view.do?no=${result.no}">
 		<table class="rcpTable" style='table-layout:fixed'>
 			<tr>
 				<td class="imgCell" colspan='2'>
@@ -38,6 +39,7 @@
 			</tr>
 			<tr><td colspan='2'>--출력 필요 X / no: ${l1.no} / type: ${l1.type}--</td></tr>
 		</table>
+		</a>
 		</div>
 		<c:if test="${idx.count % 4 == 0 && !idx.last}">
 	</div>

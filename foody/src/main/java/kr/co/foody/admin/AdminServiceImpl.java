@@ -9,6 +9,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
 
 import kr.co.foody.constants.IngredientCategory;
 import kr.co.foody.recipe.IngredientMapper;
@@ -83,6 +84,13 @@ public class AdminServiceImpl implements AdminService {
 				+ " AND adminchk = 0";
 		result.put("notChecked", rcpMapper.count(where2));
 		sess.setAttribute("cntRcp", result);
+		return false;
+	}
+
+	
+	@Override
+	public boolean selectRcpAdmin(Map cri, Model model) {
+		model.addAttribute("result", rcpMapper.selectRcpAdmin(cri));
 		return false;
 	}
 }

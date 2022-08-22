@@ -5,6 +5,8 @@ import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
+import org.springframework.ui.Model;
+
 import kr.co.foody.recipe.IngredientVO;
 
 public interface AdminService {
@@ -17,4 +19,7 @@ public interface AdminService {
 	
 	//레시피 통계 관련
 	boolean rcpCount(Map cri, HttpSession sess);
+	
+	//레시피 목록 조회
+	boolean selectRcpAdmin(Map cri, Model model);
 }

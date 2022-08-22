@@ -28,7 +28,7 @@ public interface RecipeMapper {
 	//관리자 관련 메소드
 	//1. 총 레시피 개수 집계
 	int count(String where);
-
+	List<RecipeVO> selectRcpAdmin(Map cri);
 	
 	
 	

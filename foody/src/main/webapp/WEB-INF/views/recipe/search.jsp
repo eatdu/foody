@@ -62,16 +62,35 @@ function checkName() {
 }
 
 .fixedCol {
-	width: 100px;
-	max-width: 100px;
-	min-width: 100px;
+    width: 113px;
+    max-width: 113px;
+    min-width: 113px;
+    height: 30px;
+}
+.htd {
+    width: 60px;
+    max-width: 60px;
+    min-width: 60px;
+    height: 30px;
+}
+.search{
+	margin-left:auto; 
+    margin-right:auto;
+}
+.rcpCard {
+	float: left;
+	margin: 10px;
+	width: 270px;
+	height: 310px;
+	border-radius: 30px;
+	background-color: #FAF4C0;
 }
 
 .rcpTable {
-	float: left;
+	margin: auto;
+	margin-top: 20px;
 	width: 250px;
 	height: 270px;
-	border: 1px solid black;
 }
 .rcpTable .imgCell {
 	height: 150px;
@@ -87,9 +106,24 @@ function checkName() {
 	width: 125px;
 	height: 40px;
 }
+.rcpArea {
+	display: inline-block;
+	width: 1160px;
+}
 .row {
 	display: inline-block;
-	width: 1000px;
+	width: 1160px;
+}
+.container{
+	text-align: center;
+}
+.searchBox{
+	width: 1600px;
+	margin: auto;
+    margin-top: 50px;
+	height: 250px;
+	border-radius: 70px;
+	background-color: #FAF4C0;
 }
 
 
@@ -101,13 +135,12 @@ function checkName() {
 <body>
  
 <%@ include file="../common/navBar.jsp"  %>
-
+<div class="container">
 <form method="post" action="">
-	<h1 class="tc">검색조건</h1>
-	<div class="">
-	<table>
+	<div class="searchBox">
+	<table class="search">
 		<tr>
-		<td rowspan='2'><h3>음식분류</h3></td>
+		<td class='htd' rowspan='2'><h3>음식분류</h3></td>
 		<c:forEach var="rcpCate" items="${rcpCateArr}" varStatus="idx">
 			<td class='fixedCol'>
 				<input style='zoom:0.8;' type="checkbox" name="rcpCate" value=${idx.count}>
@@ -119,7 +152,7 @@ function checkName() {
 		</c:forEach>
 		</tr>
 		<tr>
-			<td rowspan='2'><h3>재료분류</h3></td>
+			<td class='htd' rowspan='2'><h3>재료분류</h3></td>
 			<c:forEach var="ingreCate" items="${ingreCateArr}" varStatus="idx">
 				<td class='fixedCol'>
 					<input class="" style='zoom:0.8;' type="checkbox" name="ingreCate" value=${idx.count}>
@@ -148,7 +181,7 @@ function checkName() {
 			<td>
 				<button class="" type="button" onclick="javascript:makeComboBox('keyword', 'ingreNameList');">검색</button>
 			</td>
-			<td colspan='2'>
+			<td class='htd' colspan='2'>
 				<select class='' name="ingreNameList">
 			    	<option value="" selected>==재료명==</option>
 				</select>
@@ -160,19 +193,25 @@ function checkName() {
 		<td>
 			<button class="" type="button" onclick="javascript:searchBtn(1);">검색</button>
 		</td>
+		<c:if test="${!empty loginInfo}">
+		<td>
+			알러지 필터<input type="checkbox" id='allergyChk' checked>
+		</td>
+		</c:if>
 		</tr>
 		<td colspan='14' id="ingreArea">
 		<td>
 	</table>
 	</div>
 </form>
-<div class="" id="rcpArea1">
+<div class="rcpArea" id="rcpArea1">
 </div>
-<div class="" id="rcpArea2">
+<div class="rcpArea" id="rcpArea2">
 </div>
-<div class="" id="rcpArea3">
+<div class="rcpArea" id="rcpArea3">
 </div>
-<div class="" id="rcpArea4">
+<div class="rcpArea" id="rcpArea4">
+</div>
 </div>
 </body>
 </html>

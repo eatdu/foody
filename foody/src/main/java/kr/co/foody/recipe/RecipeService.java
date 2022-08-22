@@ -9,6 +9,7 @@ public interface RecipeService {
 	
 	int insert(RecipeVO vo);
 	List<String> large_cate(int i);
+	RecipeVO view(int no);
 	
 	Map search(Map cri, HttpSession sess); 
 	

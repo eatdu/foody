@@ -1,14 +1,32 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.co.foody.recipe.RecipeMapper">
-
+	
+	
+	<!-- 레시피 등록 -->
 	<insert id="insert" parameterType="kr.co.foody.recipe.RecipeVO">
 		INSERT INTO recipe (
-			name, intro, type, time, tip, serving, regdate
+			user_no, name, intro, type, time, tip, serving, regdate
 		) VALUES (
-			#{name}, #{intro}, #{type}, #{time}, #{tip}, #{serving}, NOW()
+			#{user_no}, #{name}, #{intro}, #{type}, #{time}, #{tip}, #{serving}, NOW()
 		)
 	</insert>
+	
+	<!-- 레시피 보여주기 -->
+	<select id="view" parameterType="int" resultType="kr.co.foody.recipe.RecipeVO">
+		select * from recipe where no=#{no}
+	</select>
+	
+	<!-- 조회수 올리기 -->
+	<update id="updateRecipeViewCount" parameterType="int">
+		update recipe set viewcount = viewcount+1 where no=#{no}
+	</update>
+	
+	<!-- 조회시간 업데이트(조회) -->
+	
+	<!-- 조회시간 업데이트(1.업데이트) -->
+	
+	<!-- 조회시간 업데이트(2.인서트) -->
 	
 	<!-- 레시피no로 해당 레시피에 필요한 재료 리스트 조회하는 sql -->
 	<select id='selectIngreList' parameterType="int" resultType="kr.co.foody.recipe.IngredientVO">

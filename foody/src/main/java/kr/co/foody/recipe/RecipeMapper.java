@@ -9,12 +9,13 @@ import org.apache.ibatis.annotations.Mapper;
 public interface RecipeMapper {
 
 	int insert(RecipeVO vo);
+	int updateRecipeViewCount(int no);
+	RecipeVO view(int no);
 
 	List<IngredientVO> selectIngreList(int no);
 	List<String> selectIngreNameList(int no);
 	List<String> selectIngreNameList2(String keyword);
 	List<IngredientVO> selectIngreDetail(String keyword);
-	
 	
 	List<RecipeVO> selectAll(Map cri);
 	List<RecipeVO> selectIngreOrKey(Map cri);

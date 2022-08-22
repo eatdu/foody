@@ -17,4 +17,6 @@ public interface CommentMapper {
 	int gnoUpdate(int no);
 	int onoUpdate(CommentVO vo);
 
+	boolean getStar(CommentVO vo);
+	void updateAvgstar(int recipe_no);
 }

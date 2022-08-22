@@ -14,13 +14,21 @@
 		</selectKey>
 	</insert>
 	
-	<insert id="getFeedback" parameterType="kr.co.foody.comment.CommentVO">
+	<!-- 별점 등록 -->
+	<insert id="getStar" parameterType="kr.co.foody.comment.CommentVO">
 		insert into feedback (
 			user_no, recipe_no, star
 		) values (
 			#{user_no}, #{recipe_no}, #{star}
 		)
 	</insert>
+	
+	<!-- 새로운 별점 등록시 평균별점 업뎃 -->
+	<update id="updateAvgstar" parameterType="int">
+		update recipe set
+		avgStar = (select avg(star) from feedback where recipe_no=#{recipe_no})
+		where no=#{recipe_no}
+	</update>
 	
 	<!-- 대댓글 등록 -->
 	<insert id="insert_reCmt" parameterType="kr.co.foody.comment.CommentVO">
@@ -65,7 +73,7 @@
 		where no = #{no}
 	</update>
 	
-	<!-- 삭제 -->
+	<!-- 댓글 삭제 -->
 	<delete id="delete" parameterType="int">
 		delete from comment where no=#{no}
 	</delete>

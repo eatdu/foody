@@ -27,10 +27,11 @@
 
 <style>
 
-	ul > li {
+	.qna_menu li {
 		text-align: center;
 		width: 25%;
 		line-height: 40px;
+		font-size: 150%;
 	}
 	
 </style>
@@ -40,7 +41,7 @@
 <%@ include file="../common/navBar.jsp" %>
 <div class="sub">
 	<h3 class="sub_title">QnA</h3>
-	<ul style="margin:0 auto; width:400px; display: flex;" >
+	<ul class="qna_menu" style="margin:0 auto; width:400px; display: flex;" >
 		<li style="list-style:none; width:200px; text-align:center;">
 			<a href="/foody/board/qna.do"><strong>FAQ</strong></a></li>
 		<li style="list-style:none; width:200px; text-align:center;">

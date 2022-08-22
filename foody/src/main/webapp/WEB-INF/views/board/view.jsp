@@ -16,36 +16,7 @@
 		}
 </style>
 
-
 <script>
-	
-	/*
-	$(function() {
-		$(".getStar li a img").mouseenter(function() {
-			var idx = $(this).index()+1;
-			$(".getStar").removeClass();
-			$(".getStar").addClass("star"+idx);
-		});
-	});
-	
-	
-	<script type="text/javascript">
-	var a = $(".getStar li").get();
-	console.log("a");
-	*/
-	
-	// 일단 li 자리에 회색별 하나씩 놓고
-	// 마우스오버하면 해당 위치보다 숫자가 낮으면 모두 노란별로 바꿔주고
-	// 그대로 클릭시에는 ajax로 li의 value값을 서버로 넘겨준다
-	// 넘겨준 데이터 값은 VO에 담기고 sql문을 수정해 줘야 할 듯?
-	
-
-	
-	$(".getStar li a img").hover(function() {
-		$(this).attr("src", $(this).attr("src").replace(".jpg", "_on.png"));
-	}, function() {
-		$(this).attr("src", $(this).attr("src").replace("_on.png", ".jpg"));
-	});
 	
 	// 게시글 삭제 확인
 	function del(no) {
@@ -69,8 +40,33 @@
 		});
 	}
 	
+	// 별점 등록
 	$(function() {
 		getComment(1);
+		
+		$(".getStar li a img").hover(function() { // 마우스오버 이벤트
+			var idx = $(this).index(".getStar li a img"); // 오버한 객체의 인덱스값(배열)
+			for (var i=0; i<$(".getStar li a img").length; i++) { // 전체별 반복
+				if (i <= idx) { // 맨앞에서부터 내가 오버한 곳까지
+					$(".getStar li a img").eq(i).attr("src", "/foody/img/star_icon_on.png");
+				} else { // 내가 오버한거 뒤에
+					$(".getStar li a img").eq(i).attr("src", "/foody/img/star_icon.jpg");
+				}
+			}
+		}, function() { // 마우스아웃
+			for (var i=0; i<$(".getStar li a img").length; i++) { // 전체배열 반복
+				if (i < $("#starVal").val()) { // 히든(내가 전에 클릭한 별점)에 있는 값보다 작으면 노란별
+					$(".getStar li a img").eq(i).attr("src", "/foody/img/star_icon_on.png");
+				} else { // 내가 좀 전에 클릭한 별점보다 큰거는 회색별
+					$(".getStar li a img").eq(i).attr("src", "/foody/img/star_icon.jpg");
+				}
+			}
+		});
+		$(".getStar li a img").click(function() { // 클릭이벤트(내가 별점을 주기위한)
+			var idx = $(this).index(".getStar li a img"); // 내가 클릭한 인덱스
+			
+			$("#starVal").val(idx+1); // 히든에 내가 클릭한 인덱스+1 (별점은 1부터 시작)
+		})	
 	});
 	
 	// 댓글 저장
@@ -86,6 +82,7 @@
 				formData.append("user_no",${loginInfo.no});
 				formData.append("board_no",${data.no});
 				formData.append("tablename","board");
+				formData.append("recipe_no",1);
 				console.log(JSON.stringify(formData));
 				
 				$.ajax ({
@@ -109,7 +106,6 @@
 	// 댓글 삭제
 	function commentDel(no) {
 		if (confirm('정말로 삭제하시겠습니까?')) {
-			console.log('여기');
 			$.ajax({
 				url: '/foody/comment/delete.do?no='+no,
 				success: function(res) {
@@ -122,7 +118,7 @@
 		}
 	}
 	
-	// 답글달기 클릭시 답글입력창 아래에 보여주기
+	// 답글 클릭시 답글입력창 아래에 보여주기
 	function addBox(no) {
 		$(".add_reCmt"+no).toggle();
 	}
@@ -200,6 +196,7 @@
                 	<!-- 댓글 영역 -->
                 	<div class="comment">
 	                	<form method="post" name="frm" id="frm" enctype="multipart/form-data" >
+	                	<input type="hidden" id="starVal" name="star" value="0">
 	                        <table class="board_write">
 	                            <colgroup>
 	                                <col width="*" />
@@ -214,11 +211,11 @@
 	                                </td>
 	                                <td>
 		                                <ul class="getStar" style="display:flex;">
-					                			<li style="list-style:none;" id="star1" value="10"><a href="#"><img src="/foody/img/star_icon.jpg"/></a></li>
-					                			<li style="list-style:none;" id="star2" value="20"><a href="#"><img src="/foody/img/star_icon.jpg"/></a></li>
-					                			<li style="list-style:none;" id="star3" value="30"><a href="#"><img src="/foody/img/star_icon.jpg"/></a></li>
-					                			<li style="list-style:none;" id="star4" value="40"><a href="#"><img src="/foody/img/star_icon.jpg"/></a></li>
-					                			<li style="list-style:none;" id="star5" value="50"><a href="#"><img src="/foody/img/star_icon.jpg"/></a></li>
+					                			<li style="list-style:none;" id="star1"><a href="#"><img src="/foody/img/star_icon.jpg"/></a></li>
+					                			<li style="list-style:none;" id="star2"><a href="#"><img src="/foody/img/star_icon.jpg"/></a></li>
+					                			<li style="list-style:none;" id="star3"><a href="#"><img src="/foody/img/star_icon.jpg"/></a></li>
+					                			<li style="list-style:none;" id="star4"><a href="#"><img src="/foody/img/star_icon.jpg"/></a></li>
+					                			<li style="list-style:none;" id="star5"><a href="#"><img src="/foody/img/star_icon.jpg"/></a></li>
 					                		</ul>
 					                		<br>
 										<input type="file" name="uploadFile" id="uploadFile">

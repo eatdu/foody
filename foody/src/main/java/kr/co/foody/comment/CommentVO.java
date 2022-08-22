@@ -18,6 +18,7 @@ public class CommentVO {
 	
 	private String user_name;
 	private int star;
+	private int recipe_no;
 	
 	private int gno;
 	private int ono;

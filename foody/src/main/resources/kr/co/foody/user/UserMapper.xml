@@ -42,7 +42,7 @@
 	
 	<!-- 로그인 체크 -->
 	<select id="loginCheck" parameterType="kr.co.foody.user.UserVO" resultType="kr.co.foody.user.UserVO">
-		SELECT * FROM user WHERE email=#{email} AND pwd=#{pwd}
+		SELECT * FROM user WHERE email=#{email} AND pwd=#{pwd} AND user.exit=0
 	</select>
 	
 	<!-- 이메일 중복체크 -->
@@ -155,7 +155,7 @@
 	<update id="userExit" parameterType="int">
 		UPDATE user SET 
 			user.print = 1, user.exit =1
-		WHERE no = 124
+		WHERE no=#{no}
 	</update>
 	
 	

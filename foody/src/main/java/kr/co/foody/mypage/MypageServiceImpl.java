@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,8 +22,10 @@ public class MypageServiceImpl implements MypageService {
 
 	@Override // 레시피에 대한 데이터 받아옴
 	public Map<String, Object> index(MypageVO vo, HttpSession sess) {
+		UserVO mvo = (UserVO)sess.getAttribute("loginInfo");
+		
 		// 레시피에 대한 값을 List에 담는다
-		List<MypageVO> list = mapper.myRecipe(vo);
+		List<MypageVO> list = mapper.myRecipe((int)mvo.getNo());
 		
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("list", list);
@@ -64,4 +67,5 @@ public class MypageServiceImpl implements MypageService {
 		
 		return map;
 	}
+
 }

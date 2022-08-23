@@ -67,15 +67,6 @@ public class AdminServiceImpl implements AdminService {
 		return false;
 	}
 
-	@Override
-	public Map<String, Object> userList() {
-		List<UserVO> list = adminMapper.userList();
-		
-		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("list", list);
-		
-		return map;
-	}
 	//레시피 통계 관련
 	//1. 메인 - 레시피 카운트
 		
@@ -96,5 +87,16 @@ public class AdminServiceImpl implements AdminService {
 		sess.setAttribute("cntRcp", result);
 		return false;
 	}
+
+	@Override
+	public Map<String, Object> userList() {
+		List<UserVO> userList = adminMapper.userList();
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("userList", userList);
+		
+		return map;
+	}
+
 
 }

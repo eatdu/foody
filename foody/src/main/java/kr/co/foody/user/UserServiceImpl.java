@@ -220,9 +220,13 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public int userExit(int no) {
-		// TODO Auto-generated method stub
-		return 0;
+	public boolean userExit(HttpSession sess) {
+		UserVO uv = (UserVO) sess.getAttribute("loginInfo");
+		try {
+			mapper.userAllergyDelete(uv.getNo());
+			mapper.userPreferDelete(uv.getNo());
+		} catch(Exception e) {}
+		return mapper.userExit(uv.getNo()) > 0 ? true : false;
 	}
 
 

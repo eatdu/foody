@@ -10,5 +10,5 @@ import kr.co.foody.user.UserVO;
 public interface AdminMapper {
 	
 	List<UserVO> userList();
-
+	
 }

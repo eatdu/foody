@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import kr.co.foody.board.BoardService;
+import kr.co.foody.board.BoardVO;
 import kr.co.foody.constants.IngredientCategory;
 import kr.co.foody.constants.RecipeCategory;
 import kr.co.foody.recipe.IngredientMapper;
@@ -31,6 +33,8 @@ public class AdminController {
 	IngredientMapper ingreMapper;
 	@Autowired
 	AdminService service;
+	@Autowired
+	BoardService paging;
 	
 	
 	@GetMapping("/admin/main.do")
@@ -84,7 +88,7 @@ public class AdminController {
 	}
 	
 	@GetMapping("/admin/userList.do")
-	public String userList(Model model, UserVO vo) {
+	public String userList(Model model) {
 		model.addAttribute("data", service.userList());
 		return "admin/userList";
 	}

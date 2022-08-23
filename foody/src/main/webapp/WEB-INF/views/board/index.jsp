@@ -74,7 +74,6 @@
                     </table>
                     <div class="btnSet" style="text-align:right;">
                     	<a class="btn" href="javascript:goWrite();">글작성 </a>
-                    
                     </div>
                     
                     <!-- 페이지처리 -->
@@ -99,9 +98,10 @@
                         <form method="get" name="searchForm" id="searchForm" action="">
                             <span class="srchSelect">
                                 <select id="stype" name="stype" class="dSelect" title="검색분류 선택">
-                                    <option value="all">전체</option>
+                                    <option value="all">제목+내용</option>
                                     <option value="title">제목</option>
                                     <option value="content">내용</option>
+                                    <option value="writer">작성자</option>
                                 </select>
                             </span>
                             <span class="searchWord">

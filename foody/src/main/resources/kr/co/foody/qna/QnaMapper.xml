@@ -36,24 +36,61 @@
 	update qna set response = response+1 where no = #{no}
 </update>
 
-
+<!-- 게시글 수 조회 -->
 <select id="count" parameterType="kr.co.foody.qna.QnaVO" resultType="int">
 	select count(*) from qna
-	<where> <!-- where태그없이 쓰려면 -> where 1=1 -->
-		<if test="stype != null and stype != ''"> <!-- 빈값도 제외시켜야 함 -->
-			<if test="stype != 'all'">
-				${stype} like '%${sword}%'
+	<where>
+		<if test="period != 'all' and period != null and period != ''">
+			regdate >= date_add(now(), interval -${period})
+		</if>
+		<if test="response != 0">
+			and response > 0
+		</if>
+		<if test="stype != null and stype != ''">
+			<if test="stype == 'title' or stype == 'content'">
+				and ${stype} like '%${sword}%'
 			</if>
 			<if test="stype == 'all'">
-				title like '%${sword}%' or content like '%${sword}%'
+				and title like '%${sword}%' or content like '%${sword}%'
 			</if>
-	    </if>
+			<if test="stype == 'writer'">
+				and user_no in (select no from user where name like '%${sword}%') 
+			</if>
+		</if>
 	</where>
 </select>
 
 <!-- FAQ 조회 -->
 <select id="getFaq" parameterType="kr.co.foody.qna.QnaVO" resultType="kr.co.foody.qna.QnaVO">
 	select * from qna order by regdate desc
+	limit ${startIdx}, ${pageRow}
+</select>
+
+<!-- 관리자 페이지 전체 QnA 리스트 조회 -->
+<select id="getQna" parameterType="kr.co.foody.qna.QnaVO" resultType="kr.co.foody.qna.QnaVO">
+	select *,
+		(select name from user where no = qna.user_no) as user_name
+	from qna
+	<where>
+		<if test="period != 'all' and period != null and period != ''">
+			regdate >= date_add(now(), interval -${period})
+		</if>
+		<if test="response != 0">
+			and response > 0
+		</if>
+		<if test="stype != null and stype != ''">
+			<if test="stype == 'title' or stype == 'content'">
+				and ${stype} like '%${sword}%'
+			</if>
+			<if test="stype == 'all'">
+				and title like '%${sword}%' or content like '%${sword}%'
+			</if>
+			<if test="stype == 'writer'">
+				and user_no in (select no from user where name like '%${sword}%') 
+			</if>
+		</if>
+	</where>
+	order by regdate desc
 	limit ${startIdx}, ${pageRow}
 </select>
 

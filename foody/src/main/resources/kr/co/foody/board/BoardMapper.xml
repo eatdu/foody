@@ -16,11 +16,14 @@
 	select count(*) from board
 	<where>
 		<if test="stype != null and stype != ''">
-			<if test="stype != 'all'">
+			<if test="stype == 'title' or stype == 'content'">
 				${stype} like '%${sword}%'
 			</if>
 			<if test="stype == 'all'">
 				title like '%${sword}%' or content like '%${sword}%'
+			</if>
+			<if test="stype == 'writer'">
+				user_no in (select no from user where name like '%${sword}%')
 			</if>
 		</if>
 	</where>
@@ -34,12 +37,16 @@
 	from board
 	<where>
 		<if test="stype != null and stype != ''">
-			<if test="stype != 'all'">
+			<if test="stype == 'title' or stype == 'content'">
 				${stype} like '%${sword}%'
 			</if>
 			<if test="stype == 'all'">
 				title like '%${sword}%' or content like '%${sword}%'
 			</if>
+			<if test="stype == 'writer'">
+				user_no in (select no from user where name like '%${sword}%') 
+			</if>
+			
 		</if>
 	</where>
 	order by regdate desc

@@ -15,6 +15,7 @@ public interface QnaMapper {
 	
 	int count(QnaVO vo);
 	List<QnaVO> getFaq(QnaVO vo);
+	List<QnaVO> getQna(QnaVO vo);
 	
 	int count_myQna(QnaVO vo);
 	List<QnaVO> getMyQna(QnaVO vo);

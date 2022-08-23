@@ -97,11 +97,8 @@ public class AdminController {
 	// QnA 게시판 조회
 	@GetMapping("/admin/qna.do")
 	public String getQna(QnaVO vo, Model model) {
-		model.addAttribute("data", service.getFaq(vo));
+		model.addAttribute("data", service.getQna(vo));
 		return "admin/qna";
 	}
-	
-	
-	
 	
 }

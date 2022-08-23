@@ -8,15 +8,91 @@
 <link rel="stylesheet" href="/foody/css/reset.css"/>
 <link rel="stylesheet" href="/foody/css/contents.css"/>
 <link rel="stylesheet" type="text/css" href="/foody/resources/css/leftMenu.css">
+<script type="text/javascript" src="/foody/resources/js/modal/jquery.plainmodal.min.js"></script>
 <title>관리자 QnA 페이지</title>
+
+<script>
+function openModal(){
+	$('.modal').plainModal('open');
+}
+
+$('.txt_l').on('click', function() {
+	$()
+})
+
+
+</script>
+
+<style>
+.modal {
+	width: 500px;
+	height: 500px;
+	background-color: white;
+	display: none;
+}
+</style>
+
 </head>
 
 <body>
 <%@ include file="../admin/leftMenu.jsp" %>
 <div class="adminContainer">
+	<!-- 모달영역 -->
+	<div class="modal">
+		<div class="view">
+            <div class="title">
+                <dl>
+                	
+                </dl>
+            </div>
+            <div class="cont"><p>${data.content}</p></div>
+            <div class="btnSet clear">
+                <div class="fl_l">
+                <a href="#" class="btn">답변하기</a>
+                 <a href="#" class="btn">FAQ에 등록하기</a>
+                 <a href="#" class="btn">목록보기</a>
+            	</div>
+        	</div>
+        	</div>
+    </div>
+    <!-- 모달영역 -->
+    
 	<div class="qna_list">
             <div class="size">
                 <div class="bbs">
+	                <form method="post" name="searchForm" id="searchForm" action="qna.do">
+	                <div class="search">
+		                <ul class="byPeriod" style="display:flex;">
+			                <li>기간별&nbsp;&nbsp;|&nbsp;&nbsp;</li>
+			                <li><label><input type="radio" id="entire" name="period" value="all" checked/>전체</label></li>
+			                <li><label><input type="radio" id="day" name="period" value="1 day"/>1일</label></li>
+			                <li><label><input type="radio" id="week" name="period" value="1 week"/>1주</label></li>
+			                <li><label><input type="radio" id="month" name="period" value="1 month"/>1개월</label></li>
+			                <li><label><input type="radio" id="3months" name="period" value="3 month"/>3개월</label></li>
+			                <li><label><input type="radio" id="6months" name="period" value="6 month"/>6개월</label></li>
+			                <li><label><input type="radio" id="year" name="period" value="1 year"/>1년</label></li>
+		                </ul>
+		                <ul class="byResponsed" style="display:flex;">
+			                <li>답변 여부&nbsp;&nbsp;|&nbsp;&nbsp;</li>
+			                <li><label><input type="radio" id="notResponsed" name="response" value="0" checked/>답변 미완료건</label></li>
+			                <li><label><input type="radio" id="responsed" name="response" value="1"/>답변 완료건</label></li>
+		                </ul>
+	                </div>
+	                <div class="bbsSearch" align="left">
+	                    <span class="srchSelect">
+	                        <select id="stype" name="stype" class="dSelect" title="검색분류 선택">
+	                            <option value="all">제목+내용</option>
+	                            <option value="title">제목</option>
+	                            <option value="content">내용</option>
+	                            <option value="writer">작성자</option>
+	                        </select>
+	                    </span>
+	                    <span class="searchWord">
+	                        <input type="text" id="sword" name="sword" value="${param.sword}" title="검색어 입력">
+	                        <input type="button" id="" value="검색" title="검색">
+	                    </span>
+	                </div>
+	                </form>
                     <table class="list">
                     <p><span><strong>총 ${data.totalCount}개</strong>  |  ${qnaVO.page}/${data.totalPage}페이지</span></p>
                     <!-- boardVO.page 대신 param.page도 가능하지만 1페이지일 때 안 나옴 -->
@@ -38,6 +114,7 @@
                             </tr>
                             
                         </thead>
+	                                	
                         <tbody>
 						<c:if test="${empty data.list}"> <!-- 당연히 객체가 null일 수 없고 size가 없는 경우니까 -->
                             <tr>
@@ -45,17 +122,18 @@
                             </tr>
                         </c:if>
 						<c:forEach items="${data.list}" var="list" varStatus="status">
-                            <tr class="faq_q" onclick="javascript:showAnswer(${list.no});">
+                            <tr class="faq_q">
                                 <!-- 총개수-인덱스-(현재페이지번호-1)*페이지당개수 -->
                                 <td style="text-align: center;">${data.totalCount - status.index - (qnaVO.page - 1) * qnaVO.pageRow}</td>
                                 <td class="date" style="text-align: center;">
                                 	<fmt:formatDate pattern="yyyy-MM-dd HH:mm" value="${list.regdate}" />
                                 </td>
+                                
                                 <td class="txt_l" style="text-align: left;">
 	                                	<!-- 답변 들여쓰기 -->
 	                                	<c:forEach begin="1" end="${list.depth}">&nbsp;&nbsp;&nbsp;</c:forEach>
 	                                	<c:if test="${list.depth > 0}"><img src="/foody/img/answer_icon.gif"></c:if>
-	                                    ${list.title}</a>
+	                                    <a href="javascript:openModal();">${list.title}</a>
                                 </td>
                                 <td class="writer">
                                     ${list.user_name}

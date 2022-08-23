@@ -36,14 +36,20 @@ public class RecipeController {
 
 	@PostMapping("write.do")
 	public String insert(RecipeVO vo, HttpSession sess, Model model) {
+		
 		UserVO uv = (UserVO) sess.getAttribute("loginInfo");
-
 		model.addAttribute("cal", (int) sess.getAttribute("cal"));
 		model.addAttribute("loginInfo", uv);
 		vo.setUser_no(uv.getNo());
-
-		service.insert(vo);
-		return "recipe/write";
+		
+		if (service.insert(vo) == 1) {
+			model.addAttribute("msg", "게시물이 저장되었습니다.");
+			model.addAttribute("url", "/foody/mypage/mypage.do");
+			return "recipe/alert";
+		} else {
+			model.addAttribute("msg", "게시물을 저장할 수 없습니다.");
+			return "recipe/alert";
+		}
 	}
 
 	@GetMapping("/recipe/view.do")

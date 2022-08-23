@@ -31,7 +31,13 @@ public class RecipeServiceImpl implements RecipeService {
 	public List<String> large_cate(int i) {
 		return mapper2.large_cate(i);
 	}
-
+	
+	@Override
+	public RecipeVO view(int no) {
+		mapper.updateRecipeViewCount(no);
+		return mapper.view(no);
+	}
+	
 	//재료명 리스트 - 재료 분류 번호
 	@Override
 	public List<Map> makeIngreNameList(int no) {

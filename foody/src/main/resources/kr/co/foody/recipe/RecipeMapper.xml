@@ -1,14 +1,32 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.co.foody.recipe.RecipeMapper">
-
+	
+	
+	<!-- 레시피 등록 -->
 	<insert id="insert" parameterType="kr.co.foody.recipe.RecipeVO">
 		INSERT INTO recipe (
-			name, intro, type, time, tip, serving, regdate
+			user_no, name, intro, type, time, tip, serving, regdate
 		) VALUES (
-			#{name}, #{intro}, #{type}, #{time}, #{tip}, #{serving}, NOW()
+			#{user_no}, #{name}, #{intro}, #{type}, #{time}, #{tip}, #{serving}, NOW()
 		)
 	</insert>
+	
+	<!-- 레시피 보여주기 -->
+	<select id="view" parameterType="int" resultType="kr.co.foody.recipe.RecipeVO">
+		select * from recipe where no=#{no}
+	</select>
+	
+	<!-- 조회수 올리기 -->
+	<update id="updateRecipeViewCount" parameterType="int">
+		update recipe set viewcount = viewcount+1 where no=#{no}
+	</update>
+	
+	<!-- 조회시간 업데이트(조회) -->
+	
+	<!-- 조회시간 업데이트(1.업데이트) -->
+	
+	<!-- 조회시간 업데이트(2.인서트) -->
 	
 	<!-- 레시피no로 해당 레시피에 필요한 재료 리스트 조회하는 sql -->
 	<select id='selectIngreList' parameterType="int" resultType="kr.co.foody.recipe.IngredientVO">
@@ -297,7 +315,7 @@
 		SELECT COUNT(*) FROM recipe ${where}
 	</select>
 	
-	<!-- 레시피 검색 결과 
+	<!-- 레시피 검색 결과 -->
 	<select id='selectRcpAdmin' parameterType="map" resultType="kr.co.foody.recipe.RecipeVO">
 		SELECT *
 		FROM
@@ -306,19 +324,23 @@
 				no, 
 				(
 				SELECT nik_name FROM user WHERE recipe.user_no = user.no
-				) nikname, name, type, regdate, adminchk, print
+				) nikname, name title, type, regdate, adminchk, print
 			FROM
 				recipe
 			) a
-		WHERE
-		<c:if test='
-		#adminchk = 0;
-		regdate >= date_add(now(), interval -1 day)
-		#name like '%호박%'; - 제목 검색어
-		#nikname like '%미식가%' - 닉네임 검색어
-		ORDER BY nikname;
+		<where>
+			<if test='date != "all"'>
+			regdate >= date_add(now(), interval ${date})	
+			</if>
+			AND print = ${print}
+			AND adminchk = ${adminChk}
+			<if test='type != "all" and keyword != ""'>
+			AND ${type} like '%${keyword}%'
+			</if>
+		</where>
+		ORDER BY ${orderBy};
 	</select>
-	-->
+	
 	<!-- 샘플 데이터 생성용 -->
 	<!-- 랜덤 회원정보 인서트 -->
 	<insert id="insertRandomUser" parameterType="map">

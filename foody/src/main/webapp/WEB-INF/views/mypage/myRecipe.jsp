@@ -25,13 +25,13 @@
 <div id="container">
 	<div id="myRecipe">
 		<div id="reicpeView">
-			<div><a href="/foody/write.do?no=${loginInfo.no}" class="btn">새로운 레시피</a></div>
+			<div><a href="/foody/write.do" class="btn">새로운 레시피</a></div>
 			<ul class="myRecipeList_ul">
 				<c:forEach var="recipe" items="${myRecipe.list}">
 					<li class="myRecipeList_li" style="width:300px;height:400px;">
 						<div class="myRecipeName" style="text-align:center;">${recipe.name}</div>
 						<div class="myRecipeThumb">
-							<a href="" class="recipeLink">
+							<a href="/foody/recipe/view.do?no=${recipe.no}" class="recipeLink">
 								<img class="myRecipeThumb_img" style="width:300px;height:250px;" src="${recipe.thumbnail}">
 							</a>
 						</div>

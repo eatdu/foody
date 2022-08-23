@@ -5,6 +5,8 @@ import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
+import org.springframework.ui.Model;
+
 import kr.co.foody.recipe.IngredientVO;
 import kr.co.foody.user.UserVO;
 
@@ -19,4 +21,6 @@ public interface AdminService {
 	boolean rcpCount(Map cri, HttpSession sess);
 	
 	Map<String, Object> userList();
+	//레시피 목록 조회
+	boolean selectRcpAdmin(Map cri, Model model);
 }

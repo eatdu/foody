@@ -6,6 +6,10 @@
 <!DOCTYPE html>
 <html>
 	<head>
+	<link rel="stylesheet" type="text/css" href="/foody/resources/css/board.css">
+<link rel="stylesheet" type="text/css" href="/foody/resources/css/basic.css">
+<link rel="stylesheet" type="text/css" href="/foody/resources/css/layout.css">
+<link rel="stylesheet" type="text/css" href="/foody/resources/css/manage.css">
 		<meta charset="UTF-8">
 		<title>레시피 등록</title>
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
@@ -40,6 +44,7 @@
 			
 			var num=0; //추가되는 재료들의 weight값을 구분해주는 num
 			var options;
+			var userNickname= String("${loginInfo.nik_name}");
 		
 			// -------------------재료종류 드롭다운 클릭 JS----------------------
 			$(function(){
@@ -381,11 +386,33 @@
 						dataPoints: [
 							{ label: "탄수화물", y: 50},
 							{ label: "단백질", y: 50},
-							{ label: "지방", y: 50},
+							{ label: "지방", y: 50}
 						]
 					}]
 				};
-				$("#chartContainer").CanvasJSChart(options); 
+				$("#chartContainer").CanvasJSChart(options);  
+			});
+			
+			// -------------------도넛 차트2 JS----------------------
+			$(function(){
+				
+				options={
+					title: {
+						text: userNickname+" 님의 하루 권장 칼로리: 0kcal"
+					},
+					data: [{
+						type: "doughnut",
+						innerRadius: "40%",
+						showInLegend: false,
+						legendText: "{label}",
+						indexLabel: "{label}: #percent%",
+						dataPoints: [
+							{ label: "하루 권장 칼로리", y: ${cal}},
+							{ label: "음식의 칼로리", y: 0}
+						]
+					}]
+				};
+				$("#chartContainer2").CanvasJSChart(options);  
 			});
 			
 			// -------------------실시간 칼로리계산기 JS----------------------
@@ -401,14 +428,7 @@
 					sum_protein += Number(sel_ingre[i].dataset.proteinkcal);
 					sum_fat += Number(sel_ingre[i].dataset.fatkcal);
 				}
-				sum_kcal = sum_carbo*4+ sum_protein*4 + sum_fat*9;
-				
-				console.log("++++++++++");
-				console.log(sum_carbo);
-				console.log(sum_protein);
-				console.log(sum_fat);
-				console.log(sum_kcal);
-				console.log("++++++++++");
+				sum_kcal = (sum_carbo*4+ sum_protein*4 + sum_fat*9);
 				
 				var chart_carbo;
 				var chart_protein;
@@ -437,13 +457,31 @@
 							dataPoints: [
 								{ label: "탄수화물", y: chart_carbo},
 								{ label: "단백질", y: chart_protein},
-								{ label: "지방", y: chart_fat},
+								{ label: "지방", y: chart_fat}
 							]
 						}]
 					};
 				$("#chartContainer").CanvasJSChart(options); 
+				
+				options2={
+						title: {
+							text:  userNickname+" 님의 하루 권장 칼로리: "+${cal}+"kcal"
+						},
+						data: [{
+							type: "doughnut",
+							innerRadius: "40%",
+							showInLegend: false,
+							legendText: "{label}",
+							indexLabel: "{label}: #percent%",
+							dataPoints: [
+								{ label: "하루 권장 칼로리", y: ${cal}},
+								{ label: "음식의 칼로리", y: sum_kcal}
+							]
+						}]
+					};
+				$("#chartContainer2").CanvasJSChart(options2); 
 			}
-			
+		
 			// -------------------버튼이 눌리면 이미지 프리뷰 코드(호출) JS----------------------
 			
 			function readURL(input,num1) {
@@ -463,46 +501,41 @@
 			}
 			
 			// -------------------조리과정 div 만드는 함수(호출)----------------------
-			var input = 0;
-			var count = 1;
-			var idx2 = 0;
+			var processDatas=[];
+            
+            var pNum = 0;
+            
 			function makeProcessDiv(){
-				var append_str = '<div class="process" id="process'+input+'" style="height: 150px; width: 1000px; padding:2.5px;">'
-								+'<div class="step" id="processStep'+input+'" data-val="'+input+'"></div>'
-								+'<input type="file" data-val="'+input+'" id="imgupload'+input+'" style="display:none"/>'
-								+'<div id="Imagebutton'+input+'" onclick="clickevent('+input+')" style="padding-top:0px; height: 140px; width: 220px; float:left; background-color:#ECECEC; text-align: center;">'
-								+'<img id="processImg'+input+'" src="resources/img/PlusIcon.png" style="height: 140px; width: 220px; object-fit: cover;">'
+				var append_str = '<div class="process" id="process'+pNum+'" style="height: 150px; width: 1000px; padding:2.5px;">'
+								+'<div class="step" id="processStep'+pNum+'" data-val="'+pNum+'"></div>'
+								+'<input type="file" data-val="'+pNum+'" id="imgupload'+pNum+'" style="display:none"/>'
+								+'<div id="Imagebutton'+pNum+'" onclick="clickevent('+pNum+')" style="padding-top:0px; height: 140px; width: 220px; float:left; background-color:#ECECEC; text-align: center;">'
+								+'<img id="processImg'+pNum+'" src="resources/img/PlusIcon.png" style="height: 140px; width: 220px; object-fit: cover;">'
 								+'</div>'
-								+'<textarea id="processText'+input+'" rows="5" cols="30" style="height: 140px; padding:0px; resize:none;"></textarea>'
-				if(input>2){
-					append_str += '<input type="button" data-val="'+input+'" class="deleteProcess" value="삭제">'+'</div>'
-					count++;
+								+'<textarea id="processText'+pNum+'" rows="5" cols="30" style="height: 140px; padding:0px; resize:none;"></textarea>'
+				if(pNum>2){
+					append_str += '<input type="button" data-val="'+pNum+'" class="deleteProcess" value="삭제">'+'</div>'
+					
 				}else{
 					append_str += '</div>'
 				}
 				$('#processList').append(append_str);
-				count++;
+			
+				
 				$(".deleteProcess").off('click');
 				$(".deleteProcess").click(function() {
 					var idx = $(this).index(".deleteProcess")+3;
-					console.log(idx+1);
 					$('.process').eq(idx).remove();
-					count--;
 				});
-				$("#imgupload"+input).change(function() {
+				$("#imgupload"+pNum).change(function() {
 					readURL(this,$(this).data('val'));
 				}); 
 				
 				idx2 = $('.process').index();
 				
-				input++;
+				pNum++;
 				console.log(idx2);
 			}
-			function makeProcessStepDiv(){
-					var appendStep = '<span>STEP</span>'
-					$('#processStep').html(appendStep);
-				}
-			
 			
 			// ----------imgupload(input 이미지 고르는 창) 뜨게 하는 함수(호출) JS------------
 			function clickevent(input){
@@ -529,6 +562,7 @@
 	</style>
 
 	<body>
+	<%@ include file="../common/navBar.jsp" %>
 		<form method="post" action="write.do">
 			<!-- 요리명(name) -->
 			요리명: <input type="text" name="name" ><br>
@@ -620,7 +654,10 @@
 				
 			<!-- 영양 정보(차트 하나 더 넣게 되면 float:left 해줘야 함 -->
 			영양정보:
-			<div id="chartContainer" style="height: 200px; width: 50%;"></div><br>
+			<div id="chartContainer" style="height: 200px; width: 50%;"></div>
+			<br>
+			<div id="chartContainer2" style="height: 200px; width: 50%;"></div>
+			<br>
 			
 			<!-- 조리 과정 style 먹인거 나중에 다 빼기 -->
 			조리과정:

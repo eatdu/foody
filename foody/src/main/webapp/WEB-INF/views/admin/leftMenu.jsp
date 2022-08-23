@@ -2,6 +2,8 @@
     pageEncoding="UTF-8"%>
 
 <div class="adminMenu">
+	Foody<br>
+	관리자페이지
 	<ul>
 		<a href="main.do"><li>메인페이지</li></a>
 		<a href="recipe.do"><li>레시피 목록 조회</li></a>

@@ -1,7 +1,25 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.co.foody.admin.AdminMapper">
-
-
+	
+	<!-- 회원전체 게시글 조회 -->
+	<select id="userList" resultType="kr.co.foody.user.UserVO">
+		SELECT *,
+			(SELECT COUNT(user_no) FROM recipe WHERE user_no = user.no) AS recipe_count,
+			(SELECT COUNT(user_no) FROM comment WHERE user_no = user.no) AS comment_count
+		FROM user
+		<!-- <where>
+			<if test="stype != null and stype != ''">
+				<if test="stype != 'all'">
+					${stype} like '%${sword}%'
+				</if>
+				<if test="stype == 'all'">
+					title like '%${sword}%' or content like '%${sword}%'
+				</if>
+			</if>
+		</where>
+		order by regdate desc
+		limit ${startIdx}, ${pageRow} -->
+	</select>
 	
 </mapper>

@@ -71,4 +71,44 @@
 	delete from board where no=#{no}
 </delete>
 
+<!-- 회원 수 조회 -->
+	<select id="userCount" parameterType="kr.co.foody.board.BoardVO" resultType="int">
+		select count(*) from user
+		<where>
+			<if test="stype != null and stype != ''">
+				<if test="stype != 'all'">
+					${stype} like '%${sword}%'
+				</if>
+				<if test="stype == 'all'">
+					title like '%${sword}%' or content like '%${sword}%'
+				</if>
+			</if>
+		</where>
+	</select>
+	
+	<!-- 회원전체 게시글 조회 -->
+	<select id="userList" parameterType="kr.co.foody.board.BoardVO" resultType="kr.co.foody.user.UserVO">
+		select *,
+			(SELECT COUNT(user_no) FROM recipe WHERE user_no = user.no) AS recipe_count,
+			(SELECT COUNT(user_no) FROM comment WHERE user_no = user.no) AS comment_count
+		from user
+		<where>
+			<if test="stype != null and stype != ''">
+				<if test="stype != 'all'">
+					${stype} like '%${sword}%'
+				</if>
+				<if test="stype == 'all'">
+					title like '%${sword}%' or content like '%${sword}%'
+				</if>
+			</if>
+		</where>
+		order by regdate desc
+		limit ${startIdx}, ${pageRow}
+	</select>
+	
+
+
+
+
+
 </mapper>

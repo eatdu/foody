@@ -203,6 +203,20 @@ public class UserController {
 		}
 	}
 	
+	@GetMapping("/user/exit.do")
+	public String userExit(Model model, UserVO vo, HttpServletRequest req) {
+		HttpSession sess = req.getSession();
+		if(service.userExit(sess)) {
+			sess.invalidate();
+			model.addAttribute("msg", "탈퇴완료");
+			model.addAttribute("url", "/foody/recipe/main.do");
+			return "common/alert";
+		} else {
+			model.addAttribute("msg", "탈퇴실패");
+			return "common/alert";
+		}
+	}
+	
 	
 	
 	

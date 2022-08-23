@@ -8,7 +8,7 @@ import lombok.Data;
 public class MypageVO {
 
 	private int no;
-//	private int user_no; //NULL
+	private int user_no;
 	private String name;
 	private String intro;
 	private int type;

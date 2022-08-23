@@ -3,10 +3,11 @@
 <mapper namespace="kr.co.foody.mypage.MypageMapper">
 	
 	<!-- 레시피 리스트 출력 -->
-	<select id="myRecipe" parameterType="kr.co.foody.mypage.MypageVO" resultType="kr.co.foody.mypage.MypageVO">
+	<select id="myRecipe" parameterType="int" resultType="kr.co.foody.mypage.MypageVO">
 		SELECT *,
 			(SELECT COUNT(bookmark) FROM feedback WHERE recipe_no=recipe.no) AS bookmark
 		FROM recipe 
+		WHERE recipe.user_no=#{user_no}
 		LIMIT 0,30
 	</select>
 	

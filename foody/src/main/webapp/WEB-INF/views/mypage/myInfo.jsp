@@ -84,7 +84,7 @@ function del(no){
 							주소
 						</td>
 						<td>
-							${loginInfo.addr1},${loginInfo.addr2}
+							(${loginInfo.zipcode})${loginInfo.addr1},${loginInfo.addr2}
 						</td>
 					</tr>
 					<tr>

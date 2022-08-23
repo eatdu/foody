@@ -219,6 +219,16 @@ public class UserServiceImpl implements UserService {
 		return result == 2 ? true : false;
 	}
 
+	@Override
+	public boolean userExit(HttpSession sess) {
+		UserVO uv = (UserVO) sess.getAttribute("loginInfo");
+		try {
+			mapper.userAllergyDelete(uv.getNo());
+			mapper.userPreferDelete(uv.getNo());
+		} catch(Exception e) {}
+		return mapper.userExit(uv.getNo()) > 0 ? true : false;
+	}
+
 
 
 

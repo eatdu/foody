@@ -7,7 +7,7 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface MypageMapper {
 
-	List<MypageVO> myRecipe(MypageVO vo);
+	List<MypageVO> myRecipe(int no);
 	
 	List<MypageVO> allergyList(int no);
 	

@@ -16,7 +16,7 @@ import lombok.ToString;
 public class RecipeVO {
 	
 	private int no;
-//	private int user_no; //NULL
+	private int user_no; //NULL
 	private String name;
 	private String intro;
 	private int type;

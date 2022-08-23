@@ -3,8 +3,11 @@ package kr.co.foody.board;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import kr.co.foody.user.UserVO;
 
 @Service
 public class BoardServiceImpl implements BoardService {
@@ -33,6 +36,7 @@ public class BoardServiceImpl implements BoardService {
 		if (endPage > totalPage) endPage = totalPage;
 		boolean prev = startPage > 1 ? true : false; // prev 버튼
 		boolean next = endPage < totalPage ? true : false; // next 버튼
+		
 		
 		Map map = new HashMap();
 		map.put("totalCount", totalCount);

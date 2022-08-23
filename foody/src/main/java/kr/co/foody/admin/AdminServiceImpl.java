@@ -28,8 +28,9 @@ public class AdminServiceImpl implements AdminService {
 	UserMapper userMapper;
 	
 	@Autowired
+	AdminMapper adminMapper;
+	@Autowired
 	RecipeMapper rcpMapper;
-	
 	
 	// 재료 정보 관련
 	@Override
@@ -69,6 +70,7 @@ public class AdminServiceImpl implements AdminService {
 
 	//레시피 통계 관련
 	//1. 메인 - 레시피 카운트
+		
 	@Override
 	public boolean rcpCount(Map cri, HttpSession sess) {
 		Map result = new HashMap();
@@ -85,6 +87,16 @@ public class AdminServiceImpl implements AdminService {
 		result.put("notChecked", rcpMapper.count(where2));
 		sess.setAttribute("cntRcp", result);
 		return false;
+	}
+
+	@Override
+	public Map<String, Object> userList() {
+		List<UserVO> userList = adminMapper.userList();
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("userList", userList);
+		
+		return map;
 	}
 
 	

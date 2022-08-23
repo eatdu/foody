@@ -40,6 +40,9 @@ public interface UserMapper {
 	int userPreferDelete(int ano);
 	List<MypageVO> userAllergyNo(int no);
 	
+	// 회원 탈퇴
+	int userExit(int no);
+	
 	// 회원 월별 통계(관리자)
 	int countAllUser();
 	List<Map> countUserWithPeriod();

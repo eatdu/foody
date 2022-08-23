@@ -2,6 +2,20 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<script>
+function del(no){
+	if (confirm("탈퇴하시겠습니까?")){
+		$.ajax({
+			url : '/foody/user/exit.do?no='+no,
+			success : function(res){
+				if(res.trim() == '1'){
+					alert('탈퇴완료');
+				}	    					
+			}
+		})
+	}
+}
+</script>
 <h2>회원 정보관리</h2>
 	<div class="loginInfo">
 		<div class="userInfo">
@@ -83,7 +97,7 @@
 					</tr>
 				</table>
 				<span class="userInfoModify" style="font-size:20px;"><a href="/foody/user/modify.do">회원정보수정</a></span>
-				<span class="userQuit" style="font-size:20px;"><a href="">회원탈퇴</a></span>
+				<span class="userQuit" style="font-size:20px;"><a href="/foody/user/exit.do" class="btn">회원탈퇴</a></span>
 			</div>
 		</div>
 	</div>

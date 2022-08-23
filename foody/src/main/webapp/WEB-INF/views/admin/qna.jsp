@@ -60,7 +60,7 @@ $('.txt_l').on('click', function() {
 	<div class="qna_list">
             <div class="size">
                 <div class="bbs">
-	                <form method="post" name="searchForm" id="searchForm" action="qna.do">
+	                <form method="get" name="searchForm" id="searchForm" action="qna.do">
 	                <div class="search">
 		                <ul class="byPeriod" style="display:flex;">
 			                <li>기간별&nbsp;&nbsp;|&nbsp;&nbsp;</li>

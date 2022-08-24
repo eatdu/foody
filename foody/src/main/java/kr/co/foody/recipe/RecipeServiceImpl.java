@@ -23,10 +23,20 @@ public class RecipeServiceImpl implements RecipeService {
 	IngredientMapper mapper2;
 	
 	@Override
-	public int insert(RecipeVO vo){
-		return mapper.insert(vo);
+	public int insert(Map cri){
+		return mapper.insert(cri);
 	}
-
+	
+	@Override
+	public int insertProcess(Map cri){
+		return mapper.insert2(cri);
+	}
+	
+	@Override
+	public int insertIngredient(Map cri) {
+		return mapper.insert3(cri);
+	}
+	
 	@Override
 	public List<String> large_cate(int i) {
 		return mapper2.large_cate(i);

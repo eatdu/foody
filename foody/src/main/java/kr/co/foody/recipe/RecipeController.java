@@ -48,7 +48,6 @@ public class RecipeController {
 		cri.put("user_no",uv.getNo());
 	
 		for (int k=0; k<thumbnail.length; k++) {
-			
 			if (!photo[k].isEmpty()) { 
 				String org = thumbnail[k].getOriginalFilename(); 
 				String ext = org.substring(org.lastIndexOf(".")); 

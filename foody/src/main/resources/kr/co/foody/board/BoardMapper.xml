@@ -16,11 +16,14 @@
 	select count(*) from board
 	<where>
 		<if test="stype != null and stype != ''">
-			<if test="stype != 'all'">
+			<if test="stype == 'title' or stype == 'content'">
 				${stype} like '%${sword}%'
 			</if>
 			<if test="stype == 'all'">
 				title like '%${sword}%' or content like '%${sword}%'
+			</if>
+			<if test="stype == 'writer'">
+				user_no in (select no from user where name like '%${sword}%')
 			</if>
 		</if>
 	</where>
@@ -34,12 +37,16 @@
 	from board
 	<where>
 		<if test="stype != null and stype != ''">
-			<if test="stype != 'all'">
+			<if test="stype == 'title' or stype == 'content'">
 				${stype} like '%${sword}%'
 			</if>
 			<if test="stype == 'all'">
 				title like '%${sword}%' or content like '%${sword}%'
 			</if>
+			<if test="stype == 'writer'">
+				user_no in (select no from user where name like '%${sword}%') 
+			</if>
+			
 		</if>
 	</where>
 	order by regdate desc
@@ -51,12 +58,12 @@
 	select * from board where no=#{no}
 </select>
 
-<!-- 조회수 -->
+<!-- 조회수 업뎃 -->
 <update id="updateViewcount" parameterType="int">
 	update board set viewcount = viewcount+1 where no=#{no}
 </update>
 
-<!-- 수정 -->
+<!-- 게시글 수정 -->
 <update id="update" parameterType="kr.co.foody.board.BoardVO">
 	update board set
 		title = #{title}, content = #{content}
@@ -66,7 +73,7 @@
 	where no = #{no}
 </update>
 
-<!-- 삭제 -->
+<!-- 게시글 삭제 -->
 <delete id="delete" parameterType="int">
 	delete from board where no=#{no}
 </delete>
@@ -106,7 +113,6 @@
 		limit ${startIdx}, ${pageRow}
 	</select>
 	
-
 
 
 

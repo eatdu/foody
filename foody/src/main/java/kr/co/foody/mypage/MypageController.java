@@ -19,13 +19,14 @@ public class MypageController {
 	}
 	
 	@GetMapping("mypage/myRecipe")
-	public String myRecipe(Model model, MypageVO vo, HttpSession sess) {
-		model.addAttribute("myRecipe", service.index(vo, sess));
+	public String myRecipe(Model model, HttpSession sess) {
+		model.addAttribute("myRecipe", service.mypage(sess));
 		return "/mypage/myRecipe";
 	}
 	
 	@GetMapping("mypage/recentRecipe")
-	public String recentRecipe() {
+	public String recentRecipe(Model model, HttpSession sess) {
+		model.addAttribute("recentRecipe", service.mypage(sess));	
 		return "/mypage/recentRecipe";
 	}
 	
@@ -36,7 +37,7 @@ public class MypageController {
 	
 	@GetMapping("mypage/myInfo")
 	public String myInfo(Model model, HttpSession sess) {
-		model.addAttribute("myInfo", service.myInfo(sess));
+		model.addAttribute("myInfo", service.mypage(sess));
 		return "/mypage/myInfo";
 	}
 	

@@ -23,6 +23,7 @@ public class QnaVO {
 	
 	private String stype;
 	private String sword;
+	private String period;
 	
 	private int startIdx;
 	private int page; // 현재 페이지번호

@@ -19,6 +19,7 @@ public class CommentServiceImpl implements CommentService {
 	public int insert(CommentVO vo) {
 		int r = mapper.insert(vo);
 		if (r == 1) mapper.gnoUpdate(vo.getNo()); // 등록되면 gno를 no로 업뎃
+		if (mapper.getStar(vo)) mapper.updateAvgstar(vo.getRecipe_no());
 		return r;
 	}
 	

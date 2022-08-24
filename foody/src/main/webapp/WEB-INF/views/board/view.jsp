@@ -6,9 +6,19 @@
     <link rel="stylesheet" href="/foody/css/reset.css"/>
     <link rel="stylesheet" href="/foody/css/contents.css"/>
     <title>게시판 상세</title>
-    
+
+
+<style>
+	.getStar li a img {
+		vertical-align: middle;
+		max-height: 25px;
+		max-width: 25px;
+		}
+</style>
+
 <script>
 	
+	// 게시글 삭제 확인
 	function del(no) {
 		if (confirm('삭제하시겠습니까?')) {
 			location.href='delete.do?no='+no;
@@ -30,8 +40,33 @@
 		});
 	}
 	
+	// 별점 등록
 	$(function() {
 		getComment(1);
+		
+		$(".getStar li a img").hover(function() { // 마우스오버 이벤트
+			var idx = $(this).index(".getStar li a img"); // 오버한 객체의 인덱스값(배열)
+			for (var i=0; i<$(".getStar li a img").length; i++) { // 전체별 반복
+				if (i <= idx) { // 맨앞에서부터 내가 오버한 곳까지
+					$(".getStar li a img").eq(i).attr("src", "/foody/img/star_icon_on.png");
+				} else { // 내가 오버한거 뒤에
+					$(".getStar li a img").eq(i).attr("src", "/foody/img/star_icon.jpg");
+				}
+			}
+		}, function() { // 마우스아웃
+			for (var i=0; i<$(".getStar li a img").length; i++) { // 전체배열 반복
+				if (i < $("#starVal").val()) { // 히든(내가 전에 클릭한 별점)에 있는 값보다 작으면 노란별
+					$(".getStar li a img").eq(i).attr("src", "/foody/img/star_icon_on.png");
+				} else { // 내가 좀 전에 클릭한 별점보다 큰거는 회색별
+					$(".getStar li a img").eq(i).attr("src", "/foody/img/star_icon.jpg");
+				}
+			}
+		});
+		$(".getStar li a img").click(function() { // 클릭이벤트(내가 별점을 주기위한)
+			var idx = $(this).index(".getStar li a img"); // 내가 클릭한 인덱스
+			
+			$("#starVal").val(idx+1); // 히든에 내가 클릭한 인덱스+1 (별점은 1부터 시작)
+		})	
 	});
 	
 	// 댓글 저장
@@ -47,6 +82,7 @@
 				formData.append("user_no",${loginInfo.no});
 				formData.append("board_no",${data.no});
 				formData.append("tablename","board");
+				formData.append("recipe_no",1);
 				console.log(JSON.stringify(formData));
 				
 				$.ajax ({
@@ -67,9 +103,9 @@
 		</c:if>
 	}
 	
+	// 댓글 삭제
 	function commentDel(no) {
 		if (confirm('정말로 삭제하시겠습니까?')) {
-			console.log('여기');
 			$.ajax({
 				url: '/foody/comment/delete.do?no='+no,
 				success: function(res) {
@@ -82,7 +118,7 @@
 		}
 	}
 	
-	// 답글달기 클릭시 답글입력창 아래에 보여주기
+	// 답글 클릭시 답글입력창 아래에 보여주기
 	function addBox(no) {
 		$(".add_reCmt"+no).toggle();
 	}
@@ -128,7 +164,7 @@
 <%@ include file="../common/navBar.jsp" %>
         <div class="sub">
             <div class="size">
-                <h3 class="sub_title">게시판</h3>
+                <h3 class="sub_title">자유게시판</h3>
                 <div class="bbs">
                     <div class="view">
                         <div class="title">
@@ -158,36 +194,45 @@
                     	</div>
                 	</div>
                 	<!-- 댓글 영역 -->
-                	<div class="insertComment">
+                	<div class="comment">
 	                	<form method="post" name="frm" id="frm" enctype="multipart/form-data" >
+	                	<input type="hidden" id="starVal" name="star" value="0">
 	                        <table class="board_write">
 	                            <colgroup>
 	                                <col width="*" />
-	                                <col width="200px" />
+	                                <col width="250px" />
 	                            </colgroup>
 	                            <tbody>
 	                            <tr>
 	                                <td>
 	                                    <textarea name="content" id="content" placeholder="댓글을 입력해 주세요."
 	                                    onfocus="this.placeholder=''" onblur="this.placeholder='댓글을 입력해 주세요.'"
-	                                    style="height:50px;"></textarea>
+	                                    style="height:100px;"></textarea>
 	                                </td>
 	                                <td>
-	                                    <div class="btnSet" style="text-align:left;">
-											<input type="file" name="uploadFile" id="uploadFile">
+		                                <ul class="getStar" style="display:flex;">
+					                			<li style="list-style:none;" id="star1"><a href="#"><img src="/foody/img/star_icon.jpg"/></a></li>
+					                			<li style="list-style:none;" id="star2"><a href="#"><img src="/foody/img/star_icon.jpg"/></a></li>
+					                			<li style="list-style:none;" id="star3"><a href="#"><img src="/foody/img/star_icon.jpg"/></a></li>
+					                			<li style="list-style:none;" id="star4"><a href="#"><img src="/foody/img/star_icon.jpg"/></a></li>
+					                			<li style="list-style:none;" id="star5"><a href="#"><img src="/foody/img/star_icon.jpg"/></a></li>
+					                		</ul>
+					                		<br>
+										<input type="file" name="uploadFile" id="uploadFile">
+	                                     <div class="btnSet" style="text-align:left;">
 	                                        <a class="btn" href="javascript:goSave();">저장 </a>
-	                                    </div>
+	                                     </div>
+										
 	                                </td>
 	                            </tr>
 	                            </tbody>
 	                        </table>
 	                   	</form>
                         <div id="commentArea"></div>
-                	
+                	</div>
                 	</div>
             	</div>
         	</div>
-        </div>
 </body>
 
 </html>

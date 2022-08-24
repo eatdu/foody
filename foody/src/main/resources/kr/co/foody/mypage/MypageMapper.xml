@@ -3,11 +3,21 @@
 <mapper namespace="kr.co.foody.mypage.MypageMapper">
 	
 	<!-- 레시피 리스트 출력 -->
-	<select id="myRecipe" parameterType="kr.co.foody.mypage.MypageVO" resultType="kr.co.foody.mypage.MypageVO">
+	<select id="myRecipe" parameterType="int" resultType="kr.co.foody.mypage.MypageVO">
 		SELECT *,
 			(SELECT COUNT(bookmark) FROM feedback WHERE recipe_no=recipe.no) AS bookmark
 		FROM recipe 
+		WHERE recipe.user_no=#{user_no}
 		LIMIT 0,30
+	</select>
+	
+	<!-- 최근본 레시피 출력 -->
+	<select id="recentRecipe" parameterType="int" resultType="kr.co.foody.mypage.MypageVO">
+		SELECT a.no, b.user_no, a.name, a.intro, a.time, a.thumbnail, b.regdate,
+			(SELECT COUNT(bookmark) FROM feedback WHERE recipe_no=a.no) AS bookmark
+		FROM recipe a left join recent b
+			on a.no = b.recipe_no
+		WHERE b.user_no=#{user_no}
 	</select>
 	
 	<!-- 유저의 알레르기 정보 출력 -->

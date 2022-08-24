@@ -1,5 +1,6 @@
 package kr.co.foody.user;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 import kr.co.foody.mypage.MypageVO;
@@ -23,6 +24,7 @@ public class UserVO {
 	private double weight;
 	private int activity;
 	private String intro;
+	private Timestamp regdate;
 	private int print;
 	private int exit;
 	
@@ -31,6 +33,9 @@ public class UserVO {
 	private String allergy;
 	
 	private List<MypageVO> mypageList;
+	
+	private int recipe_count;
+	private int comment_count;
 	
 	
 	

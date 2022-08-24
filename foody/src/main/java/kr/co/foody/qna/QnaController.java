@@ -23,16 +23,27 @@ public class QnaController {
 	@Autowired
 	QnaService service;
 	
-	// 목록보기
+	// FAQ 페이지 출력
 	@GetMapping("/board/qna.do")
-	public String getFaq(QnaVO vo, Model model, HttpSession sess) {
-		
+	public String getFaq(QnaVO vo, Model model) {
 		model.addAttribute("data", service.getFaq(vo));
+		return "board/qna";
+	}
+	
+	// 내가 한 질문 페이지 출력
+	@GetMapping("/board/myQna.do")
+	public String getmyQna(QnaVO vo, Model model, HttpSession sess) {
 		
 		UserVO uv = (UserVO)sess.getAttribute("loginInfo");
-		vo.setUser_no(uv.getNo());
-		model.addAttribute("myQna", service.getMyQna(vo));
-		return "board/qna";
+		if (uv != null) {
+			vo.setUser_no(uv.getNo());
+			model.addAttribute("myQna", service.getMyQna(vo));
+			return "board/myQna";
+		} else {
+			model.addAttribute("msg", "로그인이 필요합니다.");
+			model.addAttribute("url", "/foody/user/login.do");
+			return "common/alert";
+		}
 	}
 	
 	// 등록폼
@@ -93,7 +104,7 @@ public class QnaController {
 	public String view(QnaVO vo, Model model) {
 		QnaVO data = service.view(vo.getNo());
 		model.addAttribute("data", data);
-		return "board/view";
+		return "board/qna_view";
 	}
 	
 	// 수정폼

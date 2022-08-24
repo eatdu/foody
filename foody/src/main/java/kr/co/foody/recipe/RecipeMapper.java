@@ -8,7 +8,10 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface RecipeMapper {
 
-	int insert(RecipeVO vo);
+	int insert(Map cri);
+	int insert2(Map cri);
+	int insert3(Map cri);
+	
 	int updateRecipeViewCount(int no);
 	RecipeVO view(int no);
 

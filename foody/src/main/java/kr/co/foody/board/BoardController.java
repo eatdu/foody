@@ -90,7 +90,7 @@ public class BoardController {
 	
 	// 수정처리
 	@PostMapping("board/update.do")
-	public String update(BoardVO vo, Model model) {
+	public String update(BoardVO vo, Model model) { 
 		
 		if (service.update(vo) == 1) {
 			model.addAttribute("msg", "게시물이 수정되었습니다.");
@@ -114,7 +114,6 @@ public class BoardController {
 			return "common/alert";
 		}
 	}
-	
 	
 	
 }

@@ -4,11 +4,34 @@
 	
 	
 	<!-- 레시피 등록 -->
-	<insert id="insert" parameterType="kr.co.foody.recipe.RecipeVO">
+	<insert id="insert" parameterType="map">
+		
 		INSERT INTO recipe (
-			user_no, name, intro, type, time, tip, serving, regdate
+			user_no, name, intro, type, time, thumbnail, addedpicture1, addedpicture2, tip, serving, regdate
 		) VALUES (
-			#{user_no}, #{name}, #{intro}, #{type}, #{time}, #{tip}, #{serving}, NOW()
+			#{user_no}, #{name}, #{intro}, #{type}, #{time}, #{thumbnail}, #{addedpicture1}, #{addedpicture2}, #{tip}, #{serving}, NOW()
+		)
+		
+		<selectKey keyProperty="no" resultType="integer"  order="AFTER">
+        	SELECT LAST_INSERT_ID();
+		</selectKey>
+	</insert>
+	
+	<!-- 레시피 과정 등록 -->
+	<insert id="insert2" parameterType="map">
+		INSERT INTO process (
+			recipe_no, order_no, content, photo
+		)values (
+			#{no}, #{order_no}, #{content}, #{photo}
+		)
+	</insert>
+	
+	<!-- 레시피 재료 등록 -->
+	<insert id ="insert3" parameterType="map">
+		INSERT INTO ingre_recipe_map (
+			recipe_no, ingredient_no, weight, quantity
+		)values(
+			#{no}, #{ingredient_no}, #{weight}, #{quantity}
 		)
 	</insert>
 	

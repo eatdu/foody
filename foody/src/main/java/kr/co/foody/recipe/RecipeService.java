@@ -9,7 +9,10 @@ import org.springframework.ui.Model;
 
 public interface RecipeService {
 	
-	int insert(RecipeVO vo);
+	int insert(Map cri);
+	int insertProcess(Map cri);
+	int insertIngredient(Map cri);
+	
 	List<String> large_cate(int i);
 	RecipeVO view(int no);
 	

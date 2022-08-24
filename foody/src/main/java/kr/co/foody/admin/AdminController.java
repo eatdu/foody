@@ -15,8 +15,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import kr.co.foody.board.BoardService;
 import kr.co.foody.constants.IngredientCategory;
 import kr.co.foody.constants.RecipeCategory;
+import kr.co.foody.qna.QnaMapper;
+import kr.co.foody.qna.QnaService;
+import kr.co.foody.qna.QnaVO;
 import kr.co.foody.recipe.IngredientMapper;
 import kr.co.foody.recipe.IngredientServiceImpl;
 import kr.co.foody.recipe.IngredientVO;
@@ -30,6 +34,11 @@ public class AdminController {
 	IngredientServiceImpl ingreSvc;
 	@Autowired
 	IngredientMapper ingreMapper;
+	@Autowired
+	AdminService service;
+	@Autowired
+	BoardService paging;
+	
 	
 	@GetMapping("/admin/main.do")
 	public String main(Model model, HttpSession sess) {
@@ -84,6 +93,23 @@ public class AdminController {
 	@PostMapping(value = "/admin/ingreInsert.do", consumes = MediaType.APPLICATION_JSON_VALUE, produces = "application/json;charset=UTF-8")
 	public boolean ingreInsert(@RequestBody IngredientVO vo, Model model){
 		return ingreSvc.insertIngre(vo);
+	}
+	
+	@Autowired
+	QnaService Qservice;
+	@Autowired
+	QnaMapper mapper;
+	
+	// QnA 게시판 조회
+	@GetMapping("/admin/qna.do")
+	public String getQna(QnaVO vo, Model model) {
+		model.addAttribute("data", Qservice.getQna(vo));
+		return "admin/qna";
+	}
+	@GetMapping("/admin/userList.do")
+	public String userList(Model model) {
+		model.addAttribute("data", service.userList());
+		return "admin/userList";
 	}
 	
 	

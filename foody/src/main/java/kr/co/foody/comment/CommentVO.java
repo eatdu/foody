@@ -14,8 +14,11 @@ public class CommentVO {
 	private String tablename;
 	private String photo;
 	private String content;
-	private String user_name;
 	private Timestamp updatedate;
+	
+	private String user_name;
+	private int star;
+	private int recipe_no;
 	
 	private int gno;
 	private int ono;

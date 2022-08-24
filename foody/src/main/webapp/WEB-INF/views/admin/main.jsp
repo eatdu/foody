@@ -31,21 +31,37 @@ $(function(){
 
 </script>
 <style>
-#dashBoard {
-	width: 1040px;
-	display: inline-block;
+html{height: 100%;}
+body{
+	height: 100%;
+	max-height: 100%;
+	min-height: 100%;
+	overflow: hidden;
 }
-
+.adminContainer{
+	overflow: auto;
+    display: flex;
+}
+#dashBoard {
+    min-width: 1040px;
+    margin: auto;
+    min-height: 640px;
+    height: 94%;
+    width: 94%;
+    justify-content: center;
+}
 #dashBoard .container {
-	height: 300px;
-	width: 500px;
-	background-color: #FAF4C0;
-	margin: 10px 10px 10px 10px;
-	float: left;
+    min-height: 300px;
+    height: 45%;
+    min-width: 500px;
+    width: 44%;
+    background-color: #FAF4C0;
+    margin: 2%;
+    float: left;
 }
 #chartContainer {
-	height: 250px;
-	width: 400px;
+	height: 80%;
+	width: 80%;
 }
 </style>
 <link rel="stylesheet" type="text/css" href="/foody/resources/css/leftMenu.css">
@@ -54,8 +70,8 @@ $(function(){
 <body>
 <%@ include file="../admin/leftMenu.jsp" %>
 <div class="adminContainer">
-	<h1>메인 페이지</h1>
 	<div id="dashBoard">
+		<h1 class="title">메인 페이지</h1>
 		<div class="container" id='userReport'>
 			<h2>가입자현황</h2>
 			총 가입자 수: ${cntUser.all} 명<br>

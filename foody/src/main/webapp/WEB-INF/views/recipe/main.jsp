@@ -14,6 +14,15 @@ $(function(){
 	searchBest();
 	searchPrefer();
 })
+
+function goSearch(){
+	if ($("#keyword").val().trim() == "") {
+		alert("검색어를 입력해주세요.");
+		return;
+	}
+	var url = "/foody/recipe/search.do?sType=" + $("#sType").val() + "&keyword=" + $("#keyword").val(); 
+	location.href = url;
+}
 </script>
 <link
   rel="stylesheet"
@@ -22,11 +31,12 @@ $(function(){
 <!-- Demo styles -->
 <style>
 	.swiper {
-		width: 100%;
+		width: 1400px;
 		height: 300px;
 	}
 	
 	.swiper-slide {
+		margin: auto;
 		text-align: center;
 		background: #fff;
 		
@@ -45,57 +55,33 @@ $(function(){
 		align-items: center;
 	}
 	
-	.swiper-slide img {
-		display: block;
-		width: 100%;
-		height: 100%;
-		object-fit: cover;
-	}
-	.rcpTable {
-		float: left;
-		width: 250px;
-		height: 270px;
-		border: 1px solid black;
-	}
-	.rcpTable .imgCell {
-		height: 150px;
-	}
-	.rcpTable .introCell{
-		height: 40px;
-	}
-	.rcpTable .nameCell{
-		width: 125px;
-		height: 40px;
-	}
-	.rcpTable .timeCell{
-		width: 125px;
-		height: 40px;
-	}
-	.row {
-		display: inline-block;
-	}
 	.title {
 		font-size: 100px;
 	}
 	.titlesm {
 		font-size: 30px;
 	}
+	body {
+		text-align: center;
+	}
+	#keyword {
+		font-size: 16px;
+	    width: 300px;
+	    border-radius: 30px;
+	    padding-left: 10px;
+	}
 </style>
 <title>메인 화면</title>
 </head>
 <body>
 <%@ include file="../common/navBar.jsp" %>
-<div>
-preferNo: ${preferNo}<br>
-allergy: ${allergyNo}<br>
-하루권장섭취 칼로리 : ${cal}kcal
-</div>
 <h1 class='title tc'>Foody</h1>
-<select id="type" name="type">
-<option value="0" selected>==검색조건==</option>
+<select id="sType" name="sType">
+<option value="recipe">요리명</option>
+<option value="ingre">재료명</option>
 </select>
 <input type="text" id="keyword" placeholder="검색어 입력">
-<button type="button">검색</button>
+<button type="button" onclick="javascript:goSearch();">검색</button>
 <!-- 인기 레시피 / 스와이퍼 -->
 <div class="container" id="bestRcpArea">
 </div>

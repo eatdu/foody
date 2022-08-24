@@ -44,10 +44,10 @@ public class AdminController {
 	}
 	//레시피 목록 조회 결과
 	@PostMapping("/admin/recipe.do")
-	public String recipe(@RequestParam HashMap cri, Model model) {
-		System.out.println(cri);
+	public String recipe(@RequestBody Map cri, Model model) {
 		svc.selectRcpAdmin(cri, model);
-		return "admin/recipe";
+		System.out.println(cri);
+		return "common/rcpAdmin";
 	}
 	
 	

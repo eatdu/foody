@@ -1,9 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-	<div class='title' style='float: left;'><h1 style="font-size:25px;"> ${result.title2} 로 검색한 레시피는 총 ${result.count} 개가 있습니다.</div>
+	<div class='title' style='float: left;'><h1 style="font-size:25px;"> ${result.title2}<c:if test="${empty result.start}"> 로 검색한 레시피는 총 ${result.count} 개가 있습니다.</c:if></div>
 	<div class="orderBy" style='float: right;'>
-		<select id='orderBy' onchange="movePage('${result.title}', ${result.curNo}, ${result.areaNo});">
+		<select id='orderBy' onchange="movePage('${result.title}', ${result.curNo}, ${result.areaNo}, '${sType}', '${keyword}');">
 			<option value="regdate"<c:if test="${result.orderBy eq 'regdate'}"> selected</c:if>>최신순</option>
 			<option value="star"<c:if test="${result.orderBy eq 'star'}"> selected</c:if>>별점순</option>
 			<option value="viewcount"<c:if test="${result.orderBy eq 'viewcount'}"> selected</c:if>>조회순</option>
@@ -15,23 +15,31 @@
 	<div class='row'>	
 	<c:forEach var="l1" items="${result.list}" varStatus="idx">
 		<div class='rcpCard'>
-		<a href="view.do?no=${result.no}">
+		<a href="view.do?no=${l1.no}">
 		<table class="rcpTable" style='table-layout:fixed'>
 			<tr>
 				<td class="imgCell" colspan='2'>
 				<div height=150px style='border-radius: 15px; position: relative; max-height:150px; align-items:center; overflow:hidden; display: flex; justify-content:center;'>
+					<div class="rcpImg">
 					<img class="" width='100%' src="${l1.thumbnail}">
-					<div style='position: absolute; right: 5px; bottom: 5px; font-weight:bold; color: black; background-color: grey;;'>
-						<img class="" width='20px' src="/foody/img/heart.png">
-						${l1.bookmark} 
-						<img class="" width='20px' src="/foody/img/star.png">
-						${l1.star}
 					</div>
+					<div class="intro">${l1.intro}</div>
 				</div>
 				</td>
 			</tr>
 			<tr>
-				<td class="introCell" colspan='2'><span class="">${l1.intro}</span></td>
+				<td colspan='2'>
+				<div class="icons">
+					<img class="" width='20px' src="/foody/resources/img/viewcnt.png">
+					${l1.viewcount}
+					<img class="" width='20px' src="/foody/resources/img/reply.png">
+					${l1.reply}
+					<img class="" width='20px' src="/foody/img/heart.png">
+					${l1.bookmark} 
+					<img class="" width='20px' src="/foody/img/star.png">
+					${l1.star}
+				</div>
+				</td>
 			</tr>
 			<tr class="">
 				<td><span class="nameCell">${l1.name}</span></td>
@@ -52,17 +60,25 @@
 <div class='page'>
 	<c:forEach items="${result.paging}" var='pageNo' varStatus='idx'>
 	<c:if test="${result.prev eq true && idx.first}">
-		<a href="javascript:movePage('${result.title}', ${pageNo - 1}, ${result.areaNo});">앞으로</a>
+		<a href="javascript:movePage('${result.title}', ${pageNo - 1}, ${result.areaNo}, '${sType}', '${keyword}');">앞으로</a>
 	</c:if>
 	<c:if test="${pageNo eq result.curNo}">
-		<strong href="javascript:movePage('${result.title}', ${pageNo}, ${result.areaNo});">${pageNo}</strong>
+		<strong href="javascript:movePage('${result.title}', ${pageNo}, ${result.areaNo}, '${sType}', '${keyword}');">${pageNo}</strong>
 	</c:if>
 	<c:if test="${pageNo != result.curNo}">
-		<a href="javascript:movePage('${result.title}', ${pageNo}, ${result.areaNo});">${pageNo}</a>
+		<a href="javascript:movePage('${result.title}', ${pageNo}, ${result.areaNo}, '${sType}', '${keyword}');">${pageNo}</a>
 	</c:if>
 	<c:if test="${result.next eq true && idx.last}">
-		<a href="javascript:movePage('${result.title}', ${pageNo + 1}, ${result.areaNo});">다음으로</a>
+		<a href="javascript:movePage('${result.title}', ${pageNo + 1}, ${result.areaNo}, '${sType}', '${keyword}');">다음으로</a>
 	</c:if>
 	</c:forEach>
 </div>
+<script>
+$(".rcpTable").hover(function(){
+	$(this).find(".intro").show();
+})
+$(".rcpTable").mouseleave(function(){
+	$(this).find(".intro").hide();
+})
+</script>
 

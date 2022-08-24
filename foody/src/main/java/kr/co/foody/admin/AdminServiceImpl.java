@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
 import kr.co.foody.constants.IngredientCategory;
+import kr.co.foody.constants.RecipeCategory;
 import kr.co.foody.recipe.IngredientMapper;
 import kr.co.foody.recipe.IngredientVO;
 import kr.co.foody.recipe.RecipeMapper;
@@ -90,7 +91,11 @@ public class AdminServiceImpl implements AdminService {
 	
 	@Override
 	public boolean selectRcpAdmin(Map cri, Model model) {
-		model.addAttribute("result", rcpMapper.selectRcpAdmin(cri));
+		List<Map> result = rcpMapper.selectRcpAdmin(cri);
+		for(Map res : result) {
+			res.put("type", RecipeCategory.RcpCateArr[(int)res.get("type") - 1]);
+		}
+		model.addAttribute("result", result);
 		return false;
 	}
 }

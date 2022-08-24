@@ -47,19 +47,72 @@
 		update comment set ono=ono+1 where gno=#{gno} and ono>#{ono}
 	</update>
 	
-	<!-- 댓글 수 조회 -->
+	<!-- 해당 글에 달린 댓글개수 조회 -->
 	<select id="count" parameterType="kr.co.foody.comment.CommentVO" resultType="int">
 		select count(*) from comment
 		where board_no = #{board_no} and tablename = #{tablename}
 	</select>
 	
-	<!-- 전체 댓글 조회 -->
+	<!-- 해당 글에 달린 댓글목록 조회 -->
 	<select id="list" parameterType="kr.co.foody.comment.CommentVO" resultType="kr.co.foody.comment.CommentVO">
 		select *,
 			(select name from user where no=comment.user_no) as user_name
 		from comment
 		where board_no = #{board_no} and tablename = #{tablename}
 		order by gno desc, ono asc
+		limit ${startIdx}, ${pageRow}
+	</select>
+	
+	<!-- 해당 글에 달린 댓글개수 조회 -->
+	<select id="wholeCount" parameterType="kr.co.foody.comment.CommentVO" resultType="int">
+		select count(*) from comment
+		<where>
+			<if test="period != 'all' and period != null and period != ''">
+				regdate >= date_add(now(), interval -${period})
+			</if>
+			<if test="stype != null and stype != ''">
+				<if test="stype == 'title' or stype == 'content'">
+					and ${stype} like '%${sword}%'
+				</if>
+				<if test="stype == 'all'">
+					and title like '%${sword}%' or content like '%${sword}%'
+				</if>
+				<if test="stype == 'writer'">
+					and user_no in (select no from user where name like '%${sword}%') 
+				</if>
+			</if>
+		</where>
+	</select>
+	
+	<!-- 관리자 전체 댓글목록 조회 -->
+	<select id="wholeList" parameterType="kr.co.foody.comment.CommentVO" resultType="kr.co.foody.comment.CommentVO">
+		select *,
+			(select title from board where no = comment.board_no and tablename = 'board') as board_title,
+ 			(select name from recipe where no = comment.board_no and tablename = 'recipe') as recipe_name,
+ 			(select name from user where no=comment.user_no) as user_name
+		from comment
+		<where>  
+			<if test="period != 'all' and period != null and period != ''">
+				regdate >= date_add(now(), interval -${period})
+			</if>
+			<if test="stype != null and stype != ''">
+				<if test="stype == 'content'">
+					and ${stype} like '%${sword}%'
+				</if>
+				<if test="stype == 'writer'">
+					and user_no in (select no from user where name like '%${sword}%')
+				</if>
+			</if>
+		</where>
+		<if test="align == 'recent'">
+			order by regdate desc
+		</if>
+		<if test="align == 'old'">
+			order by regdate asc
+		</if>
+		<if test="align == 'writer'">
+			order by user_name
+		</if>
 		limit ${startIdx}, ${pageRow}
 	</select>
 	

@@ -34,6 +34,7 @@ public class MypageVO extends Paging {
  	private int prefer_food;
  	
  	private int bookmark;
+ 	private int comment_count;
 
 
 }

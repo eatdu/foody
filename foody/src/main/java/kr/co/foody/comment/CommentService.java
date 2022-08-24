@@ -8,6 +8,7 @@ public interface CommentService {
 	int update(CommentVO vo);
 	int delete(CommentVO vo);
 	Map index(CommentVO vo);
+	Map wholeList(CommentVO vo);
 	int insert_reCmt(CommentVO vo);
 	
 }

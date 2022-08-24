@@ -9,6 +9,7 @@
 <link rel="stylesheet" type="text/css" href="/foody/resources/css/basic.css">
 <link rel="stylesheet" type="text/css" href="/foody/resources/css/layout.css">
 <link rel="stylesheet" type="text/css" href="/foody/resources/css/manage.css">
+<link rel="stylesheet" type="text/css" href="/foody/resources/css/rcpList.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script type="text/javascript" src="/foody/resources/js/util.js"></script>
 <!-- CSS only -->

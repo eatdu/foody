@@ -2,64 +2,80 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.co.foody.comment.CommentMapper">
 
-<!-- 댓글 등록 -->
-<insert id="insert" parameterType="kr.co.foody.comment.CommentVO">
-	insert into comment (
-		user_no, board_no, regdate, tablename, photo, content
-	) values (
-		#{user_no}, #{board_no}, now(), #{tablename}, #{photo}, #{content}
-	)
-	<selectKey keyProperty="no" resultType="int" order="AFTER">
-		select last_insert_id()
-	</selectKey>
-</insert>
-
-<!-- 대댓글 등록 -->
-<insert id="insert_reCmt" parameterType="kr.co.foody.comment.CommentVO">
-	insert into comment (
-		user_no, board_no, regdate, tablename, photo, content, gno, ono, depth
-	) values (
-		#{user_no}, #{board_no}, now(), #{tablename}, #{photo}, #{content}, #{gno}, #{ono}, #{depth}
-	)
-</insert>
-
-<update id="gnoUpdate" parameterType="int">
-	update comment set gno=#{gno} where no=#{gno}
-</update>
-
-<update id="onoUpdate" parameterType="kr.co.foody.comment.CommentVO">
-	update comment set ono=ono+1 where gno=#{gno} and ono>#{ono}
-</update>
-
-<!-- 댓글 수 조회 -->
-<select id="count" parameterType="kr.co.foody.comment.CommentVO" resultType="int">
-	select count(*) from comment
-	where board_no = #{board_no} and tablename = #{tablename}
-</select>
-
-<!-- 전체 댓글 조회 -->
-<select id="list" parameterType="kr.co.foody.comment.CommentVO" resultType="kr.co.foody.comment.CommentVO">
-	select *,
-		(select name from user where no=comment.user_no) as user_name
-	from comment
-	where board_no = #{board_no} and tablename = #{tablename}
-	order by gno desc, ono asc
-	limit ${startIdx}, ${pageRow}
-</select>
-
-<!-- 댓글 수정 -->
-<update id="update" parameterType="kr.co.foody.comment.CommentVO">
-	update comment set
-		content = #{content}, updatedate = #{updatedate}
-		<if test="photo != null">
-			, photo = #{photo}
-		</if>
-	where no = #{no}
-</update>
-
-<!-- 삭제 -->
-<delete id="delete" parameterType="int">
-	delete from comment where no=#{no}
-</delete>
+	<!-- 댓글 등록 -->
+	<insert id="insert" parameterType="kr.co.foody.comment.CommentVO">
+		insert into comment (
+			user_no, board_no, regdate, tablename, photo, content
+		) values (
+			#{user_no}, #{board_no}, now(), #{tablename}, #{photo}, #{content}
+		)
+		<selectKey keyProperty="no" resultType="int" order="AFTER">
+			select last_insert_id()
+		</selectKey>
+	</insert>
+	
+	<!-- 별점 등록 -->
+	<insert id="getStar" parameterType="kr.co.foody.comment.CommentVO">
+		insert into feedback (
+			user_no, recipe_no, star
+		) values (
+			#{user_no}, #{recipe_no}, #{star}
+		)
+	</insert>
+	
+	<!-- 새로운 별점 등록시 평균별점 업뎃 -->
+	<update id="updateAvgstar" parameterType="int">
+		update recipe set
+		avgStar = (select avg(star) from feedback where recipe_no=#{recipe_no})
+		where no=#{recipe_no}
+	</update>
+	
+	<!-- 대댓글 등록 -->
+	<insert id="insert_reCmt" parameterType="kr.co.foody.comment.CommentVO">
+		insert into comment (
+			user_no, board_no, regdate, tablename, photo, content, gno, ono, depth
+		) values (
+			#{user_no}, #{board_no}, now(), #{tablename}, #{photo}, #{content}, #{gno}, #{ono}, #{depth}
+		)
+	</insert>
+	
+	<update id="gnoUpdate" parameterType="int">
+		update comment set gno=#{gno} where no=#{gno}
+	</update>
+	
+	<update id="onoUpdate" parameterType="kr.co.foody.comment.CommentVO">
+		update comment set ono=ono+1 where gno=#{gno} and ono>#{ono}
+	</update>
+	
+	<!-- 댓글 수 조회 -->
+	<select id="count" parameterType="kr.co.foody.comment.CommentVO" resultType="int">
+		select count(*) from comment
+		where board_no = #{board_no} and tablename = #{tablename}
+	</select>
+	
+	<!-- 전체 댓글 조회 -->
+	<select id="list" parameterType="kr.co.foody.comment.CommentVO" resultType="kr.co.foody.comment.CommentVO">
+		select *,
+			(select name from user where no=comment.user_no) as user_name
+		from comment
+		where board_no = #{board_no} and tablename = #{tablename}
+		order by gno desc, ono asc
+		limit ${startIdx}, ${pageRow}
+	</select>
+	
+	<!-- 댓글 수정 -->
+	<update id="update" parameterType="kr.co.foody.comment.CommentVO">
+		update comment set
+			content = #{content}, updatedate = #{updatedate}
+			<if test="photo != null">
+				, photo = #{photo}
+			</if>
+		where no = #{no}
+	</update>
+	
+	<!-- 댓글 삭제 -->
+	<delete id="delete" parameterType="int">
+		delete from comment where no=#{no}
+	</delete>
 
 </mapper>

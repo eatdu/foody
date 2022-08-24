@@ -16,13 +16,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.co.foody.board.BoardService;
-import kr.co.foody.board.BoardVO;
 import kr.co.foody.constants.IngredientCategory;
 import kr.co.foody.constants.RecipeCategory;
+import kr.co.foody.qna.QnaMapper;
+import kr.co.foody.qna.QnaService;
+import kr.co.foody.qna.QnaVO;
 import kr.co.foody.recipe.IngredientMapper;
 import kr.co.foody.recipe.IngredientServiceImpl;
 import kr.co.foody.recipe.IngredientVO;
-import kr.co.foody.user.UserVO;
 
 @Controller
 public class AdminController {
@@ -52,10 +53,10 @@ public class AdminController {
 	}
 	//레시피 목록 조회 결과
 	@PostMapping("/admin/recipe.do")
-	public String recipe(@RequestParam HashMap cri, Model model) {
-		System.out.println(cri);
+	public String recipe(@RequestBody Map cri, Model model) {
 		svc.selectRcpAdmin(cri, model);
-		return "admin/recipe";
+		System.out.println(cri);
+		return "common/rcpAdmin";
 	}
 	
 	
@@ -94,6 +95,17 @@ public class AdminController {
 		return ingreSvc.insertIngre(vo);
 	}
 	
+	@Autowired
+	QnaService Qservice;
+	@Autowired
+	QnaMapper mapper;
+	
+	// QnA 게시판 조회
+	@GetMapping("/admin/qna.do")
+	public String getQna(QnaVO vo, Model model) {
+		model.addAttribute("data", Qservice.getQna(vo));
+		return "admin/qna";
+	}
 	@GetMapping("/admin/userList.do")
 	public String userList(Model model) {
 		model.addAttribute("data", service.userList());

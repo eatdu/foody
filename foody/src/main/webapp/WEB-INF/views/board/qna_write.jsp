@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
 <%@ include file="../common/config.jsp" %>
 <link rel="stylesheet" href="/foody/css/reset.css"/>
 <link rel="stylesheet" href="/foody/css/contents.css"/>
@@ -20,7 +21,7 @@
 <%@ include file="../common/navBar.jsp" %>
         <div class="sub">
             <div class="size">
-                <h3 class="sub_title">1:1 질문하기</h3>
+                <h3 class="sub_title">1:1 문의</h3>
                 <div class="bbs">
                 <form method="post" name="frm" id="frm" action="qna_insert.do" enctype="multipart/form-data" >
                 <input type="hidden" name="user_no" value="${loginInfo.no}">
@@ -58,7 +59,7 @@
                     </table>
                     <div class="btnSet"  style="text-align:right;">
                         <a class="btn" href="javascript:goSave();">저장 </a>
-                        <a class="btn" href="qna.do">취소 </a>
+                        <a class="btn" href="myQna.do">취소 </a>
                     </div>
                     </form>
                 </div>

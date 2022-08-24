@@ -50,23 +50,8 @@ public class CommentController {
 	}
 	
 	@PostMapping("/comment/insert_reCmt.do")
-	public String insert_reCmt(CommentVO vo, Model model,
-			@RequestParam MultipartFile uploadFile, HttpServletRequest req) {
-		if (!uploadFile.isEmpty()) {
-			// 파일명 구하기
-			String org = uploadFile.getOriginalFilename(); // 사용자가 첨부한 첨부파일명
-			String ext = org.substring(org.lastIndexOf(".")); // 확장자 추출
-			String real = new Date().getTime()+ext; // 실제 파일명
-			
-			// 파일 저장
-			String path = req.getRealPath("/upload/"); // 경로 불러오는 방법 중 하나 - request에서
-			System.out.println(path);
-			try {
-				uploadFile.transferTo(new File(path+real));
-			} catch (Exception e) {System.out.println(e.toString());}
-			
-			vo.setPhoto(real);
-		}
+	public String insert_reCmt(CommentVO vo, Model model) {
+		
 		model.addAttribute("result", service.insert_reCmt(vo));
 		return "common/return";
 	}

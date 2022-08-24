@@ -16,6 +16,7 @@ public class BoardVO {
 	private int like;
 	private String filename_org;
 	private String filename_real;
+	
 	private String user_name;
 	private int comment_count;
 	private String writer;

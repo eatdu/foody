@@ -4,11 +4,34 @@
 	
 	
 	<!-- 레시피 등록 -->
-	<insert id="insert" parameterType="kr.co.foody.recipe.RecipeVO">
+	<insert id="insert" parameterType="map">
+		
 		INSERT INTO recipe (
-			user_no, name, intro, type, time, tip, serving, regdate
+			user_no, name, intro, type, time, thumbnail, addedpicture1, addedpicture2, tip, serving, regdate
 		) VALUES (
-			#{user_no}, #{name}, #{intro}, #{type}, #{time}, #{tip}, #{serving}, NOW()
+			#{user_no}, #{name}, #{intro}, #{type}, #{time}, #{thumbnail}, #{addedpicture1}, #{addedpicture2}, #{tip}, #{serving}, NOW()
+		)
+		
+		<selectKey keyProperty="no" resultType="integer"  order="AFTER">
+        	SELECT LAST_INSERT_ID();
+		</selectKey>
+	</insert>
+	
+	<!-- 레시피 과정 등록 -->
+	<insert id="insert2" parameterType="map">
+		INSERT INTO process (
+			recipe_no, order_no, content, photo
+		)values (
+			#{no}, #{order_no}, #{content}, #{photo}
+		)
+	</insert>
+	
+	<!-- 레시피 재료 등록 -->
+	<insert id ="insert3" parameterType="map">
+		INSERT INTO ingre_recipe_map (
+			recipe_no, ingredient_no, weight, quantity
+		)values(
+			#{no}, #{ingredient_no}, #{weight}, #{quantity}
 		)
 	</insert>
 	
@@ -126,6 +149,9 @@
 	    <if test='ingreCateArr != null'>
 		    AND icateCnt > 0
 		</if>
+		<if test='rKeyword != null'>
+			AND name LIKE "%${rKeyword}%"
+		</if>
 	</select>
 	
 	<!-- 0. 재료 단어, 재료 분류, 음식 분류, 알러지 필터 모두 적용 -->
@@ -135,8 +161,14 @@
 			(
 			SELECT @ROWNUM := @ROWNUM + 1 AS rownum, result.*
 			FROM (select @rownum := 0) r, (
-				SELECT recipe.*, IFNULL(bk.bmkCnt, 0) bookmark, IFNULL(s.star, 0) star
-				FROM recipe,  
+				SELECT recipe.*, IFNULL(bk.bmkCnt, 0) bookmark, IFNULL(s.star, 0) star,
+					(SELECT count(*)
+					 FROM comment
+					 WHERE
+					 	recipe.no = comment.board_no
+					 	AND comment.tablename = 'recipe'
+					) reply
+				FROM recipe,
 					(
 					SELECT a.rcpno
 					<if test='allergyArr != null'>
@@ -203,6 +235,9 @@
 			    </if>
 			    <if test='ingreCateArr != null'>
 				    AND icateCnt > 0
+				</if>
+				<if test='rKeyword != null'>
+					AND name LIKE "%${rKeyword}%"
 				</if>
 				ORDER BY 
 					${orderBy} DESC
@@ -291,21 +326,22 @@
 	
 	<!-- 재료 검색어로 재료상세 리스트 및 no 조회하는 sql -->
 	<select id="selectIngreDetail" parameterType="string" resultType="kr.co.foody.recipe.IngredientVO">
-		SELECT * FROM ingre WHERE name = #{keyword};
+		SELECT * FROM ingre WHERE name = #{keyword} 
 	</select>
 	
 	<!-- 재료 분류로 재료명 리스트 조회하는 sql -->
 	<select id="selectIngreNameList" parameterType="int" resultType="string">
 		SELECT distinct name FROM ingre
-		WHERE large_cate = #{no}
+		WHERE large_cate = #{no} AND print = 0
 		ORDER BY name
 	</select>
 	
 	<!-- 재료 검색어로 재료명 리스트 조회하는 sql -->
 	<select id='selectIngreNameList2' parameterType="string" resultType="string">
 		SELECT DISTINCT name FROM ingre
-		WHERE name LIKE '%${keyword}%'
-			OR detail LIKE '%${keyword}%'
+		WHERE (name LIKE '%${keyword}%'
+			OR detail LIKE '%${keyword}%')
+			AND print = 0
 	</select>
 	
 	<!-- 관리자 관련 -->
@@ -316,7 +352,7 @@
 	</select>
 	
 	<!-- 레시피 검색 결과 -->
-	<select id='selectRcpAdmin' parameterType="map" resultType="kr.co.foody.recipe.RecipeVO">
+	<select id='selectRcpAdmin' parameterType="map" resultType="map">
 		SELECT *
 		FROM
 			(
@@ -330,13 +366,13 @@
 			) a
 		<where>
 			<if test='date != "all"'>
-			regdate >= date_add(now(), interval ${date})	
+			regdate >= date_add(now(), interval -${date})	
 			</if>
-			AND print = ${print}
-			AND adminchk = ${adminChk}
-			<if test='type != "all" and keyword != ""'>
+			AND (print = ${print})
+			AND (adminchk = ${adminChk})
+			
 			AND ${type} like '%${keyword}%'
-			</if>
+			
 		</where>
 		ORDER BY ${orderBy};
 	</select>

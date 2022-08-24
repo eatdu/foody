@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="/foody/css/reset.css"/>
 <link rel="stylesheet" href="/foody/css/contents.css"/>
 <title>게시판목록</title>
+
 <script>
 	function goWrite() {
 		<c:if test="${empty loginInfo}">
@@ -40,7 +41,7 @@
                         </colgroup>
                         <thead>
                             <tr>
-                                <th>글번호</th>
+                                <th>번호</th>
                                 <th>제목</th>
                                 <th>작성자</th>
                                 <th>조회수</th>
@@ -65,7 +66,7 @@
                                 </td>
                                 <td> ${list.viewcount}</td>
                                 <td class="date">
-                                	<fmt:formatDate pattern="yyyy-MM-dd HH:mm" value="${list.regdate}"/>
+                                		<fmt:formatDate pattern="yyyy-MM-dd HH:mm" value="${list.regdate}"/>
                                 </td>
                             </tr>
                         </c:forEach>
@@ -73,7 +74,6 @@
                     </table>
                     <div class="btnSet" style="text-align:right;">
                     	<a class="btn" href="javascript:goWrite();">글작성 </a>
-                    
                     </div>
                     
                     <!-- 페이지처리 -->
@@ -98,9 +98,10 @@
                         <form method="get" name="searchForm" id="searchForm" action="">
                             <span class="srchSelect">
                                 <select id="stype" name="stype" class="dSelect" title="검색분류 선택">
-                                    <option value="all">전체</option>
+                                    <option value="all">제목+내용</option>
                                     <option value="title">제목</option>
                                     <option value="content">내용</option>
+                                    <option value="writer">작성자</option>
                                 </select>
                             </span>
                             <span class="searchWord">

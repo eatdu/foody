@@ -8,7 +8,10 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface RecipeMapper {
 
-	int insert(RecipeVO vo);
+	int insert(Map cri);
+	int insert2(Map cri);
+	int insert3(Map cri);
+	
 	int updateRecipeViewCount(int no);
 	RecipeVO view(int no);
 
@@ -29,7 +32,7 @@ public interface RecipeMapper {
 	//관리자 관련 메소드
 	//1. 총 레시피 개수 집계
 	int count(String where);
-	List<RecipeVO> selectRcpAdmin(Map cri);
+	List<Map> selectRcpAdmin(Map cri);
 	
 	
 	

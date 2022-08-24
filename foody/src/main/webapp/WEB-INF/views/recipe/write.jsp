@@ -144,9 +144,10 @@
 													+' data-carbokcal="'+data[i].carbo+'"data-proteinkcal="'+data[i].protein+'" data-fatkcal="'+data[i].fat+'"'
 													+' data-allergy="'+data[i].allergy_no+'">'
 													+data[i].name
+													+'<input type="hidden" name=ingredient_no value="'+data[i].no+'">'
 													+'<input type="number" value="100" min="1" name="weight" data-no="'+data[i].no+'" id="weight'
 													+num+'"> g'
-													+'('+'<input type="number" min="1" name="quantity"> 개'+')'
+													+'(수량: '+'<input type="text" min="1" name="quantity">'+')'
 													+'<input type="button" class="deleteSpan" value="삭제">'
 													+allergyCaution
 													+'<br>'
@@ -167,9 +168,10 @@
 												+' data-carbokcal="'+data[i].carbo+'"data-proteinkcal="'+data[i].protein+'" data-fatkcal="'+data[i].fat+'"'
 												+' data-allergy="'+data[i].allergy_no+'">'
 												+data[i].name+'('+data[i].detail+')'
+												+'<input type="hidden" name=ingredient_no value="'+data[i].no+'">'
 												+'<input type="number" value="100" min="1" name="weight" data-no="'+data[i].no+'" id="weight'
 												+num+'"> g'
-												+'('+'<input type="number" min="1" name="quantity"> 개'+')'
+												+'(수량: '+'<input type="text" min="1" name="quantity">'+')'
 												+'<input type="button" class="deleteSpan" value="삭제">'
 												+allergyCaution
 												+'<br>'
@@ -255,9 +257,10 @@
 												+' data-carbokcal="'+data[i].carbo+'"data-proteinkcal="'+data[i].protein+'" data-fatkcal="'+data[i].fat+'"'
 												+' data-allergy="'+data[i].allergy_no+'">'
 												+data[i].name
+												+'<input type="hidden" name=ingredient_no value="'+data[i].no+'">'
 												+'<input type="number" value="100" min="1" name="weight" data-no="'+data[i].no+'" id="weight'
 												+num+'"> g'
-												+'('+'<input type="number" min="1" name="quantity"> 개'+')'
+												+'(수량: '+'<input type="text" min="1" name="quantity">'+')'
 												+'<input type="button" class="deleteSpan" value="삭제">'
 												+allergyCaution
 												+'<br>'
@@ -278,9 +281,10 @@
 												+' data-carbokcal="'+data[i].carbo+'"data-proteinkcal="'+data[i].protein+'" data-fatkcal="'+data[i].fat+'"'
 												+' data-allergy="'+data[i].allergy_no+'">'
 												+data[i].name+'('+data[i].detail+')'
+												+'<input type="hidden" name=ingredient_no value="'+data[i].no+'">'
 												+'<input type="number" value="100" min="1" name="weight" data-no="'+data[i].no+'" id="weight'
 												+num+'"> g'
-												+'('+'<input type="number" min="1" name="quantity"> 개'+')'
+												+'(수량: '+'<input type="text" min="1" name="quantity">'+')'
 												+'<input type="button" class="deleteSpan" value="삭제">'
 												+allergyCaution
 												+'<br>'
@@ -490,12 +494,12 @@
             
 			function makeProcessDiv(){
 				var append_str ='<div class="process" id="process'+pNum+'" style="height: 150px; width: 1000px; padding:2.5px;">'
-								+'<input type="file" data-val="'+pNum+'" id="imgupload'+pNum+'" style="display:none"/>'
+								+'<input type="file" data-val="'+pNum+'" name="photo" id="imgupload'+pNum+'" style="display:none"/>'
 								+'<div class="stepNum" style="float:left;"><span>STEP'+(pNum+1)+'</span></div>'
 								+'<div id="Imagebutton'+pNum+'" onclick="clickevent('+pNum+')" style="padding-top:0px; height: 140px; width: 220px; float:left; background-color:#ECECEC; text-align: center;">'
 								+'<img id="processImg'+pNum+'" src="resources/img/PlusIcon.png" style="height: 140px; width: 220px; object-fit: cover;">'
 								+'</div>'
-								+'<textarea id="processText'+pNum+'" rows="5" cols="30" style="height: 140px; padding:0px; resize:none;"></textarea>'
+								+'<textarea name="content" id="processText'+pNum+'" rows="5" cols="30" style="height: 140px; padding:0px; resize:none;"></textarea>'
 				if(pNum>2){
 					append_str += '<input type="button" data-val="'+pNum+'" class="deleteProcess" value="삭제">'+'</div>'
 					
@@ -525,7 +529,7 @@
 			var PNum = 0;
 			function receipePicture(){
 				var append_str ='<span style="height: 140px; width: 230px;">'
-								+'<input type="file" data-val="'+PNum+'" id="pictureUpload'+PNum+'" style="display:none"/>'	
+								+'<input type="file" name="thumbnail" data-val="'+PNum+'" id="pictureUpload'+PNum+'" style="display:none"/>'	
 								+'<span onclick="clickeventPic('+PNum+')" style="padding-top:0px; margin-right:20px; float:left; height: 140px; width: 220px; background-color:#ECECEC; text-align: center;">'
 								+'<img id="additionalPic'+PNum+'" src="resources/img/PlusIcon.png" style="height: 140px; width: 220px; object-fit: cover;">'
 								+'</span></span>'

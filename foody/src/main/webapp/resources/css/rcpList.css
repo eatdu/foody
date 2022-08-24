@@ -1,0 +1,118 @@
+@charset "utf-8";
+/* 레시피 검색 결과 영역*/
+/* 테이블 프레임 관련 */
+
+.fixedCol {
+    width: 113px;
+    max-width: 113px;
+    min-width: 113px;
+    height: 30px;
+}
+.htd {
+    width: 60px;
+    max-width: 60px;
+    min-width: 60px;
+    height: 30px;
+}
+.search{
+    position: relative;
+    top: 30px;
+}
+.rcpCard {
+	float: left;
+	margin: 10px;
+	width: 270px;
+	height: 310px;
+	border-radius: 30px;
+	background-color: #FAF4C0;
+}
+
+.rcpTable {
+	margin: auto;
+	margin-top: 20px;
+	width: 250px;
+	height: 270px;
+}
+.rcpTable .imgCell {
+	height: 150px;
+}
+.rcpTable .introCell{
+	height: 40px;
+}
+.rcpTable .nameCell{
+	width: 125px;
+	height: 40px;
+}
+.rcpTable .timeCell{
+	width: 125px;
+	height: 40px;
+}
+.rcpArea {
+	display: inline-block;
+	width: 1160px;
+}
+.row {
+	display: inline-block;
+	width: 1160px;
+}
+.container{
+	text-align: center;
+}
+.searchBox{
+	width: 1600px;
+	margin: auto;
+    margin-top: 50px;
+	height: 220px;
+	border-radius: 70px;
+	background-color: #FAF4C0;
+}
+table.search {
+	margin: auto;
+	text-align: left;
+	position: relative;
+    top: 30px;
+}
+/* 썸네일 관련 */
+.intro {
+    width: 250px;
+    position: absolute;
+    bottom: 0;
+	display: none;
+    background: rgba(200, 200, 200, 0.6);
+    color: black;
+    text-align: left;
+    padding: 10px;
+}
+/* 통계 아이콘 관련 */
+.icons {
+    position: relative;
+    border-radius: 12px;
+    height: 24px;
+    background: #CEF279;
+    font-weight: bold;
+    color: black;
+}
+div.icons img{
+	vertical-align: middle;
+}
+button.delete{
+	border-radius: 50%;
+    border: 0;
+    color: white;
+    font-size: 1px;
+    width: 12px;
+    height: 12px;
+    background-image: url(/foody/resources/img/delete.png);
+    background-size: cover;
+}
+.ingre {
+    background-color: #CC723D;
+    padding: 5px;
+    border-radius: 10px;
+    color: white;
+    font-weight: bold;
+}
+.hide {
+	display: none
+}
+

@@ -10,33 +10,38 @@ var ingreArr = new Array();
 var ingreNameArr = new Array();
 var ingreIdx = 1;
 $(function(){
-	searchBtn(1);
+	searchBtn(1, "${sType}", "${keyword}");
 	$("input[type='checkbox']").change(function(){
 		var name = $(this).attr("name");
 		if (name === 'rcpCate') rcpArr = makeArr(name);
 		else if (name === 'ingreCate') ingreArr = makeArr(name);
 	});
+	$(".search").change(function(){
+		searchBtn(1);
+	})
+
 });
 
 function addIngre(){
 	if (checkName()){
 		var name = $('select[name="ingreNameList"]').val();
 		var html = '';
-		html += "<span id='" + ingreIdx + "'>" + name
-			+ '<button class="btn btn-danger" style="--bs-btn-line-height: .3rem;'
-			+ ' --bs-btn-padding-x: .10rem; --bs-btn-font-size: .30rem;" type="button"'
+		html += "<div style='float: left;' id='" + ingreIdx + "'><span class='ingre'>" + name
+			+ '</span><button class="delete" type="button"'
 			+ ' name="removeBtn" onclick="javascript:removeIngre(' + ingreIdx 
 			+ ');">X</button><input type="checkbox" class="hide" name="ingreName" value="'
-			+ name + '" checked="checked"></span>';
+			+ name + '" checked="checked"></div>';
 		$("#ingreArea").append(html);
 		ingreIdx++;
 		ingreNameArr = makeArr('ingreName');
 	}
+	searchBtn(1);
 }
 
 function removeIngre(idx){
 	$("#"+idx).remove();
 	ingreNameArr = makeArr('ingreName');
+	searchBtn(1);
 }
 
 
@@ -57,74 +62,6 @@ function checkName() {
 </script>
 
 <style>
-.hide {
-	display: none
-}
-
-.fixedCol {
-    width: 113px;
-    max-width: 113px;
-    min-width: 113px;
-    height: 30px;
-}
-.htd {
-    width: 60px;
-    max-width: 60px;
-    min-width: 60px;
-    height: 30px;
-}
-.search{
-	margin-left:auto; 
-    margin-right:auto;
-}
-.rcpCard {
-	float: left;
-	margin: 10px;
-	width: 270px;
-	height: 310px;
-	border-radius: 30px;
-	background-color: #FAF4C0;
-}
-
-.rcpTable {
-	margin: auto;
-	margin-top: 20px;
-	width: 250px;
-	height: 270px;
-}
-.rcpTable .imgCell {
-	height: 150px;
-}
-.rcpTable .introCell{
-	height: 40px;
-}
-.rcpTable .nameCell{
-	width: 125px;
-	height: 40px;
-}
-.rcpTable .timeCell{
-	width: 125px;
-	height: 40px;
-}
-.rcpArea {
-	display: inline-block;
-	width: 1160px;
-}
-.row {
-	display: inline-block;
-	width: 1160px;
-}
-.container{
-	text-align: center;
-}
-.searchBox{
-	width: 1600px;
-	margin: auto;
-    margin-top: 50px;
-	height: 250px;
-	border-radius: 70px;
-	background-color: #FAF4C0;
-}
 
 
 
@@ -143,7 +80,7 @@ function checkName() {
 		<td class='htd' rowspan='2'><h3>음식분류</h3></td>
 		<c:forEach var="rcpCate" items="${rcpCateArr}" varStatus="idx">
 			<td class='fixedCol'>
-				<input style='zoom:0.8;' type="checkbox" name="rcpCate" value=${idx.count}>
+				<input type="checkbox" name="rcpCate" value=${idx.count}>
 				<label><span class=''>${rcpCate}</span></label>
 			</td>
 			<c:if test='${idx.count == 13}'>
@@ -155,7 +92,7 @@ function checkName() {
 			<td class='htd' rowspan='2'><h3>재료분류</h3></td>
 			<c:forEach var="ingreCate" items="${ingreCateArr}" varStatus="idx">
 				<td class='fixedCol'>
-					<input class="" style='zoom:0.8;' type="checkbox" name="ingreCate" value=${idx.count}>
+					<input class="" type="checkbox" name="ingreCate" value=${idx.count}>
 					<label class=""><span class=''>${ingreCate}</span></label>
 				</td>
 				<c:if test='${idx.count == 13}'>

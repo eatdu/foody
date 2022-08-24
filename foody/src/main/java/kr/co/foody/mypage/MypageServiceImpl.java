@@ -50,6 +50,8 @@ public class MypageServiceImpl implements MypageService {
 		List<MypageVO> list = mapper.myRecipe((int)uv.getNo());
 		// 회원의 최근 본 레시피 리스트
 		List<MypageVO> recentList = mapper.recentRecipe((int)uv.getNo());
+		// 즐겨찾기 레시피 리스트
+		List<MypageVO> likeList = mapper.likeRecipe(uv.getNo());
 		
 		// 출력된 값들을 map에 담아서 리턴해준다
 		Map<String, Object> map = new HashMap<String, Object>();
@@ -58,6 +60,7 @@ public class MypageServiceImpl implements MypageService {
 		map.put("preferList", prefer);
 		map.put("list", list);
 		map.put("recentList", recentList);
+		map.put("likeList", likeList);
 		
 		return map;
 	}

@@ -16,9 +16,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.co.foody.board.BoardService;
+import kr.co.foody.comment.CommentService;
+import kr.co.foody.comment.CommentVO;
 import kr.co.foody.constants.IngredientCategory;
 import kr.co.foody.constants.RecipeCategory;
-import kr.co.foody.qna.QnaMapper;
 import kr.co.foody.qna.QnaService;
 import kr.co.foody.qna.QnaVO;
 import kr.co.foody.recipe.IngredientMapper;
@@ -97,8 +98,9 @@ public class AdminController {
 	
 	@Autowired
 	QnaService Qservice;
+	
 	@Autowired
-	QnaMapper mapper;
+	CommentService Cservice;
 	
 	// QnA 게시판 조회
 	@GetMapping("/admin/qna.do")
@@ -106,11 +108,19 @@ public class AdminController {
 		model.addAttribute("data", Qservice.getQna(vo));
 		return "admin/qna";
 	}
+	// 댓글목록 조회
+	@GetMapping("/admin/comment.do")
+	public String getComment(CommentVO vo, Model model) {
+		model.addAttribute("comment", Cservice.wholeList(vo));
+		return "admin/comment";
+	}
+	
 	@GetMapping("/admin/userList.do")
 	public String userList(Model model) {
 		model.addAttribute("data", service.userList());
 		return "admin/userList";
 	}
+	
 	
 	
 }

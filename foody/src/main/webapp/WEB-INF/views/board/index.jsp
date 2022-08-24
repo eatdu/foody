@@ -98,10 +98,10 @@
                         <form method="get" name="searchForm" id="searchForm" action="">
                             <span class="srchSelect">
                                 <select id="stype" name="stype" class="dSelect" title="검색분류 선택">
-                                    <option value="all">제목+내용</option>
-                                    <option value="title">제목</option>
-                                    <option value="content">내용</option>
-                                    <option value="writer">작성자</option>
+                                    <option value="all" >제목+내용</option>
+                                    <option value="title" <c:if test="${param.stype=='title'}" >selected</c:if>>제목</option>
+                                    <option value="content" <c:if test="${param.stype=='content'}" >selected</c:if>>내용</option>
+                                    <option value="writer" <c:if test="${param.stype=='writer'}" >selected</c:if>>작성자</option>
                                 </select>
                             </span>
                             <span class="searchWord">

@@ -106,7 +106,7 @@ $('.txt_l').on('click', function() {
                         </colgroup>
                         <thead>
                             <tr>
-                            	<th>번호</th>
+                                <th>번호</th>
                                 <th>작성일</th>
                                 <th>질문내용</th>
                                 <th>작성자</th>

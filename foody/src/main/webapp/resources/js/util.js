@@ -1,3 +1,23 @@
+jQuery.fn.serializeObject = function() {
+	    var obj = null;
+	    try {
+	        if (this[0].tagName && this[0].tagName.toUpperCase() == "FORM") {
+	            var arr = this.serializeArray();
+	            if (arr) {
+	                obj = {};
+	                jQuery.each(arr, function() {
+	                    obj[this.name] = this.value;
+	                });
+	            }//if ( arr ) {
+	        }
+	    } catch (e) {
+	        alert(e.message);
+	    } finally {
+	    }
+	 
+	    return obj;
+	};
+
 function makeArr(name){
 	var tempArr = new Array();
 	$("input[name='" + name + "']:checked").each(function() { 
@@ -38,6 +58,18 @@ function sendAjax(reqUrl, data, callback){
 			console.log(e);
 		}
 	});
+}
+//관리자 - 레시피 검색
+function searchRcp(pageNo){
+	var data = $('#form').serializeObject();
+	data.pageNo = pageNo;
+	sendAjax(
+			"/foody/admin/recipe.do",
+			data,
+			function(result){
+				$('#recipeArea').html(result);
+			}
+	);
 }
 
 //ajax로 재료 정보 추가
@@ -125,7 +157,7 @@ function search(data, targetId){
 function searchPrefer() {
 	var data = {};
 	data.jsp = 'common/swipeRcpList';
-	data.orderBy = 'regdate';//정렬 순서 필요함
+	data.orderBy = 'bookmark';//찜
 	data.allergyChk = '1';
 
 	data.type = 'prefer'; //수정필요, 임시로 all 해놓음
@@ -136,7 +168,7 @@ function searchPrefer() {
 function searchBest() {
 	var data = {};
 	data.jsp = 'common/swipeRcpList';
-	data.orderBy = 'regdate';//정렬 순서 필요함
+	data.orderBy = 'star';//별점
 	data.allergyChk = '1';
 
 	data.type = 'best'; //수정필요, 임시로 all 해놓음
@@ -144,7 +176,7 @@ function searchBest() {
 	search(data, 'bestRcpArea');	
 }
 //각 검색 결과에서 페이지 이동에 이용될 함수
-function movePage(title, pageNo, areaNo){
+function movePage(title, pageNo, areaNo, sType, keyword){
 	data = {};
 	data.orderBy = $('#rcpArea' + areaNo).find('#orderBy').val();
 	data.areaNo = areaNo;
@@ -153,6 +185,8 @@ function movePage(title, pageNo, areaNo){
 	data.jsp = 'common/rcpList';
 	data.type = 'common';
 	data.allergyChk = '0';
+	if (sType != "") data.sType = sType;
+	if (keyword != "") data.keyword = keyword;
 	if ($('#allergyChk').is(':checked')) {
 		data.allergyChk = '1';
 	}
@@ -207,12 +241,14 @@ function movePage(title, pageNo, areaNo){
 }
 
 //상세검색에서 pageNo추가하여 검색  
-function searchBtn(pageNo){
+function searchBtn(pageNo, sType, keyword){
 	var flagI = false;
 	var flagR = false;
 	var flagK = false;
 
 	var data = {};
+	data.sType = sType;
+	if (keyword != "") data.keyword = keyword;
 	data.pageNo = pageNo;
 	data.areaNo = 1;
 	data.orderBy = 'regdate';

@@ -133,9 +133,8 @@ public class RecipeController {
 	}
 	
 	@PostMapping(value = "search.do", consumes = MediaType.APPLICATION_JSON_VALUE, produces = "application/json;charset=UTF-8")
-
 	public String search(@RequestBody Map cri, Model model, HttpSession sess){
-		model.addAttribute("result", service.search(cri, sess));
+		model.addAttribute("result", service.search(cri, model, sess));
 		return (String) cri.get("jsp");
 	}
 
@@ -157,9 +156,11 @@ public class RecipeController {
 	}
 
 	@GetMapping("/recipe/search.do")
-	public String search(Model model) {
+	public String search(@RequestParam Map cri, Model model) {
 		model.addAttribute("rcpCateArr", RecipeCategory.RcpCateArr);
 		model.addAttribute("ingreCateArr", IngredientCategory.IngreCateArr);
+		if (cri.get("sType") != null) model.addAttribute("sType", cri.get("sType"));
+		if (cri.get("keyword") != null) model.addAttribute("keyword", cri.get("keyword"));
 		return "recipe/search";
 	}
 

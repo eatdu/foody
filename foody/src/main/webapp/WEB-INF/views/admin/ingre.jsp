@@ -34,7 +34,7 @@ table, td {
 <body>
 <%@ include file="../admin/leftMenu.jsp" %>
 <div class="adminContainer">
-재료 조작 페이지
+<h1 class="title">재료 조작 페이지</h1>
 	<table>
 		<tr>
 			<td>분류로 검색</td>

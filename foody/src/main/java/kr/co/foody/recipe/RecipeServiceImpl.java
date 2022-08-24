@@ -9,6 +9,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
 
 import kr.co.foody.constants.IngredientCategory;
 import kr.co.foody.constants.RecipeCategory;
@@ -89,7 +90,7 @@ public class RecipeServiceImpl implements RecipeService {
 	}
 
 	@Override
-	public Map search(Map cri, HttpSession sess) {
+	public Map search(Map cri, Model model, HttpSession sess) {
 		String title2 = "";
 
 		//로그인 한 경우 알러지 조건 추가
@@ -135,6 +136,22 @@ public class RecipeServiceImpl implements RecipeService {
 
 		//검색타입 - 상세검색(common)
 		if(cri.get("type").equals("common")) {
+			result.put("title2", title2);
+			//키워드 입력으로 검색 들어온 경우
+			if (cri.get("sType") != null && cri.get("keyword") != null) {
+				model.addAttribute("sType", cri.get("sType"));
+				model.addAttribute("keyword", cri.get("keyword"));
+				//제목 입력
+				if ("recipe".equals(cri.get("sType"))) {
+					cri.put("rKeyword", cri.get("keyword"));
+					result.put("title2", "요리명 " + cri.get("keyword") + "(으)로 검색한 결과");
+				}
+				//재료 입력
+				else if ("ingre".equals(cri.get("sType"))) {
+					cri.put("keywordArr", mapper.selectIngreNo("'" + cri.get("keyword") + "'"));
+					result.put("title2", "재료 " + cri.get("keyword") + "(으)로 검색한 결과");
+				}
+			}
 			//검색조건 하에서 총 게시물 수
 			int count = mapper.countWithFilter(cri);
 			result.put("count", count);
@@ -168,8 +185,9 @@ public class RecipeServiceImpl implements RecipeService {
 			result.put("paging", paging);
 			//현재 페이지
 			result.put("curNo", pageNo);
+			//최종 검색
 			result.put("list", mapper.selectWithFilter(cri));
-			result.put("title2", title2);
+			
 		} else if (cri.get("type").equals("best")) {
 			//인기레시피 - 인기순 정렬
 			cri.put("startRno", 1);
@@ -184,8 +202,7 @@ public class RecipeServiceImpl implements RecipeService {
 			cri.put("endRno", 20);
 			result.put("list", mapper.selectWithFilter(cri));
 		}
-		System.out.println(title2);
-		System.out.println((List)cri.get("rcpCateArr"));
+		System.out.println(cri);
 		return result;
 	}
 }

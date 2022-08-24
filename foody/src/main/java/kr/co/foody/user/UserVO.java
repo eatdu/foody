@@ -4,10 +4,15 @@ import java.sql.Timestamp;
 import java.util.List;
 
 import kr.co.foody.mypage.MypageVO;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+import util.Paging;
 
-@Data
-public class UserVO {
+@Getter
+@Setter
+@ToString
+public class UserVO extends Paging {
 
 	private int no;
 	private String name;

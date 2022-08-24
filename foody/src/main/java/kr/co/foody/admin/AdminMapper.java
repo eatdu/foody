@@ -9,6 +9,7 @@ import kr.co.foody.user.UserVO;
 @Mapper
 public interface AdminMapper {
 	
-	List<UserVO> userList();
+	List<UserVO> userList(UserVO vo);
+	int userCount();
 	
 }

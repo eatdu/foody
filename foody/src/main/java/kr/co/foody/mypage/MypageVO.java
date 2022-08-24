@@ -2,10 +2,15 @@ package kr.co.foody.mypage;
 
 import java.sql.Timestamp;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+import util.Paging;
 
-@Data
-public class MypageVO {
+@Getter
+@Setter
+@ToString
+public class MypageVO extends Paging {
 
 	private int no;
 	private int user_no;

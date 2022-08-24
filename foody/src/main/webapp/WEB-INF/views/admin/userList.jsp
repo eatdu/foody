@@ -68,7 +68,7 @@ $(function(){
 	<div id="dashBoard" >
 		<div class="container" id='signUser'>
 			<h2>가입자현황</h2>
-			총 가입자 수: ${cntUser.all} 명<br>
+			총 가입자 수: ${data.totalCount} 명<br>
 			<div id="chartContainer"></div>
 		</div>
 		<div class="container" id='exitUser'>
@@ -102,54 +102,61 @@ $(function(){
 	                    </tr>
 	                </thead>
 	                <tbody>
-					<c:forEach var="vo" items="${data.userList}" varStatus="status">
+	                <c:if test="${empty data.userList}">
+                        <tr>
+                            <td class="first" colspan="5">등록된 글이 없습니다.</td>
+                        </tr>
+                    </c:if>
+					<c:forEach var="list" items="${data.userList}" varStatus="status">
 	                     <tr>
-	                     	<td>${vo.email}</td>
-	                     	<td>${vo.nik_name}</td>
-	                     	<td>${vo.name}</td>
-	                     	<td>${vo.recipe_count}</td>
-	                     	<td>${vo.comment_count}</td>
-	                     	<td><fmt:formatDate value="${vo.regdate}" pattern="yyyy-MM-dd"/></td>
+	                     	<td>${list.email}</td>
+	                     	<td>${list.nik_name}</td>
+	                     	<td>${list.name}</td>
+	                     	<td>${list.recipe_count}</td>
+	                     	<td>${list.comment_count}</td>
+	                     	<td><fmt:formatDate value="${list.regdate}" pattern="yyyy-MM-dd"/></td>
 	                     	<td>
-	                     		<c:if test="${vo.exit eq 0}">가입</c:if>
-	                     		<c:if test="${vo.exit eq 1}">탈퇴</c:if>
+	                     		<c:if test="${list.exit eq 0}">가입</c:if>
+	                     		<c:if test="${list.exit eq 1}">탈퇴</c:if>
 	                     	</td>
 	                     </tr>
 					</c:forEach>
 	            	</tbody>
 	            </table>
-	            <%-- <div class="pagenate clear">
+	            <!-- 페이징처리 -->
+	            <div class="pagenate clear">
 	               <ul class='paging'>
 	               		<c:if test="${data.prev == true}">
-	                		<div>${data.startPage }</div>
+	                		<div>${data.startPage}</div>
 	                		<li><a href="userList.do?page=${data.startPage-1}&stype=${param.stype}&sword=${param.sword}"><-</a>
 	                	</c:if>
 	                	<c:forEach var="num" begin="${data.startPage}" end="${data.endPage}">
 	                    <li><a href='userList.do?page=${num}&stype=${param.stype}&sword=${param.sword}' 
-	                	<c:if test="${boardVO.page == num}"> class='current' </c:if>>${num}</a></li>
+	                	<c:if test="${data.page == num}"> class='current' </c:if>>${num}</a></li>
 	                </c:forEach>
-	                <c:if test="${page.next == true}">
+	                <c:if test="${data.next == true}">
 	                		<li><a href="userList.do?page=${data.endPage+1}&stype=${param.stype}&sword=${param.sword}">-></a>
 	               	</c:if>
 	               </ul> 
 	            </div>
-	        
-	            <!-- 페이징처리 -->
-	            <div class="bbsSearch">
-	                <form method="get" name="searchForm" id="searchForm" action="">
-	                    <span class="srchSelect">
-	                        <select id="stype" name="stype" class="dSelect" title="검색분류 선택">
-	                            <option value="all" <c:if test="${param.stype == 'all'}">selected</c:if>>전체</option>
-	                            <option value="title" <c:if test="${param.stype == 'title'}">selected</c:if>>제목</option>
-	                            <option value="content" <c:if test="${param.stype == 'content'}">selected</c:if>>내용</option>
-	                        </select>
-	                    </span>
-	                    <span class="searchWord">
-	                        <input type="text" id="sval" name="sword" value="${param.sword}" title="검색어 입력">
-	                        <input type="button" id="" value="검색" title="검색">
-	                    </span>
-	                </form>
-	            </div>--%>
+	            
+	            <!-- 검색조건/키워드 -->
+                <div class="bbsSearch">
+                    <form method="get" name="searchForm" id="searchForm" action="">
+                        <span class="srchSelect">
+                            <select id="stype" name="stype" class="dSelect" title="검색분류 선택">
+                                <option value="all">이메일+이름</option>
+                                <option value="email">이메일</option>
+                                <option value="name">이름</option>
+                                <option value="nik_name">닉네임</option>
+                            </select>
+                        </span>
+                        <span class="searchWord">
+                            <input type="text" id="sword" name="sword" value="${param.sword}" title="검색어 입력">
+                            <input type="button" id="" value="검색" title="검색">
+                        </span>
+                    </form>
+                </div>
 	        </div> 
 	    </div>
 	</div>

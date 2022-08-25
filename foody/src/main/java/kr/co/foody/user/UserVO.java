@@ -7,12 +7,11 @@ import kr.co.foody.mypage.MypageVO;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-import util.Paging;
 
 @Getter
 @Setter
 @ToString
-public class UserVO extends Paging {
+public class UserVO {
 
 	private int no;
 	private String name;

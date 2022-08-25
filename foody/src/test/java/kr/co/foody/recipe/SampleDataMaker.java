@@ -125,9 +125,9 @@ public class SampleDataMaker {
 		}
 	}
 	
-	//@Test
+	@Test
 	public void insertUserAllergy() {
-		for (int i = 21; i < 121; i++) {
+		for (int i = 23; i <= 121; i++) {
 			Random r = new Random();
 			int count = (int)(Math.random() * 4);
 			int a[] = new int[count];

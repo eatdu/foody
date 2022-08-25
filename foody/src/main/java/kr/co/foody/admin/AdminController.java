@@ -67,7 +67,7 @@ public class AdminController {
 		return "/common/rcpAdminModal";
 	}
 	//레시피 삭제 처리
-	@PostMapping("/admin/deleteRcp.do")
+	//@PostMapping("/admin/deleteRcp.do")
 	
 	
 	

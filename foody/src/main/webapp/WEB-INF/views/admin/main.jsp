@@ -38,15 +38,12 @@ body{
 	min-height: 100%;
 	overflow: hidden;
 }
-.adminContainer{
-	overflow: auto;
-    display: flex;
-}
+
 #dashBoard {
     min-width: 1200px;
     margin: auto;
     min-height: 640px;
-    height: 94%;
+    height: 90%;
     width: 94%;
     justify-content: center;
 }
@@ -70,8 +67,8 @@ body{
 <body>
 <%@ include file="../admin/leftMenu.jsp" %>
 <div class="adminContainer">
+	<div class="title"><h1>메인 페이지</h1></div>
 	<div id="dashBoard">
-		<h1 class="title">메인 페이지</h1>
 		<div class="container" id='userReport'>
 			<h2>가입자현황</h2>
 			총 가입자 수: ${cntUser.all} 명<br>

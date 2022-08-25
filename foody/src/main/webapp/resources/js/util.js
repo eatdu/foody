@@ -81,7 +81,7 @@ function rcpDetailAdmin(no){
 		function(result){
 			$('#modal').html(result);
 			openModal();
-			$("#"+no).find("#adminChk").html('<strong class="colG01">확인</strong>');
+			$("#"+no).find(".adminChk").html('<strong class="colG01">확인</strong>');
 		}
 	);
 }

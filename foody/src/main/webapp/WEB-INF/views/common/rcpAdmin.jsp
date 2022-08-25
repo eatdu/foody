@@ -2,7 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <div id="bbs">
 <div id="blist">
-${count}
+총 ${count}건이 검색되었습니다.
 <table>
 	<thead>
 		<th>작성글 제목</th>
@@ -19,7 +19,7 @@ ${count}
 			<td>${res.nikname}</td>
 			<td>${res.type}</td>
 			<td>${res.regdate}</td>
-			<td id="adminChk">
+			<td class="adminChk">
 			<c:if test="${res.adminchk == 0}"><strong class="colR01">미확인</strong></c:if>
 			<c:if test="${res.adminchk == 1}"><strong class="colG01">확인</strong></c:if>
 			</td>
@@ -32,11 +32,10 @@ ${count}
 	</tbody>
 </table>
 </div>
-</div>
 <div class='page'>
 	<c:forEach items="${paging}" var='pageNo' varStatus='idx'>
 	<c:if test="${prev eq true && idx.first}">
-		<a href="javascript:searchRcp(${pageNo - 1});">앞으로</a>
+		<a  href="javascript:searchRcp(${pageNo - 1});">이전으로</a>
 	</c:if>
 	<c:if test="${pageNo eq curNo}">
 		<strong>${pageNo}</strong>
@@ -48,5 +47,6 @@ ${count}
 		<a href="javascript:searchRcp(${pageNo + 1});">다음으로</a>
 	</c:if>
 	</c:forEach>
+</div>
 </div>
 

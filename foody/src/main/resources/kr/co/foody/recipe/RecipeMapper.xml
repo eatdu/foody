@@ -431,7 +431,7 @@
 	
 	<!-- 랜덤 회원 알러지 인서트 -->
 	<insert id="insertAllergyUser" parameterType="map">
-		insert into prefer(user_no, prefer_food)
+		insert into u_allergy(user_no, user_allergy)
 		values (#{userNo}, #{preferFood})
 	</insert>
 	

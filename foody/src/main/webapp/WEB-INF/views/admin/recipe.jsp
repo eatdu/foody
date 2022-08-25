@@ -105,25 +105,27 @@ $( function() {
 	background-color: #FFA7A7;
 }
 #recipeArea {
-	height: 85%;
+	height: 80%;
 	max-height: 85%;
 	max-height: 85%;
 	overflow: auto;
 	overflow-x: hidden;
 }
+.form{
+	height: 10%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
 #form{
-	height: 15%;
-	margin-left: 5%;
+    background-color: #FAF4C0;
+    padding: 5px;
+    border: solid 8px #FAED7D;
 }
 td.head{
 	background-color: white;
 }
-html{height: 100%;}
-body{
-	height: 100%;
-	max-height: 100%;
-	min-height: 100%;
-}
+
 </style>
 <link rel="stylesheet" type="text/css" href="/foody/resources/css/leftMenu.css">
 <title>레시피 목록</title>
@@ -131,56 +133,35 @@ body{
 <body>
 <%@ include file="../admin/leftMenu.jsp" %>
 <div class="adminContainer">
-<form id="form" method="post" action="recipe.do">
-	<h1 class="title">레시피 목록 조회</h1>
-	<table>
-		<colgroup>
-			<col width="12.5%"/>
-			<col width="12.5%"/>
-			<col width="12.5%"/>
-			<col width="12.5%"/>
-			<col width="12.5%"/>
-			<col width="12.5%"/>
-			<col width="12.5%"/>
-			<col width="12.5%"/>
-		</colgroup>
-		<tr>
-			<td class="head">확인여부</td>
-			<td>
+<div class="title"><h1>레시피 목록 조회</h1></div>
+<div class="form">
+	<form id="form" method="post" action="recipe.do">
+
+			확인여부
 				<select name="adminChk">
 					<option value='1'>확인</option>
 					<option value='0'>미확인</option>
 					<option value='0 or 1' selected>모두</option>
 				</select>
-			</td>
-			<td class="head">삭제여부</td>
-				<td>
+				삭제여부
 				<select name="print">
 					<option value='1'>삭제된 건만</option>
 					<option value='0'>출력되는 건만</option>
 					<option value='0 or 1' selected>모두</option>
 				</select>
-			</td>
-			<td class="head">정렬조건</td>
-			<td>
+			정렬조건
 				<select name="orderBy">
 					<option value="regdate desc" selected>최신순</option>
 					<option value="regdate">오래된순</option>
 					<option value="nikname">작성자</option>
 				</select>
-			</td>
-			<td>페이지당 출력 갯수</td>
-			<td>
+			페이지당 출력 갯수
 				<select name="rcpPerPage">
 					<option value="10">10개</option>
 					<option value="30" selected>30개</option>
 					<option value="50">50개</option>
 				</select>
-			</td>
-		</tr>
-		<tr>
-			<td class="head">기간별</td>
-			<td>
+			기간: 
 			<select id="selectDate" name="date">
 				<option value='1'>1일</option>
 				<option value='7'>1주</option>
@@ -190,30 +171,21 @@ body{
 				<option value='365'>1년</option>
 				<option value='3650'>전체기간</option>
 			</select>
-			</td>
-			<td>
-				<label for="from">From</label>
+			직접입력
 				<input type="text" id="from" name="from" readonly>
-			</td>
-			<td>
-				<label for="to">to</label>
+				<label for="from">부터</label>
+			
 				<input type="text" id="to" name="to" readonly>
-			</td>
-			<td class="head">옵션별 검색</td>
-			<td>
+				<label for="to">까지</label>
+			옵션별 검색
 			<select name="type">
 				<option value="title">제목</option>
 				<option value="nikname">닉네임</option>
 			</select>
-			<td>
 				<input type="text" name="keyword">
-			</td>
-			<td>
 				<input type="button" value="검색하기" onclick="searchRcp(1);">
-			</td>
-		</tr>
-	</table>
 	</form>
+</div>
 	<div id="recipeArea">
 	</div>
 </div>

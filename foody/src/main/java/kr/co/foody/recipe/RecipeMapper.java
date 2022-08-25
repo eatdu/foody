@@ -14,7 +14,10 @@ public interface RecipeMapper {
 	
 	int updateRecipeViewCount(int no);
 	RecipeVO view(int no);
-
+	Map userView(int no);
+	List<Map> processView(int no);
+	List<Map> ingredientView(int no);
+	
 	List<IngredientVO> selectIngreList(int no);
 	List<String> selectIngreNameList(int no);
 	List<String> selectIngreNameList2(String keyword);

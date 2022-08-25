@@ -7,9 +7,9 @@
 <html>
 	<head>
 	<link rel="stylesheet" type="text/css" href="/foody/resources/css/board.css">
-<link rel="stylesheet" type="text/css" href="/foody/resources/css/basic.css">
-<link rel="stylesheet" type="text/css" href="/foody/resources/css/layout.css">
-<link rel="stylesheet" type="text/css" href="/foody/resources/css/manage.css">
+	<link rel="stylesheet" type="text/css" href="/foody/resources/css/basic.css">
+	<link rel="stylesheet" type="text/css" href="/foody/resources/css/layout.css">
+	<link rel="stylesheet" type="text/css" href="/foody/resources/css/manage.css">
 		<meta charset="UTF-8">
 		<title>레시피 등록</title>
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
@@ -97,8 +97,12 @@
 					},
 					success: function(data){
 						for(var i=0; i< data.length; i++){
-
-							var searchOption_str ='<option data-no='+data[i].no+' value="'+data[i].name+'('+data[i].detail+')" ></option>'; //이름검색 드롭다운 옵션에 넣을 스트링
+							if(data[i].detail==""){
+								var searchOption_str ='<option data-no='+data[i].no+' value="'+data[i].name+'" ></option>'; //이름검색 드롭다운 옵션에 넣을 스트링
+							}else{
+								var searchOption_str ='<option data-no='+data[i].no+' value="'+data[i].name+'('+data[i].detail+')" ></option>'; //이름검색 드롭다운 옵션에 넣을 스트링
+							}
+							
 							$("#searchName_drop").append(searchOption_str);
 						}
 						
@@ -441,9 +445,12 @@
 					};
 				$("#chartContainer").CanvasJSChart(options); 
 				
+				var dayKcal = ${cal};
+				var leftKcal = dayKcal-sum_kcal;
+				
 				options2={
 						title: {
-							text:  userNickname+" 님의 하루 권장 칼로리: "+${cal}+"kcal"
+							text:  userNickname+" 님의 하루 권장 칼로리: "+dayKcal+"kcal"
 						},
 						data: [{
 							type: "doughnut",
@@ -452,7 +459,7 @@
 							legendText: "{label}",
 							indexLabel: "{label}: #percent%",
 							dataPoints: [
-								{ label: "하루 권장 칼로리", y: ${cal}},
+								{ label: "남은 칼로리", y: leftKcal},
 								{ label: "음식의 칼로리", y: sum_kcal}
 							]
 						}]
@@ -693,7 +700,7 @@
 			<!-- 팁(tip) -->
 			<div>
 				요리tip! &nbsp <input type="text" name="tip" ><br>
-		
+				
 				<!-- 등록버튼(submit) -->
 				<input type="submit" name ="submit">
 			</div>

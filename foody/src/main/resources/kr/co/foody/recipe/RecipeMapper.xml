@@ -40,6 +40,23 @@
 		select * from recipe where no=#{no}
 	</select>
 	
+	<select id="userView" parameterType="int" resultType="map">
+		select * from user where no=#{no}
+	</select>
+	
+	<select id="processView" parameterType="int" resultType="map">
+		select * from process where recipe_no=#{no}
+	</select>
+	
+	<select id="ingredientView" parameterType="int" resultType="map">
+		select * from (
+			select *from ingre
+		)a join(
+			select * from ingre_recipe_map where recipe_no= #{no}
+		)b
+		on a.no = b.ingredient_no;
+	</select>
+	
 	<!-- 조회수 올리기 -->
 	<update id="updateRecipeViewCount" parameterType="int">
 		update recipe set viewcount = viewcount+1 where no=#{no}

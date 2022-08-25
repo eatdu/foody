@@ -14,6 +14,7 @@ import org.springframework.ui.Model;
 
 import kr.co.foody.constants.IngredientCategory;
 import kr.co.foody.constants.RecipeCategory;
+import kr.co.foody.user.UserVO;
 
 @Service
 public class RecipeServiceImpl implements RecipeService {
@@ -48,25 +49,43 @@ public class RecipeServiceImpl implements RecipeService {
 	}
 	
 	@Override
-	public Map viewRecipe(int no) {
-
-		Map datamap = new HashMap();
+	public Map viewRecipe(int no, HttpSession sess) {
 		
 		//viewCount 하나 올려주기
 		mapper.updateRecipeViewCount(no);
+		
 		//recipe 테이블 정보 가져오기
 		RecipeVO recipe = mapper.view(no);
 		//process 테이블 정보 가져오기
-		
 		List<Map> process = mapper.processView(no);
 		List<Map> ingredient = mapper.ingredientView(no);
 		
 		String typeName = RecipeCategory.RcpCateArr[recipe.getType()-1];
 		
+		Map datamap = new HashMap();
+		RegdateVO regdate = new RegdateVO();
 		
-		 double sumCarbo = 0; double sumProtein = 0; double sumFat = 0; int sumKcal= 0;
+		//viewRegdate 인서트 or 업데이트 시켜주기
+		if(sess.getAttribute("loginInfo") != null) {
+			UserVO uv = (UserVO) sess.getAttribute("loginInfo");
+			
+			regdate.setRecipe_no(no);
+			regdate.setUser_no(uv.getNo());
+			RegdateVO resultRegdate = mapper.bringRegdate(regdate);
+			
+			if(resultRegdate == null) {
+				mapper.insertRegdate(regdate);
+			}else {
+				mapper.updateRegdate(resultRegdate);
+			}
+		}else {
+			System.out.println("로그인 정보가 없습니다");
+		}
 		
-		 for(int i=0;i<ingredient.size();i++) { 
+		//칼로리 및 영양정보 계산하기
+		double sumCarbo = 0; double sumProtein = 0; double sumFat = 0; int sumKcal= 0;
+		
+		for(int i=0;i<ingredient.size();i++) { 
 			sumCarbo += ((BigDecimal)ingredient.get(i).get("carbo")).doubleValue()/100 *  (int)ingredient.get(i).get("weight"); 
 			sumProtein += ((BigDecimal)ingredient.get(i).get("protein")).doubleValue()/100 * (int)ingredient.get(i).get("weight");
 			sumFat += ((BigDecimal)ingredient.get(i).get("fat")).doubleValue()/100 *  (int)ingredient.get(i).get("weight"); 
@@ -84,7 +103,6 @@ public class RecipeServiceImpl implements RecipeService {
 		datamap.put("sumProtein", Math.round(sumProtein/recipe.getServing()));
 		datamap.put("sumFat", Math.round(sumFat/recipe.getServing()));
 		datamap.put("sumKcal", sumKcal/recipe.getServing());
-		
 		
 		return datamap;
 	}

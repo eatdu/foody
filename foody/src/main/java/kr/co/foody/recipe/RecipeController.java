@@ -130,8 +130,9 @@ public class RecipeController {
 
 		UserVO uv = (UserVO) sess.getAttribute("loginInfo");
 		int recipeNo = Integer.parseInt(req.getParameter("no"));
-		Map cri = service.viewRecipe(recipeNo);
-
+		
+		Map cri = service.viewRecipe(recipeNo, sess);
+		
 		List<Integer> userAllergyNo = (List<Integer>) sess.getAttribute("allergyNo");
 
 		model.addAttribute("loginUser", uv);
@@ -172,6 +173,13 @@ public class RecipeController {
 			model.addAttribute("head", "==상세==");
 		}
 		return "common/comboBox";
+	}
+	
+	
+	@GetMapping("modify.do")
+	public String modify() {
+
+		return "recipe/modify";
 	}
 
 	@GetMapping("/recipe/search.do")

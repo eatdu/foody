@@ -63,11 +63,22 @@
 	</update>
 	
 	<!-- 조회시간 업데이트(조회) -->
-	
+	<select id="bringRegdate" parameterType="kr.co.foody.recipe.RegdateVO" resultType="kr.co.foody.recipe.RegdateVO">
+		select * from recent where user_no=#{user_no} and recipe_no=#{recipe_no}
+	</select>
 	<!-- 조회시간 업데이트(1.업데이트) -->
-	
+	<update id="updateRegdate" parameterType="kr.co.foody.recipe.RegdateVO">
+		UPDATE recent SET user_no=#{user_no}, recipe_no=#{recipe_no}, regdate=NOW() WHERE no=#{no}
+	</update>
 	<!-- 조회시간 업데이트(2.인서트) -->
-	
+	<insert id="insertRegdate" parameterType="kr.co.foody.recipe.RegdateVO">
+		insert into recent(
+			user_no, recipe_no, regdate
+		)values(
+			#{user_no}, #{recipe_no},NOW()
+		)
+	</insert>
+
 	<!-- 레시피no로 해당 레시피에 필요한 재료 리스트 조회하는 sql -->
 	<select id='selectIngreList' parameterType="int" resultType="kr.co.foody.recipe.IngredientVO">
 		SELECT

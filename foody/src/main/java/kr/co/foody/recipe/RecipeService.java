@@ -13,7 +13,7 @@ public interface RecipeService {
 	int insertProcess(Map cri);
 	int insertIngredient(Map cri);
 	
-	Map viewRecipe(int no);
+	Map viewRecipe(int no, HttpSession sess);
 	
 	List<String> large_cate(int i);
 	Map search(Map cri, Model model, HttpSession sess); 

@@ -24,7 +24,7 @@
 					<img class="" width='20px' src="/foody/resources/img/viewcnt.png">
 					${l1.viewcount}
 					<img class="" width='20px' src="/foody/resources/img/reply.png">
-					0
+					${l1.reply}
 					<img class="" width='20px' src="/foody/img/heart.png">
 					${l1.bookmark} 
 					<img class="" width='20px' src="/foody/img/star.png">

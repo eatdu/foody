@@ -23,4 +23,7 @@ public interface AdminService {
 	Map<String, Object> userList();
 	//레시피 목록 조회
 	boolean selectRcpAdmin(Map cri, Model model);
+	
+	//레시피 상세보기시 프로세스
+	void rcpDetail(int no);
 }

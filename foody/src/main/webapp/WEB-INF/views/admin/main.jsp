@@ -43,7 +43,7 @@ body{
     display: flex;
 }
 #dashBoard {
-    min-width: 1040px;
+    min-width: 1200px;
     margin: auto;
     min-height: 640px;
     height: 94%;
@@ -52,7 +52,7 @@ body{
 }
 #dashBoard .container {
     min-height: 300px;
-    height: 45%;
+    height: 42%;
     min-width: 500px;
     width: 44%;
     background-color: #FAF4C0;

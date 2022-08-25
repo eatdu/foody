@@ -112,8 +112,12 @@
 					}
 				});
 			});
-			
-			
+			// -------------------serving 바뀔 때 JS----------------------
+			$(function(){
+			  $('#serving').on('input', function() {
+				  kcalUpdate();
+			  });
+			});
 			// -------------------드롭다운 선택 후 '추가'버튼 클릭(호출) JS----------------------
 			function cateAdd(){
 				
@@ -404,6 +408,7 @@
 				var sum_protein=0;
 				var sum_fat=0;
 				var sum_kcal=0;
+				var serving= Number($('#serving').val());
 				
 				for(var i=0; i<sel_ingre.length;i++){
 					sum_carbo+= Number(sel_ingre[i].dataset.carbokcal);
@@ -421,14 +426,16 @@
 					chart_protein= 50;
 					chart_fat= 50;
 				}else{
-					chart_carbo= sum_carbo;
-					chart_protein= sum_protein;
-					chart_fat= sum_fat;
+					chart_carbo= Math.round(sum_carbo/serving*10)/10;
+					chart_protein= Math.round(sum_protein/serving*10)/10;
+					chart_fat= Math.round(sum_fat/serving *10)/10;
 				}
+				
+				chart_kcal = Math.round(sum_kcal/serving);
 				
 				options={
 						title: {
-							text: "칼로리: "+sum_kcal.toFixed(0)+"kcal"
+							text: "칼로리: "+chart_kcal+"kcal"
 						},
 						data: [{
 							type: "doughnut",
@@ -460,7 +467,7 @@
 							indexLabel: "{label}: #percent%",
 							dataPoints: [
 								{ label: "남은 칼로리", y: leftKcal},
-								{ label: "음식의 칼로리", y: sum_kcal}
+								{ label: "음식의 칼로리", y: chart_kcal}
 							]
 						}]
 					};
@@ -673,7 +680,7 @@
 			   		</datalist>
 			   	<input type="button" value="추가" onclick="searchAdd()"><br>
 				<!-- 인분(searving) -->
-				<input type="number" name="serving" min='1' value="1"> 인분 기준<br>
+				<input type="number" id="serving" name="serving" min='1' value="1"> 인분 기준<br>
 				
 				<!-- 추가된 재료 리스트 -->
 				<br><div id="addedIngredientList"></div><br>

@@ -11,7 +11,8 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class UserVO{
+
+public class UserVO {
 
 	private int no;
 	private String name;

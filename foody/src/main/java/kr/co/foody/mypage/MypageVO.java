@@ -29,6 +29,7 @@ public class MypageVO {
  	private int prefer_food;
  	
  	private int bookmark;
+ 	private int comment_count;
 
 
 }

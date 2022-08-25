@@ -19,10 +19,17 @@ public class CommentVO {
 	private String user_name;
 	private int star;
 	private int recipe_no;
+	private String board_title;
+	private String recipe_name;
 	
 	private int gno;
 	private int ono;
 	private int depth;
+	
+	private String stype;
+	private String sword;
+	private String period;
+	private String align;
 	
 	private int startIdx;
 	private int page;

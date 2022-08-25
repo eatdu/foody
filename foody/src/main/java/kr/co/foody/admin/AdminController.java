@@ -16,9 +16,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.co.foody.board.BoardService;
+import kr.co.foody.comment.CommentService;
+import kr.co.foody.comment.CommentVO;
 import kr.co.foody.constants.IngredientCategory;
 import kr.co.foody.constants.RecipeCategory;
-import kr.co.foody.qna.QnaMapper;
 import kr.co.foody.qna.QnaService;
 import kr.co.foody.qna.QnaVO;
 import kr.co.foody.recipe.IngredientMapper;
@@ -55,9 +56,18 @@ public class AdminController {
 	@PostMapping("/admin/recipe.do")
 	public String recipe(@RequestBody Map cri, Model model) {
 		svc.selectRcpAdmin(cri, model);
-		System.out.println(cri);
 		return "common/rcpAdmin";
 	}
+	//레시피 상세보기 모달
+	@PostMapping("/admin/rcpDetail.do")
+	public String rcpDetail(@RequestBody Map cri, Model model) {
+		int no = (int)cri.get("no");
+		svc.rcpDetail(no);
+		model.addAttribute("no", no);
+		return "/common/rcpAdminModal";
+	}
+	//레시피 삭제 처리
+	//@PostMapping("/admin/deleteRcp.do")
 	
 	
 	
@@ -69,6 +79,7 @@ public class AdminController {
 		model.addAttribute("allergyList", ingreMapper.allergyList());
 		return "admin/ingre";
 	}
+	
 	//재료 정보 조회
 	@PostMapping(value = "/admin/ingreInfo.do", consumes = MediaType.APPLICATION_JSON_VALUE, produces = "application/json;charset=UTF-8")
 	public String ingreInfo(@RequestBody Map cri, Model model){
@@ -97,8 +108,9 @@ public class AdminController {
 	
 	@Autowired
 	QnaService Qservice;
+	
 	@Autowired
-	QnaMapper mapper;
+	CommentService Cservice;
 	
 	// QnA 게시판 조회
 	@GetMapping("/admin/qna.do")
@@ -106,11 +118,19 @@ public class AdminController {
 		model.addAttribute("data", Qservice.getQna(vo));
 		return "admin/qna";
 	}
+	// 댓글목록 조회
+	@GetMapping("/admin/comment.do")
+	public String getComment(CommentVO vo, Model model) {
+		model.addAttribute("comment", Cservice.wholeList(vo));
+		return "admin/comment";
+	}
+	
 	@GetMapping("/admin/userList.do")
 	public String userList(Model model) {
 		model.addAttribute("data", service.userList());
 		return "admin/userList";
 	}
+	
 	
 	
 }

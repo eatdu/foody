@@ -11,9 +11,13 @@
 	</head>
 		
 	<body>
-	레시피입니다<br>
-	레시피 번호: ${recipeDatas.no}<br>
-	이름: ${recipeDatas.name}<br>
+	레시피 번호: ${recipeDatas.no}<br><br><br>
+	${recipeDatas.name}<br>
+	${recipeDatas.intro}<br>
+	소요시간 ${recipeDatas.time}분 이내<br>
+	분류: ${typeName}<br><br><br>
+	
+	
 	작성자: ${recipeDatas.user_no}<br>
 	하하하하
 	</body>

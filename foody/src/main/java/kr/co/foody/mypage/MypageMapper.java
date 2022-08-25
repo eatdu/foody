@@ -11,6 +11,7 @@ public interface MypageMapper {
 	List<MypageVO> allergyList(int no);
 	List<MypageVO> preferList(int no);
 	List<MypageVO> recentRecipe(int no);
+	List<MypageVO> likeRecipe(int no);
 	
 }
 	

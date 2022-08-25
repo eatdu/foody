@@ -20,6 +20,16 @@
 		WHERE b.user_no=#{user_no}
 	</select>
 	
+	<!-- 즐겨찾기 레시피 출력 -->
+	<select id="likeRecipe" parameterType="int" resultType="kr.co.foody.mypage.MypageVO">
+		SELECT a.no, a.name, a.intro, a.time, a.thumbnail, b.user_no,
+			(SELECT COUNT(bookmark) FROM feedback WHERE recipe_no=a.no) AS bookmark,
+			(SELECT COUNT(*) FROM comment WHERE board_no=a.no AND tablename='recipe') AS comment_count
+		FROM recipe a LEFT JOIN feedback b
+			ON a.no = b.recipe_no
+		WHERE b.user_no = #{user_no}
+	</select>
+	
 	<!-- 유저의 알레르기 정보 출력 -->
 	<select id="allergyList" parameterType="int" resultType="kr.co.foody.mypage.MypageVO">
 		SELECT

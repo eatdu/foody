@@ -126,7 +126,9 @@ public class RecipeController {
 		
 		int recipeNo = Integer.parseInt(req.getParameter("no"));
 		RecipeVO recipeDatas = service.view(recipeNo);
+		String typeName = RecipeCategory.RcpCateArr[recipeDatas.getType()-1];
 		model.addAttribute("recipeDatas", recipeDatas); 
+		model.addAttribute("typeName", typeName);
 		return "recipe/view";
 	}
 	

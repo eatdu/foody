@@ -135,7 +135,7 @@
 				var formData = new FormData($('#frm'+no)[0]);
 				formData.append("user_no",${loginInfo.no});
 				formData.append("board_no",${data.no});
-				formData.append("tablename","board");
+				formData.append("tablename","board"); // 상세레시피에서는 "recipe"로
 				console.log(JSON.stringify(formData));
 				
 				$.ajax ({

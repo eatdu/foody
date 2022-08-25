@@ -31,7 +31,8 @@ public class MypageController {
 	}
 	
 	@GetMapping("mypage/likeRecipe")
-	public String likeRecipe() {
+	public String likeRecipe(Model model, HttpSession sess) {
+		model.addAttribute("likeRecipe", service.mypage(sess));
 		return "/mypage/likeRecipe";
 	}
 	

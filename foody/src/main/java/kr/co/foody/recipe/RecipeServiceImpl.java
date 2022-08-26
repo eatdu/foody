@@ -1,5 +1,6 @@
 package kr.co.foody.recipe;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -13,6 +14,7 @@ import org.springframework.ui.Model;
 
 import kr.co.foody.constants.IngredientCategory;
 import kr.co.foody.constants.RecipeCategory;
+import kr.co.foody.user.UserVO;
 
 @Service
 public class RecipeServiceImpl implements RecipeService {
@@ -23,16 +25,19 @@ public class RecipeServiceImpl implements RecipeService {
 	@Autowired
 	IngredientMapper mapper2;
 	
+	//레시피 정보 인서트
 	@Override
 	public int insert(Map cri){
 		return mapper.insert(cri);
 	}
 	
+	//레시피 정보-조리과정 인서트
 	@Override
 	public int insertProcess(Map cri){
 		return mapper.insert2(cri);
 	}
 	
+	//레시피 정보-재료 인서트
 	@Override
 	public int insertIngredient(Map cri) {
 		return mapper.insert3(cri);
@@ -44,9 +49,62 @@ public class RecipeServiceImpl implements RecipeService {
 	}
 	
 	@Override
-	public RecipeVO view(int no) {
+	public Map viewRecipe(int no, HttpSession sess) {
+		
+		//viewCount 하나 올려주기
 		mapper.updateRecipeViewCount(no);
-		return mapper.view(no);
+		
+		//recipe 테이블 정보 가져오기
+		RecipeVO recipe = mapper.view(no);
+		//process 테이블 정보 가져오기
+		List<Map> process = mapper.processView(no);
+		List<Map> ingredient = mapper.ingredientView(no);
+		
+		String typeName = RecipeCategory.RcpCateArr[recipe.getType()-1];
+		
+		Map datamap = new HashMap();
+		RegdateVO regdate = new RegdateVO();
+		
+		//viewRegdate 인서트 or 업데이트 시켜주기
+		if(sess.getAttribute("loginInfo") != null) {
+			UserVO uv = (UserVO) sess.getAttribute("loginInfo");
+			
+			regdate.setRecipe_no(no);
+			regdate.setUser_no(uv.getNo());
+			RegdateVO resultRegdate = mapper.bringRegdate(regdate);
+			
+			if(resultRegdate == null) {
+				mapper.insertRegdate(regdate);
+			}else {
+				mapper.updateRegdate(resultRegdate);
+			}
+		}else {
+			System.out.println("로그인 정보가 없습니다");
+		}
+		
+		//칼로리 및 영양정보 계산하기
+		double sumCarbo = 0; double sumProtein = 0; double sumFat = 0; int sumKcal= 0;
+		
+		for(int i=0;i<ingredient.size();i++) { 
+			sumCarbo += ((BigDecimal)ingredient.get(i).get("carbo")).doubleValue()/100 *  (int)ingredient.get(i).get("weight"); 
+			sumProtein += ((BigDecimal)ingredient.get(i).get("protein")).doubleValue()/100 * (int)ingredient.get(i).get("weight");
+			sumFat += ((BigDecimal)ingredient.get(i).get("fat")).doubleValue()/100 *  (int)ingredient.get(i).get("weight"); 
+		}
+		  	sumKcal = (int)(sumCarbo*4 + sumProtein*4 + sumFat*9);
+		
+		
+		datamap.put("recipe", recipe);
+		datamap.put("recipeType", typeName);
+		datamap.put("user",mapper.userView(recipe.getUser_no()));
+		datamap.put("process", process);
+		datamap.put("ingredient", ingredient);
+		
+		datamap.put("sumCarbo", Math.round(sumCarbo/recipe.getServing())); 
+		datamap.put("sumProtein", Math.round(sumProtein/recipe.getServing()));
+		datamap.put("sumFat", Math.round(sumFat/recipe.getServing()));
+		datamap.put("sumKcal", sumKcal/recipe.getServing());
+		
+		return datamap;
 	}
 	
 	//재료명 리스트 - 재료 분류 번호

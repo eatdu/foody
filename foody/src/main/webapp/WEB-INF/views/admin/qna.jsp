@@ -30,6 +30,10 @@ $('.txt_l').on('click', function() {
 	background-color: white;
 	display: none;
 }
+div.adminMenu {
+	font: 13px/1.5 '나눔고딕', NanumGothic, 'Nanum Gothic';
+    color: #6a6d6f;
+}
 </style>
 
 </head>
@@ -37,6 +41,7 @@ $('.txt_l').on('click', function() {
 <body>
 <%@ include file="../admin/leftMenu.jsp" %>
 <div class="adminContainer">
+<div class="title"><h1>QnA 게시판</h1></div>
 	<!-- 모달영역 -->
 	<div class="modal">
 		<div class="view">

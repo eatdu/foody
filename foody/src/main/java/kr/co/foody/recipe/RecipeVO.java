@@ -22,6 +22,8 @@ public class RecipeVO {
 	private int type;
 	private String time;
 	private String thumbnail;
+	private String addedpicture1;
+	private String addedpicture2;
 	private String tip;
 	private int serving;
 	private Timestamp regdate;

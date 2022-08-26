@@ -56,9 +56,18 @@ public class AdminController {
 	@PostMapping("/admin/recipe.do")
 	public String recipe(@RequestBody Map cri, Model model) {
 		svc.selectRcpAdmin(cri, model);
-		System.out.println(cri);
 		return "common/rcpAdmin";
 	}
+	//레시피 상세보기 모달
+	@PostMapping("/admin/rcpDetail.do")
+	public String rcpDetail(@RequestBody Map cri, Model model) {
+		int no = (int)cri.get("no");
+		svc.rcpDetail(no);
+		model.addAttribute("no", no);
+		return "/common/rcpAdminModal";
+	}
+	//레시피 삭제 처리
+	//@PostMapping("/admin/deleteRcp.do")
 	
 	
 	
@@ -70,6 +79,7 @@ public class AdminController {
 		model.addAttribute("allergyList", ingreMapper.allergyList());
 		return "admin/ingre";
 	}
+	
 	//재료 정보 조회
 	@PostMapping(value = "/admin/ingreInfo.do", consumes = MediaType.APPLICATION_JSON_VALUE, produces = "application/json;charset=UTF-8")
 	public String ingreInfo(@RequestBody Map cri, Model model){

@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import kr.co.foody.admin.AdminService;
 import kr.co.foody.board.BoardVO;
 import kr.co.foody.constants.IngredientCategory;
 import kr.co.foody.constants.RecipeCategory;
@@ -28,6 +29,8 @@ import kr.co.foody.user.UserVO;
 @Controller
 public class RecipeController {
 
+	@Autowired
+	AdminService adminSvc;
 	@Autowired
 	RecipeService service;
 	@Autowired
@@ -149,6 +152,11 @@ public class RecipeController {
 		model.addAttribute("sumFat", cri.get("sumFat"));
 		model.addAttribute("sumKcal", cri.get("sumKcal"));
 		
+		//관리자페이지에서 접속한 경우 실행되는 코드
+		if (vo.isAdmin()) {
+			adminSvc.rcpDetail(vo.getNo());
+			return "common/rcpAdminModal";
+		}
 		return "recipe/view";
 	}
 

@@ -9,6 +9,7 @@
 <script>
 function openModal(){
 	$('#modal').plainModal('open');
+	$('#modal').css("display", "inline-block");
 }
 
 $( function() {
@@ -106,6 +107,28 @@ $( function() {
 	height: 80%;
 	background-color: white;
 	display: none;
+}
+#modal .summaryArea{
+    width: 100%;
+    height: 30%;
+    background: aliceblue;
+}
+#modal .ingreArea{
+    width: 50%;
+    height: 50%;
+    float: left;
+    background: antiquewhite;
+}
+#modal .processArea{
+    width: 50%;
+    height: 50%;
+    float: right;
+    background: aqua;
+}
+#modal .endArea{
+	width: 100%;
+    height: 20%;
+    background: white;
 }
 #bbs {
 	width: 90%;

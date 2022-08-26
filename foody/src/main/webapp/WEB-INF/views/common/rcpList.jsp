@@ -14,14 +14,14 @@
 	<input type='hidden' id='title' value='${result.title}'>
 	<div class='row'>	
 	<c:forEach var="l1" items="${result.list}" varStatus="idx">
-		<div class='rcpCard'>
 		<a href="view.do?no=${l1.no}">
+		<div class='rcpCard'>
 		<table class="rcpTable" style='table-layout:fixed'>
 			<tr>
 				<td class="imgCell" colspan='2'>
 				<div height=150px style='border-radius: 15px; position: relative; max-height:150px; align-items:center; overflow:hidden; display: flex; justify-content:center;'>
 					<div class="rcpImg">
-					<img class="" width='100%' src="${l1.thumbnail}">
+					<img class="thumbnail" width='100%' src="${l1.thumbnail}">
 					</div>
 					<div class="intro">${l1.intro}</div>
 				</div>
@@ -41,14 +41,13 @@
 				</div>
 				</td>
 			</tr>
-			<tr class="">
-				<td><span class="nameCell">${l1.name}</span></td>
-				<td><span class="timeCell">${l1.time}분</span></td>
+			<tr>
+				<td><div class="timename">${l1.name}</span></td>
+				<td><div class="timename">${l1.time}분</span></td>
 			</tr>
-			<tr><td colspan='2'>--출력 필요 X / no: ${l1.no} / type: ${l1.type}--</td></tr>
 		</table>
-		</a>
 		</div>
+		</a>
 		<c:if test="${idx.count % 4 == 0 && !idx.last}">
 	</div>
 	<div class='row'>
@@ -74,11 +73,13 @@
 	</c:forEach>
 </div>
 <script>
-$(".rcpTable").hover(function(){
+$(".rcpCard").hover(function(){
 	$(this).find(".intro").show();
+	$(this).find(".thumbnail").css("opacity", 0.7);
 })
-$(".rcpTable").mouseleave(function(){
+$(".rcpCard").mouseleave(function(){
 	$(this).find(".intro").hide();
+	$(this).find(".thumbnail").css("opacity", 1.0);
 })
 </script>
 

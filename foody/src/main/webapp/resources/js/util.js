@@ -73,17 +73,19 @@ function searchRcp(pageNo){
 }
 //관리자 - 레시피 상세 보기(모달)
 function rcpDetailAdmin(no){
-	var data = {};
-	data.no = no;
-	sendAjax(
-		"/foody/admin/rcpDetail.do",
-		data,
-		function(result){
-			$('#modal').html(result);
+	$.ajax({
+		url: "/foody/recipe/view.do?no=" + no + "&admin=true",
+		method: "get",
+		contentType: 'application/json; charset=utf-8',
+		success: function(result){
+			$("#modal").html(result);
 			openModal();
-			$("#"+no).find(".adminChk").html('<strong class="colG01">확인</strong>');
+			$("#" + no).find(".adminChk").html('<strong class="colG01">확인</strong>');
+		},
+		error: function(e){
+			console.log(e);
 		}
-	);
+	});
 }
 
 //ajax로 재료 정보 추가

@@ -152,9 +152,10 @@
 		WHERE user_no=#{user_no}
 	</delete>
 	
+	<!-- 회원탈퇴 -->
 	<update id="userExit" parameterType="int">
 		UPDATE user SET 
-			user.print = 1, user.exit =1
+			user.print = 1, user.exit =1, user.exit_date=now()
 		WHERE no=#{no}
 	</update>
 	
@@ -176,6 +177,10 @@
 			GROUP BY month order by month desc) a , (select @rownum := 0) r
 		) b
 		where rownum between 1 and 5;
+	</select>
+	
+	<select id="getUserTotalCount" resultType="int">
+		select count(*) from user
 	</select>
 
 </mapper>

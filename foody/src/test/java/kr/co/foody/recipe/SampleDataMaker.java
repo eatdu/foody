@@ -36,9 +36,9 @@ public class SampleDataMaker {
 		}
 	}
 	
-	//@Test
+	@Test
 	public void randomRcpUser() {
-		for(int i = 251; i <= 300; i++) {
+		for(int i = 301; i <= 350; i++) {
 			Map map = new HashMap();
 			map.put("userNo", 34 + (int)(Math.random() * 10));
 			map.put("no", i);
@@ -49,7 +49,7 @@ public class SampleDataMaker {
 	
 	//@Test
 	public void randomReg() {
-		for (int i=251; i<=300; i++) {
+		for (int i=301; i<=350; i++) {
 			mapper.randomReg(i);
 		}
 	}
@@ -125,7 +125,7 @@ public class SampleDataMaker {
 		}
 	}
 	
-	@Test
+	//@Test
 	public void insertUserAllergy() {
 		for (int i = 23; i <= 121; i++) {
 			Random r = new Random();

@@ -7,12 +7,13 @@ import kr.co.foody.mypage.MypageVO;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import util.Paging;
 
 @Getter
 @Setter
 @ToString
 
-public class UserVO {
+public class UserVO extends Paging {
 
 	private int no;
 	private String name;
@@ -42,7 +43,9 @@ public class UserVO {
 	private int recipe_count;
 	private int comment_count;
 	
-	
+	// 탈퇴회원 
+	private int month;
+	private int exit_sum;
 	
 	
 	public void setHeight(String height) {

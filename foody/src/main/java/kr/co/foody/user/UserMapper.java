@@ -35,10 +35,11 @@ public interface UserMapper {
 	
 	// 회원 데이터 수정
 	int modifyUserInfo(UserVO vo);
-	
 	int userAllergyDelete(int ano);
 	int userPreferDelete(int ano);
 	List<MypageVO> userAllergyNo(int no);
+	
+	int getUserTotalCount();
 	
 	// 회원 탈퇴
 	int userExit(int no);

@@ -32,17 +32,12 @@ public class CommentServiceImpl implements CommentService {
 		return r;
 	}
 
-	@Override
-	public int update(CommentVO vo) {
-		return mapper.update(vo);
-	}
-
-	@Override
+	@Override // 댓글 삭제
 	public int delete(CommentVO vo) {
 		return mapper.delete(vo.getNo());
 	}
 
-	@Override
+	@Override // 해당 글의 댓글목록
 	public Map index(CommentVO vo) {
 		
 		int totalCount = mapper.count(vo); // 총게시물수
@@ -73,7 +68,7 @@ public class CommentServiceImpl implements CommentService {
 		return map;
 	}
 
-	@Override
+	@Override // 관리자 전체 댓글목록
 	public Map wholeList(CommentVO vo) {
 		int totalCount = mapper.wholeCount(vo); // 총게시물수
 		int totalPage = totalCount / vo.getPageRow(); // 총페이지수
@@ -103,4 +98,8 @@ public class CommentServiceImpl implements CommentService {
 		return map;
 	}
 
+	@Override // 댓글수정 못함 (나중에 추가)
+	public int update(CommentVO vo) {
+		return mapper.update(vo);
+	}
 }

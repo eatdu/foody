@@ -38,9 +38,59 @@
   }
 </style>
 <script>
+function getMyRecipe(page) {
+	$.ajax({
+		url: "/foody/mypage/myRecipe",
+		type: "get",
+		dataType: "html",
+		data: {
+			page: page
+		},
+		success: function(res) {
+			$("#contents").html(res);
+		}
+	});
+}
+function getRecentRecipe(page) {
+	$.ajax({
+		url: "/foody/mypage/recentRecipe",
+		type: "get",
+		dataType: "html",
+		data: {
+			page: page
+		},
+		success: function(res) {
+			$("#contents").html(res);
+		}
+	});
+}
+function getLikeRecipe(page) {
+	$.ajax({
+		url: "/foody/mypage/likeRecipe",
+		type: "get",
+		dataType: "html",
+		data: {
+			page: page
+		},
+		success: function(res) {
+			$("#contents").html(res);
+		}
+	});
+}
 $(function(){
+	$.ajax({
+		url: "/foody/mypage/myRecipe",
+		type: "get",
+		dataType: "html",
+		success: function(res){
+			$("#contents").html(res);
+		}
+	})
+	
 	$(".category_item").on("click", function(){
 		var id = $(this).attr("id");
+		console.log(id);
+		 
 		$.ajax({
 			url: "/foody/mypage/" + id,
 			type: "get",
@@ -48,10 +98,15 @@ $(function(){
 			success: function(res){
 				$("#contents").html(res);
 			}
-		
-		})
+		}) 
 	});
 });
+
+
+
+
+
+
 </script>
 <title>마이페이지</title>
 </head>

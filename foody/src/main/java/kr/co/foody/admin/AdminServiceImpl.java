@@ -92,12 +92,32 @@ public class AdminServiceImpl implements AdminService {
 	}
 
 	@Override
-	public Map<String, Object> userList() {
-		List<UserVO> userList = adminMapper.userList();
+	public Map<String, Object> userList(UserVO vo) {
+		int totalCount = adminMapper.userCount();
+		int totalPage = totalCount / vo.getPageRow(); // 총페이지수
+		if (totalCount % vo.getPageRow() > 0) totalPage++;
+		
+		int startIdx = (vo.getPage() - 1) * vo.getPageRow(); // 시작인덱스
+		vo.setStartIdx(startIdx);
+		
+		List<UserVO> userList = adminMapper.userList(vo);
+		
+		int endPage = (int)(Math.ceil(vo.getPage()/10.0) * 10); // 끝페이지
+		int startPage = endPage - 9; // 시작페이지
+		
+		if (endPage > totalPage) endPage = totalPage;
+		boolean prev = startPage > 1 ? true : false; // prev 버튼
+		boolean next = endPage < totalPage ? true : false; // next 버튼
 		
 		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("totalCount", totalCount);
+		map.put("totalPage", totalPage);
 		map.put("userList", userList);
 		
+		map.put("startPage", startPage);
+		map.put("endPage", endPage);
+		map.put("prev", prev);
+		map.put("next", next);
 		return map;
 	}
 
@@ -144,6 +164,15 @@ public class AdminServiceImpl implements AdminService {
 		return false;
 	}
 
+	@Override
+	public boolean exitUserList(HttpSession sess) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("exitUserCount", adminMapper.exitUserCount());
+		map.put("exitCountMonth", adminMapper.exitUserWithMonth());
+		sess.setAttribute("exitUserMS", map);
+		System.out.println("map!!!!!!!!!!!!!!!!!!!!"+map);
+		return false;
+	}
 	//레시피 상세 보기 로직
 	@Override
 	public void rcpDetail(int no) {

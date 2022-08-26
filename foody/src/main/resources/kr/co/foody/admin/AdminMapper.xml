@@ -3,23 +3,40 @@
 <mapper namespace="kr.co.foody.admin.AdminMapper">
 	
 	<!-- 회원전체 게시글 조회 -->
-	<select id="userList" resultType="kr.co.foody.user.UserVO">
+	<select id="userList" parameterType="kr.co.foody.user.UserVO" resultType="kr.co.foody.user.UserVO">
 		SELECT *,
 			(SELECT COUNT(user_no) FROM recipe WHERE user_no = user.no) AS recipe_count,
 			(SELECT COUNT(user_no) FROM comment WHERE user_no = user.no) AS comment_count
-		FROM user
-		<!-- <where>
+		FROM user 
+		<where>
 			<if test="stype != null and stype != ''">
-				<if test="stype != 'all'">
-					${stype} like '%${sword}%'
+				<if test="stype == 'email' or stype == 'name' or stype== 'nik_name'" >
+					${stype} LIKE '%${sword}%'
 				</if>
 				<if test="stype == 'all'">
-					title like '%${sword}%' or content like '%${sword}%'
+					email LIKE '%${sword}%' OR name LIKE '%${sword}%'
 				</if>
 			</if>
 		</where>
-		order by regdate desc
-		limit ${startIdx}, ${pageRow} -->
+		ORDER BY no DESC
+	    LIMIT ${startIdx}, ${pageRow}
 	</select>
+	<select id="userCount" resultType="int">
+		SELECT COUNT(*) FROM user
+	</select>
+	
+	
+	<select id="exitUserWithMonth" resultType="map">
+		SELECT MONTH(exit_date) AS 'month',
+		       sum(user.exit) AS 'exit_sum'
+		FROM user
+		GROUP BY month
+		ORDER BY month
+	</select>
+	<select id="exitUserCount" resultType="int">
+		SELECT COUNT(*) FROM user WHERE user.exit = 1
+	</select>
+	
+	
 	
 </mapper>

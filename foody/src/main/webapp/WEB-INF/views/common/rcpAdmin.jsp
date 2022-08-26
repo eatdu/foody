@@ -5,11 +5,11 @@
 총 ${count}건이 검색되었습니다.
 <table>
 	<thead>
-		<th>작성글 제목</th>
+		<th>요리명</th>
 		<th>작성자</th>
 		<th>대분류</th>
 		<th>작성일</th>
-		<th>확인여부</th>
+		<th>관리자 확인여부</th>
 		<th>삭제여부</th>
 	</thead>
 	<tbody>

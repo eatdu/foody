@@ -53,7 +53,9 @@ $( function() {
           dayNamesShort: ['일','월','화','수','목','금','토'],
           dayNamesMin: ['일','월','화','수','목','금','토'],
           showMonthAfterYear: true,
-          yearSuffix: '년'
+          yearSuffix: '년',
+          buttonImage: "/foody/resources/img/calendar.png", //버튼 이미지 경로
+          buttonImageOnly: true //기본 버튼의 회색 부분을 없애고, 이미지만 보이게 함
         })
         .on( "change", function() {
           to.datepicker( "option", "minDate", getDate( this ) );
@@ -70,7 +72,9 @@ $( function() {
         dayNamesShort: ['일','월','화','수','목','금','토'],
         dayNamesMin: ['일','월','화','수','목','금','토'],
         showMonthAfterYear: true,
-        yearSuffix: '년'
+        yearSuffix: '년',
+        buttonImage: "/foody/resources/img/calendar.png", //버튼 이미지 경로
+        buttonImageOnly: true //기본 버튼의 회색 부분을 없애고, 이미지만 보이게 함
       })
       .on( "change", function() {
         from.datepicker( "option", "maxDate", getDate( this ) );
@@ -86,10 +90,17 @@ $( function() {
  
       return date;
     }
+    searchRcp(1);
 } );
 </script>
 
 <style>
+.ui-datepicker-trigger {
+    position: relative;
+    top: 2px;
+    width: 24px;
+    margin-left: 5px;
+}
 #modal {
 	width: 80%;
 	height: 80%;

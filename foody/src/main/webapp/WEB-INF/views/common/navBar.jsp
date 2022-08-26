@@ -10,7 +10,7 @@
 				<li>
 				<div class='navInfo'>
 					<c:if test="${!empty loginInfo}">
-						<div class="navUserImg" id="navUserImg" style='background:url(/foody/resources/img/emoji-smile.svg)'></div>
+						<div class="navUserImg" id="navUserImg" style='background:url(/foody/resources/img/emoji-smile.svg);background-size: cover;'></div>
 						<div class="navUserName">
 							<span>${loginInfo.nik_name}</span>
 						</div>

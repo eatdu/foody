@@ -78,9 +78,35 @@
 		WHERE user_no=${user_no}
 	</select>
 	
+	<!-- 회원 레시피 삭제 -->
 	<update id="deleteRecipe" parameterType="int">
 		UPDATE recipe SET print = 1 WHERE no=#{recipe_no}
 	</update> 
+	
+	
+	<!-- 회원이 작성한 레시피 수 -->
+	<select id="userRecipeCount" parameterType="int" resultType="int">
+		SELECT COUNT(no) AS urcount FROM recipe WHERE user_no = #{user_no}
+	</select>
+	<!-- 회원이 받은 총 북마크 수 -->
+	<select id="userBookmarkCount" parameterType="int" resultType="int">
+		SELECT COUNT(bookmark) AS ubcount FROM feedback WHERE user_no = #{user_no}
+	</select>
+	<!-- 회원의 레시피가 받은 조회수 -->
+	<select id="userTotalViewCount" parameterType="int" resultType="int">
+		SELECT SUM(viewcount) AS utvcount FROM recipe WHERE user_no = #{user_no}
+	</select>
+	<!-- 회원의 레시피가 받은 댓글수 -->
+	<select id="userCommentCount" parameterType="int" resultType="int">
+		SELECT SUM(
+			(SELECT COUNT(board_no) 
+			FROM comment WHERE board_no = recipe.no)) AS uccount 
+		FROM recipe 
+		WHERE user_no = #{user_no}
+	</select>
+		
+		
+		
 	
 		
 	

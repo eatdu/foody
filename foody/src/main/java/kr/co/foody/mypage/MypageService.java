@@ -6,6 +6,7 @@ import javax.servlet.http.HttpSession;
 
 public interface MypageService {
 
+	Map<String, Object> mypage(HttpSession sess);
 	Map<String, Object> myRecipe(HttpSession sess, MypageVO vo);
 	Map<String, Object> recentRecipe(HttpSession sess, MypageVO vo);
 	Map<String, Object> likeRecipe(HttpSession sess, MypageVO vo);

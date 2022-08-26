@@ -19,6 +19,23 @@ public class MypageServiceImpl implements MypageService {
 	@Autowired
 	MypageMapper mapper;
 
+
+	@Override
+	public Map<String, Object> mypage(HttpSession sess) {
+		UserVO uv = (UserVO)sess.getAttribute("loginInfo");
+		int userRecipeCount = mapper.userRecipeCount(uv.getNo());
+		int userBookmarkCount = mapper.userBookmarkCount(uv.getNo());
+		int userTotalViewCount = mapper.userTotalViewCount(uv.getNo());
+		int userCommentCount = mapper.userCommentCount(uv.getNo());
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("userRecipeCount", userRecipeCount);
+		map.put("userBookmarkCount", userBookmarkCount);
+		map.put("userTotalViewCount", userTotalViewCount);
+		map.put("userCommentCount", userCommentCount);
+		return map;
+	}
+
+	
 	@Override
 	public Map<String, Object> myRecipe(HttpSession sess, MypageVO vo) {
 		UserVO uv = (UserVO)sess.getAttribute("loginInfo");

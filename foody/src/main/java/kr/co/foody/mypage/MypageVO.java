@@ -35,6 +35,11 @@ public class MypageVO extends Paging {
  	
  	private int bookmark;
  	private int comment_count;
+ 	
+ 	private int urcount;
+ 	private int ubcount;
+ 	private int utvcount;
+ 	private int uccount;
 
  	public void pagingProcess(int pageRow, int totalCount) {
 		this.pageRow = pageRow;

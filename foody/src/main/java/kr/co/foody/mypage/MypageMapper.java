@@ -25,5 +25,12 @@ public interface MypageMapper {
 	
 	// 회원의 레시피 삭제
 	int deleteRecipe(int no);
+	
+	// 마이페이지 정보
+	int userRecipeCount(int no); 
+	int userBookmarkCount(int no); 
+	int userTotalViewCount(int no); 
+	int userCommentCount(int no); 
+	
 }
 	

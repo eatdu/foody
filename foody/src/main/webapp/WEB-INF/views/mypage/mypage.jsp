@@ -136,6 +136,10 @@ $(function(){
 			<tr>
 				<td>
 					email : ${loginInfo.email}
+				${mypage.userRecipeCount}
+				${mypage.userBookmarkCount}
+				${mypage.userTotalViewCount}
+				${mypage.userCommentCount}
 				</td>
 			</tr>
 		</table>

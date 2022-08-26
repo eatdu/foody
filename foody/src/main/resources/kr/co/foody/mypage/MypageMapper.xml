@@ -3,32 +3,64 @@
 <mapper namespace="kr.co.foody.mypage.MypageMapper">
 	
 	<!-- 레시피 리스트 출력 -->
-	<select id="myRecipe" parameterType="int" resultType="kr.co.foody.mypage.MypageVO">
-		SELECT *,
-			(SELECT COUNT(bookmark) FROM feedback WHERE recipe_no=recipe.no) AS bookmark
+	<select id="myRecipe" parameterType="kr.co.foody.mypage.MypageVO" resultType="kr.co.foody.mypage.MypageVO">
+		SELECT no,user_no,name,thumbnail,intro,time,
+			(SELECT COUNT(bookmark) FROM feedback WHERE recipe_no=recipe.no) AS bookmark,
+			(SELECT COUNT(*) FROM comment WHERE board_no=recipe.no AND tablename='recipe') AS comment_count
 		FROM recipe 
-		WHERE recipe.user_no=#{user_no}
-		LIMIT 0,30
+		WHERE recipe.user_no=#{user_no} 
+		AND recipe.print = 0
+		ORDER BY bookmark DESC
+	    LIMIT ${startIdx}, ${pageRow}
+	    
+	</select>
+	<select id="myRecipeCount" resultType="int" parameterType="int">
+		SELECT COUNT(*) FROM recipe
+		WHERE recipe.user_no=#{user_no} 
+		AND recipe.print = 0
 	</select>
 	
+	
 	<!-- 최근본 레시피 출력 -->
-	<select id="recentRecipe" parameterType="int" resultType="kr.co.foody.mypage.MypageVO">
+	<select id="recentRecipe" parameterType="kr.co.foody.mypage.MypageVO" resultType="kr.co.foody.mypage.MypageVO">
 		SELECT a.no, b.user_no, a.name, a.intro, a.time, a.thumbnail, b.regdate,
-			(SELECT COUNT(bookmark) FROM feedback WHERE recipe_no=a.no) AS bookmark
+			(SELECT COUNT(bookmark) FROM feedback WHERE recipe_no=a.no) AS bookmark,
+			(SELECT COUNT(*) FROM comment WHERE board_no=a.no AND tablename='recipe') AS comment_count
 		FROM recipe a left join recent b
 			on a.no = b.recipe_no
-		WHERE b.user_no=#{user_no}
+		WHERE b.user_no = #{user_no}
+		AND a.print = 0
+		ORDER BY bookmark DESC
+	    LIMIT ${startIdx}, ${pageRow}
+	</select>
+	<select id="recentRecipeCount" resultType="int" parameterType="int">
+		SELECT COUNT(*)
+		FROM recipe AS a LEFT JOIN recent AS b
+			ON a.no = b.recipe_no
+		WHERE b.user_no = #{user_no}
+		AND a.print = 0
 	</select>
 	
 	<!-- 즐겨찾기 레시피 출력 -->
-	<select id="likeRecipe" parameterType="int" resultType="kr.co.foody.mypage.MypageVO">
+	<select id="likeRecipe" parameterType="kr.co.foody.mypage.MypageVO" resultType="kr.co.foody.mypage.MypageVO">
 		SELECT a.no, a.name, a.intro, a.time, a.thumbnail, b.user_no,
 			(SELECT COUNT(bookmark) FROM feedback WHERE recipe_no=a.no) AS bookmark,
 			(SELECT COUNT(*) FROM comment WHERE board_no=a.no AND tablename='recipe') AS comment_count
 		FROM recipe a LEFT JOIN feedback b
 			ON a.no = b.recipe_no
 		WHERE b.user_no = #{user_no}
+		AND a.print = 0
+		ORDER BY bookmark DESC
+	    LIMIT ${startIdx}, ${pageRow}
 	</select>
+	<select id="likeRecipeCount" resultType="int" parameterType="int">
+		SELECT COUNT(*)
+		FROM recipe a LEFT JOIN feedback b
+			ON a.no = b.recipe_no
+		WHERE b.user_no = #{user_no}
+		AND a.print = 0
+	</select>
+	
 	
 	<!-- 유저의 알레르기 정보 출력 -->
 	<select id="allergyList" parameterType="int" resultType="kr.co.foody.mypage.MypageVO">
@@ -45,6 +77,11 @@
 		FROM prefer 
 		WHERE user_no=${user_no}
 	</select>
+	
+	<update id="deleteRecipe" parameterType="int">
+		UPDATE recipe SET print = 1 WHERE no=#{recipe_no}
+	</update> 
+	
 		
 	
 	

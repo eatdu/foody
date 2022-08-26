@@ -42,11 +42,27 @@
 						<div class="recipeInfo">
 							<div class="recipeIntro" style="width:290px;">${recipe.intro}</div>
 							<div class="recipeTime">${recipe.time}분<span style="float:right;"><fmt:formatDate value="${recipe.regdate}" pattern="yyyy-MM-dd hh:mm"/></span></div>
-							
 						</div>
 					</li>
 				</c:forEach>
 			</ul>
+			<!-- 페이지 처리 -->
+	        <div class="pagenate clear">
+	            <ul class='paging'>
+	            <!-- prev 버튼 있는 경우 -->
+	            <c:if test="${mypageVO.prev == true}">
+	           		<!-- prev 버튼 클릭시 -->
+	           		<li><a href="javascript:getRecentRecipe(${mypageVO.startPage-1})">prev</a>
+	           	</c:if>
+	            <c:forEach var="num" begin="${mypageVO.startPage}" end="${mypageVO.endPage}">
+	                <li><a href='javascript:getRecentRecipe(${num})'>
+	                <c:if test='javascript:getRecentRecipe(${mypageVO.page == num})'>class='current'</c:if>${num}</a></li>
+	            </c:forEach>
+	            <c:if test="${mypageVO.next == true}">
+	           		<li><a href="javascript:getRecentRecipe(${mypageVO.endPage+1})">next</a>
+	           	</c:if>
+	        	</ul>
+	        </div>
 		</div>
 	</div>
 </div>

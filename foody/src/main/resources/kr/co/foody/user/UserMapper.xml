@@ -155,7 +155,7 @@
 	<!-- 회원탈퇴 -->
 	<update id="userExit" parameterType="int">
 		UPDATE user SET 
-			user.print = 1, user.exit =1
+			user.print = 1, user.exit =1, user.exit_date=now()
 		WHERE no=#{no}
 	</update>
 	

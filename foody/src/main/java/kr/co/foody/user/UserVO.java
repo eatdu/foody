@@ -3,6 +3,8 @@ package kr.co.foody.user;
 import java.sql.Timestamp;
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import kr.co.foody.mypage.MypageVO;
 import lombok.Getter;
 import lombok.Setter;
@@ -42,7 +44,9 @@ public class UserVO extends Paging {
 	private int recipe_count;
 	private int comment_count;
 	
-	
+	// 탈퇴회원 
+	private int month;
+	private int exit_sum;
 	
 	
 	public void setHeight(String height) {

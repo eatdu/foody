@@ -130,4 +130,14 @@ public class AdminServiceImpl implements AdminService {
 		model.addAttribute("result", result);
 		return false;
 	}
+
+	@Override
+	public boolean exitUserList(HttpSession sess) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("exitUserCount", adminMapper.exitUserCount());
+		map.put("exitCountMonth", adminMapper.exitUserWithMonth());
+		sess.setAttribute("exitUserMS", map);
+		System.out.println("map!!!!!!!!!!!!!!!!!!!!"+map);
+		return false;
+	}
 }

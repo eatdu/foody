@@ -23,4 +23,6 @@ public interface AdminService {
 	Map<String, Object> userList(UserVO vo);
 	//레시피 목록 조회
 	boolean selectRcpAdmin(Map cri, Model model);
+	
+	boolean exitUserList(HttpSession sess);
 }

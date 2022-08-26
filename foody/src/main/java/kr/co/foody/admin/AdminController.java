@@ -116,13 +116,14 @@ public class AdminController {
 		model.addAttribute("comment", Cservice.wholeList(vo));
 		return "admin/comment";
 	}
-	
+	// 회원목록 조회
 	@GetMapping("/admin/userList.do")
-	public String userList(Model model, UserVO vo) {
+	public String userList(Model model, UserVO vo, HttpSession sess) {
+		svc.userReport(sess);
+		svc.exitUserList(sess);
 		model.addAttribute("data", service.userList(vo));
 		return "admin/userList";
 	}
-	
 	
 	
 }

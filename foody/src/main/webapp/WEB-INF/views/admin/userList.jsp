@@ -21,17 +21,37 @@ $(function(){
 			// Change type to "doughnut", "line", "splineArea", etc.
 			type: "line",
 			dataPoints: [
-				{ label: '${cntUser.withM[4].month}',  y: ${cntUser.withM[4].cnt}  },
-				{ label: '${cntUser.withM[3].month}', y: ${cntUser.withM[3].cnt}  },
-				{ label: '${cntUser.withM[2].month}', y: ${cntUser.withM[2].cnt}  },
-				{ label: '${cntUser.withM[1].month}',  y: ${cntUser.withM[1].cnt}  },
-				{ label: '${cntUser.withM[0].month}',  y: ${cntUser.withM[0].cnt}  }
+				{ label: '${cntUser.withM[4].month}', y: ${cntUser.withM[4].cnt} },
+				{ label: '${cntUser.withM[3].month}', y: ${cntUser.withM[3].cnt} },
+				{ label: '${cntUser.withM[2].month}', y: ${cntUser.withM[2].cnt} },
+				{ label: '${cntUser.withM[1].month}', y: ${cntUser.withM[1].cnt} },
+				{ label: '${cntUser.withM[0].month}', y: ${cntUser.withM[0].cnt} }
 			]
 		}
 		]
 	};
-
-	$("#chartContainer").CanvasJSChart(options);
+	
+	$("#signUser #chartContainer").CanvasJSChart(options);
+	
+	var exits = {
+		title: {
+			text: "월별 탈퇴자 통계"              
+		},
+		data: [              
+		{
+			// Change type to "doughnut", "line", "splineArea", etc.
+			type: "line",
+			dataPoints: [
+				{ label: '${exitUserMS.exitCountMonth[1].month}', y: ${exitUserMS.exitCountMonth[1].exit_sum} },
+				{ label: '${exitUserMS.exitCountMonth[2].month}', y: ${exitUserMS.exitCountMonth[2].exit_sum} },
+				{ label: '${exitUserMS.exitCountMonth[3].month}', y: ${exitUserMS.exitCountMonth[3].exit_sum} },
+				{ label: '${exitUserMS.exitCountMonth[4].month}', y: ${exitUserMS.exitCountMonth[4].exit_sum} },
+				{ label: '${exitUserMS.exitCountMonth[5].month}', y: ${exitUserMS.exitCountMonth[5].exit_sum} }
+			]
+		}
+		]
+	};
+	$("#exitUser #chartContainer").CanvasJSChart(exits);
 });
 </script>
 <style>
@@ -57,6 +77,7 @@ $(function(){
 		height: 280px;
 		width: 90%;
 		margin: 10px auto;
+		opercity: 0.7;
 	}
 </style>
 <link rel="stylesheet" type="text/css" href="/foody/resources/css/leftMenu.css">
@@ -73,7 +94,7 @@ $(function(){
 		</div>
 		<div class="container" id='exitUser'>
 			<h2>탈퇴자 현황</h2>
-			총 탈퇴자 수:   명
+			총 탈퇴자 수: ${exitUserMS.exitUserCount} 명
 			<div id="chartContainer"></div>
 		</div>
 	</div>

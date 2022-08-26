@@ -9,13 +9,19 @@ import lombok.ToString;
 @ToString
 public class Paging {
 	
-	private int page; //pageNum
-	private int pageRow; // amount
-	private String stype;
-	private String sword;
-	private int startIdx;
+	protected int page; //pageNum
+	protected int pageRow; // amount
+	protected String stype;
+	protected String sword;
+	protected int startIdx;
 	
-	 
+	protected int startPage;
+	protected int endPage;
+	protected boolean prev, next;
+	
+	protected int totalPage;
+	protected int totalCount;
+	
 	public Paging() {
 		this.page = 1;
 		this.pageRow = 20;
@@ -25,6 +31,8 @@ public class Paging {
 		this.page = page;
 		this.pageRow = pageRow;
 	}
+	
+	
 }
 
 

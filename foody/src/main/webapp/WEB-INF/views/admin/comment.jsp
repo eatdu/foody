@@ -5,9 +5,10 @@
 <%@ include file="../common/config.jsp" %>
 
 <head>
+
+<link rel="stylesheet" type="text/css" href="/foody/resources/css/leftMenu.css">
 <link rel="stylesheet" href="/foody/css/reset.css"/>
 <link rel="stylesheet" href="/foody/css/contents.css"/>
-<link rel="stylesheet" type="text/css" href="/foody/resources/css/leftMenu.css">
 <script type="text/javascript" src="/foody/resources/js/modal/jquery.plainmodal.min.js"></script>
 <title>관리자 댓글 목록 페이지</title>
 
@@ -30,6 +31,10 @@
 	background-color: white;
 	display: none;
 }
+div.adminMenu {
+	font: 13px/1.5 '나눔고딕', NanumGothic, 'Nanum Gothic';
+    color: #6a6d6f;
+}
 </style>
 
 </head>
@@ -37,6 +42,7 @@
 <body>
 <%@ include file="../admin/leftMenu.jsp" %>
 <div class="adminContainer">
+<div class="title"><h1>댓글 목록 조회</h1></div>
 	<!-- 모달영역 -->
 	<div class="modal">
 		<div class="view">

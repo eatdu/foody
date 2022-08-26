@@ -378,8 +378,8 @@ a:hover.sbtn{color:#2e2e2e !important; text-decoration:none;}
 #bbs .page .next{position:relative; display:inline-block; padding:7px 3px; margin:0 10px; vertical-align:top; color:#797979; font-size:11px;}
 #bbs .page .next img{padding:3px 6px; *padding:4px 6px; margin:0; vertical-align: top;}
 #bbs .page a:hover{color:#2e2e2e; text-decoration:underline;}
-#bbs .page .page_prev{padding:0 0 0 2px; background:url(/sample/img/admin/page_prev_bg.gif) no-repeat left 5px;}
-#bbs .page .page_next{padding:0 2px 0 0; background:url(/sample/img/admin/page_next_bg.gif) no-repeat right 5px;}
+#bbs .page .page_prev{padding:0 0 0 2px; background:url(/foody/resources/img/page_prev_bg.gif) no-repeat left 5px;}
+#bbs .page .page_next{padding:0 2px 0 0; background:url(/foody/resources/img/page_next_bg.png) no-repeat right 5px;}
 
 /*search*/
 #blist .search{position:relative; width:100%; margin:0px; padding:9px 0; text-align:center; vertical-align:middle;}

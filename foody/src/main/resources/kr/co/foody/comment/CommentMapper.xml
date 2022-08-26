@@ -63,7 +63,7 @@
 		limit ${startIdx}, ${pageRow}
 	</select>
 	
-	<!-- 해당 글에 달린 댓글개수 조회 -->
+	<!-- 관리자 전체 댓글개수 조회 -->
 	<select id="wholeCount" parameterType="kr.co.foody.comment.CommentVO" resultType="int">
 		select count(*) from comment
 		<where>

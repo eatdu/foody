@@ -7,6 +7,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
+import org.apache.ibatis.annotations.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
@@ -123,10 +124,42 @@ public class AdminServiceImpl implements AdminService {
 	
 	@Override
 	public boolean selectRcpAdmin(Map cri, Model model) {
+		//검색 결과 카운트
+		int count = rcpMapper.countRcpAdmin(cri); 
+		int pageNo = (int)cri.get("pageNo");
+		int rcpPerPage = Integer.parseInt(((String)cri.get("rcpPerPage")));
+		
+		//sql로 넘길것 : rno 검색조건
+		int startRno = (pageNo - 1) * rcpPerPage + 1;
+		int endRno = pageNo * rcpPerPage;
+		cri.put("startRno", startRno);
+		cri.put("endRno", endRno);
+		//(첫 페이지, 끝 페이지) - 배열로 넘김
+		int startNo = (pageNo - 1) / 5 * 5 + 1;
+		int endNo = startNo + 4;
+		//이전 여부
+		if (startNo == 1) model.addAttribute("prev", false);
+		else model.addAttribute("prev", true);
+		//다음 여부
+		if (endNo > (count - 1) / rcpPerPage + 1) {
+			model.addAttribute("next", false);
+			endNo = (count - 1) / rcpPerPage + 1;
+		}
+		else model.addAttribute("next", true);
+		
+		List<Integer> paging = new ArrayList();
+		for(int i = startNo; i <= endNo; i++) {
+			paging.add(i);
+		}
+		model.addAttribute("paging", paging);
+		model.addAttribute("curNo", pageNo);
+		model.addAttribute("count", count);
+		
 		List<Map> result = rcpMapper.selectRcpAdmin(cri);
 		for(Map res : result) {
 			res.put("type", RecipeCategory.RcpCateArr[(int)res.get("type") - 1]);
 		}
+		
 		model.addAttribute("result", result);
 		return false;
 	}
@@ -139,5 +172,10 @@ public class AdminServiceImpl implements AdminService {
 		sess.setAttribute("exitUserMS", map);
 		System.out.println("map!!!!!!!!!!!!!!!!!!!!"+map);
 		return false;
+	}
+	//레시피 상세 보기 로직
+	@Override
+	public void rcpDetail(int no) {
+		rcpMapper.updateAdminChk(no);
 	}
 }

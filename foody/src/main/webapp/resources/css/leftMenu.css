@@ -1,7 +1,11 @@
 @charset "utf-8";
 
+html{height: 100%;}
 body{
 	display: flex;
+	height: 100%;
+	max-height: 100%;
+	min-height: 100%;
 }
 div.adminMenu {
 	min-width: 200px;
@@ -39,10 +43,24 @@ div.adminMenu ul li:hover {
 div.adminContainer {
 	flex: 1;
 	width: auto;
-	background: #CEFBC9;
 	float: right;
+	overflow: auto;
+}
+div.adminContainer .title h1{
+    font-size: 30px;
+    position: absolute;
+    top: 50%;
+    left: 3%;
+    transform: translate(0%, -50%);
+    margin: 0;
 }
 div.adminContainer .title{
-    font-size: 30px;
-    margin-left: 30px;
+    background: url(../img/header-bg-pixel-repeat-css.png) repeat-x;
+    height: 10%;
+    background-size: contain;
+    position: relative;
+    font-size: 13px;
+    line-height: 1.5;
+    font-family: 'Noto Sans KR', sans-serif;
+    color: #2f3134;
 }

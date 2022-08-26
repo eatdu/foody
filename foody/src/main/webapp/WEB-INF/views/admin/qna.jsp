@@ -30,6 +30,10 @@ $('.txt_l').on('click', function() {
 	background-color: white;
 	display: none;
 }
+div.adminMenu {
+	font: 13px/1.5 '나눔고딕', NanumGothic, 'Nanum Gothic';
+    color: #6a6d6f;
+}
 </style>
 
 </head>
@@ -37,22 +41,26 @@ $('.txt_l').on('click', function() {
 <body>
 <%@ include file="../admin/leftMenu.jsp" %>
 <div class="adminContainer">
+<div class="title"><h1>QnA 게시판</h1></div>
 	<!-- 모달영역 -->
 	<div class="modal">
 		<div class="view">
-            <div class="title">
-                <dl>
-                	
-                </dl>
-            </div>
-            <div class="cont"><p>${data.content}</p></div>
+            <c:forEach items="${data.list}" var="list" varStatus="status">
+            <div class="qna_q">
+	            <p>${list.title}</p>
+	            <p>${list.content}</p>
+	        </div>
+        		</c:forEach>
+	        <div class="qna_a">
+		        <textarea style="width:80%; margin:0 10%;"></textarea>
+	        </div>
             <div class="btnSet clear">
                 <div class="fl_l">
                 <a href="#" class="btn">답변하기</a>
                  <a href="#" class="btn">FAQ에 등록하기</a>
                  <a href="#" class="btn">목록보기</a>
-            	</div>
-        	</div>
+            		</div>
+        		</div>
         	</div>
     </div>
     <!-- 모달영역 -->
@@ -100,6 +108,7 @@ $('.txt_l').on('click', function() {
                         <colgroup>
                             <col width="80px" />
                             <col width="200px" />
+                            <col width="200px" />
                             <col width="*px" />
                             <col width="100px" />
                             <col width="100px" />
@@ -108,6 +117,7 @@ $('.txt_l').on('click', function() {
                             <tr>
                                 <th>번호</th>
                                 <th>작성일</th>
+                                <th>질문유형</th>
                                 <th>질문내용</th>
                                 <th>작성자</th>
                                 <th>답변여부</th>
@@ -128,7 +138,11 @@ $('.txt_l').on('click', function() {
                                 <td class="date" style="text-align: center;">
                                 	<fmt:formatDate pattern="yyyy-MM-dd HH:mm" value="${list.regdate}" />
                                 </td>
-                                
+                                <td class="qtype">
+	                                <c:if test="${list.qtype == 1}">레시피검색/등록</c:if>
+	                                <c:if test="${list.qtype == 2}">회원정보</c:if>
+	                                <c:if test="${list.qtype == 3}">기타</c:if>
+                                </td>
                                 <td class="txt_l" style="text-align: left;">
 	                                	<!-- 답변 들여쓰기 -->
 	                                	<c:forEach begin="1" end="${list.depth}">&nbsp;&nbsp;&nbsp;</c:forEach>

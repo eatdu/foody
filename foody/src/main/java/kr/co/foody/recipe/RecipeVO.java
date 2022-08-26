@@ -22,6 +22,8 @@ public class RecipeVO {
 	private int type;
 	private String time;
 	private String thumbnail;
+	private String addedpicture1;
+	private String addedpicture2;
 	private String tip;
 	private int serving;
 	private Timestamp regdate;
@@ -33,6 +35,9 @@ public class RecipeVO {
  	private int bookmark;
  	private double star;
  	private int reply;
+ 	
+ 	//관리자에서 요청한 경우
+ 	private boolean admin;
  	
  	public double getStar() {
  		return (int)(star * 10) / 100.0;

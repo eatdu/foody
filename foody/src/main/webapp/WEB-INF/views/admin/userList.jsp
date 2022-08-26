@@ -54,6 +54,7 @@ $(function(){
 	$("#exitUser #chartContainer").CanvasJSChart(exits);
 });
 </script>
+<link rel="stylesheet" type="text/css" href="/foody/resources/css/basic.css">
 <style>
 	td {
 		text-align: center;
@@ -85,7 +86,7 @@ $(function(){
 <body>
 <%@ include file="../admin/leftMenu.jsp" %>
 <div class="adminContainer">
-<h2>회원목록</h2>
+<div class="title"><h1>회원 목록</h1></div>
 	<div id="dashBoard" >
 		<div class="container" id='signUser'>
 			<h2>가입자현황</h2>

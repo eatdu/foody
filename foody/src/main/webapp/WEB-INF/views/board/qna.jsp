@@ -9,8 +9,8 @@
 <script>
 
 	function showAnswer(no) {
-		$(".faq_a"+no).slideToggle("slow");
 		
+		$(".faq_a"+no).slideToggle(300);
 	}
 	
 	function goWrite() {
@@ -41,12 +41,14 @@
 <%@ include file="../common/navBar.jsp" %>
 <div class="sub">
 	<h3 class="sub_title">QnA</h3>
-	<ul class="qna_menu" style="margin:0 auto; width:400px; display: flex;" >
-		<li style="list-style:none; width:200px; text-align:center;">
-			<a href="/foody/board/qna.do"><strong>FAQ</strong></a></li>
-		<li style="list-style:none; width:200px; text-align:center;">
-			<a href="/foody/board/myQna.do">1:1 문의</a></li>
-	</ul>
+	<div class="qna_menu">
+		<ul class="qna_menu" style="margin:0 auto; width:400px; display: flex;" >
+			<li style="list-style:none; width:200px; text-align:center;">
+				<a href="/foody/board/qna.do"><strong>FAQ</strong></a></li>
+			<li style="list-style:none; width:200px; text-align:center;">
+				<a href="/foody/board/myQna.do">1:1 문의</a></li>
+		</ul>
+	</div>
 <div class="qna_list">
             <div class="size">
                 <div class="bbs">

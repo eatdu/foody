@@ -2,31 +2,51 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <div id="bbs">
 <div id="blist">
+총 ${count}건이 검색되었습니다.
 <table>
 	<thead>
-		<th>작성글 제목</th>
+		<th>요리명</th>
 		<th>작성자</th>
 		<th>대분류</th>
 		<th>작성일</th>
-		<th>확인여부</th>
+		<th>관리자 확인여부</th>
 		<th>삭제여부</th>
 	</thead>
 	<tbody>
 		<c:forEach var="res" items="${result}">
-		<tr onclick="javascript:openModal();" style="cursor:pointer">
+		<tr id="${res.no}" onclick="javascript:rcpDetailAdmin(${res.no});" style="cursor:pointer">
 			<td>${res.title}</td>
 			<td>${res.nikname}</td>
 			<td>${res.type}</td>
 			<td>${res.regdate}</td>
-			<td>
-			<c:if test="${res.adminchk == 0}">미확인</c:if>
-			<c:if test="${res.adminchk == 1}">확인</c:if>
+			<td class="adminChk">
+			<c:if test="${res.adminchk == 0}"><strong class="colR01">미확인</strong></c:if>
+			<c:if test="${res.adminchk == 1}"><strong class="colG01">확인</strong></c:if>
 			</td>
-			<td>${res.print}</td>
+			<td>
+			<c:if test="${res.print == 0}"><strong class="colBl001">X</strong></c:if>
+			<c:if test="${res.print == 1}"><strong class="colR01">O</strong></c:if>
+			</td>
 		</tr>
 		</c:forEach>
 	</tbody>
 </table>
+</div>
+<div class='page'>
+	<c:forEach items="${paging}" var='pageNo' varStatus='idx'>
+	<c:if test="${prev eq true && idx.first}">
+		<a  href="javascript:searchRcp(${pageNo - 1});">이전으로</a>
+	</c:if>
+	<c:if test="${pageNo eq curNo}">
+		<strong>${pageNo}</strong>
+	</c:if>
+	<c:if test="${pageNo != curNo}">
+		<a href="javascript:searchRcp(${pageNo});">${pageNo}</a>
+	</c:if>
+	<c:if test="${next eq true && idx.last}">
+		<a href="javascript:searchRcp(${pageNo + 1});">다음으로</a>
+	</c:if>
+	</c:forEach>
 </div>
 </div>
 

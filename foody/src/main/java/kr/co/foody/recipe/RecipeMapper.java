@@ -14,7 +14,14 @@ public interface RecipeMapper {
 	
 	int updateRecipeViewCount(int no);
 	RecipeVO view(int no);
-
+	Map userView(int no);
+	List<Map> processView(int no);
+	List<Map> ingredientView(int no);
+	
+	RegdateVO bringRegdate(RegdateVO vo);
+	int updateRegdate(RegdateVO vo);
+	int insertRegdate(RegdateVO vo);
+	
 	List<IngredientVO> selectIngreList(int no);
 	List<String> selectIngreNameList(int no);
 	List<String> selectIngreNameList2(String keyword);
@@ -30,11 +37,14 @@ public interface RecipeMapper {
 	
 	
 	//관리자 관련 메소드
-	//1. 총 레시피 개수 집계
+	//  총 레시피 개수 집계
 	int count(String where);
 	List<Map> selectRcpAdmin(Map cri);
-	
-	
+	int countRcpAdmin(Map cri);
+	//  레시피 조회시 확인여부 변경
+	boolean updateAdminChk(int no);
+	//  레시피 삭제시 삭제여부 변경
+	boolean updatePrint(int no);
 	
 	
 	//샘플 데이터 생성용

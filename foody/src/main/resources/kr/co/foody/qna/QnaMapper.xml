@@ -32,7 +32,7 @@
 </insert>
 
 <!-- 답변시 답변여부 업뎃 -->
-<update id="updateRes" parameterType="kr.co.foody.qna.QnaVO">
+<update id="updateResponse" parameterType="kr.co.foody.qna.QnaVO">
 	update qna set response = response+1 where no = #{no}
 </update>
 

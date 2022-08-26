@@ -25,4 +25,6 @@ public interface AdminService {
 	boolean selectRcpAdmin(Map cri, Model model);
 	
 	boolean exitUserList(HttpSession sess);
+	//레시피 상세보기시 프로세스
+	void rcpDetail(int no);
 }

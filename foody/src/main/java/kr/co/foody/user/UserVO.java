@@ -3,8 +3,6 @@ package kr.co.foody.user;
 import java.sql.Timestamp;
 import java.util.List;
 
-import javax.servlet.http.HttpSession;
-
 import kr.co.foody.mypage.MypageVO;
 import lombok.Getter;
 import lombok.Setter;
@@ -14,6 +12,7 @@ import util.Paging;
 @Getter
 @Setter
 @ToString
+
 public class UserVO extends Paging {
 
 	private int no;

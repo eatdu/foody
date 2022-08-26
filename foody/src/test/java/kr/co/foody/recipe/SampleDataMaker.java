@@ -11,7 +11,6 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
-import kr.co.foody.constants.RecipeCategory;
 import lombok.extern.log4j.Log4j;
 
 @WebAppConfiguration
@@ -37,20 +36,20 @@ public class SampleDataMaker {
 		}
 	}
 	
-	//@Test
+	@Test
 	public void randomRcpUser() {
-		for(int i = 1; i <= 200; i++) {
+		for(int i = 301; i <= 350; i++) {
 			Map map = new HashMap();
-			map.put("userNo", 21 + (int)(Math.random() * 10));
+			map.put("userNo", 34 + (int)(Math.random() * 10));
 			map.put("no", i);
 			//System.out.println(map);
 			mapper.randomRcpUser(map);
 		}
 	}
 	
-	@Test
+	//@Test
 	public void randomReg() {
-		for (int i=22; i<=121; i++) {
+		for (int i=301; i<=350; i++) {
 			mapper.randomReg(i);
 		}
 	}
@@ -128,7 +127,7 @@ public class SampleDataMaker {
 	
 	//@Test
 	public void insertUserAllergy() {
-		for (int i = 21; i < 121; i++) {
+		for (int i = 23; i <= 121; i++) {
 			Random r = new Random();
 			int count = (int)(Math.random() * 4);
 			int a[] = new int[count];

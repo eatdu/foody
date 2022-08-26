@@ -33,13 +33,13 @@ public class RecipeController {
 	@Autowired
 	IngredientService service2;
 
-	@GetMapping("write.do")
+	@GetMapping("/recipe/write.do")
 	public String write() {
 
 		return "recipe/write";
 	}
 
-	@PostMapping("write.do")
+	@PostMapping("/recipe/write.do")
 	public String insert(@RequestParam Map cri, HttpSession sess, Model model, HttpServletRequest req,
 			@RequestParam MultipartFile[] photo, @RequestParam MultipartFile[] thumbnail) {
 
@@ -117,10 +117,10 @@ public class RecipeController {
 		if (success == 1) {
 			model.addAttribute("msg", "게시물이 저장되었습니다.");
 			model.addAttribute("url", "/foody/mypage/mypage.do");
-			return "recipe/alert";
+			return "/recipe/alert";
 		} else {
 			model.addAttribute("msg", "게시물을 저장할 수 없습니다.");
-			return "recipe/alert";
+			return "/recipe/alert";
 		}
 
 	}
@@ -176,7 +176,7 @@ public class RecipeController {
 	}
 	
 	
-	@GetMapping("modify.do")
+	@GetMapping("/recipe/modify.do")
 	public String modify() {
 
 		return "recipe/modify";
@@ -200,20 +200,20 @@ public class RecipeController {
 	}
 
 	@ResponseBody
-	@PostMapping(value = "mainCate_drop.action", produces = "application/json; charset=UTF-8")
+	@PostMapping(value = "/recipe/mainCate_drop.action", produces = "application/json; charset=UTF-8")
 	public Object selLargecate(@RequestParam int num) {
 		return service2.large_cate(num);
 	}
 
 	@ResponseBody
-	@PostMapping(value = "ingredientName_drop.action", produces = "application/json; charset=UTF-8")
+	@PostMapping(value = "/recipe/ingredientName_drop.action", produces = "application/json; charset=UTF-8")
 	public Object selMediumcate(@RequestParam String name) {
 
 		return service2.detail_cate(name);
 	}
 
 	@ResponseBody
-	@PostMapping(value = "searchName_drop.action", produces = "application/json; charset=UTF-8")
+	@PostMapping(value = "/recipe/searchName_drop.action", produces = "application/json; charset=UTF-8")
 	public Object nameSearchList() {
 
 		return service2.nameSearch();

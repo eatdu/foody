@@ -119,7 +119,7 @@
 	
 	<br><br><br>
 	칼로리 및 영양정보(1인 제공량 기준):<br>
-	열량: ${sumKcal}kcal  탄수화물: ${sumCarbo}kcal   단백질:${sumProtein}kcal  지방:${sumFat}kcal 
+	열량: ${sumKcal}kcal  탄수화물: ${sumCarbo}g   단백질:${sumProtein}g 지방:${sumFat}g
 	<br><br><br>
 	<div id="chartContainer" style="height: 200px; width: 50%;"></div>
 	<br>

@@ -22,6 +22,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import kr.co.foody.admin.AdminService;
 import kr.co.foody.board.BoardVO;
+import kr.co.foody.comment.CommentService;
+import kr.co.foody.comment.CommentVO;
 import kr.co.foody.constants.IngredientCategory;
 import kr.co.foody.constants.RecipeCategory;
 import kr.co.foody.user.UserVO;
@@ -35,6 +37,8 @@ public class RecipeController {
 	RecipeService service;
 	@Autowired
 	IngredientService service2;
+	@Autowired
+	CommentService cservice;
 
 	@GetMapping("write.do")
 	public String write() {
@@ -129,11 +133,12 @@ public class RecipeController {
 	}
 
 	@GetMapping("/recipe/view.do")
-	public String view(RecipeVO vo, Model model, HttpSession sess, HttpServletRequest req) {
+
+	public String view(RecipeVO vo, CommentVO cvo, Model model, HttpSession sess, HttpServletRequest req) {
 
 		UserVO uv = (UserVO) sess.getAttribute("loginInfo");
 		int recipeNo = Integer.parseInt(req.getParameter("no"));
-		
+
 		Map cri = service.viewRecipe(recipeNo, sess);
 		
 		List<Integer> userAllergyNo = (List<Integer>) sess.getAttribute("allergyNo");
@@ -152,11 +157,16 @@ public class RecipeController {
 		model.addAttribute("sumFat", cri.get("sumFat"));
 		model.addAttribute("sumKcal", cri.get("sumKcal"));
 		
+		cvo.setBoard_no(recipeNo);
+		cvo.setTablename("recipe");
+		model.addAttribute("comment", cservice.index(cvo)); // 레시피에 대한 포토리뷰
+		
 		//관리자페이지에서 접속한 경우 실행되는 코드
 		if (vo.isAdmin()) {
 			adminSvc.rcpDetail(vo.getNo());
 			return "common/rcpAdminModal";
 		}
+		
 		return "recipe/view";
 	}
 
@@ -225,5 +235,11 @@ public class RecipeController {
 	public Object nameSearchList() {
 
 		return service2.nameSearch();
+	}
+	
+	@GetMapping("/comment/clist.do")
+	public String list(CommentVO vo, Model model) {
+		model.addAttribute("comment", cservice.index(vo)); // 레시피 글에 대한 댓글리뷰
+		return "common/comment";
 	}
 }

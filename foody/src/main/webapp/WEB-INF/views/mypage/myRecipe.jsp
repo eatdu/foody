@@ -58,7 +58,7 @@
 							<div class="recipeTime">${recipe.time}분</div>
 						</div>
 						<div class="modify" style="text-align:center;">
-							<span class="recipeModify" style="font-size:20px;"><a href="">수정</a></span>
+							<span class="recipeModify" style="font-size:20px;"><a href="/foody/recipe/modify.do?no=${recipe.no}">수정</a></span>
 							<span class="recipeDelete" style="font-size:20px;"><a href="/foody/mypage/delete.do?no=${recipe.no}">삭제</a></span>
 						</div>
 					</li>

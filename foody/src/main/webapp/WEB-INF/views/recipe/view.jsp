@@ -159,6 +159,9 @@
 		<img src = "<c:out value="/foody/resources/img/processImg.png"/>" style="width:250px; height:140px;">
 	</c:if>
 	
+	<br>
+	요리 팁: ${recipe.tip}
+	
 	</body>
 </html>
 

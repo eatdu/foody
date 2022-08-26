@@ -131,7 +131,7 @@ public class RecipeController {
 		}
 
 	}
-
+	
 	@GetMapping("/recipe/view.do")
 	public String view(RecipeVO vo, CommentVO cvo, Model model, HttpSession sess, HttpServletRequest req) {
 
@@ -170,8 +170,14 @@ public class RecipeController {
 	}
 	
 	@GetMapping("/recipe/modify.do")
-	public String modify(HttpServletRequest req) {
+	public String modify(HttpServletRequest req, Model model) {
 		int recipeNo = Integer.parseInt(req.getParameter("no"));
+		
+		Map cri = service.viewModify(recipeNo);
+		
+		model.addAttribute("recipe", cri.get("recipe"));
+		model.addAttribute("rcpCateArr", RecipeCategory.RcpCateArr);
+		model.addAttribute("Ingredientlist", cri.get("ingredient"));
 		
 		return "recipe/modify";
 	}

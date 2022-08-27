@@ -8,6 +8,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <title></title>
+<%@ include file="../common/config.jsp" %>
 <style type="text/css">
     .img {
     width: 150px;
@@ -37,6 +38,7 @@
 </script>
 </head>
 <body>
+<%@ include file="../common/navBar.jsp" %>
  	${signUp.no}
    	<h3>회원가입</h3>
 	<form action="signUpNext.do" method="post" name="frm" id="frm" enctype="multipart/form-data">

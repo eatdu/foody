@@ -112,12 +112,6 @@ $(function(){
 		}) 
 	});
 });
-
-
-
-
-
-
 </script>
 <title>마이페이지</title>
 </head>
@@ -125,7 +119,7 @@ $(function(){
 <%@ include file="../common/navBar.jsp" %>
 <h1>마이페이지</h1>
 <input type="file" onchange="readURL(this);"> 
-<img id="preview" />												
+<img id="preview" style="width:100px; height:100px; border-radius:50%; border:none;"/>												
 <div id="userInfo">
 	<div id="userMain" class="userMain">
 		<table border="1" >

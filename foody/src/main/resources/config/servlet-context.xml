@@ -46,7 +46,6 @@
 		<property name="defaultEncoding" value="utf-8"></property>
 		<property name="maxUploadSize" value="104857560"></property>
 		<property name="maxUploadSizePerFile" value="2097152"></property>
-		<property name="uploadTempDir" value="file:/D:/kdigital/upload/temp"></property>
 		<property name="maxInMemorySize" value="10485756"></property>
 	</bean>
 	

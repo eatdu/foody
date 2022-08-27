@@ -236,19 +236,20 @@
 	#email,#nik_name,#name,#tel2,#tel3,#birth1,#birth2,#pwd,#pwd_check,#zipcode,#addr1,#addr2{height:35px;font-size: 20px;border-radius:7px;}
 	.signUpFrm{margin-left: 30px;} .signUp_board_write{width:80%;height: 200px;}
 	.signUpBtn{float:right;margin-right:1%;}
-	.nik_nameDupBtn,.emailDupBtn{margin-left:6px;margin-top:4px;}
+	/* .nik_nameDupBtn,.emailDupBtn{margin-left:6px;margin-top:4px;} */
 	.submitBtn button{
-		width:180px;height:60px;
-		background-color:#f7fa89;
-		border-color:#f7fa89;
+		width: 135px;height: 45px;
+		background-color:white;
+		border-color:#6A6D6F;
 		border-radius:5px;
 		font-size:20px;
-		color:white;
+		color:#6A6D6F;
 		font-weight: bolder;
+		border-size:0.5px;
 	}
 	.submitBtn button:hover{
-		color:#f7fa89;
-		background-color:white;
+		color:white;
+		background-color:#6A6D6F;
 	}
 </style>
 <%@ include file="../common/config.jsp" %>

@@ -20,7 +20,6 @@
 			var options;
 			var userNickname= String("${loginInfo.nik_name}");
 			
-			
 			// -------------------재료종류 드롭다운 클릭 JS----------------------
 			$(function(){
 				$("#mainCate_drop").on("change", function(){
@@ -625,6 +624,8 @@
 					return false;
 				}
 			}
+
+			
 		</script>
 		
 	</head>
@@ -755,6 +756,7 @@
 			</div>
 		</form>
 	</body>
+
 </html>
 
 

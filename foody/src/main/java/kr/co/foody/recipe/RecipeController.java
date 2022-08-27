@@ -131,9 +131,8 @@ public class RecipeController {
 		}
 
 	}
-
+	
 	@GetMapping("/recipe/view.do")
-
 	public String view(RecipeVO vo, CommentVO cvo, Model model, HttpSession sess, HttpServletRequest req) {
 
 		UserVO uv = (UserVO) sess.getAttribute("loginInfo");
@@ -169,6 +168,21 @@ public class RecipeController {
 		
 		return "recipe/view";
 	}
+	
+	@GetMapping("/recipe/modify.do")
+	public String modify(HttpServletRequest req, Model model) {
+		int recipeNo = Integer.parseInt(req.getParameter("no"));
+		
+		Map cri = service.viewModify(recipeNo);
+		
+		model.addAttribute("recipe", cri.get("recipe"));
+		model.addAttribute("rcpCateArr", RecipeCategory.RcpCateArr);
+		model.addAttribute("Ingredientlist", cri.get("ingredient"));
+		
+		return "recipe/modify";
+	}
+	
+	
 
 	@PostMapping(value = "search.do", consumes = MediaType.APPLICATION_JSON_VALUE, produces = "application/json;charset=UTF-8")
 	public String search(@RequestBody Map cri, Model model, HttpSession sess) {
@@ -193,13 +207,6 @@ public class RecipeController {
 		return "common/comboBox";
 	}
 	
-	
-	@GetMapping("/recipe/modify.do")
-	public String modify() {
-
-		return "recipe/modify";
-	}
-
 	@GetMapping("/recipe/search.do")
 	public String search(@RequestParam Map cri, Model model) {
 		model.addAttribute("rcpCateArr", RecipeCategory.RcpCateArr);

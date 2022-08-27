@@ -11,7 +11,7 @@
 	<link rel="stylesheet" type="text/css" href="/foody/resources/css/layout.css">
 	<link rel="stylesheet" type="text/css" href="/foody/resources/css/manage.css">
 		<meta charset="UTF-8">
-		<title>레시피 등록</title>
+		<title>레시피 수정</title>
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 		<script src="https://canvasjs.com/assets/script/jquery.canvasjs.min.js"></script>
 		<script type="text/javascript">
@@ -19,7 +19,7 @@
 			var num=0; //추가되는 재료들의 weight값을 구분해주는 num
 			var options;
 			var userNickname= String("${loginInfo.nik_name}");
-		
+			
 			// -------------------재료종류 드롭다운 클릭 JS----------------------
 			$(function(){
 				$("#mainCate_drop").on("change", function(){
@@ -120,7 +120,7 @@
 			});
 			// -------------------드롭다운 선택 후 '추가'버튼 클릭(호출) JS----------------------
 			function cateAdd(){
-				
+			
 				//드롭다운 3개 다 선택되어 있어야 추가 가능
 				if($("#mainCate_drop :selected").val() == "" ||$("#ingredientName_drop :selected").val() == ""||$("#subCate_drop :selected").val() == ""){
 					alert("카테고리를 다 선택하세요");
@@ -338,6 +338,7 @@
 							}
 						}
 						kcalUpdate();
+						
 					},
 					error:function(){
 						alert("카테고리 추가버튼 클릭 error");
@@ -346,6 +347,10 @@
 				});
 				
 			}
+			//-------------재료리스트 출력하는 코드 JS----------------
+			<c:forEach var="dataMap" items="${Ingredientlist}" varStatus="status">
+			
+			</c:forEach>
 			
 			// -------------------중복 체크 JS----------------------
 			function overlapCheck(data){								
@@ -502,9 +507,10 @@
 				}
 			}
 			
+			
 			// -------------------조리과정 div 만드는 함수(호출)----------------------
             var pNum = 0;
-            var count = 0;
+            var processCount = 0;
             
 			function makeProcessDiv(){
 				var append_str ='<div class="process" id="process'+pNum+'" style="height: 150px; width: 1000px; padding:2.5px;">'
@@ -521,8 +527,8 @@
 					append_str += '</div>'
 				}
 				$('#processList').append(append_str);
-				count++;
-				changeStepNum(count);
+				processCount++;
+				changeStepNum(processCount);
 				
 				$("#imgupload"+pNum).change(function() {
 					readURL(this,$(this).data('val'));
@@ -532,11 +538,12 @@
 				$(".deleteProcess").click(function() {
 					var idx = $(this).index(".deleteProcess")+3;
 					$('.process').eq(idx).remove();
-					count--;
-					changeStepNum(count);
+					processCount--;
+					changeStepNum(processCount);
 				});
 				
 				pNum++;
+				
 			}
 			
 			// ------------------썸네일+사진 div 만드는 함수(호출)----------------------
@@ -555,11 +562,12 @@
 				}); 
 				
 				PNum++;
+				
 			}
 			
 			// -------------------STEP 숫자 바꿔주는 함수(호출) JS----------------------
-			function changeStepNum(count){
-				for(var i=0; i<count; i++){
+			function changeStepNum(processCount){
+				for(var i=0; i<processCount; i++){
 				   $(".stepNum span").eq(i).text("STEP"+(i+1));
 				}
 			}
@@ -583,6 +591,44 @@
 				}
 			});
 			
+			// -------------------JS----------------------
+			function goSave(){
+				if($("#name").val().trim() == ''){ // 요리명 체크
+					alert('요리명을 입력해 주세요.');
+					$("#name").focus();
+					return false;
+				}
+				if($("#intro").val().trim() == ''){ // 소개 체크
+					alert('요리소개를 입력해 주세요.');
+					$("#intro").focus();
+					return false;
+				}
+				if($("#time").val().trim() == ''){ // 시간 체크
+					alert('소요시간을 입력해 주세요.');
+					$("#time").focus();
+					return false;
+				}
+				
+				if(document.getElementsByClassName('addedSpan').length == 0){
+					alert('재료를 하나라도 추가하세요');
+					return false;
+				}
+				
+				for(i=0;i<processCount;i++){
+					var textValue = document.getElementsByName('content')[i].value;
+					if(textValue == "" | textValue == null){
+						alert("과정 설명을 빠짐없이 기입하세요");
+
+						return false;
+					}
+				}
+				
+				var fileCheck = document.getElementById("pictureUpload0").value;
+				if(!fileCheck){
+					alert("썸네일 파일을 추가해주세요");
+					return false;
+				}
+			}
 		</script>
 		
 	</head>
@@ -596,39 +642,28 @@
 
 	<body>
 	<%@ include file="../common/navBar.jsp" %>
-		<form method="post" action="write.do" enctype="multipart/form-data">
+		<form id="frm" method="post" action="write.do" enctype="multipart/form-data" onsubmit="return goSave();">
 			<!-- 요리명(name) -->
-			요리명: <input type="text" name="name" ><br>
+			요리명: <input type="text" id=name name="name" value="${recipe.name}" ><br>
 			
 			<!-- 소개(intro) -->
-			소개: <input type="text" name="intro" ><br>
+			소개: <input type="text" id=intro name="intro" value="${recipe.intro}" ><br>
 			
 			<!-- 음식종류(type) -->
 		 	음식종류:  
 		    <select name="type">
-			   	<option value=1>밥</option>
-			   	<option value=2>떡/한과</option>
-			   	<option value=3>만두/면류</option>
-			   	<option value=4>국</option>
-			   	<option value=5>나물/생채/샐러드</option>
-			   	<option value=6>구이</option>
-			   	<option value=7>볶음</option>
-			   	<option value=8>밑반찬/김치</option>
-			   	<option value=9>조림</option>
-			   	<option value=10>찜</option>
-			   	<option value=11>튀김/커틀릿</option>
-			   	<option value=12>찌개/전골/스튜</option>
-			   	<option value=13>도시락/간식</option>
-			   	<option value=14>부침</option>
-			   	<option value=15>샌드위치/햄버거</option>
-			   	<option value=16>빵/과자</option>
-			   	<option value=17>양념장</option>
-			   	<option value=18>음료</option>
-			   	<option value=19>그라탕/리조또</option>
-		  		</select><br>
+		    	<c:forEach var="typeOption" items="${rcpCateArr}" varStatus="status">
+		    		<c:if test="${status.count eq recipe.type}">
+		    			<option value="${status.count}" selected="selected">${typeOption}</option>
+		    		</c:if>
+		    		<c:if test="${status.count ne recipe.type}">
+						<option value="${status.count}">${typeOption}</option>
+		    		</c:if>
+		    	</c:forEach>
+		  	</select><br>
 		  		
 		  	<!-- 소요시간(time) -->
-			소요시간: <input type="number" name="time" min="1">분<br>
+			소요시간: <input type="number" id="time" name="time" min="1" value="${recipe.time}">분<br>
 			
 			<!-- 재료 -->
 			재료:
@@ -679,8 +714,9 @@
 			   		<datalist id="searchName_drop">
 			   		</datalist>
 			   	<input type="button" value="추가" onclick="searchAdd()"><br>
+			   	
 				<!-- 인분(searving) -->
-				<input type="number" id="serving" name="serving" min='1' value="1"> 인분 기준<br>
+				<input type="number" id="serving" name="serving" min='1' value="${recipe.serving}"> 인분 기준<br>
 				
 				<!-- 추가된 재료 리스트 -->
 				<br><div id="addedIngredientList"></div><br>
@@ -702,19 +738,15 @@
 			요리사진:
 			<div id="receipePicture" style="height: 150px; width: 100%;">
 			</div>
-			
-			 
+		
 			<!-- 팁(tip) -->
 			<div>
-				요리tip! &nbsp <input type="text" name="tip" ><br>
+				요리tip! &nbsp <input type="text" name="tip" value="${recipe.tip}"><br>
 				
 				<!-- 등록버튼(submit) -->
-				<input type="submit" name ="submit">
+				<input type="submit" name ="submit" value="저장">
 			</div>
 		</form>
+			
 	</body>
 </html>
-
-
-
-

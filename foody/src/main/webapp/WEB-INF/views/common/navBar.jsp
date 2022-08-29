@@ -8,7 +8,23 @@
 			<ul>
 				<li>
 				<div class='navInfo'>
-					<c:if test="${!empty loginInfo}">
+					<c:if test="${!empty loginInfo and !empty loginInfo.selfi}">
+						<div class="navUserImg" id="navUserImg" style='background:url(/foody/upload/${loginInfo.selfi});background-size: cover;'></div>
+						<div class="navUserName">
+							<span>${loginInfo.nik_name}</span>
+						</div>
+						<div class="navUserInfo" id="navUserInfo">
+							<div class="navUserImgBig" style="background:url(/foody/upload/${loginInfo.selfi});background-size: cover;"></div>
+							<div class="userDetail">
+								<a style="font-size: 17px;">${loginInfo.nik_name}</a>
+								<br><a style="font-size: 17px;">${loginInfo.email}</a>
+							</div>
+							<a href="/foody/mypage/mypage.do"><button type="button" id="mypage">마이페이지</button></a>
+							<a href="/foody/user/logout.do"><button type="button" id="logout">로그아웃</button></a>
+							<a href="/foody/user/modify.do"><button type="button" id="modify">회원정보수정</button></a>
+						</div>
+					</c:if>
+					<c:if test="${!empty loginInfo and empty loginInfo.selfi}">
 						<div class="navUserImg" id="navUserImg" style='background:url(/foody/resources/img/emoji-smile.svg);background-size: cover;'></div>
 						<div class="navUserName">
 							<span>${loginInfo.nik_name}</span>

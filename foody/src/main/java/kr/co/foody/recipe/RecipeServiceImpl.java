@@ -150,7 +150,7 @@ public class RecipeServiceImpl implements RecipeService {
 	@Override
 	public Map search(Map cri, Model model, HttpSession sess) {
 		String title2 = "";
-
+		String html = "";
 		//로그인 한 경우 알러지 조건 추가
 		if (sess.getAttribute("loginInfo") != null
 				&& ((List)sess.getAttribute("allergyNo")).size() != 0 

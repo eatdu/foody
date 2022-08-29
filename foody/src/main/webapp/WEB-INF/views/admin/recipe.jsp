@@ -223,6 +223,6 @@ td.head{
 	<div id="recipeArea">
 	</div>
 </div>
-<div id="modal">모달</div>
+<div id="modal"></div>
 </body>
 </html>

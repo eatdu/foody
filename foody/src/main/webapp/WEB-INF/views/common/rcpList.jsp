@@ -1,7 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
-	<div class='title' style='float: left;'><h1 style="font-size:25px;"> ${result.title2}<c:if test="${empty result.start}"> 로 검색한 레시피는 총 ${result.count} 개가 있습니다.</c:if></div>
+<div class='title' style='text-align: left;float: left;'>
+	<h1 style="font-size:20px;">
+		<a id="arrow${result.areaNo}" href="javascript:" onclick="rcpClose(${result.areaNo}, this);">▼</a>${result.title2} 레시피는 총 ${result.count} 개가 있습니다.
+	</h1>
+</div>
+<div id="list${result.areaNo}">
 	<div class="orderBy" style='float: right;'>
 		<select id='orderBy' onchange="movePage('${result.title}', ${result.curNo}, ${result.areaNo}, '${sType}', '${keyword}');">
 			<option value="regdate"<c:if test="${result.orderBy eq 'regdate'}"> selected</c:if>>최신순</option>
@@ -54,23 +60,24 @@
 		</c:if>
 	</c:forEach>
 	</div>
-</div>
-<div id='bbs'>
-<div class='page'>
-	<c:forEach items="${result.paging}" var='pageNo' varStatus='idx'>
-	<c:if test="${result.prev eq true && idx.first}">
-		<a href="javascript:movePage('${result.title}', ${pageNo - 1}, ${result.areaNo}, '${sType}', '${keyword}');">앞으로</a>
-	</c:if>
-	<c:if test="${pageNo eq result.curNo}">
-		<strong href="javascript:movePage('${result.title}', ${pageNo}, ${result.areaNo}, '${sType}', '${keyword}');">${pageNo}</strong>
-	</c:if>
-	<c:if test="${pageNo != result.curNo}">
-		<a href="javascript:movePage('${result.title}', ${pageNo}, ${result.areaNo}, '${sType}', '${keyword}');">${pageNo}</a>
-	</c:if>
-	<c:if test="${result.next eq true && idx.last}">
-		<a href="javascript:movePage('${result.title}', ${pageNo + 1}, ${result.areaNo}, '${sType}', '${keyword}');">다음으로</a>
-	</c:if>
-	</c:forEach>
+	<div id='bbs'>
+	<div class='page'>
+		<c:forEach items="${result.paging}" var='pageNo' varStatus='idx'>
+		<c:if test="${result.prev eq true && idx.first}">
+			<a href="javascript:movePage('${result.title}', ${pageNo - 1}, ${result.areaNo}, '${sType}', '${keyword}');">앞으로</a>
+		</c:if>
+		<c:if test="${pageNo eq result.curNo}">
+			<strong href="javascript:movePage('${result.title}', ${pageNo}, ${result.areaNo}, '${sType}', '${keyword}');">${pageNo}</strong>
+		</c:if>
+		<c:if test="${pageNo != result.curNo}">
+			<a href="javascript:movePage('${result.title}', ${pageNo}, ${result.areaNo}, '${sType}', '${keyword}');">${pageNo}</a>
+		</c:if>
+		<c:if test="${result.next eq true && idx.last}">
+			<a href="javascript:movePage('${result.title}', ${pageNo + 1}, ${result.areaNo}, '${sType}', '${keyword}');">다음으로</a>
+		</c:if>
+		</c:forEach>
+	</div>
+	</div>
 </div>
 <script>
 $(".rcpCard").hover(function(){
@@ -81,5 +88,6 @@ $(".rcpCard").mouseleave(function(){
 	$(this).find(".intro").hide();
 	$(this).find(".thumbnail").css("opacity", 1.0);
 })
+
 </script>
 

@@ -178,4 +178,9 @@ public class AdminServiceImpl implements AdminService {
 	public void rcpDetail(int no) {
 		rcpMapper.updateAdminChk(no);
 	}
+
+	@Override
+	public AdminVO adminLogin1(AdminVO vo) {
+		return adminMapper.adminLogin1(vo);
+	}
 }

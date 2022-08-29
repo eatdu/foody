@@ -287,11 +287,11 @@ public class RecipeController {
 	@PostMapping(value = "comboBox.do", consumes = MediaType.APPLICATION_JSON_VALUE, produces = "application/json;charset=UTF-8")
 	public String comboBox(@RequestBody Map cri, Model model) {
 		if (cri.get("name").equals("ingreCateDrop")) {
-			model.addAttribute("list", service.makeIngreNameList(Integer.parseInt((String) cri.get("data"))));
+			model.addAttribute("list", service.makeIngreNameList(Integer.parseInt((String)cri.get("data"))));
 			model.addAttribute("head", "==재료명==");
 		}
 		if (cri.get("name").equals("keyword")) {
-			model.addAttribute("list", service.makeIngreNameList((String) cri.get("data")));
+			model.addAttribute("list", service.makeIngreNameList(cri));
 			model.addAttribute("head", "==재료명==");
 		}
 		if (cri.get("name").equals("ingreNameList")) {

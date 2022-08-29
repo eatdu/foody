@@ -23,7 +23,7 @@ public interface RecipeService {
 	Map search(Map cri, Model model, HttpSession sess); 
 	
 	List<Map> makeIngreNameList(int no);
-	List<Map> makeIngreNameList(String keyword);
+	List<Map> makeIngreNameList(Map cri);
 	List<Map> makeIngreDetailList(String keyword);
 	
 }

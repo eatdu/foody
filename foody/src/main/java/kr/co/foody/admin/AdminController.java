@@ -11,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.co.foody.board.BoardService;
@@ -24,7 +25,7 @@ import kr.co.foody.recipe.IngredientMapper;
 import kr.co.foody.recipe.IngredientServiceImpl;
 import kr.co.foody.recipe.IngredientVO;
 import kr.co.foody.user.UserVO;
-import util.Paging;
+import util.SendMail;
 
 @Controller
 public class AdminController {
@@ -43,6 +44,46 @@ public class AdminController {
 	AdminMapper amapper;
 	
 	
+	@GetMapping("/admin/login.do")
+	public String login() {
+		return "admin/login";
+	}
+	
+	//관리자 1차 로그인 - 아이디, 비밀번호
+	@ResponseBody
+	@PostMapping(value = "/admin/login1.do", consumes = MediaType.APPLICATION_JSON_VALUE, produces = "application/json;charset=UTF-8")
+	public boolean login1(@RequestBody AdminVO vo, Model model, HttpSession sess) {
+		System.out.println(vo);
+		AdminVO result = service.adminLogin1(vo);
+		if (result != null) {
+			String confirm = SendMail.confirmMail(result.getEmail());
+			sess.setAttribute("confirm", confirm);
+			sess.setAttribute("adminInfoTemp", result);
+			return true;
+		} else return false; 
+	}
+	//관리자 2차 로그인 - 이메일 인증번호 입력
+	@ResponseBody
+	@PostMapping(value = "/admin/login2.do", consumes = MediaType.APPLICATION_JSON_VALUE, produces = "application/json;charset=UTF-8")
+	public boolean login2(@RequestBody Map confirm, Model model, HttpSession sess) {
+		boolean result = sess.getAttribute("confirm").equals(confirm.get("confirm"));
+		if (result) {
+			AdminVO adminInfo = (AdminVO)sess.getAttribute("adminInfoTemp");
+			adminInfo.setPwd(null);
+			sess.setAttribute("adminInfo", adminInfo);
+			sess.removeAttribute("adminInfoTemp");
+			sess.removeAttribute("confirm");
+		}			
+		return result;
+	}
+	//관리자 로그아웃
+	@GetMapping("/admin/logout.do")
+	public String logout(HttpSession sess) {
+		sess.removeAttribute("adminInfo");
+		return "admin/login";
+	}
+	
+	
 	@GetMapping("/admin/main.do")
 	public String main(Model model, HttpSession sess) {
 		svc.userReport(sess);
@@ -51,7 +92,8 @@ public class AdminController {
 	}
 	//레시피 목록 조회 페이지
 	@GetMapping("/admin/recipe.do")
-	public String recipe(Model model, HttpSession sess) {
+	public String recipe(Model model, HttpSession sess, @RequestParam int mode) {
+		model.addAttribute("mode", mode);
 		return "admin/recipe";
 	}
 	//레시피 목록 조회 결과

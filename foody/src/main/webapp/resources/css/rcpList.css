@@ -58,6 +58,7 @@
 .rcpArea {
 	display: inline-block;
 	width: 1160px;
+	margin-top: 5px;
 }
 .row {
 	display: inline-block;

@@ -28,7 +28,7 @@ public interface RecipeMapper {
 	
 	List<IngredientVO> selectIngreList(int no);
 	List<String> selectIngreNameList(int no);
-	List<String> selectIngreNameList2(String keyword);
+	List<String> selectIngreNameList2(Map keyword);
 	List<IngredientVO> selectIngreDetail(String keyword);
 	
 	List<RecipeVO> selectAll(Map cri);

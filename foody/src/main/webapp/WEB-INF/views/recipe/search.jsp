@@ -60,13 +60,8 @@ function checkName() {
 	return true;
 }
 </script>
-
 <style>
-
-
-
 </style>
-
 <title>상세 검색</title>
 </head>
 <body>
@@ -80,8 +75,8 @@ function checkName() {
 		<td class='htd' rowspan='2'><h3>음식분류</h3></td>
 		<c:forEach var="rcpCate" items="${rcpCateArr}" varStatus="idx">
 			<td class='fixedCol'>
-				<input type="checkbox" name="rcpCate" value=${idx.count}>
-				<label><span class=''>${rcpCate}</span></label>
+				<input type="checkbox" name="rcpCate" value=${idx.count} id="rcpCate${idx.count}">
+				<label for="rcpCate${idx.count}"><span class=''>${rcpCate}</span></label>
 			</td>
 			<c:if test='${idx.count == 13}'>
 			</tr><tr>
@@ -92,8 +87,8 @@ function checkName() {
 			<td class='htd' rowspan='2'><h3>재료분류</h3></td>
 			<c:forEach var="ingreCate" items="${ingreCateArr}" varStatus="idx">
 				<td class='fixedCol'>
-					<input class="" type="checkbox" name="ingreCate" value=${idx.count}>
-					<label class=""><span class=''>${ingreCate}</span></label>
+					<input id="ingreCate${idx.count}" type="checkbox" name="ingreCate" value=${idx.count}>
+					<label for="ingreCate${idx.count}"><span class=''>${ingreCate}</span></label>
 				</td>
 				<c:if test='${idx.count == 13}'>
 				</tr><tr>
@@ -116,19 +111,19 @@ function checkName() {
 				<input type="text" id="keyword" class="" placeholder="검색어 입력">
 			</td>
 			<td>
-				<button class="" type="button" onclick="javascript:makeComboBox('keyword', 'ingreNameList');">검색</button>
+				<button class="btn1" type="button" onclick="javascript:makeComboBox('keyword', 'ingreNameList');">검색</button>
 			</td>
-			<td class='htd' colspan='2'>
+			<td class='htd'>
 				<select class='' name="ingreNameList">
 			    	<option value="" selected>==재료명==</option>
 				</select>
 			</td>
 			<td>
-				<button class="" type="button" onclick="javascript:addIngre();">추가</button>
+				<button class="btn1" type="button" onclick="javascript:addIngre();">추가</button>
 			</td>
 		<td>레시피 검색</td>
 		<td>
-			<button class="" type="button" onclick="javascript:searchBtn(1);">검색</button>
+			<button class="btn1" type="button" onclick="javascript:searchBtn(1);">검색</button>
 		</td>
 		<c:if test="${!empty loginInfo}">
 		<td>

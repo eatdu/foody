@@ -26,15 +26,20 @@ function makeArr(name){
 	return tempArr;
 }
 
-function makeComboBox(origin, target){
+function makeComboBox(origin, target, admin){
+	if($('#' + origin).val() == '') {
+		alert("검색어를 입력해주세요");
+		return;
+	}
+	data = {};
+	data.name = origin;
+	data.data = $('#' + origin).val();
+	data.admin = admin;
 	$.ajax({
 		url: "/foody/comboBox.do",
 		method: "post",
 		contentType: 'application/json; charset=utf-8',
-        data: JSON.stringify({
-        	name: origin,
-        	data: $('#' + origin).val()
-        	}),
+        data: JSON.stringify(data),
 		success: function(result){
 			$('select[name="' + target + '"]').html(result);
 		},
@@ -59,6 +64,7 @@ function sendAjax(reqUrl, data, callback){
 		}
 	});
 }
+
 //관리자 - 레시피 검색
 function searchRcp(pageNo){
 	var data = $('#form').serializeObject();
@@ -156,6 +162,15 @@ function updateIngre(){
 			} else alert("재료 수정 실패");
 		}
 	);
+}
+//레시피 검색 결과 접고 펴기
+function rcpClose(no){
+	$("#list"+no).hide();
+	$("#arrow"+no).html("▶").attr("onclick","rcpOpen(" + no + ", this);");
+}
+function rcpOpen(no){
+	$("#list"+no).show();
+	$("#arrow"+no).html("▼").attr("onclick","rcpClose(" + no + ", this);");
 }
 
 //ajax로 검색하는 함수
@@ -331,6 +346,7 @@ function searchBtn(pageNo, sType, keyword){
 		data.ingreCateArr = ingreArr;
 		data.areaNo = 3;
 		search(data, 'rcpArea3');
+		$('#rcpArea4').empty();
 	} else if (!flagI && flagR && flagK) {
 		//RK
 		data.type = 'common';
@@ -341,6 +357,8 @@ function searchBtn(pageNo, sType, keyword){
 		data.title = 'K';
 		data.areaNo = 2;
 		search(data, 'rcpArea2');
+		$('#rcpArea4').empty();
+		$('#rcpArea3').empty();
 	} else if (flagI && flagR && !flagK) {
 		//IR
 		data.type = 'common';
@@ -351,26 +369,40 @@ function searchBtn(pageNo, sType, keyword){
 		data.title = 'I';
 		data.areaNo = 2;
 		search(data, 'rcpArea2');
+		$('#rcpArea4').empty();
+		$('#rcpArea3').empty();
 	} else if (!flagI && flagR && !flagK) {
 		//R
 		data.type = 'common';
 		data.title = 'R';
 		search(data, 'rcpArea1');
+		$('#rcpArea4').empty();
+		$('#rcpArea3').empty();
+		$('#rcpArea2').empty();
 	} else if (flagI && !flagR && !flagK) {
 		//I
 		data.type = 'common';
 		data.title = 'I';
 		search(data, 'rcpArea1');
+		$('#rcpArea4').empty();
+		$('#rcpArea3').empty();
+		$('#rcpArea2').empty();
 	} else if (!flagI && !flagR && flagK) {
 		//K
 		data.type = 'common';
 		data.title = 'K';
 		search(data, 'rcpArea1');
+		$('#rcpArea4').empty();
+		$('#rcpArea3').empty();
+		$('#rcpArea2').empty();
 	} else if (!flagI && !flagR &&! flagK) {
 		//selectAll
 		data.type = 'common';
 		data.title = 'all';
 		search(data, 'rcpArea1');
+		$('#rcpArea4').empty();
+		$('#rcpArea3').empty();
+		$('#rcpArea2').empty();
 	}
 }
 

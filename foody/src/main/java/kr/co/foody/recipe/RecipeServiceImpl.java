@@ -167,8 +167,8 @@ public class RecipeServiceImpl implements RecipeService {
 	}
 	//재료명 리스트 - 검색어
 	@Override
-	public List<Map> makeIngreNameList(String keyword) {
-		List<String> result = mapper.selectIngreNameList2(keyword);
+	public List<Map> makeIngreNameList(Map cri) {
+		List<String> result = mapper.selectIngreNameList2(cri);
 		List<Map> list = new ArrayList<Map>();
 		for (String name : result) {
 			Map map = new HashMap();
@@ -176,6 +176,7 @@ public class RecipeServiceImpl implements RecipeService {
 			map.put("value", name);
 			list.add(map);
 		}
+		System.out.println(cri);
 		return list;
 	}
 	//재료 상세 리스트
@@ -195,7 +196,7 @@ public class RecipeServiceImpl implements RecipeService {
 	@Override
 	public Map search(Map cri, Model model, HttpSession sess) {
 		String title2 = "";
-
+		String html = "";
 		//로그인 한 경우 알러지 조건 추가
 		if (sess.getAttribute("loginInfo") != null
 				&& ((List)sess.getAttribute("allergyNo")).size() != 0 

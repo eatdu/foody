@@ -153,7 +153,7 @@
 	</c:if>
 	
 	<c:if test="${not empty recipe.addedpicture2}">
-		<img src = "<c:out value="${recipe.addedpicture1}"/>" style="width:250px; height:140px;">
+		<img src = "<c:out value="${recipe.addedpicture2}"/>" style="width:250px; height:140px;">
 	</c:if>
 	<c:if test="${empty recipe.addedpicture2}">
 		<img src = "<c:out value="/foody/resources/img/processImg.png"/>" style="width:250px; height:140px;">

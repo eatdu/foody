@@ -18,6 +18,10 @@ public interface RecipeMapper {
 	List<Map> processView(int no);
 	List<Map> ingredientView(int no);
 	
+	int updateRecipe(Map cri);
+	int deleteRecipe2(int no);
+	int deleteRecipe3(int no);
+	
 	RegdateVO bringRegdate(RegdateVO vo);
 	int updateRegdate(RegdateVO vo);
 	int insertRegdate(RegdateVO vo);

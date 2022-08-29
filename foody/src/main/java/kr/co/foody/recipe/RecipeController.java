@@ -197,7 +197,7 @@ public class RecipeController {
 			model.addAttribute("head", "==재료명==");
 		}
 		if (cri.get("name").equals("keyword")) {
-			model.addAttribute("list", service.makeIngreNameList((String) cri.get("data")));
+			model.addAttribute("list", service.makeIngreNameList(cri));
 			model.addAttribute("head", "==재료명==");
 		}
 		if (cri.get("name").equals("ingreNameList")) {

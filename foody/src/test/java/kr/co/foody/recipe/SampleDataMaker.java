@@ -36,18 +36,19 @@ public class SampleDataMaker {
 		}
 	}
 	
-	//@Test
+	@Test
 	public void randomRcpUser() {
-		for(int i = 351; i <= 500; i++) {
-			Map map = new HashMap();
-			map.put("userNo", 55 + (int)(Math.random() * 10));
-			map.put("no", i);
-			//System.out.println(map);
-			mapper.randomRcpUser(map);
-		}
+		System.out.println(Math.random());
+//		for(int i = 351; i <= 500; i++) {
+//			Map map = new HashMap();
+//			map.put("userNo", 55 + (int)(Math.random() * 10));
+//			map.put("no", i);
+//			//System.out.println(map);
+//			mapper.randomRcpUser(map);
+//		}
 	}
 	
-	@Test
+	//@Test
 	public void randomReg() {
 		for (int i=351; i<=500; i++) {
 			mapper.randomReg(i);

@@ -20,7 +20,7 @@ $( function() {
     var toStr = toY + "-" + toM + "-" + toD;
     $("#to").val(toStr);
 	
-    var dftFrom = new Date(Date.parse(to) - 30*1000*60*60*24);
+    var dftFrom = new Date(Date.parse(to) - $("#selectDate").val()*1000*60*60*24);
 	var dftFromY = dftFrom.getFullYear();
 	var dftFromM = dftFrom.getMonth() + 1;
     var dftFromD = dftFrom.getDate();
@@ -173,9 +173,9 @@ td.head{
 
 			확인여부
 				<select name="adminChk">
-					<option value='1'>확인</option>
-					<option value='0'>미확인</option>
-					<option value='0 or 1' selected>모두</option>
+					<option value='1' <c:if test="${mode eq 2}">selected</c:if>>확인</option>
+					<option value='0' <c:if test="${mode eq 3}">selected</c:if>>미확인</option>
+					<option value='0 or 1' <c:if test="${mode eq 0 or mode eq 1}">selected</c:if>>모두</option>
 				</select>
 				삭제여부
 				<select name="print">
@@ -198,8 +198,8 @@ td.head{
 			기간: 
 			<select id="selectDate" name="date">
 				<option value='1'>1일</option>
-				<option value='7'>1주</option>
-				<option value='30' selected>1개월</option>
+				<option value='7' <c:if test="${mode eq 1}">selected</c:if>>1주</option>
+				<option value='30' <c:if test="${mode != 1}">selected</c:if>>1개월</option>
 				<option value='90'>3개월</option>
 				<option value='180'>6개월</option>
 				<option value='365'>1년</option>

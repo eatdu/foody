@@ -155,8 +155,8 @@ public class RecipeServiceImpl implements RecipeService {
 	}
 	//재료명 리스트 - 검색어
 	@Override
-	public List<Map> makeIngreNameList(String keyword) {
-		List<String> result = mapper.selectIngreNameList2(keyword);
+	public List<Map> makeIngreNameList(Map cri) {
+		List<String> result = mapper.selectIngreNameList2(cri);
 		List<Map> list = new ArrayList<Map>();
 		for (String name : result) {
 			Map map = new HashMap();
@@ -164,6 +164,7 @@ public class RecipeServiceImpl implements RecipeService {
 			map.put("value", name);
 			list.add(map);
 		}
+		System.out.println(cri);
 		return list;
 	}
 	//재료 상세 리스트

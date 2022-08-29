@@ -26,19 +26,20 @@ function makeArr(name){
 	return tempArr;
 }
 
-function makeComboBox(origin, target){
+function makeComboBox(origin, target, admin){
 	if($('#' + origin).val() == '') {
 		alert("검색어를 입력해주세요");
 		return;
 	}
+	data = {};
+	data.name = origin;
+	data.data = $('#' + origin).val();
+	data.admin = admin;
 	$.ajax({
 		url: "/foody/comboBox.do",
 		method: "post",
 		contentType: 'application/json; charset=utf-8',
-        data: JSON.stringify({
-        	name: origin,
-        	data: $('#' + origin).val()
-        	}),
+        data: JSON.stringify(data),
 		success: function(result){
 			$('select[name="' + target + '"]').html(result);
 		},
@@ -63,6 +64,7 @@ function sendAjax(reqUrl, data, callback){
 		}
 	});
 }
+
 //관리자 - 레시피 검색
 function searchRcp(pageNo){
 	var data = $('#form').serializeObject();

@@ -27,4 +27,7 @@ public interface AdminService {
 	boolean exitUserList(HttpSession sess);
 	//레시피 상세보기시 프로세스
 	void rcpDetail(int no);
+	
+	//관리자 로그인
+	AdminVO adminLogin1(AdminVO vo);
 }

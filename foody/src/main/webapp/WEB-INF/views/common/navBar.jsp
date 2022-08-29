@@ -50,8 +50,8 @@
 							<div class="userDetail">
 								<a style="font-size: 17px;">Guest</a>
 							</div>
-							<a href="/foody/user/login.do"><button type="button">로그인</button></a>
-							<a href="/foody/user/signUp.do"><button type="button">회원가입</button></a>
+							<a href="/foody/user/login.do"><button class="btn1" type="button">로그인</button></a>
+							<a href="/foody/user/signUp.do"><button class="btn1" type="button">회원가입</button></a>
 						</div>
 					</c:if>
 				</div>

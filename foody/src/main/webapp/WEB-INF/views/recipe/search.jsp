@@ -111,19 +111,19 @@ function checkName() {
 				<input type="text" id="keyword" class="" placeholder="검색어 입력">
 			</td>
 			<td>
-				<button class="" type="button" onclick="javascript:makeComboBox('keyword', 'ingreNameList');">검색</button>
+				<button class="btn1" type="button" onclick="javascript:makeComboBox('keyword', 'ingreNameList');">검색</button>
 			</td>
-			<td class='htd' colspan='2'>
+			<td class='htd'>
 				<select class='' name="ingreNameList">
 			    	<option value="" selected>==재료명==</option>
 				</select>
 			</td>
 			<td>
-				<button class="" type="button" onclick="javascript:addIngre();">추가</button>
+				<button class="btn1" type="button" onclick="javascript:addIngre();">추가</button>
 			</td>
 		<td>레시피 검색</td>
 		<td>
-			<button class="" type="button" onclick="javascript:searchBtn(1);">검색</button>
+			<button class="btn1" type="button" onclick="javascript:searchBtn(1);">검색</button>
 		</td>
 		<c:if test="${!empty loginInfo}">
 		<td>

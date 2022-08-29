@@ -412,11 +412,11 @@
 				var serving= Number($('#serving').val());
 				
 				for(var i=0; i<sel_ingre.length;i++){
-					sum_carbo+= Number(sel_ingre[i].dataset.carbokcal);
-					sum_protein += Number(sel_ingre[i].dataset.proteinkcal);
-					sum_fat += Number(sel_ingre[i].dataset.fatkcal);
+					sum_carbo+= Number(sel_ingre[i].dataset.carbokcal*4);
+					sum_protein += Number(sel_ingre[i].dataset.proteinkcal*4);
+					sum_fat += Number(sel_ingre[i].dataset.fatkcal*9);
 				}
-				sum_kcal = (sum_carbo*4+ sum_protein*4 + sum_fat*9);
+				sum_kcal = sum_carbo+ sum_protein + sum_fat;
 				
 				var chart_carbo;
 				var chart_protein;
@@ -454,7 +454,7 @@
 				$("#chartContainer").CanvasJSChart(options); 
 				
 				var dayKcal = ${cal};
-				var leftKcal = dayKcal-sum_kcal;
+				var leftKcal = dayKcal-chart_kcal;
 				
 				options2={
 						title: {

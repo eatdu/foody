@@ -83,14 +83,14 @@ public class RecipeServiceImpl implements RecipeService {
 		}
 		
 		//칼로리 및 영양정보 계산하기
-		double sumCarbo = 0; double sumProtein = 0; double sumFat = 0; int sumKcal= 0;
+		double sumCarbo = 0; double sumProtein = 0; double sumFat = 0; double sumKcal= 0;
 		
 		for(int i=0;i<ingredient.size();i++) { 
-			sumCarbo += ((BigDecimal)ingredient.get(i).get("carbo")).doubleValue()/100 *  (int)ingredient.get(i).get("weight"); 
-			sumProtein += ((BigDecimal)ingredient.get(i).get("protein")).doubleValue()/100 * (int)ingredient.get(i).get("weight");
-			sumFat += ((BigDecimal)ingredient.get(i).get("fat")).doubleValue()/100 *  (int)ingredient.get(i).get("weight"); 
+			sumCarbo += ((BigDecimal)ingredient.get(i).get("carbo")).doubleValue()/100 *  (int)ingredient.get(i).get("weight")*4; 
+			sumProtein += ((BigDecimal)ingredient.get(i).get("protein")).doubleValue()/100 * (int)ingredient.get(i).get("weight")*4;
+			sumFat += ((BigDecimal)ingredient.get(i).get("fat")).doubleValue()/100 *  (int)ingredient.get(i).get("weight")*9; 
 		}
-		  	sumKcal = (int)(sumCarbo*4 + sumProtein*4 + sumFat*9);
+		  	sumKcal = sumCarbo + sumProtein + sumFat;
 		
 		
 		datamap.put("recipe", recipe);
@@ -99,11 +99,17 @@ public class RecipeServiceImpl implements RecipeService {
 		datamap.put("process", process);
 		datamap.put("ingredient", ingredient);
 		
-		datamap.put("sumCarbo", Math.round(sumCarbo/recipe.getServing())); 
-		datamap.put("sumProtein", Math.round(sumProtein/recipe.getServing()));
-		datamap.put("sumFat", Math.round(sumFat/recipe.getServing()));
-		datamap.put("sumKcal", sumKcal/recipe.getServing());
+		datamap.put("sumCarbo", Math.round(sumCarbo/recipe.getServing()*10)/10.0); 
+		datamap.put("sumProtein", Math.round(sumProtein/recipe.getServing()*10)/10.0);
+		datamap.put("sumFat", Math.round(sumFat/recipe.getServing()*10)/10.0);
+		datamap.put("sumKcal", Math.round(sumKcal/recipe.getServing()));
 		
+		System.out.println("-----------확인해야할 것------------");
+		System.out.println(datamap.get("sumCarbo"));
+		System.out.println(datamap.get("sumProtein"));
+		System.out.println(datamap.get("sumFat"));
+		System.out.println(datamap.get("sumKcal"));
+		System.out.println("--------------------------------");
 		return datamap;
 	}
 	
@@ -124,28 +130,12 @@ public class RecipeServiceImpl implements RecipeService {
 		Map datamap = new HashMap();
 		RegdateVO regdate = new RegdateVO();
 		
-		//칼로리 및 영양정보 계산하기
-		double sumCarbo = 0; double sumProtein = 0; double sumFat = 0; int sumKcal= 0;
-		
-		for(int i=0;i<ingredient.size();i++) { 
-			sumCarbo += ((BigDecimal)ingredient.get(i).get("carbo")).doubleValue()/100 *  (int)ingredient.get(i).get("weight"); 
-			sumProtein += ((BigDecimal)ingredient.get(i).get("protein")).doubleValue()/100 * (int)ingredient.get(i).get("weight");
-			sumFat += ((BigDecimal)ingredient.get(i).get("fat")).doubleValue()/100 *  (int)ingredient.get(i).get("weight"); 
-		}
-		  	sumKcal = (int)(sumCarbo*4 + sumProtein*4 + sumFat*9);
-		
-		
 		datamap.put("recipe", recipe);
 		datamap.put("recipeType", typeName);
 		datamap.put("user",mapper.userView(recipe.getUser_no()));
 		datamap.put("process", process);
 		datamap.put("ingredient", ingredient);
-		
-		datamap.put("sumCarbo", Math.round(sumCarbo/recipe.getServing())); 
-		datamap.put("sumProtein", Math.round(sumProtein/recipe.getServing()));
-		datamap.put("sumFat", Math.round(sumFat/recipe.getServing()));
-		datamap.put("sumKcal", sumKcal/recipe.getServing());
-		
+
 		return datamap;
 	}
 	

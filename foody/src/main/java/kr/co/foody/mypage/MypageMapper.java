@@ -7,11 +7,30 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface MypageMapper {
 
-	List<MypageVO> myRecipe(int no);
+	// 나의 레시피 리스트
+	List<MypageVO> myRecipe(MypageVO vo);
+	int myRecipeCount(int no);
+	
+	// 최근 본 레시피 리스트
+	List<MypageVO> recentRecipe(MypageVO vo);
+	int recentRecipeCount(int no);
+	
+	// 즐겨찾기 레시피 리스트
+	List<MypageVO> likeRecipe(MypageVO vo);
+	int likeRecipeCount(int no);
+	
+	// 알러지, 선호음식 리시트
 	List<MypageVO> allergyList(int no);
 	List<MypageVO> preferList(int no);
-	List<MypageVO> recentRecipe(int no);
-	List<MypageVO> likeRecipe(int no);
+	
+	// 회원의 레시피 삭제
+	int deleteRecipe(int no);
+	
+	// 마이페이지 정보
+	int userRecipeCount(int no); 
+	int userBookmarkCount(int no); 
+	int userTotalViewCount(int no); 
+	int userCommentCount(int no); 
 	
 }
 	

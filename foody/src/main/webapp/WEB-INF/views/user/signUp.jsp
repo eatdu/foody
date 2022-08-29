@@ -3,12 +3,6 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, user-scalable=yes">
-<meta name="format-detection" content="telephone=no, address=no, email=no">
-<meta name="keywords" content="">
-<meta name="description" content="">
 <title>회원가입</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
@@ -22,11 +16,11 @@
    			return;
    		}
    		// 이메일 입력형식 체크
-   		/* var reg_email = /^([0-9a-zA-Z_\.-]+)@([0-9a-zA-Z_-]+)(\.[0-9a-zA-Z_-]+){1,2}$/;
+   		var reg_email = /^([0-9a-zA-Z_\.-]+)@([0-9a-zA-Z_-]+)(\.[0-9a-zA-Z_-]+){1,2}$/;
    		if(!reg_email.test($("#email").val())){
    			alert('이메일 형식이 올바르지 않습니다.');
    			return;
-   		} */
+   		}
    		// 이메일 중복확인
    		var isCon = true;
    		$.ajax({
@@ -48,11 +42,11 @@
    			return;
    		}
    		// 닉네임 입력혁식(한글 or 영문으로만 입력) 체크 
-   		/* var reg_nik_name = /^[가-힣]{2,4}|[a-zA-Z]{2,10}[a-zA-Z]{2,10}$/;
+   		var reg_nik_name = /^[가-힣]{2,4}|[a-zA-Z]{2,10}[a-zA-Z]{2,10}$/;
    		if(!reg_nik_name.test($("#nik_name").val())){
    			alert('한글 또는 영문으로만 입력해주세요.')
    			return;
-   		} */
+   		}
    		// 닉네임 중복확인
    		var isCon = true;
    		$.ajax({
@@ -78,12 +72,12 @@
    			$("#tel2").focus();
    			return;
    		}
-   		//var reg_tel = /^d{4}-\d{4}$/;
-  			/* if(!reg_tel.test($("#tel2").val())){ // 전화번호2 숫자만 입력
+   		var reg_tel = /^d{4}-\d{4}$/;
+  		if(!reg_tel.test($("#tel2").val())){ // 전화번호2 숫자만 입력
    			alert('숫자만 입력해주세요.');
    			$("#tel2").focus();
    			return;
-   		} */
+   		}
    		if($('#tel2').val().length != 4){ // 전화번호2 칸수제한
   			alert('전화번호 4자리를 입력해 주세요.');
   		    	$('#tel2').focus()
@@ -94,22 +88,22 @@
    			$("#tel3").focus();
    			return;
    		}
-   		/* if(!reg_tel.test($("#tel3").val())){ // 전화번호3 숫자만 입력
+   		if(!reg_tel.test($("#tel3").val())){ // 전화번호3 숫자만 입력
    			alert('숫자만 입력해주세요.');
    			$("#tel3").focus();
    			return;
-   		} */
+   		}
    		if($('#tel3').val().length != 4){ // 전화번호3 칸수제한
   			alert('전화번호 4자리를 입력해 주세요.');
   		    	$('#tel3').focus()
     		    return;
     		}
    		// 이름 입력형식(한글만 입력 최대5자) 체크
-   		/* var reg_name = /^[가-힣]{2,5}$/;
+   		var reg_name = /^[가-힣]{2,5}$/;
    		if(!reg_name.test($("#name").val())){
    			alert('한글로 입력해주세요.')
    			return;
-   		} */
+   		} 
    		if($("#birth1").val().trim() == ''){ // 주민번호공란 체크
    			alert('주민번호를 입력해 주세요.');
    			$("#birth1").focus();
@@ -131,11 +125,11 @@
    			return;
    		}
    		// 비밀번호 입력형식 체크
-   		/* var reg = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/;
+   		var reg = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/;
    		if(!reg.test($("#pwd").val())){
    			alert('비밀번호는 영문,숫자,특수문자 조합으로 8자 이상 입력하세요.')
    			return;
-   		} */
+   		}
    		// 비밀번호입력 및 비밀번호 확인란 중복 체크
    		if($("#pwd").val() != $("#pwd_check").val()){
    			alert('비밀번호가 일치하지 않습니다.');
@@ -231,15 +225,45 @@
    		})
    	})
 </script>
+<style>
+	.signUp_title{font-size: 60px;}.sub_title{font-size: 40px;margin-left: 11%;} .signUp_th{font-size:30px;}
+	table tr td{
+		font-size: 22px;
+	    color: #2e2e2e;
+	    height: 39px;
+	    padding: 5px 0px 0 2px;
+	 	}  
+	#email,#nik_name,#name,#tel2,#tel3,#birth1,#birth2,#pwd,#pwd_check,#zipcode,#addr1,#addr2{height:35px;font-size: 20px;border-radius:7px;}
+	.signUpFrm{margin-left: 30px;} .signUp_board_write{width:80%;height: 200px;}
+	.signUpBtn{float:right;margin-right:1%;}
+	/* .nik_nameDupBtn,.emailDupBtn{margin-left:6px;margin-top:4px;} */
+	.submitBtn button{
+		width: 135px;height: 45px;
+		background-color:white;
+		border-color:#6A6D6F;
+		border-radius:5px;
+		font-size:20px;
+		color:#6A6D6F;
+		font-weight: bolder;
+		border-size:0.5px;
+	}
+	.submitBtn button:hover{
+		color:white;
+		background-color:#6A6D6F;
+	}
+</style>
+<%@ include file="../common/config.jsp" %>
 <%@ include file="../common/addrAPI.jsp" %>
 </head>
 <body>
+<%@ include file="../common/navBar.jsp" %>
 	<div class="sub">
+	    <h3 class="signUp_title">회원가입</h3>
 	    <div class="size">
-	        <h3 class="sub_title">회원가입</h3>
-	        <form name="frm" id="frm" action="signUp.do" method="post">
+	        <h3 class="sub_title">기본정보</h3>
+	        <form class="signUpFrm" name="frm" id="frm" action="signUp.do" method="post">
 	        <input type="hidden" name="route" id="route" value="login">
-	        <table class="board_write">
+	        <table class="signUp_board_write">
 	            <caption>회원가입</caption>
 	            <colgroup>
 	                <col width="20%" />
@@ -247,63 +271,63 @@
 	            </colgroup>
 	            <tbody>
 	                <tr>
-	                    <th>*이메일</th>
+	                    <th class="signUp_th">이메일</th>
 	                    <td>
 	                        <input type="text" name="email" id="email" class="" style="float:left;" maxlength="30" required>
-	                        <span class="email_check"><a href="javascript:;"  class="" style="float:left; width:auto; clear:none;" id="dupCheckBtnEmail">중복확인</a></span>
+	                        <span class="email_check"><a href="javascript:;"  class="emailDupBtn" style="float:left; width:auto; clear:none;" id="dupCheckBtnEmail">중복확인</a></span>
 	                    </td>
 	                </tr>
 	                <tr>
-	                    <th>*닉네임</th>
+	                    <th class="signUp_th">닉네임</th>
 	                    <td>
-	                        <input type="text" name="nik_name" id="nik_name" class="" style="width:90px;float:left;" maxlength="10" required>
-	                        <span class="nik_name_check"><a href="javascript:;" class="" style="float:left; width:auto; clear:none;" id="dupCheckBtnNik">중복확인</a></span>
+	                        <input type="text" name="nik_name" id="nik_name" class="" style="width:120px;float:left;" maxlength="10" required>
+	                        <span class="nik_name_check"><a href="javascript:;" class="nik_nameDupBtn" style="float:left; width:auto; clear:none;" id="dupCheckBtnNik">중복확인</a></span>
 	         			</td>
 	                </tr>
 	                <tr>
-	                    <th>*이름</th>
+	                    <th class="signUp_th">이름</th>
 	                    <td>
-	                        <input type="text" name="name" id="name" class="" style="width:90px;float:left;" maxlength="5" required>
+	                        <input type="text" name="name" id="name" class="" style="width:120px;float:left;" maxlength="5" required>
 	          			</td>
 	                </tr>
 	                <tr>
-	                    <th>*전화번호</th>
+	                    <th class="signUp_th">전화번호</th>
 	                    <td>
 	                  		<input type="hidden" name="tel">
-	                    	<select name="tel1" style="height:22px;">
+	                    	<select name="tel1" style="height:41px;border-radius: 7px;">
 	                    		<option value="010">010</option>
 	                    		<option value="011">011</option>
 	                    		<option value="012">012</option>
 	                    	</select> - 
-	                    	<input type="text" name="tel2" id="tel2" class="" style="width:35px;" maxlength="4" required> -
-	                    	<input type="text" name="tel3" id="tel3" class="" style="width:35px;" maxlength="4" required>
+	                    	<input type="text" name="tel2" id="tel2" class="" style="width:60px;" maxlength="4" required> -
+	                    	<input type="text" name="tel3" id="tel3" class="" style="width:60px;" maxlength="4" required>
 	           			</td>
 	                </tr>
 	                <tr>
-	                    <th>*주민번호</th>
+	                    <th class="signUp_th">주민번호</th>
 	                    <td>
 	                        <input type="hidden" name="birth">
 	                        <input type="text" name="birth1" id="birth1" class="" style="width:70px;" maxlength="6" required>-
-	                        <input type="password" name="birth2" id="birth2" class="" style="width:7px;"maxlength="1" required><span>******</span>
+	                        <input type="password" name="birth2" id="birth2" class="" style="width:18px;"maxlength="1" required><span>******</span>
 	           			</td>
 	                </tr>
 	                <tr>
-	                    <th>*비밀번호</th>
+	                    <th class="signUp_th">비밀번호</th>
 	                    <td><input type="password" name="pwd" id="pwd" style="float:left;" required>&nbsp;
 	                    <span class="">비밀번호는 숫자, 영문 조합으로 8자 이상으로 입력해주세요.</span></td>
 	                </tr>
 	                <tr>
-	                    <th>*비밀번호<span>확인</span></th>
+	                    <th class="signUp_th">비밀번호<span>확인</span></th>
 	                    <td><input type="password" name="pwd_check" id="pwd_check" style="float:left;" required></td>
 	                </tr>
 	                <tr>
-	                    <th rowspan="3">주소</th>
+	                    <th rowspan="3" class="signUp_th">주소</th>
 	                    <td>
 	                        <input type="text" name="zipcode" id="zipcode" class="inNextBtn" style="float:left;" readonly>
 	                        <span class="email_check"><a href="javascript:zipcode();"  class="btn bgGray" style="float:left; width:auto; clear:none;">우편번호</a></span>
 	                    </td>
 	                </tr>
-	                <tr>
+	                <tr>	
 	                    <td>
 	                    	<input type="text" name="addr1" id="addr1" style="width:80%" readonly>
 	                    </td>
@@ -318,10 +342,9 @@
 	        </form>
 	        <!-- //write--->
 	        <div class="btnSet clear">
-	            <div>
-		             <button type="button" id="goBackBtn" name="goBackBtn" onclick="history.back();">돌아가기</button>
-		             <button type="button" id="goFinish" name="goFinish" onclick="goSave('login');">가입완료</button>
-		             <button type="button" id="goFinish" name="goFinish" onclick="goSave('profile');">프로필</button>
+	            <div class="submitBtn">
+		             <button class="signUpBtn" type="button" id="goFinish" name="goFinish" onclick="goSave('login');">가입완료</button>
+		             <button class="signUpBtn" type="button" id="goProfile" name="goProfile" onclick="goSave('profile');">프로필등록하기</button>
 	            </div>
 	        </div>
 	    </div>

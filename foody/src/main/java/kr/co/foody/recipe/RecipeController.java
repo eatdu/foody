@@ -40,13 +40,13 @@ public class RecipeController {
 	@Autowired
 	CommentService cservice;
 
-	@GetMapping("write.do")
+	@GetMapping("/recipe/write.do")
 	public String write() {
 
 		return "recipe/write";
 	}
 
-	@PostMapping("write.do")
+	@PostMapping("/recipe/write.do")
 	public String insert(@RequestParam Map cri, HttpSession sess, Model model, HttpServletRequest req,
 			@RequestParam MultipartFile[] photo, @RequestParam MultipartFile[] thumbnail) {
 
@@ -124,16 +124,15 @@ public class RecipeController {
 		if (success == 1) {
 			model.addAttribute("msg", "게시물이 저장되었습니다.");
 			model.addAttribute("url", "/foody/mypage/mypage.do");
-			return "recipe/alert";
+			return "/recipe/alert";
 		} else {
 			model.addAttribute("msg", "게시물을 저장할 수 없습니다.");
-			return "recipe/alert";
+			return "/recipe/alert";
 		}
 
 	}
-
+	
 	@GetMapping("/recipe/view.do")
-
 	public String view(RecipeVO vo, CommentVO cvo, Model model, HttpSession sess, HttpServletRequest req) {
 
 		UserVO uv = (UserVO) sess.getAttribute("loginInfo");
@@ -169,6 +168,21 @@ public class RecipeController {
 		
 		return "recipe/view";
 	}
+	
+	@GetMapping("/recipe/modify.do")
+	public String modify(HttpServletRequest req, Model model) {
+		int recipeNo = Integer.parseInt(req.getParameter("no"));
+		
+		Map cri = service.viewModify(recipeNo);
+		
+		model.addAttribute("recipe", cri.get("recipe"));
+		model.addAttribute("rcpCateArr", RecipeCategory.RcpCateArr);
+		model.addAttribute("Ingredientlist", cri.get("ingredient"));
+		
+		return "recipe/modify";
+	}
+	
+	
 
 	@PostMapping(value = "search.do", consumes = MediaType.APPLICATION_JSON_VALUE, produces = "application/json;charset=UTF-8")
 	public String search(@RequestBody Map cri, Model model, HttpSession sess) {
@@ -193,13 +207,6 @@ public class RecipeController {
 		return "common/comboBox";
 	}
 	
-	
-	@GetMapping("modify.do")
-	public String modify() {
-
-		return "recipe/modify";
-	}
-
 	@GetMapping("/recipe/search.do")
 	public String search(@RequestParam Map cri, Model model) {
 		model.addAttribute("rcpCateArr", RecipeCategory.RcpCateArr);
@@ -218,20 +225,20 @@ public class RecipeController {
 	}
 
 	@ResponseBody
-	@PostMapping(value = "mainCate_drop.action", produces = "application/json; charset=UTF-8")
+	@PostMapping(value = "/recipe/mainCate_drop.action", produces = "application/json; charset=UTF-8")
 	public Object selLargecate(@RequestParam int num) {
 		return service2.large_cate(num);
 	}
 
 	@ResponseBody
-	@PostMapping(value = "ingredientName_drop.action", produces = "application/json; charset=UTF-8")
+	@PostMapping(value = "/recipe/ingredientName_drop.action", produces = "application/json; charset=UTF-8")
 	public Object selMediumcate(@RequestParam String name) {
 
 		return service2.detail_cate(name);
 	}
 
 	@ResponseBody
-	@PostMapping(value = "searchName_drop.action", produces = "application/json; charset=UTF-8")
+	@PostMapping(value = "/recipe/searchName_drop.action", produces = "application/json; charset=UTF-8")
 	public Object nameSearchList() {
 
 		return service2.nameSearch();

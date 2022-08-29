@@ -6,6 +6,12 @@ import javax.servlet.http.HttpSession;
 
 public interface MypageService {
 
-	public Map<String, Object> mypage(HttpSession sess);
+	Map<String, Object> mypage(HttpSession sess);
+	Map<String, Object> myRecipe(HttpSession sess, MypageVO vo);
+	Map<String, Object> recentRecipe(HttpSession sess, MypageVO vo);
+	Map<String, Object> likeRecipe(HttpSession sess, MypageVO vo);
+	Map<String, Object> userInfo(HttpSession sess);
+	boolean deleteRecipe(int no);
+	
 	
 }

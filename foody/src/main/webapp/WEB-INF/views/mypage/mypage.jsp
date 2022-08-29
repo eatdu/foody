@@ -38,9 +38,70 @@
   }
 </style>
 <script>
+function readURL(input) {
+  if (input.files && input.files[0]) {
+    var reader = new FileReader();
+    reader.onload = function(e) {
+      document.getElementById('preview').src = e.target.result;
+    };
+    reader.readAsDataURL(input.files[0]);
+  } else {	
+    document.getElementById('preview').src = "";
+  }
+}
+function getMyRecipe(page) {
+	$.ajax({
+		url: "/foody/mypage/myRecipe",
+		type: "get",
+		dataType: "html",
+		data: {
+			page: page
+		},
+		success: function(res) {
+			$("#contents").html(res);
+		}
+	});
+}
+function getRecentRecipe(page) {
+	$.ajax({
+		url: "/foody/mypage/recentRecipe",
+		type: "get",
+		dataType: "html",
+		data: {
+			page: page
+		},
+		success: function(res) {
+			$("#contents").html(res);
+		}
+	});
+}
+function getLikeRecipe(page) {
+	$.ajax({
+		url: "/foody/mypage/likeRecipe",
+		type: "get",
+		dataType: "html",
+		data: {
+			page: page
+		},
+		success: function(res) {
+			$("#contents").html(res);
+		}
+	});
+}
 $(function(){
+	$.ajax({
+		url: "/foody/mypage/myRecipe",
+		type: "get",
+		dataType: "html",
+		success: function(res){
+			$("#contents").html(res);
+		}
+	})
+	
 	$(".category_item").on("click", function(){
 		var id = $(this).attr("id");
+		console.log(id);
+		 
 		$.ajax({
 			url: "/foody/mypage/" + id,
 			type: "get",
@@ -48,8 +109,7 @@ $(function(){
 			success: function(res){
 				$("#contents").html(res);
 			}
-		
-		})
+		}) 
 	});
 });
 </script>
@@ -58,6 +118,8 @@ $(function(){
 <body>
 <%@ include file="../common/navBar.jsp" %>
 <h1>마이페이지</h1>
+<input type="file" onchange="readURL(this);"> 
+<img id="preview" style="width:100px; height:100px; border-radius:50%; border:none;"/>												
 <div id="userInfo">
 	<div id="userMain" class="userMain">
 		<table border="1" >
@@ -81,6 +143,10 @@ $(function(){
 			<tr>
 				<td>
 					email : ${loginInfo.email}
+				${mypage.userRecipeCount}
+				${mypage.userBookmarkCount}
+				${mypage.userTotalViewCount}
+				${mypage.userCommentCount}
 				</td>
 			</tr>
 		</table>

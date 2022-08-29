@@ -204,7 +204,7 @@ public class UserController {
 	}
 	
 	@GetMapping("/user/exit.do")
-	public String userExit(Model model, UserVO vo, HttpServletRequest req) {
+	public String userExit(Model model, HttpServletRequest req) {
 		HttpSession sess = req.getSession();
 		if(service.userExit(sess)) {
 			sess.invalidate();

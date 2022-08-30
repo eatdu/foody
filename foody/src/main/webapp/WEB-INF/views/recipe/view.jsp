@@ -356,6 +356,7 @@
 	</c:if>
 	
 	<!-- 찜하기 -->
+	<!--
 	<div class="getBookmark">
 		<c:if test="${!empty loginInfo}">
 			<c:if test="${recipe.bookmark eq 1}">
@@ -368,9 +369,12 @@
 	    		</c:if>
 	    </c:if>
 	</div>
+	-->
 	
 	<!-- 포토리뷰 -->
+	<div class="comment">
 	<h2 class="sub_title">포토 리뷰</h2><br>
+	</div>
 	<div class="swiper mySwiper">
 		<div class="swiper-wrapper">
 			<c:forEach var="vo" items="${comment.list}" varStatus="idx">

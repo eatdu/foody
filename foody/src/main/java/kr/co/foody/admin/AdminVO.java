@@ -13,4 +13,5 @@ public class AdminVO {
 	private String email;
 	private String id;
 	private String pwd;
+	private int no;
 }

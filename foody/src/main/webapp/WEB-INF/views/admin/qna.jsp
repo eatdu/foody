@@ -178,9 +178,8 @@ div.adminMenu {
 	                                    
                                 </td>
                                 <td class="writer">
-                                    <c:if test="${list.manager_no != null}">관리자</c:if>
-                                    <c:if test="${list.manager_no == null}">
-                                    ${list.user_name}</c:if>
+                                    <c:if test="${!empty list.manager_no}">관리자</c:if>
+                                    <c:if test="${empty list.manager_no}">${list.user_name}</c:if>
                                 </td>
                                 <td>
 	                                <c:if test="${list.response > 0}">완료

@@ -36,6 +36,17 @@
 	update qna set response = response+1 where no = #{qna_no}
 </update>
 
+<!-- FAQ 개수 조회 -->
+<select id="count_faq" parameterType="kr.co.foody.qna.QnaVO" resultType="int">
+	SELECT count(*) from (select *, (select content from qna where gno=q.gno and response=0 limit 1) as answer FROM qna q where response=1) AS a
+</select>
+
+<!-- FAQ 조회 -->
+<select id="getFaq" parameterType="kr.co.foody.qna.QnaVO" resultType="kr.co.foody.qna.QnaVO">
+	SELECT *, (select content from qna where gno=q.gno and response=0 limit 1) as answer FROM qna q where response=1
+	limit ${startIdx}, ${pageRow}
+</select>
+
 <!-- 게시글 수 조회 -->
 <select id="count" parameterType="kr.co.foody.qna.QnaVO" resultType="int">
 	select count(*) from qna
@@ -60,13 +71,6 @@
 	</where>
 </select>
 
-<!-- FAQ 조회 -->
-<select id="getFaq" parameterType="kr.co.foody.qna.QnaVO" resultType="kr.co.foody.qna.QnaVO">
-	select * from qna
-	order by gno desc, ono asc
-	limit ${startIdx}, ${pageRow}
-</select>
-
 <!-- 관리자 페이지 전체 QnA 리스트 조회 -->
 <select id="getQna" parameterType="kr.co.foody.qna.QnaVO" resultType="kr.co.foody.qna.QnaVO">
 	select *,
@@ -76,8 +80,8 @@
 		<if test="period != 'all' and period != null and period != ''">
 			regdate >= date_add(now(), interval -${period})
 		</if>
-		<if test="response == 1">
-			response = 1
+		<if test="response != 0">
+			and response > 1
 		</if>
 		<if test="stype != null and stype != ''">
 			<if test="stype == 'title' or stype == 'content'">

@@ -171,7 +171,11 @@ public class AdminController {
 	}
 	// QnA 게시판 답변 등록처리
 	@PostMapping("/admin/reply.do")
-	public String reply(QnaVO vo, Model model, HttpServletRequest req) {
+	public String reply(QnaVO vo, Model model, HttpSession sess, HttpServletRequest req) {
+		HttpSession session = req.getSession();
+		AdminVO av = (AdminVO)session.getAttribute("adminInfo");
+		vo.setManager_no(av.getNo());
+		
 		if (Qservice.reply(vo) == 1) {
 			model.addAttribute("msg", "답변 등록 완료.");
 			return "common/alertClose";

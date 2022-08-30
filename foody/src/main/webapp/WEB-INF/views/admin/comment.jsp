@@ -94,7 +94,7 @@ div.adminMenu {
 			                <li><label><input type="radio" id="writer" name="align" value="writer" <c:if test="${param.align=='writer'}"> checked</c:if>/>작성자순</label></li>
 		                </ul>
 		            </div>
-	                <div class="bbsSearch" style="float:left;">
+	                <div class="bbsSearch" align="left;">
 	                    <span class="srchSelect">
 	                        <select id="stype" name="stype" class="dSelect" title="검색분류 선택">
 	                            <option value="content" <c:if test="${param.stype=='content'}">selected</c:if>>댓글내용</option>

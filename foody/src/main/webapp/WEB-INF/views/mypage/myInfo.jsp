@@ -53,15 +53,15 @@ function del(no){
 			<table class="profileT">
 				<tr>
 					<td>
-						${myInfo.uv.nik_name}
+						${loginInfo.nik_name}
 					</td>
 				</tr>
 				<tr>
 					<td>
-						<c:if test="${!empty myInfo.uv.selfi}">
-							<img src="/foody/upload/${myInfo.uv.selfi}" style="width: 175px;height: 175px;border-radius:50%;">
+						<c:if test="${!empty loginInfo.selfi}">
+							<img src="/foody/upload/${loginInfo.selfi}" style="width: 175px;height: 175px;border-radius:50%;">
 						</c:if>
-						<c:if test="${empty myInfo.uv.selfi}">
+						<c:if test="${empty loginInfo.selfi}">
 							<img src="/foody/img/basic_profile.png" style="width: 175px;height: 175px;border-radius:50%;">
 						</c:if>
 					</td>
@@ -73,7 +73,7 @@ function del(no){
 						이름
 					</td>
 					<td>
-						${myInfo.uv.name}
+						${loginInfo.name}
 					</td>
 					<td>
 						선호음식
@@ -105,7 +105,7 @@ function del(no){
 						소개
 					</td>
 					<td>
-						${myInfo.uv.intro}
+						${loginInfo.intro}
 					</td>
 					<td>
 						하루권장섭취 칼로리
@@ -119,7 +119,7 @@ function del(no){
 						주소
 					</td>
 					<td>
-						(${myInfo.uv.zipcode})${myInfo.uv.addr1},${myInfo.uv.addr2}
+						(${loginInfo.zipcode})${loginInfo.addr1},${loginInfo.addr2}
 					</td>
 				</tr>
 				<tr>
@@ -127,7 +127,7 @@ function del(no){
 						비밀번호
 					</td>
 					<td>
-						${myInfo.uv.pwd}
+						${loginInfo.pwd}
 					</td>
 				</tr>
 			</table>

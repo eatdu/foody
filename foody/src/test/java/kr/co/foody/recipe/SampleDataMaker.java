@@ -23,6 +23,34 @@ public class SampleDataMaker {
 	RecipeMapper mapper;
 	
 	//@Test
+	public void updatePwd() {
+		for(int i = 23; i < 122; i++) {
+			mapper.updatePwd(i);
+		}
+	}
+	
+	//@Test
+	public void randomComment2() {
+		for(int i = 5057; i < 5197; i++) {
+			Map map = new HashMap();
+			map.put("gno", i);
+			mapper.updateComment2(map);
+		}
+	}
+	
+	//@Test
+	public void randomComment() {
+		for(int boardNo = 1; boardNo <= 14; boardNo++) {
+			for(int i = 0; i < 10; i++) {
+				Map map = new HashMap();
+				map.put("boardNo", boardNo);
+				map.put("userNo", 22 + (int)(Math.random() * 100));
+				mapper.insertComment(map);
+			}
+		}
+	}
+	
+	//@Test
 	public void randomRecent() {
 		for(int user_no = 23; user_no <= 121; user_no++) {
 			for(int recipe_no = 1; recipe_no <= 200; recipe_no++) {
@@ -36,7 +64,7 @@ public class SampleDataMaker {
 		}
 	}
 	
-	@Test
+	//@Test
 	public void randomRcpUser() {
 		System.out.println(Math.random());
 //		for(int i = 351; i <= 500; i++) {
@@ -50,7 +78,7 @@ public class SampleDataMaker {
 	
 	//@Test
 	public void randomReg() {
-		for (int i=351; i<=500; i++) {
+		for (int i=56; i<=5196; i++) {
 			mapper.randomReg(i);
 		}
 	}

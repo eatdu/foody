@@ -141,7 +141,7 @@ $(function(){
 				<table>
 					<tr>
 						<td>
-							${mypage.uv.nik_name}
+							${loginInfo.nik_name}
 						</td>
 						<td>
 							<span>소개</span>
@@ -150,15 +150,15 @@ $(function(){
 					</tr>
 					<tr>
 						<td rowspan="4">
-							<c:if test="${!empty mypage.uv.selfi}">
-								<img src="/foody/upload/${mypage.uv.selfi}" style="width: 175px;height: 175px;border-radius:50%;">
+							<c:if test="${!empty loginInfo.selfi}">
+								<img src="/foody/upload/${loginInfo.selfi}" style="width: 175px;height: 175px;border-radius:50%;">
 							</c:if>
-							<c:if test="${empty mypage.uv.selfi}">
+							<c:if test="${empty loginInfo.selfi}">
 								<img src="/foody/img/basic_profile.png" style="width: 175px;height: 175px;border-radius:50%;">
 							</c:if>
 						</td>
 						<td rowspan="2">
-							${mypage.uv.intro}
+							${loginInfo.intro}
 						</td>
 						<td class="userComment">
 							등록한 레시피 : ${mypage.userRecipeCount}
@@ -171,7 +171,7 @@ $(function(){
 					</tr>
 					<tr>
 						<td rowspan="2">
-							email : ${mypage.uv.email}
+							email : ${loginInfo.email}
 						</td>
 						<td class="userComment">
 							받은 조회수 : <c:if test="${empty mypage.userTotalViewCount}">0</c:if>${mypage.userTotalViewCount}

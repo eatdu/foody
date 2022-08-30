@@ -135,7 +135,6 @@ public class UserServiceImpl implements UserService {
 	@Override // 회원정보 수정페이지 출력
 	public Map<String, Object> modify(HttpSession sess) {
 		UserVO uv = (UserVO)sess.getAttribute("loginInfo");
-		
 		UserVO uvl = mapper.selectOne(uv.getNo());
 		
 		// 회원가입시 유저가 선택한 알레르기
@@ -188,13 +187,12 @@ public class UserServiceImpl implements UserService {
 		map.put("userInfo", uvl);
 		map.put("allergy", aHtml);
 		map.put("prefer", pHtml);
-		map.put("uvl", uvl);
 		
 		return map;
 	}
 	
 	@Override // 회원정보수정
-	public int userInfoUpdate(UserVO uvo, HttpServletRequest req) {
+	public int userInfoUpdate(UserVO uvo, HttpServletRequest req, HttpSession sess) {
 		int result = 0;
 		try {
 			mapper.modifyUserInfo(uvo);

@@ -25,6 +25,8 @@ public class UserController {
 
 	@Autowired
 	UserService service;
+	@Autowired
+	UserMapper mapper;
 	
 	@GetMapping("/user/signUp.do") // 회원가입창(필수) 이동
 	public String signUp() {
@@ -151,8 +153,8 @@ public class UserController {
 	
 	@PostMapping("/user/modify.do")
 	public String modify(UserVO uvo, Model model,HttpServletRequest req
-			, @RequestParam MultipartFile chooseFile) {
-		int a = service.userInfoUpdate(uvo, req);
+			, @RequestParam MultipartFile chooseFile, HttpSession sess) {
+		int a = service.userInfoUpdate(uvo, req, sess);
 		if((a == 0 || a == 1) && !chooseFile.isEmpty()) {
 			// 파일명 초기화
 			String org = chooseFile.getOriginalFilename();
@@ -166,6 +168,8 @@ public class UserController {
 			uvo.setSelfi(real);
 		}
 		if(service.signUpNext(uvo) > 0) {
+			UserVO loginInfo = mapper.selectOne(uvo.getNo());
+			sess.setAttribute("loginInfo", loginInfo);
 			model.addAttribute("msg", "업데이트 성공!!");
 			model.addAttribute("url", "/foody/mypage/mypage.do");
 			return "common/alert";

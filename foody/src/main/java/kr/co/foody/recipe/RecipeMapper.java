@@ -62,4 +62,7 @@ public interface RecipeMapper {
 	int randomReg(int no);
 	int randomRcpUser(Map map);
 	int insertRecent(Map map);
+	int insertComment(Map map);
+	int updateComment2(Map map);
+	int updatePwd(int no);
 }

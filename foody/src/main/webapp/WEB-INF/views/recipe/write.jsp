@@ -153,9 +153,9 @@
 													+' data-allergy="'+data[i].allergy_no+'">'
 													+data[i].name
 													+'<input type="hidden" name=ingredient_no value="'+data[i].no+'">'
-													+'<input type="number" value="100" min="1" name="weight" data-no="'+data[i].no+'" id="weight'
+													+'<input type="number" value="100" min="0" name="weight" data-no="'+data[i].no+'" id="weight'
 													+num+'"> g'
-													+'(수량: '+'<input type="text" min="1" name="quantity">'+')'
+													+'(수량: '+'<input type="text" name="quantity">'+')'
 													+'<input type="button" class="deleteSpan" value="삭제">'
 													+allergyCaution
 													+'<br>'
@@ -177,9 +177,9 @@
 												+' data-allergy="'+data[i].allergy_no+'">'
 												+data[i].name+'('+data[i].detail+')'
 												+'<input type="hidden" name=ingredient_no value="'+data[i].no+'">'
-												+'<input type="number" value="100" min="1" name="weight" data-no="'+data[i].no+'" id="weight'
+												+'<input type="number" value="100" min="0" name="weight" data-no="'+data[i].no+'" id="weight'
 												+num+'"> g'
-												+'(수량: '+'<input type="text" min="1" name="quantity">'+')'
+												+'(수량: '+'<input type="text" name="quantity">'+')'
 												+'<input type="button" class="deleteSpan" value="삭제">'
 												+allergyCaution
 												+'<br>'
@@ -266,9 +266,9 @@
 												+' data-allergy="'+data[i].allergy_no+'">'
 												+data[i].name
 												+'<input type="hidden" name=ingredient_no value="'+data[i].no+'">'
-												+'<input type="number" value="100" min="1" name="weight" data-no="'+data[i].no+'" id="weight'
+												+'<input type="number" value="100" min="0" name="weight" data-no="'+data[i].no+'" id="weight'
 												+num+'"> g'
-												+'(수량: '+'<input type="text" min="1" name="quantity">'+')'
+												+'(수량: '+'<input type="text" name="quantity">'+')'
 												+'<input type="button" class="deleteSpan" value="삭제">'
 												+allergyCaution
 												+'<br>'
@@ -290,9 +290,9 @@
 												+' data-allergy="'+data[i].allergy_no+'">'
 												+data[i].name+'('+data[i].detail+')'
 												+'<input type="hidden" name=ingredient_no value="'+data[i].no+'">'
-												+'<input type="number" value="100" min="1" name="weight" data-no="'+data[i].no+'" id="weight'
+												+'<input type="number" value="100" min="0" name="weight" data-no="'+data[i].no+'" id="weight'
 												+num+'"> g'
-												+'(수량: '+'<input type="text" min="1" name="quantity">'+')'
+												+'(수량: '+'<input type="text" name="quantity">'+')'
 												+'<input type="button" class="deleteSpan" value="삭제">'
 												+allergyCaution
 												+'<br>'
@@ -543,14 +543,14 @@
 			
 			// ------------------썸네일+사진 div 만드는 함수(호출)----------------------
 			var PNum = 0;
-			function receipePicture(){
+			function recipePicture(){
 				var append_str ='<span style="height: 140px; width: 230px;">'
 								+'<input type="file" name="thumbnail" data-val="'+PNum+'" id="pictureUpload'+PNum+'" style="display:none"/>'	
 								+'<span onclick="clickeventPic('+PNum+')" style="padding-top:0px; margin-right:20px; float:left; height: 140px; width: 220px; background-color:#ECECEC; text-align: center;">'
 								+'<img id="additionalPic'+PNum+'" src="resources/img/PlusIcon.png" style="height: 140px; width: 220px; object-fit: cover;">'
 								+'</span></span>'
 
-				$('#receipePicture').append(append_str);
+				$('#recipePicture').append(append_str);
 								
 				$("#pictureUpload"+PNum).change(function() {
 					readURL2(this,$(this).data('val'));
@@ -582,7 +582,7 @@
 			$(function(){
 				for(var i=0; i<3; i++){
 					makeProcessDiv();
-					receipePicture(); 
+					recipePicture(); 
 				}
 			});
 			
@@ -743,7 +743,7 @@
 			</div>
 			
 			요리사진:
-			<div id="receipePicture" style="height: 150px; width: 100%;">
+			<div id="recipePicture" style="height: 150px; width: 100%;">
 			</div>
 			
 			 

@@ -37,6 +37,7 @@ public interface UserMapper {
 	int modifyUserInfo(UserVO vo);
 	int userAllergyDelete(int ano);
 	int userPreferDelete(int ano);
+	int userProfileDelete(int no);
 	List<MypageVO> userAllergyNo(int no);
 	
 	int getUserTotalCount();

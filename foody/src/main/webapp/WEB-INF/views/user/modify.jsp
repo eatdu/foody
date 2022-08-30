@@ -17,6 +17,17 @@
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
 <script>
+	function readURL(input) {
+		if (input.files && input.files[0]) {
+			var reader = new FileReader();
+		    reader.onload = function(e) {
+				document.getElementById('imgmodify').src = e.target.result;
+		};
+			reader.readAsDataURL(input.files[0]);
+		} else {
+			document.getElementById('imgmodify').src = "";
+		}
+	}
    	function goSave(){
    		if($("#nik_name").val().trim() == ''){ // 닉네임공란 체크
    			alert('닉네임을 입력해 주세요.');
@@ -24,57 +35,32 @@
    			return;
    		}
    		// 닉네임 입력혁식(한글 or 영문으로만 입력) 체크 
-   		/* var reg_nik_name = /^[가-힣]{2,4}|[a-zA-Z]{2,10}[a-zA-Z]{2,10}$/;
+   		var reg_nik_name = /^[가-힣]{2,4}|[a-zA-Z]{2,10}[a-zA-Z]{2,10}$/;
    		if(!reg_nik_name.test($("#nik_name").val())){
    			alert('한글 또는 영문으로만 입력해주세요.')
    			return;
-   		} */
-   		// 닉네임 중복확인
-   		/* var isCon = true;
-   		$.ajax({
-			url : 'nik_nameDupCheck.do',
-			data : {nik_name:$('#nik_name').val()},
-			async : false,
-			success:function(res){
-				if(res == 'true'){
-					alert('입력한 닉네임이 중복되었습니다. 다른 닉네임을 입력해주세요.');
-					$("#nik_name").focus();
-					isCon = false;
-				}
-			}
-		}); */
-   		//var reg_tel = /^d{4}-\d{4}$/;
-  			/* if(!reg_tel.test($("#tel2").val())){ // 전화번호2 숫자만 입력
-   			alert('숫자만 입력해주세요.');
-   			$("#tel2").focus();
-   			return;
-   		} */
+   		}
    		if($('#tel2').val().length != 4){ // 전화번호2 칸수제한
   			alert('전화번호 4자리를 입력해 주세요.');
   		    	$('#tel2').focus()
     		    return;
-    		}
+    	}
    		if($("#tel3").val().trim() == ''){ // 전화번호3공란 체크
    			alert('전화번호를 입력해 주세요.');
    			$("#tel3").focus();
    			return;
    		}
-   		/* if(!reg_tel.test($("#tel3").val())){ // 전화번호3 숫자만 입력
-   			alert('숫자만 입력해주세요.');
-   			$("#tel3").focus();
-   			return;
-   		} */
    		if($('#tel3').val().length != 4){ // 전화번호3 칸수제한
   			alert('전화번호 4자리를 입력해 주세요.');
   		    	$('#tel3').focus()
     		    return;
-    		}
+    	}
    		// 이름 입력형식(한글만 입력 최대5자) 체크
-   		/* var reg_name = /^[가-힣]{2,5}$/;
+   		var reg_name = /^[가-힣]{2,5}$/;
    		if(!reg_name.test($("#name").val())){
    			alert('한글로 입력해주세요.')
    			return;
-   		} */
+   		} 
    		var f = document.frm;
 		f.tel.value = f.tel1.value + f.tel2.value + f.tel3.value;
    		$("#frm").submit();
@@ -132,43 +118,144 @@
    		})
    	})
 </script>
-<%-- <%@ include file="../common/profile.jsp" %> --%>
+<style type="text/css">
+    .jb-wrap img {
+        width: 100%;
+        vertical-align: middle;
+    }
+    .jb-text {
+        padding: 5px 10px;
+        background-color: yellow;
+    }
+    .signUpNext_title{font-size: 60px;}.signUpNext_sub_title{font-size: 20px;} .signUpNext_th{font-size: 20px;} 
+    #frm{margin-left:6px;margin-top:4px;} #intro{font-size: 15px;width:350px;height:130px;border-radius:7px;}
+    #height,#weight{border-radius:5px;} #activity{height:30px;border-radius:3px;}
+    input[type="checkbox"]{
+    	zoom: 1.3;
+    	font-size:15px;
+    }
+    .btnSet_clear{float:right;margin-top:5px;}  
+    .submitBtn button{
+		width: 150px;height: 45px;
+		background-color:white;
+		border-color:#6A6D6F;
+		border-radius:5px;
+		font-size:20px;
+		color:#6A6D6F;
+		font-weight: bolder;
+		border-width: thin;
+	}
+	.submitBtn button:hover{
+		color:white;
+		background-color:#6A6D6F;
+	}
+	.sub_title{
+		font-size: 50px;
+	    color: #6A6D6F;
+	    margin-bottom: -2px;
+	    margin-top: -15px;
+	}
+	th{
+		width:100px;
+		font-size: 24px;
+    	color: #6A6D6F;
+    }
+	tr{width:70px;}
+	td{
+		height:28px;font-size: 20px;border-radius:7px;margin-left:5px;
+	}
+	.submitBtn{
+		width: 150px;height: 45px;
+		background-color:white;
+		border-color:#6A6D6F;
+		border-radius:5px;
+		font-size:20px;
+		color:#6A6D6F;
+		font-weight: bolder;
+		border-width: thin;
+	}
+	.submitBtn:hover{
+		color:white;
+		background-color:#6A6D6F;
+	}
+	#nik_name,#email,#name,#zipcode,#addr1,#addr2,#height,#weight{
+		width: 125px;
+	    height: 30px;
+	    float: left;
+	    font-size: 21px;
+	}
+	#addr1,#addr2{width: 515px;}
+	#intro{font-size: 21px;}
+	.dupCheckBtnNik,#zipCode{
+		text-decoration: none;
+		color: black;
+		margin-top:5px;
+		vertical-align : middle;
+		margin-left:4px;
+	}
+	#zipCode:hover{color:red;}
+	.dupCheckBtnNik:hover{color:red;}
+	#tel2,#tel3{
+		height: 30px;
+	    width: 45px;
+	    font-size: 18px;
+	}
+	input[type="number"]::-webkit-outer-spin-button,
+	input[type="number"]::-webkit-inner-spin-button {
+	    -webkit-appearance: none;
+	    margin: 0;
+	}
+	#nik_name,#height,#weight{border-radius: 5px;width:110px;float:left;border:1px solid #6A6D6F}
+	#preview{
+   		height: 150px;
+	    width: 150px;
+	    border-radius: 50%;
+	    diplay:none;
+	}
+</style>
 <%@ include file="../common/addrAPI.jsp" %>
 </head>
 <body>
 	<div class="sub">
 	    <div class="size">
 	        <h3 class="sub_title">회원수정</h3>
-	        <form name="frm" id="frm" action="modify.do" method="post">
-	        <input type="hidden" name="no" value="${modify.userInfo.no}">
+	        <form name="frm" id="frm" action="modify.do" method="post" enctype="multipart/form-data">
+	        <input type="hidden" name="no" value="${modify.uvl.no}">
 	        <input type="hidden" name="selfi">
-	        <div class="jb-image"><input type="file" id="chooseFile" name="chooseFile" class="img-input" style="diplay:none;"></div>
-	        <div class="img"><img src="/foody/upload/${modify.userInfo.selfi}" style="width:200px; height:200px; border-radius:50%;"></div>
+	        <div >
+		        <c:if test="${!empty modify.uvl.selfi}">
+					<img id="imgmodify" src="/foody/upload/${modify.uvl.selfi}" style="width: 175px;height: 175px;border-radius:50%;">
+				</c:if>
+				<c:if test="${empty modify.uvl.selfi}">
+					<img id="imgmodify" src="/foody/img/basic_profile.png" style="width: 175px;height: 175px;border-radius:50%;">
+				</c:if>
+			</div>
+			<input type="file" id="chooseFile" name="chooseFile" onchange="readURL(this);">
 	        <table class="board_modify">
 	            <tbody>
 	                <tr>
 	                    <th>닉네임</th>
 	                    <td>
-	                        <input type="text" name="nik_name" id="nik_name" class="" style="width:90px;float:left;" maxlength="10" value="${modify.userInfo.nik_name}">
-	                        <span class="nik_name_check"><a href="javascript:;" class="" style="float:left; width:auto; clear:none;" id="dupCheckBtnNik">중복확인</a></span>
+	                        <input type="text" name="nik_name" id="nik_name" maxlength="10" value="${modify.userInfo.nik_name}">
+	                        <span class="nik_name_check"><a href="javascript:;" class="dupCheckBtnNik" id="dupCheckBtnNik">중복확인</a></span>
 	         			</td>
 	                </tr>
 	                <tr>
 	                    <th>이메일</th>
 	                    <td>
-	                        <input name="email" id="email" class="" style="float:left;" value="${modify.userInfo.email}" readonly="readonly">
+	                        <input name="email" id="email" class="" style="width:200px;float:left;border:none;" value="${modify.userInfo.email}" readonly="readonly">
 	                    </td>
 	                </tr>
 	                <tr>
 	                    <th>이름</th>
 	                    <td>
-	                        <input name="name" id="name" class="" style="width:90px;float:left;" maxlength="5" value="${modify.userInfo.name}" readonly="readonly">
+	                        <input name="name" id="name" class="" style="width:90px;float:left;border:none;" maxlength="5" value="${modify.userInfo.name}" readonly="readonly">
 	          			</td>
 	                </tr>
 	                <tr>
 	                    <th>한줄소개</th>
 	                    <td>
-	                        <input type="text" id="intro" name="intro" value="${modify.userInfo.intro}" style="width:200px;height:100px;">
+		                    <textarea name="intro" id="intro" >${modify.userInfo.intro}</textarea>
 	          			</td>
 	                </tr>
 	                <tr>
@@ -176,30 +263,30 @@
 	                    <td>
  	                    	<c:set var="tel" value="${fn:substring(modify.userInfo.tel,0,3)}"/>
 	                  		<input type="hidden" name="tel">
-	                    	<select class="tel1" name="tel1" style="height:22px;">
+	                    	<select class="tel1" name="tel1" style="height:37px;font-size:18px;">
 							    <option value="010" <c:if test ="${fn:substring(modify.userInfo.tel,0,3) eq 010}">selected="selected"</c:if>>010</option>
 							    <option value="011" <c:if test ="${fn:substring(modify.userInfo.tel,0,3) eq 011}">selected="selected"</c:if>>011</option>
 							    <option value="012" <c:if test ="${fn:substring(modify.userInfo.tel,0,3) eq 012}">selected="selected"</c:if>>012</option>
 							</select> -
-	                    	<input type="text" name="tel2" id="tel2" value="${fn:substring(modify.userInfo.tel,3,7)}" class="" style="width:35px;" maxlength="4"> -
-	                    	<input type="text" name="tel3" id="tel3" value="${fn:substring(modify.userInfo.tel,7,12)}" class="" style="width:35px;" maxlength="4">
+	                    	<input type="number" name="tel2" id="tel2" value="${fn:substring(modify.userInfo.tel,3,7)}" maxlength="4"  pattern="|d*"> -
+	                    	<input type="number" name="tel3" id="tel3" value="${fn:substring(modify.userInfo.tel,7,12)}" maxlength="4"  pattern="|d*">
 	           			</td>
 	                </tr>
 	                <tr>
 	                    <th rowspan="3">주소</th>
 	                    <td>
 	                        <input type="text" name="zipcode" id="zipcode" class="inNextBtn" style="float:left;" value="${modify.userInfo.zipcode}" readonly>
-	                        <span class="email_check"><a href="javascript:zipcode();"  class="btn bgGray" style="float:left; width:auto; clear:none;">우편번호</a></span>
+	                        <span class="zip_code"><a href="javascript:zipcode();" id="zipCode"  class="btn bgGray">우편번호</a></span>
 	                    </td>
 	                </tr>
 	                <tr>
 	                    <td>
-	                    	<input type="text" name="addr1" id="addr1" style="width:250px" value="${modify.userInfo.addr1}" readonly>
+	                    	<input type="text" name="addr1" id="addr1" value="${modify.userInfo.addr1}" readonly>
 	                    </td>
 	               	</tr>
 	                <tr>
 	                    <td>
-	                    	<input type="text" name="addr2" id="addr2" style="width:250px" value="${modify.userInfo.addr2}">
+	                    	<input type="text" name="addr2" id="addr2" value="${modify.userInfo.addr2}">
 	                    </td>
 	                </tr>
 	                <tr>
@@ -217,7 +304,7 @@
 			        <tr>
 			            <th>활동지수</th>
 			            <td>
-				            <select name="activity" style="height:22px;">
+				            <select name="activity" style="height:37px;font-size:17px;">
 					        	<option value="30" <c:if test ="${modify.userInfo.activity eq 30}">selected="selected"</c:if>>앉아서 주로 생활하거나 활동량이 적은 경우</option>
 					        	<option value="35" <c:if test ="${modify.userInfo.activity eq 35}">selected="selected"</c:if>>규칙적인 생활로 보통의 활동량을 가진 경우</option>
 					        	<option value="40" <c:if test ="${modify.userInfo.activity eq 40}">selected="selected"</c:if>>육체노동 등 평소 신체 활동량이 많은 경우</option>
@@ -240,11 +327,11 @@
 	        </table>
 	        </form>
 	        <!-- //write--->
-	        <div class="btnSet clear">
-	            <div>
-	          		 <a href="/foody/mypage/mypage.do"><button type="button">마이페이지</button></a>
-		             <input type="button" id="goFinish" name="goFinish" onclick="goSave();" value="저장">
-	            </div>
+	        <div class="btnSet_clear" style="margin-right: 13px;">
+	            <div class="modifyCon">
+					<button type="button" class="submitBtn" id="userInfoModify" onclick="location.href='/foody/mypage/mypage.do'">마이페이지</button>
+					<button type="button" class="submitBtn" id="userExit" onclick="goSave();">저장하기</button>
+				</div>
 	        </div>
 	    </div>
 	</div>

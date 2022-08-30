@@ -16,88 +16,125 @@ function del(no){
 	}
 }
 </script>
-<h2>회원 정보관리</h2>
-	<div class="loginInfo">
-		<div class="userInfo">
-			<div class="profile">
-				<table border="1">
-					<tr>
-						<td>
-							${loginInfo.nik_name}
-						</td>
-					</tr>
-					<tr>
-						<td>
-							<img src="/foody/upload/${loginInfo.selfi}" style="width:100px; height:100px; border-radius:50%;">
-						</td>
-					</tr>
-				</table>
-				<table border="1">
-					<tr>
-						<td>
-							이름
-						</td>
-						<td>
-							${loginInfo.name}
-						</td>
-						<td>
-							선호음식
-						</td>
-						<td>
-							<c:forEach var="prefer" items="${myInfo.preferList}" varStatus="status">
-								${prefer}<c:if test="${status.last eq false}">,</c:if>
-							</c:forEach>
-						</td>
-					</tr>
-					<tr>
-						<td>
-							이메일
-						</td>
-						<td>
-							${loginInfo.email}
-						</td>
-						<td>
-							알레르기
-						</td>
-						<td>
-							<c:forEach var="allergyList" items="${myInfo.allergyList}" varStatus="status">
-								${allergyList.allergy}<c:if test="${status.last eq false}">,</c:if>
-							</c:forEach>
-						</td>
-					</tr>
-					<tr>
-						<td>
-							소개
-						</td>
-						<td>
-							${loginInfo.intro}
-						</td>
-						<td>
-							${loginInfo.name}님의 하루권장섭취 칼로리
-						</td>
-						<td>
-							${myInfo.cal}kcal
-						</td>
-					</tr>
-					<tr>
-						<td>
-							주소
-						</td>
-						<td>
-							(${loginInfo.zipcode})${loginInfo.addr1},${loginInfo.addr2}
-						</td>
-					</tr>
-					<tr>
-						<td>
-							비밀번호
-						</td>
-						<td>
-							${loginInfo.pwd}
-						</td>
-					</tr>
-				</table>
-				<span class="userInfoModify" style="font-size:20px;"><a href="/foody/user/modify.do">회원정보수정</a></span>
-				<span class="userQuit" style="font-size:20px;"><a href="/foody/user/exit.do" class="btn">회원탈퇴</a></span>
+<style>
+	.profile{
+		position: relative;
+	}
+	.profileT{
+		margin:auto;
+		margin-bottom:10px;
+	}
+	.userInfoT{
+		margin:auto;
+		font-size: 30px;
+	}
+	.submitBtn{
+		width: 150px;height: 45px;
+		background-color:white;
+		border-color:#6A6D6F;
+		border-radius:5px;
+		font-size:20px;
+		color:#6A6D6F;
+		font-weight: bolder;
+		border-width: thin;
+	}
+	.submitBtn:hover{
+		color:white;
+		background-color:#6A6D6F;
+	}	
+	.modifyCon{
+		margin-left:1300px;
+		margin-top:14px;
+	}
+</style>
+<div class="loginInfo">
+	<div class="userInfo">
+		<div class="profile">
+			<table class="profileT">
+				<tr>
+					<td>
+						${myInfo.uv.nik_name}
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<c:if test="${!empty myInfo.uv.selfi}">
+							<img src="/foody/upload/${myInfo.uv.selfi}" style="width: 175px;height: 175px;border-radius:50%;">
+						</c:if>
+						<c:if test="${empty myInfo.uv.selfi}">
+							<img src="/foody/img/basic_profile.png" style="width: 175px;height: 175px;border-radius:50%;">
+						</c:if>
+					</td>
+				</tr>
+			</table>
+			<table class="userInfoT">
+				<tr>
+					<td>
+						이름
+					</td>
+					<td>
+						${myInfo.uv.name}
+					</td>
+					<td>
+						선호음식
+					</td>
+					<td>
+						<c:forEach var="prefer" items="${myInfo.prefer}" varStatus="status">
+							${prefer}<c:if test="${status.last eq false}">,</c:if>
+						</c:forEach>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						이메일
+					</td>
+					<td>
+						${myInfo.uv.email}
+					</td>
+					<td>
+						알레르기
+					</td>
+					<td>
+						<c:forEach var="allergy" items="${myInfo.allergy}" varStatus="status">
+							${allergy.allergy}<c:if test="${status.last eq false}">,</c:if>
+						</c:forEach>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						소개
+					</td>
+					<td>
+						${myInfo.uv.intro}
+					</td>
+					<td>
+						하루권장섭취 칼로리
+					</td>
+					<td>
+						${myInfo.cal}kcal
+					</td>
+				</tr>
+				<tr>
+					<td>
+						주소
+					</td>
+					<td>
+						(${myInfo.uv.zipcode})${myInfo.uv.addr1},${myInfo.uv.addr2}
+					</td>
+				</tr>
+				<tr>
+					<td>
+						비밀번호
+					</td>
+					<td>
+						${myInfo.uv.pwd}
+					</td>
+				</tr>
+			</table>
+			<div class="modifyCon">
+				<button type="button" class="submitBtn" id="userInfoModify" onclick="location.href='/foody/user/modify.do'">회원정보수정</button>
+				<button type="button" class="submitBtn" id="userExit" onclick="location.href='/foody/user/exit.do'">탈퇴하기</button>
 			</div>
 		</div>
 	</div>
+</div>

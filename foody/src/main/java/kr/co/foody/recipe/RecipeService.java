@@ -15,6 +15,9 @@ public interface RecipeService {
 	
 	Map viewRecipe(int no, HttpSession sess);
 	Map viewModify(int no);
+	int updateRecipe(Map cri);
+	int deleteIngredient(int no);
+	int deleteProcess(int no);
 	
 	List<String> large_cate(int i);
 	Map search(Map cri, Model model, HttpSession sess); 

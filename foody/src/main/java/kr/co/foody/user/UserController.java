@@ -61,19 +61,6 @@ public class UserController {
 		return "user/modify";
 	}
 	
-	@PostMapping("/user/modify.do")
-	public String modify(UserVO uvo, Model model,HttpServletRequest req) {
-		if(service.userInfoUpdate(uvo,req) == true) {
-			model.addAttribute("msg", "업데이트 성공!!");
-			model.addAttribute("url", "/foody/mypage/mypage.do");
-			return "common/alert";
-		} else {
-			model.addAttribute("msg", "업데이트에 실패하였습니다.");
-			return "common/alert";
-		}
-	}
-	
-	
 	@PostMapping("/user/login.do") // 로그인 이메일 비밀번호 일치 확인
 	public String login(UserVO vo, HttpSession sess, Model model) {
 		if(service.loginCheck(vo, sess)) {
@@ -135,7 +122,6 @@ public class UserController {
 				model.addAttribute("msg", "회원가입되었습니다 추가정보를 입력하세요.");
 				model.addAttribute("url", "signUpNext.do");
 			}
-			
 			return "common/alert"; 
 		} else {
 			model.addAttribute("msg", "회원가입 오류");
@@ -162,6 +148,32 @@ public class UserController {
 //		}
 //		return "common/return";
 //	}
+	
+	@PostMapping("/user/modify.do")
+	public String modify(UserVO uvo, Model model,HttpServletRequest req
+			, @RequestParam MultipartFile chooseFile) {
+		int a = service.userInfoUpdate(uvo, req);
+		if((a == 0 || a == 1) && !chooseFile.isEmpty()) {
+			// 파일명 초기화
+			String org = chooseFile.getOriginalFilename();
+			String ext = org.substring(org.lastIndexOf("."));
+			String real = new Date().getTime()+ext;
+			// 파일저장
+			String path = req.getRealPath("/upload/");
+			try {
+				chooseFile.transferTo(new File(path+real));
+			} catch(Exception e) {}
+			uvo.setSelfi(real);
+		}
+		if(service.signUpNext(uvo) > 0) {
+			model.addAttribute("msg", "업데이트 성공!!");
+			model.addAttribute("url", "/foody/mypage/mypage.do");
+			return "common/alert";
+		} else {
+			model.addAttribute("msg", "업데이트에 실패하였습니다.");
+			return "common/alert";
+		}
+	}
 	
 	@PostMapping("/user/signUpNext.do")
 	public String signUpNext(Model model, UserVO vo

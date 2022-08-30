@@ -153,9 +153,9 @@
 													+' data-allergy="'+data[i].allergy_no+'">'
 													+data[i].name
 													+'<input type="hidden" name=ingredient_no value="'+data[i].no+'">'
-													+'<input type="number" value="100" min="1" name="weight" data-no="'+data[i].no+'" id="weight'
+													+'<input type="number" value="100" min="0" name="weight" data-no="'+data[i].no+'" id="weight'
 													+num+'"> g'
-													+'(수량: '+'<input type="text" min="1" name="quantity">'+')'
+													+'(수량: '+'<input type="text" name="quantity">'+')'
 													+'<input type="button" class="deleteSpan" value="삭제">'
 													+allergyCaution
 													+'<br>'
@@ -177,9 +177,9 @@
 												+' data-allergy="'+data[i].allergy_no+'">'
 												+data[i].name+'('+data[i].detail+')'
 												+'<input type="hidden" name=ingredient_no value="'+data[i].no+'">'
-												+'<input type="number" value="100" min="1" name="weight" data-no="'+data[i].no+'" id="weight'
+												+'<input type="number" value="100" min="0" name="weight" data-no="'+data[i].no+'" id="weight'
 												+num+'"> g'
-												+'(수량: '+'<input type="text" min="1" name="quantity">'+')'
+												+'(수량: '+'<input type="text" name="quantity">'+')'
 												+'<input type="button" class="deleteSpan" value="삭제">'
 												+allergyCaution
 												+'<br>'
@@ -266,9 +266,9 @@
 												+' data-allergy="'+data[i].allergy_no+'">'
 												+data[i].name
 												+'<input type="hidden" name=ingredient_no value="'+data[i].no+'">'
-												+'<input type="number" value="100" min="1" name="weight" data-no="'+data[i].no+'" id="weight'
+												+'<input type="number" value="100" min="0" name="weight" data-no="'+data[i].no+'" id="weight'
 												+num+'"> g'
-												+'(수량: '+'<input type="text" min="1" name="quantity">'+')'
+												+'(수량: '+'<input type="text" name="quantity">'+')'
 												+'<input type="button" class="deleteSpan" value="삭제">'
 												+allergyCaution
 												+'<br>'
@@ -290,9 +290,9 @@
 												+' data-allergy="'+data[i].allergy_no+'">'
 												+data[i].name+'('+data[i].detail+')'
 												+'<input type="hidden" name=ingredient_no value="'+data[i].no+'">'
-												+'<input type="number" value="100" min="1" name="weight" data-no="'+data[i].no+'" id="weight'
+												+'<input type="number" value="100" min="0" name="weight" data-no="'+data[i].no+'" id="weight'
 												+num+'"> g'
-												+'(수량: '+'<input type="text" min="1" name="quantity">'+')'
+												+'(수량: '+'<input type="text" name="quantity">'+')'
 												+'<input type="button" class="deleteSpan" value="삭제">'
 												+allergyCaution
 												+'<br>'
@@ -367,9 +367,9 @@
 							+' data-allergy="'+${dataMap.allergy_no}+'">'
 							+"${dataMap.name}"
 							+'<input type="hidden" name=ingredient_no value="'+${dataMap.ingredient_no}+'">'
-							+'<input type="number" value="'+${dataMap.weight}+'" min="1" name="weight" data-no="'+${dataMap.ingredient_no}+'" id="weight'
+							+'<input type="number" value="'+${dataMap.weight}+'" min="0" name="weight" data-no="'+${dataMap.ingredient_no}+'" id="weight'
 							+num+'"> g'
-							+'(수량: '+'<input type="text" min="1" value="${dataMap.quantity}" name="quantity">'+')'
+							+'(수량: '+'<input type="text" value="${dataMap.quantity}" name="quantity">'+')'
 							+'<input type="button" class="deleteSpan" value="삭제">'
 							+allergyCaution
 							+'<br>'
@@ -391,9 +391,9 @@
 							+' data-allergy="'+${dataMap.allergy_no}+'">'
 							+"${dataMap.name}"+'('+"${dataMap.detail}"+')'
 							+'<input type="hidden" name=ingredient_no value="'+${dataMap.ingredient_no}+'">'
-							+'<input type="number" value="'+${dataMap.weight}+'" min="1" name="weight" data-no="'+${dataMap.ingredient_no}+'" id="weight'
+							+'<input type="number" value="'+${dataMap.weight}+'" min="0" name="weight" data-no="'+${dataMap.ingredient_no}+'" id="weight'
 							+num+'"> g'
-							+'(수량: '+'<input type="text" min="1" value="${dataMap.quantity}" name="quantity">'+')'
+							+'(수량: '+'<input type="text" value="${dataMap.quantity}" name="quantity">'+')'
 							+'<input type="button" class="deleteSpan" value="삭제">'
 							+allergyCaution
 							+'<br>'
@@ -605,14 +605,36 @@
 			
 			// ------------------썸네일+사진 div 만드는 함수(호출)----------------------
 			var PNum = 0;
-			function receipePicture(){
+			function recipePicture(){
 				var append_str ='<span style="height: 140px; width: 230px;">'
 								+'<input type="file" name="thumbnail" data-val="'+PNum+'" id="pictureUpload'+PNum+'" style="display:none"/>'	
 								+'<span onclick="clickeventPic('+PNum+')" style="padding-top:0px; margin-right:20px; float:left; height: 140px; width: 220px; background-color:#ECECEC; text-align: center;">'
-								+'<img id="additionalPic'+PNum+'" src="resources/img/PlusIcon.png" style="height: 140px; width: 220px; object-fit: cover;">'
+							
+				if(PNum == 0){
+					append_str +='<img id="additionalPic'+PNum+'" src="${recipe.thumbnail}" style="height: 140px; width: 220px; object-fit: cover;">'
 								+'</span></span>'
-
-				$('#receipePicture').append(append_str);
+				}else if(PNum ==1){
+					
+					<c:if test="${not empty recipe.addedpicture1}">
+					append_str += '<img id="additionalPic'+PNum+'" src="<c:out value="${recipe.addedpicture1}"/>" style="height: 140px; width: 220px; object-fit: cover;">'
+								+'</span></span>'
+					</c:if>
+					<c:if test="${empty recipe.addedpicture1}">
+						append_str += '<img id="additionalPic'+PNum+'" src="<c:out value="/foody/resources/img/processImg.png"/>" style="height: 140px; width: 220px; object-fit: cover;">'
+									+'</span></span>'
+					</c:if>
+				}else{
+					<c:if test="${not empty recipe.addedpicture2}">
+					append_str += '<img id="additionalPic'+PNum+'" src="<c:out value="${recipe.addedpicture2}"/>" style="height: 140px; width: 220px; object-fit: cover;">'
+								+'</span></span>'
+					</c:if>
+					<c:if test="${empty recipe.addedpicture2}">
+						append_str += '<img id="additionalPic'+PNum+'" src="<c:out value="/foody/resources/img/processImg.png"/>" style="height: 140px; width: 220px; object-fit: cover;">'
+									+'</span></span>'
+					</c:if>
+				}
+								
+				$('#recipePicture').append(append_str);
 								
 				$("#pictureUpload"+PNum).change(function() {
 					readURL2(this,$(this).data('val'));
@@ -621,6 +643,12 @@
 				PNum++;
 				
 			}
+			
+			$(function(){
+				for(i=0;i<3;i++){
+					recipePicture();
+				}
+			});
 			
 			// -------------------STEP 숫자 바꿔주는 함수(호출) JS----------------------
 			function changeStepNum(processCount){
@@ -640,16 +668,55 @@
 			}
 			
 			
-			// -------------------조리과정 기본적으로 3개 만드는 함수 JS----------------------
+			// -------------------조리과정 불러오기 JS----------------------
 			$(function(){
-				for(var i=0; i<3; i++){
-					makeProcessDiv();
-					receipePicture(); 
-				}
+				
+				<c:forEach var="dataMap" items="${processlist}" varStatus="status">
+					var append_str ='<div class="process" id="process'+pNum+'" style="height: 150px; width: 1000px; padding:2.5px;">'
+									+'<input type="file" data-val="'+pNum+'" name="photo" id="imgupload'+pNum+'" style="display:none"/>'
+									+'<div class="stepNum" style="float:left;"><span>STEP'+(pNum+1)+'</span></div>'
+									+'<div id="Imagebutton'+pNum+'" onclick="clickevent('+pNum+')" style="padding-top:0px; height: 140px; width: 220px; float:left; background-color:#ECECEC; text-align: center;">'
+					
+					<c:if test="${not empty dataMap.photo}">					
+						append_str  +='<img id="processImg'+pNum+'" src="<c:out value="${dataMap.photo}"/>" style="height: 140px; width: 220px; object-fit: cover;">'
+									+'</div>'
+									+'<textarea name="content" id="processText'+pNum+'" rows="5" cols="30" style="height: 140px; padding:0px; resize:none;">${dataMap.content}</textarea>'
+					</c:if>
+					<c:if test="${empty dataMap.photo}">
+						append_str  +='<img id="processImg'+pNum+'" src="<c:out value="/foody/resources/img/processImg.png"/>" style="height: 140px; width: 220px; object-fit: cover;">'
+									+'</div>'
+									+'<textarea name="content" id="processText'+pNum+'" rows="5" cols="30" style="height: 140px; padding:0px; resize:none;">${dataMap.content}</textarea>'
+					</c:if>
+					if(pNum>2){
+						append_str += '<input type="button" data-val="'+pNum+'" class="deleteProcess" value="삭제">'+'</div>'
+						
+					}else{
+						append_str += '</div>'
+					}
+			
+					$('#processList').append(append_str);
+					processCount++;
+					changeStepNum(processCount);
+					
+					$("#imgupload"+pNum).change(function() {
+						readURL(this,$(this).data('val'));
+					}); 
+					
+					$(".deleteProcess").off('click');
+					$(".deleteProcess").click(function() {
+						var idx = $(this).index(".deleteProcess")+3;
+						$('.process').eq(idx).remove();
+						processCount--;
+						changeStepNum(processCount);
+					});
+					
+					pNum++;
+				
+				</c:forEach>
 			});
 			
 			// -------------------JS----------------------
-			function goSave(){
+			function goUpdate(){
 				if($("#name").val().trim() == ''){ // 요리명 체크
 					alert('요리명을 입력해 주세요.');
 					$("#name").focus();
@@ -665,12 +732,10 @@
 					$("#time").focus();
 					return false;
 				}
-				
 				if(document.getElementsByClassName('addedSpan').length == 0){
 					alert('재료를 하나라도 추가하세요');
 					return false;
 				}
-				
 				for(i=0;i<processCount;i++){
 					var textValue = document.getElementsByName('content')[i].value;
 					if(textValue == "" | textValue == null){
@@ -678,12 +743,6 @@
 
 						return false;
 					}
-				}
-				
-				var fileCheck = document.getElementById("pictureUpload0").value;
-				if(!fileCheck){
-					alert("썸네일 파일을 추가해주세요");
-					return false;
 				}
 			}
 		</script>
@@ -699,7 +758,7 @@
 
 	<body>
 	<%@ include file="../common/navBar.jsp" %>
-		<form id="frm" method="post" action="write.do" enctype="multipart/form-data" onsubmit="return goSave();">
+		<form id="frm" method="post" action="modify.do?no=${recipe.no}" enctype="multipart/form-data" onsubmit="return goUpdate();">
 			<!-- 요리명(name) -->
 			요리명: <input type="text" id=name name="name" value="${recipe.name}" ><br>
 			
@@ -793,7 +852,7 @@
 			</div>
 			
 			요리사진:
-			<div id="receipePicture" style="height: 150px; width: 100%;">
+			<div id="recipePicture" style="height: 150px; width: 100%;">
 			</div>
 		
 			<!-- 팁(tip) -->

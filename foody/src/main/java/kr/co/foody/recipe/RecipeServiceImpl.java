@@ -139,6 +139,18 @@ public class RecipeServiceImpl implements RecipeService {
 		return datamap;
 	}
 	
+	public int updateRecipe(Map cri) {
+		return mapper.updateRecipe(cri);
+	}
+	
+	public int deleteIngredient(int no) {
+		return mapper.deleteRecipe2(no);
+	}
+	
+	public int deleteProcess(int no) {
+		return mapper.deleteRecipe3(no);
+	}
+	
 	
 	//재료명 리스트 - 재료 분류 번호
 	@Override

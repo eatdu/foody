@@ -19,9 +19,9 @@
 								<a style="font-size: 17px;">${loginInfo.nik_name}</a>
 								<br><a style="font-size: 17px;">${loginInfo.email}</a>
 							</div>
-							<a href="/foody/mypage/mypage.do"><button type="button" id="mypage">마이페이지</button></a>
-							<a href="/foody/user/logout.do"><button type="button" id="logout">로그아웃</button></a>
-							<a href="/foody/user/modify.do"><button type="button" id="modify">회원정보수정</button></a>
+							<a href="/foody/mypage/mypage.do"><button class="btn1" type="button" id="mypage">마이페이지</button></a>
+							<a href="/foody/user/logout.do"><button class="btn1" type="button" id="logout">로그아웃</button></a>
+							<a href="/foody/user/modify.do"><button class="btn1" type="button" id="modify">회원정보수정</button></a>
 						</div>
 					</c:if>
 					<c:if test="${!empty loginInfo and empty loginInfo.selfi}">

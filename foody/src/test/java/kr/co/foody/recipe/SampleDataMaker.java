@@ -1,6 +1,9 @@
 package kr.co.foody.recipe;
 
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
@@ -12,6 +15,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
 import lombok.extern.log4j.Log4j;
+import util.DownloadImg;
 
 @WebAppConfiguration
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -21,6 +25,40 @@ public class SampleDataMaker {
 
 	@Autowired
 	RecipeMapper mapper;
+	
+	@Test
+	public void imgDownloader() {
+//		for (int no = 4; no <= 500; no++) {
+//			RecipeVO vo = mapper.view(no);
+//			if (vo == null) continue;
+//			Map map = new HashMap();
+//			map.put("no", no);
+//			map.put("thumbnail", vo.getThumbnail());
+//			mapper.copyThumbnail(map);
+//		}
+		
+		List<Integer> errorList = new ArrayList<Integer>();
+		for (int no = 4; no <= 500; no++) {
+			RecipeVO vo = mapper.view(no);
+			if (vo == null) continue;
+			String url = vo.getThumbnail();
+			String realPath = "C:\\Users\\tjoeun-jr-902-10\\git\\foody\\foody\\src\\main\\webapp\\upload\\";
+			String ext = "jpg";
+			String fileName = new Date().getTime() + "";
+			try {
+				DownloadImg.saveImage(url, realPath, fileName, ext);
+				Map map = new HashMap();
+				map.put("no", no);
+				map.put("thumbnail", fileName + "." + ext);
+				mapper.copyThumbnail(map);
+			} catch (Exception e) {
+				e.printStackTrace();
+				errorList.add(no);
+			}
+		}
+		System.out.println(errorList);
+	}
+	
 	
 	//@Test
 	public void updatePwd() {

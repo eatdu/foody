@@ -91,6 +91,7 @@ function loginCheckAdmin1(){
 	var data = {};
 	data.id = $("#id").val();
 	data.pwd = $("#pwd").val();
+	$("#button").val("인증번호 발송중..").attr("onclick","loginCheckAdmin2();").attr("disabled",true);
 	sendAjax(
 			"/foody/admin/login1.do",
 			data,
@@ -99,7 +100,7 @@ function loginCheckAdmin1(){
 					var html = "";
 					html += '<input class="login_ul_li_input" type="text" id="confirm" name="confirm" placeholder="인증번호" style="height:35px;padding-left: 5px;text-indent: 3px;font-size: 23px;margin-bottom: 5px;"><br>';
 					$("#form").append(html);
-					$("#button").val("인증하기").attr("onclick","loginCheckAdmin2();").attr("alt","인증하기");
+					$("#button").val("인증하기").attr("onclick","loginCheckAdmin2();").attr("alt","인증하기").attr("disabled",false);
 					$("#id").attr("readonly",true);
 					$("#pwd").attr("readonly",true);
 					alert("인증번호가 이메일로 발송되었습니다.");

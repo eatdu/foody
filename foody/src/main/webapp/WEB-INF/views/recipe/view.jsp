@@ -19,6 +19,18 @@
 		max-height: 25px;
 		max-width: 25px;
 		}
+		
+	.getBookmark img {
+		vertical-align: middle;
+		max-height: 25px;
+		max-width: 25px;
+	}
+	
+	.sub_title {
+		float:left;
+		font-size: 100%;
+		
+	}
 	</style>
 	
 	<!-- 포토리뷰 스와이퍼 css -->
@@ -34,6 +46,7 @@
 		var userNikname;
 		var userDayKcal;
 		$(function(){
+			console.log(${recipe.bookmark});
 			if("${loginUser}" == null || "${loginUser}" == ""){
 				console.log("로그인 정보가 없습니다.");
 				userNikname = "게스트";
@@ -44,6 +57,30 @@
 				userDayKcal = Number("${sessCal}");
 			}
 		});
+		
+		// 찜해제
+		/*
+		function processBmk() {
+			$.ajax({
+				url: "/foody/recipe/processBmk.do",
+				
+				data: {
+					no: ${recipe.no},
+					user_no: ${loginInfo.no}
+				},
+				success: function(res) {
+					console.log(res);
+					if (res.trim() == "insert") {
+						//document.getElementById("heartImg").src =;
+						console.log("꽉찬하트");
+					} else if (res.trim() == "delete") {
+						//$("#heartChange").html("<img id='heartImg' src='/foody/img/empty_heart.png'>");
+						console.log("빈하트");
+					}
+				}
+			});
+		}
+		*/
 		
 		// 댓글리뷰 리스트
 		function getComment(page) {
@@ -102,7 +139,7 @@
 		// 댓글 저장
 		function goSave() {
 			<c:if test="${empty loginInfo}">
-				alert('로그인 후 댓글을 작성하실 수 있습니다.');
+				alert('로그인 후 댓글을 작성하실 수 있습니다. 로그인 하시겠습니까?');
 				location.href='/foody/user/login.do';
 			</c:if>
 			<c:if test="${!empty loginInfo}">
@@ -156,7 +193,7 @@
 		// 대댓글 저장
 		function insert_reCmt(no) {
 			<c:if test="${empty loginInfo}">
-				alert('로그인 후 댓글을 작성하실 수 있습니다.');
+				alert('로그인 후 댓글을 작성하실 수 있습니다. 로그인 하시겠습니까?');
 				location.href='/foody/user/login.do';
 			</c:if>
 			<c:if test="${!empty loginInfo}">
@@ -321,11 +358,24 @@
 		<img src = "<c:out value="/foody/resources/img/processImg.png"/>" style="width:250px; height:140px;">
 	</c:if>
 	
+	<!-- 찜하기 -->
+	<div class="getBookmark">
+		<c:if test="${!empty loginInfo}">
+			<c:if test="${recipe.bookmark eq 1}">
+				<img id="heartImg" src="/foody/img/heart.png">
+	   		 	<a href="javascript:processBmk();">찜해제</a>
+	    		</c:if>
+			<c:if test="${recipe.bookmark eq 0 or empty recipe.bookmark}">
+				<img id="heartImg2" src="/foody/img/empty_heart.png">
+	   		 	<a href="javascript:processBmk();">찜하기</a>
+	    		</c:if>
+	    </c:if>
+	</div>
 	
 	<!-- 포토리뷰 -->
+	<h2 class="sub_title">포토 리뷰</h2>
 	<div class="swiper mySwiper">
 		<div class="swiper-wrapper">
-		<h2 class="sub_title">포토 리뷰</h3>
 			<c:forEach var="vo" items="${comment.list}" varStatus="idx">
 			<div class="swiper-slide"> 
 				<div class='reviewCard'>
@@ -334,7 +384,9 @@
 						<td class="imgCell">
 							<div height=150px; style='border-radius:15px; position:relative; max-height:150px; align-items:center; overflow:hidden; display:flex; justify-content:center;'>
 								<div class="reviewImg">
+									<c:if test="${!empty vo.photo}">
 									<img class="" width='100%' src="/foody/upload/${vo.photo}">
+									</c:if>
 								</div>
 							</div>
 						</td>
@@ -386,7 +438,7 @@
 	                            </tbody>
 	                        </table>
 	                   	</form>
-		                <h2 class="sub_title">댓글 리뷰</h3>
+		                <h2 class="sub_title">댓글 리뷰</h2><br>
                         <div id="commentArea"></div>
                 	</div>
                 	</div>

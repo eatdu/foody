@@ -22,4 +22,7 @@ public interface RecipeService {
 	List<Map> makeIngreNameList(String keyword);
 	List<Map> makeIngreDetailList(String keyword);
 	
+	int insertBmk(Map bmk);
+	int deleteBmk(Map bmk);
+	
 }

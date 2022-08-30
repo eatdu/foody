@@ -449,6 +449,20 @@
 		WHERE no = #{no}
 	</update>
 	
+	<!-- 찜 관련 -->
+	<!-- 유저가 찜했는지 조회 -->
+	<select id="getBmk" parameterType="map" resultType="int">
+		SELECT bookmark FROM feedback WHERE recipe_no=#{no} AND user_no=#{user_no}
+	</select>
+		<!-- 찜 인서트 -->
+	<insert id="insertBmk" parameterType="kr.co.foody.recipe.RecipeVO">
+		INSERT INTO feedback(recipe_no, user_no, bookmark)
+		VALUES (#{no}, #{user_no}, 1)
+	</insert>
+	<!-- 찜 해제 -->
+	<delete id="deleteBmk" parameterType="kr.co.foody.recipe.RecipeVO">
+		DELETE FROM feedback WHERE recipe_no={no} AND user_no={user_no} AND bookmark=1
+	</delete>
 	
 	<!-- 샘플 데이터 생성용 -->
 	<!-- 랜덤 회원정보 인서트 -->

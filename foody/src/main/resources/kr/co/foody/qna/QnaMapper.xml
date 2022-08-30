@@ -25,15 +25,15 @@
 <!-- 관리자 답변 등록 -->
 <insert id="reply" parameterType="kr.co.foody.qna.QnaVO">
 	insert into qna (
-		user_no, manager_no, title, content, replydate, gno, ono, depth
+		user_no, qtype, manager_no, title, content, replydate, gno, ono, depth
 	) values (
-		#{user_no}, #{manager_no}, #{title}, #{content}, now(), #{gno}, #{ono}, #{depth}
+		#{user_no}, #{qtype}, #{manager_no}, #{title}, #{content}, now(), #{gno}, #{ono}, #{depth}
 	)
 </insert>
 
 <!-- 답변시 답변여부 업뎃 -->
-<update id="updateResponse" parameterType="kr.co.foody.qna.QnaVO">
-	update qna set response = response+1 where no = #{no}
+<update id="updateResponse" parameterType="int">
+	update qna set response = response+1 where no = #{qna_no}
 </update>
 
 <!-- 게시글 수 조회 -->
@@ -62,7 +62,8 @@
 
 <!-- FAQ 조회 -->
 <select id="getFaq" parameterType="kr.co.foody.qna.QnaVO" resultType="kr.co.foody.qna.QnaVO">
-	select * from qna order by regdate desc
+	select * from qna
+	order by gno desc, ono asc
 	limit ${startIdx}, ${pageRow}
 </select>
 
@@ -75,8 +76,8 @@
 		<if test="period != 'all' and period != null and period != ''">
 			regdate >= date_add(now(), interval -${period})
 		</if>
-		<if test="response != 0">
-			and response > 0
+		<if test="response == 1">
+			response = 1
 		</if>
 		<if test="stype != null and stype != ''">
 			<if test="stype == 'title' or stype == 'content'">
@@ -90,7 +91,7 @@
 			</if>
 		</if>
 	</where>
-	order by regdate desc
+	order by gno desc, ono asc
 	limit ${startIdx}, ${pageRow}
 </select>
 
@@ -100,7 +101,8 @@
 </select>
 <!-- 내가 한 질문 조회 -->
 <select id="getMyQna" parameterType="kr.co.foody.qna.QnaVO" resultType="kr.co.foody.qna.QnaVO">
-	select * from qna where user_no = #{user_no} order by regdate desc
+	select * from qna where user_no = #{user_no}
+	order by gno desc, ono asc, regdate desc
 	limit ${startIdx}, ${pageRow}
 </select>
 

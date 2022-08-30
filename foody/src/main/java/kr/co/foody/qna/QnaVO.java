@@ -20,6 +20,7 @@ public class QnaVO {
 	private int ono;
 	private int depth;
 	private String user_name;
+	private int qna_no;
 	
 	private String stype;
 	private String sword;

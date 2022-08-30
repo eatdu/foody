@@ -46,6 +46,10 @@ public interface RecipeMapper {
 	//  레시피 삭제시 삭제여부 변경
 	boolean updatePrint(int no);
 	
+	// 찜관련
+	Integer getBmk(Map bmk);
+	int insertBmk(Map bmk);
+	int deleteBmk(Map bmk);
 	
 	//샘플 데이터 생성용
 	int insertRandomUser(Map user);

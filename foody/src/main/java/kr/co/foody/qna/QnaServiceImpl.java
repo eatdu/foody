@@ -14,7 +14,9 @@ public class QnaServiceImpl implements QnaService {
 	
 	@Override
 	public int insert(QnaVO vo) {
-		return mapper.insert(vo);
+		int r = mapper.insert(vo);
+		if (r == 1) mapper.gnoUpdate(vo.getNo());
+		return r;
 	}
 	
 	@Override
@@ -22,7 +24,11 @@ public class QnaServiceImpl implements QnaService {
 		mapper.onoUpdate(vo);
 		vo.setOno(vo.getOno()+1);
 		vo.setDepth(vo.getDepth()+1);
-		return mapper.reply(vo);
+		int r = mapper.reply(vo);
+		if (r == 1) {
+		mapper.updateResponse(vo.getQna_no());
+		}
+		return r;
 	}
 	
 	@Override
@@ -133,6 +139,8 @@ public class QnaServiceImpl implements QnaService {
 	public boolean delete(int no) {
 		return mapper.delete(no);
 	}
+
+
 
 	
 }

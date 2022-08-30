@@ -23,6 +23,13 @@ public class SampleDataMaker {
 	RecipeMapper mapper;
 	
 	//@Test
+	public void updatePwd() {
+		for(int i = 23; i < 122; i++) {
+			mapper.updatePwd(i);
+		}
+	}
+	
+	//@Test
 	public void randomComment2() {
 		for(int i = 5057; i < 5197; i++) {
 			Map map = new HashMap();
@@ -69,7 +76,7 @@ public class SampleDataMaker {
 //		}
 	}
 	
-	@Test
+	//@Test
 	public void randomReg() {
 		for (int i=56; i<=5196; i++) {
 			mapper.randomReg(i);

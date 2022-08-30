@@ -5,7 +5,7 @@
 </head>
 <style>
 form {
-	margin: 50px 0 50px 0;
+	margin: 50px 0 20px 0;
 }
 html {
 	height: 100%;
@@ -16,16 +16,17 @@ div {
     justify-content: center;
     align-items: center;
     height: 100%;
+    top: -100px;
+    position: relative;
 }
 h1 {
-    font-size: 150px;
+    font-size: 120px;
 }
-
 h2 {
-    font-size: 50px;
+    font-size: 30px;
 }
 .login_sub {
- 	  	display: flex;
+  	display: flex;
   	justify-content: center;
   	align-items:center;
   	min-height: 60vh;
@@ -96,7 +97,7 @@ function loginCheckAdmin1(){
 			function(result){
 				if (result == true) {
 					var html = "";
-					html += '<input class="login_ul_li_input" type="text" id="confirm" name="confirm" placeholder="인증번호" style="height:50px;padding-left: 5px;text-indent: 3px;font-size: 25px;"><br>';
+					html += '<input class="login_ul_li_input" type="text" id="confirm" name="confirm" placeholder="인증번호" style="height:35px;padding-left: 5px;text-indent: 3px;font-size: 23px;margin-bottom: 5px;"><br>';
 					$("#form").append(html);
 					$("#button").val("인증하기").attr("onclick","loginCheckAdmin2();").attr("alt","인증하기");
 					$("#id").attr("readonly",true);
@@ -135,8 +136,8 @@ function loginCheckAdmin2(){
 	<h1>Foody</h1>
 	<h2>관리자 페이지</h2>
 	<form action="login.do" method="post" id="form">
-		<input class="login_ul_li_input" type="text" id="id" name="id" placeholder="아이디" style="height:50px;padding-left: 5px;text-indent: 3px;font-size: 25px;"><br>
-		<input class="login_ul_li_input" type="password" id="pwd" name="pwd" placeholder="비밀번호" style="height:50px;padding-left: 5px;text-indent: 3px;font-size: 25px;"><br>
+		<input class="login_ul_li_input" type="text" id="id" name="id" placeholder="아이디" style="height:35px;padding-left: 5px;text-indent: 3px;font-size: 23px;margin-bottom: 5px;"><br>
+		<input class="login_ul_li_input" type="password" id="pwd" name="pwd" placeholder="비밀번호" style="height:35px;padding-left: 5px;text-indent: 3px;font-size: 23px;margin-bottom: 5px;"><br>
 	</form>
     <input class="loginBtn" id="button" type="button" value="로그인" alt="로그인" onclick="loginCheckAdmin1();"/>
 </div>

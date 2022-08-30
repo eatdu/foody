@@ -529,4 +529,10 @@
 		update comment set gno = #{gno}
 		where no = #{gno}
 	</update>
+	
+	<!-- 비밀번호 암호화 -->
+	<update id="updatePwd" parameterType="int">
+		update user set pwd = md5("test1234")
+		where no = #{no}
+	</update>
 </mapper>

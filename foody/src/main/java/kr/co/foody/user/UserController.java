@@ -57,7 +57,42 @@ public class UserController {
 		return "user/findPwd";
 	}
 	
-	@GetMapping("/user/modify.do") // 회원정보수정 페이지
+	@PostMapping("/user/modifyPwdCheck.do") // 회원정보수정 비밀번호체크
+	public String modifyPwdCheck(Model model, HttpSession sess, UserVO vo) {
+		if(service.pwdCheck(vo, sess)) {
+			model.addAttribute("msg", "비밀번호 일치");
+			model.addAttribute("url", "modify.do");
+			return "common/alert";
+		} else {
+			model.addAttribute("msg", "비밀번호 불일치");
+			return "common/alert";
+		}
+	}
+	
+	@PostMapping("/user/exitPwdCheck.do") // 회원탈퇴 비밀번호체크
+	public String exitPwdCheck(Model model, HttpSession sess, UserVO vo) {
+		if(service.pwdCheck(vo, sess)) {
+			model.addAttribute("msg", "비밀번호 일치");
+			model.addAttribute("url", "exit.do");
+			return "common/alert";
+		} else {
+			model.addAttribute("msg", "비밀번호 불일치");
+			return "common/alert";
+		}
+	}
+	
+	@GetMapping("/user/exit.do") // 회원탈퇴 메핑
+	public String userExit(Model model, HttpServletRequest req, UserVO vo, HttpSession sess) {
+		HttpSession session = req.getSession();
+		service.userExit(session);
+		session.invalidate();
+		
+		model.addAttribute("msg", "탈퇴완료");
+		model.addAttribute("url", "/foody/recipe/main.do");
+		return "common/alert";
+	}
+	
+	@GetMapping("/user/modify.do") // 회원수정 페이지
 	public String modify(Model model, HttpSession sess) {
 		model.addAttribute("modify", service.modify(sess));
 		return "user/modify";
@@ -151,7 +186,7 @@ public class UserController {
 //		return "common/return";
 //	}
 	
-	@PostMapping("/user/modify.do")
+	@PostMapping("/user/modify.do") // 회원수정 업데이트
 	public String modify(UserVO uvo, Model model,HttpServletRequest req
 			, @RequestParam MultipartFile chooseFile, HttpSession sess) {
 		int a = service.userInfoUpdate(uvo, req, sess);
@@ -179,7 +214,7 @@ public class UserController {
 		}
 	}
 	
-	@PostMapping("/user/signUpNext.do")
+	@PostMapping("/user/signUpNext.do") // 회원가입 추가정보 입력
 	public String signUpNext(Model model, UserVO vo
 			, @RequestParam MultipartFile chooseFile
 			,HttpServletRequest req) {
@@ -218,21 +253,6 @@ public class UserController {
 			return "common/alert";
 		}
 	}
-	
-	@GetMapping("/user/exit.do")
-	public String userExit(Model model, HttpServletRequest req) {
-		HttpSession sess = req.getSession();
-		if(service.userExit(sess)) {
-			sess.invalidate();
-			model.addAttribute("msg", "탈퇴완료");
-			model.addAttribute("url", "/foody/recipe/main.do");
-			return "common/alert";
-		} else {
-			model.addAttribute("msg", "탈퇴실패");
-			return "common/alert";
-		}
-	}
-	
 	
 	
 	

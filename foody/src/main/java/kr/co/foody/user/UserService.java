@@ -28,5 +28,6 @@ public interface UserService {
 	
 	boolean userExit(HttpSession sess);
 	
+	boolean pwdCheck(UserVO vo, HttpSession sess);
 	
 }

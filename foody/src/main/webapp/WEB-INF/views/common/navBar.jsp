@@ -2,37 +2,56 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <div id="header">
 	<div class="header_inner">
-		<h1>Foody</h1>
-		<p class="login_name"></p>
+		<a href="/foody/recipe/main.do"><h1 style="font-size: 50px;">Foody</h1></a>
 		<!-- util : s -->
 		<div class="util">
 			<ul>
 				<li>
 				<div class='navInfo'>
-					<c:if test="${!empty loginInfo}">
-						<div class="navUserImg" id="navUserImg" style='background:url(/foody/resources/img/emoji-smile.svg)'></div>
+					<c:if test="${!empty loginInfo and !empty loginInfo.selfi}">
+						<div class="navUserImg" id="navUserImg" style='background:url(/foody/upload/${loginInfo.selfi});background-size: cover;'></div>
 						<div class="navUserName">
 							<span>${loginInfo.nik_name}</span>
 						</div>
 						<div class="navUserInfo" id="navUserInfo">
-							<img src='/foody/resources/img/emoji-smile.svg' style='width:50px; height:50px'><br>
-							<span>${loginInfo.nik_name} 님</span><br>
-							<span>email: ${loginInfo.email}</span><br>
+							<div class="navUserImgBig" style="background:url(/foody/upload/${loginInfo.selfi});background-size: cover;"></div>
+							<div class="userDetail">
+								<a style="font-size: 17px;">${loginInfo.nik_name}</a>
+								<br><a style="font-size: 17px;">${loginInfo.email}</a>
+							</div>
 							<a href="/foody/mypage/mypage.do"><button type="button" id="mypage">마이페이지</button></a>
 							<a href="/foody/user/logout.do"><button type="button" id="logout">로그아웃</button></a>
 							<a href="/foody/user/modify.do"><button type="button" id="modify">회원정보수정</button></a>
 						</div>
 					</c:if>
+					<c:if test="${!empty loginInfo and empty loginInfo.selfi}">
+						<div class="navUserImg" id="navUserImg" style='background:url(/foody/resources/img/emoji-smile.svg);background-size: cover;'></div>
+						<div class="navUserName">
+							<span>${loginInfo.nik_name}</span>
+						</div>
+						<div class="navUserInfo" id="navUserInfo">
+							<div class="navUserImgBig" style="background:url(/foody/resources/img/emoji-smile.svg);background-size: cover;"></div>
+							<div class="userDetail">
+								<a style="font-size: 17px;">${loginInfo.nik_name}</a>
+								<br><a style="font-size: 17px;">${loginInfo.email}</a>
+							</div>
+							<a href="/foody/mypage/mypage.do"><button class="btn1" type="button" id="mypage">마이페이지</button></a>
+							<a href="/foody/user/logout.do"><button class="btn1" type="button" id="logout">로그아웃</button></a>
+							<a href="/foody/user/modify.do"><button class="btn1" type="button" id="modify">회원정보수정</button></a>
+						</div>
+					</c:if>
 					<c:if test="${empty loginInfo}">
-						<div class="navUserImg" id="navUserImg" style='background:url(/foody/resources/img/emoji-smile.svg)'></div>
+						<div class="navUserImg" id="navUserImg" style='background:url(/foody/resources/img/emoji-smile.svg);background-size: cover;'></div>
 						<div class="navUserName">
 							<span>Guest</span>
 						</div>
 						<div class="navUserInfo" id="navUserInfo">
-							<img src='/foody/resources/img/emoji-smile.svg' style='width:50px; height:50px'><br>
-							<span>손님</span><br>
-							<a href="/foody/user/login.do"><button type="button">로그인</button></a>
-							<a href="/foody/user/signUp.do"><button type="button">회원가입</button></a>
+							<div class="navUserImgBig" style="background:url(/foody/resources/img/emoji-smile.svg);background-size: cover;"></div>
+							<div class="userDetail">
+								<a style="font-size: 17px;">Guest</a>
+							</div>
+							<a href="/foody/user/login.do"><button class="btn1" type="button">로그인</button></a>
+							<a href="/foody/user/signUp.do"><button class="btn1" type="button">회원가입</button></a>
 						</div>
 					</c:if>
 				</div>
@@ -40,6 +59,7 @@
 			</ul>
 		</div>
 		<!-- util : e --> 
+
 		
 		<div id="menu">
   			<ul class="menu">
@@ -65,12 +85,15 @@
 		$("#navUserImg").on("click", function(){
 			dis($("#navUserInfo"));
 		});
+		$(".navUserName").on("click", function(){
+			dis($("#navUserInfo"));
+		});
 	});
     function dis(obj){
         if($(obj).css('display') == 'none'){
-	        $(obj).show();
+	        $(obj).css("display", "inline-block");
 	    }else{
-	        $(obj).hide();
+	        $(obj).css("display", "none");
 	    }
     }
 </script>

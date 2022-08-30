@@ -9,6 +9,7 @@
 <script>
 function openModal(){
 	$('#modal').plainModal('open');
+	$('#modal').css("display", "inline-block");
 }
 
 $( function() {
@@ -19,7 +20,7 @@ $( function() {
     var toStr = toY + "-" + toM + "-" + toD;
     $("#to").val(toStr);
 	
-    var dftFrom = new Date(Date.parse(to) - 30*1000*60*60*24);
+    var dftFrom = new Date(Date.parse(to) - $("#selectDate").val()*1000*60*60*24);
 	var dftFromY = dftFrom.getFullYear();
 	var dftFromM = dftFrom.getMonth() + 1;
     var dftFromD = dftFrom.getDate();
@@ -53,7 +54,9 @@ $( function() {
           dayNamesShort: ['일','월','화','수','목','금','토'],
           dayNamesMin: ['일','월','화','수','목','금','토'],
           showMonthAfterYear: true,
-          yearSuffix: '년'
+          yearSuffix: '년',
+          buttonImage: "/foody/resources/img/calendar.png", //버튼 이미지 경로
+          buttonImageOnly: true //기본 버튼의 회색 부분을 없애고, 이미지만 보이게 함
         })
         .on( "change", function() {
           to.datepicker( "option", "minDate", getDate( this ) );
@@ -70,7 +73,9 @@ $( function() {
         dayNamesShort: ['일','월','화','수','목','금','토'],
         dayNamesMin: ['일','월','화','수','목','금','토'],
         showMonthAfterYear: true,
-        yearSuffix: '년'
+        yearSuffix: '년',
+        buttonImage: "/foody/resources/img/calendar.png", //버튼 이미지 경로
+        buttonImageOnly: true //기본 버튼의 회색 부분을 없애고, 이미지만 보이게 함
       })
       .on( "change", function() {
         from.datepicker( "option", "maxDate", getDate( this ) );
@@ -86,15 +91,44 @@ $( function() {
  
       return date;
     }
+    searchRcp(1);
 } );
 </script>
 
 <style>
+.ui-datepicker-trigger {
+    position: relative;
+    top: 2px;
+    width: 24px;
+    margin-left: 5px;
+}
 #modal {
 	width: 80%;
 	height: 80%;
 	background-color: white;
 	display: none;
+}
+#modal .summaryArea{
+    width: 100%;
+    height: 30%;
+    background: aliceblue;
+}
+#modal .ingreArea{
+    width: 50%;
+    height: 50%;
+    float: left;
+    background: antiquewhite;
+}
+#modal .processArea{
+    width: 50%;
+    height: 50%;
+    float: right;
+    background: aqua;
+}
+#modal .endArea{
+	width: 100%;
+    height: 20%;
+    background: white;
 }
 #bbs {
 	width: 90%;
@@ -139,9 +173,9 @@ td.head{
 
 			확인여부
 				<select name="adminChk">
-					<option value='1'>확인</option>
-					<option value='0'>미확인</option>
-					<option value='0 or 1' selected>모두</option>
+					<option value='1' <c:if test="${mode eq 2}">selected</c:if>>확인</option>
+					<option value='0' <c:if test="${mode eq 3}">selected</c:if>>미확인</option>
+					<option value='0 or 1' <c:if test="${mode eq 0 or mode eq 1}">selected</c:if>>모두</option>
 				</select>
 				삭제여부
 				<select name="print">
@@ -164,8 +198,8 @@ td.head{
 			기간: 
 			<select id="selectDate" name="date">
 				<option value='1'>1일</option>
-				<option value='7'>1주</option>
-				<option value='30' selected>1개월</option>
+				<option value='7' <c:if test="${mode eq 1}">selected</c:if>>1주</option>
+				<option value='30' <c:if test="${mode != 1}">selected</c:if>>1개월</option>
 				<option value='90'>3개월</option>
 				<option value='180'>6개월</option>
 				<option value='365'>1년</option>
@@ -189,6 +223,6 @@ td.head{
 	<div id="recipeArea">
 	</div>
 </div>
-<div id="modal">모달</div>
+<div id="modal"></div>
 </body>
 </html>

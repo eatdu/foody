@@ -46,7 +46,6 @@
 		<property name="defaultEncoding" value="utf-8"></property>
 		<property name="maxUploadSize" value="104857560"></property>
 		<property name="maxUploadSizePerFile" value="2097152"></property>
-		<property name="uploadTempDir" value="file:/D:/kdigital/upload/temp"></property>
 		<property name="maxInMemorySize" value="10485756"></property>
 	</bean>
 	
@@ -59,6 +58,22 @@
 		<property name="dataSource" ref="dataSource"></property>
 	</bean>
 	
+	<!-- 인터셉터 -->
+	<mvc:interceptors>
+	<!-- 관리자 로그인 확인 -->
+		<mvc:interceptor>
+		<!-- 
+			<mapping path="/board/insert.do"/>
+			<mapping path="/board/edit.do"/>
+			<mapping path="/board/write.do"/>
+		 -->
+			<mvc:mapping path="/admin/**/"/>
+			<mvc:exclude-mapping path="/admin/login.do"/>
+			<mvc:exclude-mapping path="/admin/login1.do"/>
+			<mvc:exclude-mapping path="/admin/login2.do"/>
+			<bean class="kr.co.foody.intercepter.AdminLoginInterceptor" />
+		</mvc:interceptor>
+	</mvc:interceptors>
 </beans>
 
 

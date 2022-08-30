@@ -56,6 +56,9 @@ body{
     margin: 2%;
     float: left;
 }
+#dashBoard .container h2{
+	font-size: 26px;
+}
 #chartContainer {
 	height: 80%;
 	width: 80%;
@@ -76,10 +79,10 @@ body{
 		</div>
 		<div class="container" id='rcpReport'>
 			<h2>레시피현황</h2>
-			총 레시피 수: ${cntRcp.all}<br>
-			최근 7일간 등록된 레시피: ${cntRcp.weekAll}<br>
-			기확인된 레시피 건수: ${cntRcp.checked}<br>
-			미확인 레시피 건수: ${cntRcp.notChecked}
+			<a href="recipe.do?mode=0">총 레시피 수: ${cntRcp.all}</a><br>
+			<a href="recipe.do?mode=1">최근 7일간 등록된 레시피: ${cntRcp.weekAll}</a><br>
+			<a href="recipe.do?mode=2">기확인된 레시피 건수: ${cntRcp.checked}</a><br>
+			<a href="recipe.do?mode=3">미확인 레시피 건수: ${cntRcp.notChecked}</a>
 		</div>
 		<div class="container" id='replyReport'>
 			<h2>댓글현황</h2>

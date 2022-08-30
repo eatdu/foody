@@ -78,7 +78,7 @@
 	delete from board where no=#{no}
 </delete>
 
-<!-- 회원 수 조회 -->
+	<!-- 회원 수 조회 -->
 	<select id="userCount" parameterType="kr.co.foody.board.BoardVO" resultType="int">
 		select count(*) from user
 		<where>

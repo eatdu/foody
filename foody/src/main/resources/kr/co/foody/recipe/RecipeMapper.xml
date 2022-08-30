@@ -78,7 +78,35 @@
 			#{user_no}, #{recipe_no},NOW()
 		)
 	</insert>
-
+	
+	<!-- 레시피 정보(하나씩 있는 기본 정보) 수정 -->
+	<update id="updateRecipe" parameterType="Map">
+		update recipe.recipe
+			set name = #{name},
+				intro = #{intro},
+				type = #{type},
+				time = #{time},
+				thumbnail =#{thumbnail},
+				addedpicture1 = #{addedpicture1},
+				addedpicture2 = #{addedpicture2},
+				tip = #{tip},
+				serving = #{serving},
+				regdate= NOW()
+    	where no= #{no};
+	</update>
+	
+	<!-- 레시피 번호로 재료행 삭제 -->
+	<delete id="deleteRecipe2" parameterType="int">
+		DELETE FROM recipe.ingre_recipe_map
+     	WHERE recipe_no = #{no};
+	</delete>
+	
+	<!-- 레시피 번호로 재료행 삭제 -->
+	<delete id="deleteRecipe3" parameterType="int">
+		DELETE FROM recipe.process
+     	WHERE recipe_no = #{no};
+	</delete>
+	
 	<!-- 레시피no로 해당 레시피에 필요한 재료 리스트 조회하는 sql -->
 	<select id='selectIngreList' parameterType="int" resultType="kr.co.foody.recipe.IngredientVO">
 		SELECT
@@ -367,11 +395,13 @@
 	</select>
 	
 	<!-- 재료 검색어로 재료명 리스트 조회하는 sql -->
-	<select id='selectIngreNameList2' parameterType="string" resultType="string">
+	<select id='selectIngreNameList2' parameterType="map" resultType="string">
 		SELECT DISTINCT name FROM ingre
-		WHERE (name LIKE '%${keyword}%'
-			OR detail LIKE '%${keyword}%')
+		WHERE (name LIKE '%${data}%'
+			OR detail LIKE '%${data}%')
+			<if test="admin != 1">
 			AND print = 0
+			</if>
 	</select>
 	
 	<!-- 관리자 관련 -->

@@ -18,13 +18,17 @@ public interface RecipeMapper {
 	List<Map> processView(int no);
 	List<Map> ingredientView(int no);
 	
+	int updateRecipe(Map cri);
+	int deleteRecipe2(int no);
+	int deleteRecipe3(int no);
+	
 	RegdateVO bringRegdate(RegdateVO vo);
 	int updateRegdate(RegdateVO vo);
 	int insertRegdate(RegdateVO vo);
 	
 	List<IngredientVO> selectIngreList(int no);
 	List<String> selectIngreNameList(int no);
-	List<String> selectIngreNameList2(String keyword);
+	List<String> selectIngreNameList2(Map keyword);
 	List<IngredientVO> selectIngreDetail(String keyword);
 	
 	List<RecipeVO> selectAll(Map cri);

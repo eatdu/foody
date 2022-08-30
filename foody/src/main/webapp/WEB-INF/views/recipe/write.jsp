@@ -19,7 +19,7 @@
 			var num=0; //추가되는 재료들의 weight값을 구분해주는 num
 			var options;
 			var userNickname= String("${loginInfo.nik_name}");
-		
+			
 			// -------------------재료종류 드롭다운 클릭 JS----------------------
 			$(function(){
 				$("#mainCate_drop").on("change", function(){
@@ -120,7 +120,7 @@
 			});
 			// -------------------드롭다운 선택 후 '추가'버튼 클릭(호출) JS----------------------
 			function cateAdd(){
-				
+			
 				//드롭다운 3개 다 선택되어 있어야 추가 가능
 				if($("#mainCate_drop :selected").val() == "" ||$("#ingredientName_drop :selected").val() == ""||$("#subCate_drop :selected").val() == ""){
 					alert("카테고리를 다 선택하세요");
@@ -153,9 +153,9 @@
 													+' data-allergy="'+data[i].allergy_no+'">'
 													+data[i].name
 													+'<input type="hidden" name=ingredient_no value="'+data[i].no+'">'
-													+'<input type="number" value="100" min="1" name="weight" data-no="'+data[i].no+'" id="weight'
+													+'<input type="number" value="100" min="0" name="weight" data-no="'+data[i].no+'" id="weight'
 													+num+'"> g'
-													+'(수량: '+'<input type="text" min="1" name="quantity">'+')'
+													+'(수량: '+'<input type="text" name="quantity">'+')'
 													+'<input type="button" class="deleteSpan" value="삭제">'
 													+allergyCaution
 													+'<br>'
@@ -177,9 +177,9 @@
 												+' data-allergy="'+data[i].allergy_no+'">'
 												+data[i].name+'('+data[i].detail+')'
 												+'<input type="hidden" name=ingredient_no value="'+data[i].no+'">'
-												+'<input type="number" value="100" min="1" name="weight" data-no="'+data[i].no+'" id="weight'
+												+'<input type="number" value="100" min="0" name="weight" data-no="'+data[i].no+'" id="weight'
 												+num+'"> g'
-												+'(수량: '+'<input type="text" min="1" name="quantity">'+')'
+												+'(수량: '+'<input type="text" name="quantity">'+')'
 												+'<input type="button" class="deleteSpan" value="삭제">'
 												+allergyCaution
 												+'<br>'
@@ -266,9 +266,9 @@
 												+' data-allergy="'+data[i].allergy_no+'">'
 												+data[i].name
 												+'<input type="hidden" name=ingredient_no value="'+data[i].no+'">'
-												+'<input type="number" value="100" min="1" name="weight" data-no="'+data[i].no+'" id="weight'
+												+'<input type="number" value="100" min="0" name="weight" data-no="'+data[i].no+'" id="weight'
 												+num+'"> g'
-												+'(수량: '+'<input type="text" min="1" name="quantity">'+')'
+												+'(수량: '+'<input type="text" name="quantity">'+')'
 												+'<input type="button" class="deleteSpan" value="삭제">'
 												+allergyCaution
 												+'<br>'
@@ -290,9 +290,9 @@
 												+' data-allergy="'+data[i].allergy_no+'">'
 												+data[i].name+'('+data[i].detail+')'
 												+'<input type="hidden" name=ingredient_no value="'+data[i].no+'">'
-												+'<input type="number" value="100" min="1" name="weight" data-no="'+data[i].no+'" id="weight'
+												+'<input type="number" value="100" min="0" name="weight" data-no="'+data[i].no+'" id="weight'
 												+num+'"> g'
-												+'(수량: '+'<input type="text" min="1" name="quantity">'+')'
+												+'(수량: '+'<input type="text" name="quantity">'+')'
 												+'<input type="button" class="deleteSpan" value="삭제">'
 												+allergyCaution
 												+'<br>'
@@ -338,6 +338,7 @@
 							}
 						}
 						kcalUpdate();
+						
 					},
 					error:function(){
 						alert("카테고리 추가버튼 클릭 error");
@@ -411,11 +412,11 @@
 				var serving= Number($('#serving').val());
 				
 				for(var i=0; i<sel_ingre.length;i++){
-					sum_carbo+= Number(sel_ingre[i].dataset.carbokcal);
-					sum_protein += Number(sel_ingre[i].dataset.proteinkcal);
-					sum_fat += Number(sel_ingre[i].dataset.fatkcal);
+					sum_carbo+= Number(sel_ingre[i].dataset.carbokcal*4);
+					sum_protein += Number(sel_ingre[i].dataset.proteinkcal*4);
+					sum_fat += Number(sel_ingre[i].dataset.fatkcal*9);
 				}
-				sum_kcal = (sum_carbo*4+ sum_protein*4 + sum_fat*9);
+				sum_kcal = sum_carbo+ sum_protein + sum_fat;
 				
 				var chart_carbo;
 				var chart_protein;
@@ -453,7 +454,7 @@
 				$("#chartContainer").CanvasJSChart(options); 
 				
 				var dayKcal = ${cal};
-				var leftKcal = dayKcal-sum_kcal;
+				var leftKcal = dayKcal-chart_kcal;
 				
 				options2={
 						title: {
@@ -504,7 +505,7 @@
 			
 			// -------------------조리과정 div 만드는 함수(호출)----------------------
             var pNum = 0;
-            var count = 0;
+            var processCount = 0;
             
 			function makeProcessDiv(){
 				var append_str ='<div class="process" id="process'+pNum+'" style="height: 150px; width: 1000px; padding:2.5px;">'
@@ -521,8 +522,8 @@
 					append_str += '</div>'
 				}
 				$('#processList').append(append_str);
-				count++;
-				changeStepNum(count);
+				processCount++;
+				changeStepNum(processCount);
 				
 				$("#imgupload"+pNum).change(function() {
 					readURL(this,$(this).data('val'));
@@ -532,34 +533,36 @@
 				$(".deleteProcess").click(function() {
 					var idx = $(this).index(".deleteProcess")+3;
 					$('.process').eq(idx).remove();
-					count--;
-					changeStepNum(count);
+					processCount--;
+					changeStepNum(processCount);
 				});
 				
 				pNum++;
+				
 			}
 			
 			// ------------------썸네일+사진 div 만드는 함수(호출)----------------------
 			var PNum = 0;
-			function receipePicture(){
+			function recipePicture(){
 				var append_str ='<span style="height: 140px; width: 230px;">'
 								+'<input type="file" name="thumbnail" data-val="'+PNum+'" id="pictureUpload'+PNum+'" style="display:none"/>'	
 								+'<span onclick="clickeventPic('+PNum+')" style="padding-top:0px; margin-right:20px; float:left; height: 140px; width: 220px; background-color:#ECECEC; text-align: center;">'
 								+'<img id="additionalPic'+PNum+'" src="resources/img/PlusIcon.png" style="height: 140px; width: 220px; object-fit: cover;">'
 								+'</span></span>'
 
-				$('#receipePicture').append(append_str);
+				$('#recipePicture').append(append_str);
 								
 				$("#pictureUpload"+PNum).change(function() {
 					readURL2(this,$(this).data('val'));
 				}); 
 				
 				PNum++;
+				
 			}
 			
 			// -------------------STEP 숫자 바꿔주는 함수(호출) JS----------------------
-			function changeStepNum(count){
-				for(var i=0; i<count; i++){
+			function changeStepNum(processCount){
+				for(var i=0; i<processCount; i++){
 				   $(".stepNum span").eq(i).text("STEP"+(i+1));
 				}
 			}
@@ -579,9 +582,49 @@
 			$(function(){
 				for(var i=0; i<3; i++){
 					makeProcessDiv();
-					receipePicture(); 
+					recipePicture(); 
 				}
 			});
+			
+			// -------------------JS----------------------
+			function goSave(){
+				if($("#name").val().trim() == ''){ // 요리명 체크
+					alert('요리명을 입력해 주세요.');
+					$("#name").focus();
+					return false;
+				}
+				if($("#intro").val().trim() == ''){ // 소개 체크
+					alert('요리소개를 입력해 주세요.');
+					$("#intro").focus();
+					return false;
+				}
+				if($("#time").val().trim() == ''){ // 시간 체크
+					alert('소요시간을 입력해 주세요.');
+					$("#time").focus();
+					return false;
+				}
+				
+				if(document.getElementsByClassName('addedSpan').length == 0){
+					alert('재료를 하나라도 추가하세요');
+					return false;
+				}
+				
+				for(i=0;i<processCount;i++){
+					var textValue = document.getElementsByName('content')[i].value;
+					if(textValue == "" | textValue == null){
+						alert("과정 설명을 빠짐없이 기입하세요");
+
+						return false;
+					}
+				}
+				
+				var fileCheck = document.getElementById("pictureUpload0").value;
+				if(!fileCheck){
+					alert("썸네일 파일을 추가해주세요");
+					return false;
+				}
+			}
+
 			
 		</script>
 		
@@ -596,12 +639,12 @@
 
 	<body>
 	<%@ include file="../common/navBar.jsp" %>
-		<form method="post" action="write.do" enctype="multipart/form-data">
+		<form id="frm" method="post" action="write.do" enctype="multipart/form-data" onsubmit="return goSave();">
 			<!-- 요리명(name) -->
-			요리명: <input type="text" name="name" ><br>
+			요리명: <input type="text" id=name name="name" ><br>
 			
 			<!-- 소개(intro) -->
-			소개: <input type="text" name="intro" ><br>
+			소개: <input type="text" id=intro name="intro" ><br>
 			
 			<!-- 음식종류(type) -->
 		 	음식종류:  
@@ -628,7 +671,7 @@
 		  		</select><br>
 		  		
 		  	<!-- 소요시간(time) -->
-			소요시간: <input type="number" name="time" min="1">분<br>
+			소요시간: <input type="number" id="time" name="time" min="1">분<br>
 			
 			<!-- 재료 -->
 			재료:
@@ -700,7 +743,7 @@
 			</div>
 			
 			요리사진:
-			<div id="receipePicture" style="height: 150px; width: 100%;">
+			<div id="recipePicture" style="height: 150px; width: 100%;">
 			</div>
 			
 			 
@@ -709,10 +752,11 @@
 				요리tip! &nbsp <input type="text" name="tip" ><br>
 				
 				<!-- 등록버튼(submit) -->
-				<input type="submit" name ="submit">
+				<input type="submit" name ="submit" value="저장">
 			</div>
 		</form>
 	</body>
+
 </html>
 
 

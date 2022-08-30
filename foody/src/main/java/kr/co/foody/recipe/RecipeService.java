@@ -14,12 +14,16 @@ public interface RecipeService {
 	int insertIngredient(Map cri);
 	
 	Map viewRecipe(int no, HttpSession sess);
+	Map viewModify(int no);
+	int updateRecipe(Map cri);
+	int deleteIngredient(int no);
+	int deleteProcess(int no);
 	
 	List<String> large_cate(int i);
 	Map search(Map cri, Model model, HttpSession sess); 
 	
 	List<Map> makeIngreNameList(int no);
-	List<Map> makeIngreNameList(String keyword);
+	List<Map> makeIngreNameList(Map cri);
 	List<Map> makeIngreDetailList(String keyword);
 	
 	int insertBmk(Map bmk);

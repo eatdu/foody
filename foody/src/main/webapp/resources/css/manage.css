@@ -1,7 +1,7 @@
 @charset "utf-8";
 /* CSS Document */
 
-@import url(/sample/css/admin/basic.css);
+@import url(/foody/resources/css/basic.css);
 
 #login{position:relative; wisth:100%; height:100%; font-family:"맑은 고딕","돋움"; }
 #login .title{position:relative; background:#333; height:350px; width:100%; font-family:"맑은 고딕","돋움"; }

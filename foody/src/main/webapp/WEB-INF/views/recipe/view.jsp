@@ -1,9 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ include file="../common/config.jsp" %>
 <%@ page import="java.util.*"%>
-
 
 <!DOCTYPE html>
 <html>
@@ -39,7 +37,6 @@
 	  href="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.css"
 	/>
 	
-	<script src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 	<script src="https://canvasjs.com/assets/script/jquery.canvasjs.min.js"></script>
 	<script type="text/javascript">
@@ -264,8 +261,7 @@
 			};
 			$("#chartContainer2").CanvasJSChart(options);  
 		});
-	</script>
-	
+	</script>	
 	<body>
 	레시피 번호: ${recipe.no}<br><br><br>
 	
@@ -352,7 +348,7 @@
 	</c:if>
 	
 	<c:if test="${not empty recipe.addedpicture2}">
-		<img src = "<c:out value="${recipe.addedpicture1}"/>" style="width:250px; height:140px;">
+		<img src = "<c:out value="${recipe.addedpicture2}"/>" style="width:250px; height:140px;">
 	</c:if>
 	<c:if test="${empty recipe.addedpicture2}">
 		<img src = "<c:out value="/foody/resources/img/processImg.png"/>" style="width:250px; height:140px;">
@@ -444,9 +440,10 @@
                 	</div>
                 	</div>
 	</div>
+	<br>
+	요리 팁: ${recipe.tip}
 	
 	</body>
-
 </html>
 
 

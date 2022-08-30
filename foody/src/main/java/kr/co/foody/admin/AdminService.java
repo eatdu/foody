@@ -20,10 +20,14 @@ public interface AdminService {
 	//레시피 통계 관련
 	boolean rcpCount(Map cri, HttpSession sess);
 	
-	Map<String, Object> userList();
+	Map<String, Object> userList(UserVO vo);
 	//레시피 목록 조회
 	boolean selectRcpAdmin(Map cri, Model model);
 	
+	boolean exitUserList(HttpSession sess);
 	//레시피 상세보기시 프로세스
 	void rcpDetail(int no);
+	
+	//관리자 로그인
+	AdminVO adminLogin1(AdminVO vo);
 }

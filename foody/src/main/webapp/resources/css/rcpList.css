@@ -22,16 +22,19 @@
 	float: left;
 	margin: 10px;
 	width: 270px;
-	height: 310px;
+	height: 250px;
 	border-radius: 30px;
 	background-color: #FAF4C0;
+}
+.rcpCard:hover{
+	background-color: #F2CB61;
 }
 
 .rcpTable {
 	margin: auto;
 	margin-top: 20px;
 	width: 250px;
-	height: 270px;
+    height: 220px;
 }
 .rcpTable .imgCell {
 	height: 150px;
@@ -39,17 +42,23 @@
 .rcpTable .introCell{
 	height: 40px;
 }
-.rcpTable .nameCell{
-	width: 125px;
-	height: 40px;
-}
-.rcpTable .timeCell{
-	width: 125px;
-	height: 40px;
+.rcpTable .timename{
+	width: 100px;
+	height: 30px;
+	border-radius: 15px;
+    font-weight: bold;
+    font-size: 13px;
+    background: #CEF279;
+    margin: auto;
+    color: black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 .rcpArea {
 	display: inline-block;
 	width: 1160px;
+	margin-top: 5px;
 }
 .row {
 	display: inline-block;
@@ -74,7 +83,7 @@ table.search {
 }
 /* 썸네일 관련 */
 .intro {
-    width: 250px;
+    width: 230px;
     position: absolute;
     bottom: 0;
 	display: none;
@@ -82,6 +91,7 @@ table.search {
     color: black;
     text-align: left;
     padding: 10px;
+    font-weight: 600;
 }
 /* 통계 아이콘 관련 */
 .icons {
@@ -95,6 +105,8 @@ table.search {
 div.icons img{
 	vertical-align: middle;
 }
+/* 시간 제목 */
+
 button.delete{
 	border-radius: 50%;
     border: 0;

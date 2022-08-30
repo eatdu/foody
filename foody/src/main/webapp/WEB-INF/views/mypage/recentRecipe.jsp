@@ -62,7 +62,7 @@
 		<div id="reicpeView">
 			<div class="abc">
 				<ul class="myRecipeList_ul">
-					<c:forEach var="recipe" items="${recentRecipe.recentList}">
+					<c:forEach var="recipe" items="${recentRecipe.recipeList}">
 						<li class="myRecipeList_li">
 							<div class="myRecipeName">${recipe.name}</div>
 							<div class="myRecipeThumb">

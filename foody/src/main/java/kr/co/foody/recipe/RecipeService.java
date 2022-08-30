@@ -26,4 +26,7 @@ public interface RecipeService {
 	List<Map> makeIngreNameList(Map cri);
 	List<Map> makeIngreDetailList(String keyword);
 	
+	int insertBmk(Map bmk);
+	int deleteBmk(Map bmk);
+	
 }

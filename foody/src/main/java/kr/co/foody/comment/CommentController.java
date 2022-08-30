@@ -63,8 +63,8 @@ public class CommentController {
 	}
 	
 	@GetMapping("/comment/delete.do")
-	public String delete(CommentVO vo, Model model) {
-		model.addAttribute("result", service.delete(vo));
+	public String delete(CommentVO vo, Model model, @RequestParam int no) {
+		model.addAttribute("result", service.delete(no));
 		return "common/return";
 	}
 	

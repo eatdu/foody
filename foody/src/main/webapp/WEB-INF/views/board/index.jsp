@@ -17,6 +17,7 @@
 			location.href='write.do';
 		</c:if>
 	}
+	
 </script>
 
 

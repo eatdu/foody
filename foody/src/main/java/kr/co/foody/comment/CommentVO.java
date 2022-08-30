@@ -21,6 +21,7 @@ public class CommentVO {
 	private int recipe_no;
 	private String board_title;
 	private String recipe_name;
+	private String user_nik_name;
 	
 	private int gno;
 	private int ono;

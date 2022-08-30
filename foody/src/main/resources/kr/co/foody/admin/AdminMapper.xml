@@ -37,6 +37,10 @@
 		SELECT COUNT(*) FROM user WHERE user.exit = 1
 	</select>
 	
-	
+	<!-- 관리자 계정 관련 -->
+	<select id="adminLogin1" parameterType="kr.co.foody.admin.AdminVO" resultType="kr.co.foody.admin.AdminVO">
+		select * from manager
+		where id = #{id} and pwd = md5(#{pwd})
+	</select>
 	
 </mapper>

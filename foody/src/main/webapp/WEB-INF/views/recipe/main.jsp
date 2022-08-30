@@ -70,16 +70,18 @@ function goSearch(){
 	    border-radius: 30px;
 	    padding-left: 10px;
 	}
+	
+	
 </style>
 <title>메인 화면</title>
 </head>
 <body>
 <%@ include file="../common/navBar.jsp" %>
 <h1 class='title tc'>Foody</h1>
-<select id="sType" name="sType">
-<option value="recipe">요리명</option>
-<option value="ingre">재료명</option>
-</select>
+	<select id="sType" name="sType">
+		<option value="recipe">요리명</option>
+		<option value="ingre">재료명</option>
+	</select>
 <input type="text" id="keyword" placeholder="검색어 입력">
 <button type="button" onclick="javascript:goSearch();">검색</button>
 <!-- 인기 레시피 / 스와이퍼 -->

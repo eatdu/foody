@@ -38,18 +38,19 @@ public class SampleDataMaker {
 	
 	@Test
 	public void randomRcpUser() {
-		for(int i = 301; i <= 350; i++) {
-			Map map = new HashMap();
-			map.put("userNo", 34 + (int)(Math.random() * 10));
-			map.put("no", i);
-			//System.out.println(map);
-			mapper.randomRcpUser(map);
-		}
+		System.out.println(Math.random());
+//		for(int i = 351; i <= 500; i++) {
+//			Map map = new HashMap();
+//			map.put("userNo", 55 + (int)(Math.random() * 10));
+//			map.put("no", i);
+//			//System.out.println(map);
+//			mapper.randomRcpUser(map);
+//		}
 	}
 	
 	//@Test
 	public void randomReg() {
-		for (int i=301; i<=350; i++) {
+		for (int i=351; i<=500; i++) {
 			mapper.randomReg(i);
 		}
 	}

@@ -1,18 +1,18 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <table>
-	<tr>
-		<td>고유번호</td>
-		<td>이름</td>
-		<td>상세</td>
-		<td>분류</td>
-		<td>탄수화물</td>
-		<td>단백질</td>
-		<td>지방</td>
-		<td>알러지</td>
-		<td>출력여부</td>
+	<tr class="row1">
+		<td style="width: 7%;">고유번호</td>
+		<td style="width: 18%;">이름</td>
+		<td style="width: 18%;">상세</td>
+		<td style="width: 18%;">분류</td>
+		<td style="width: 8%;">탄수화물</td>
+		<td style="width: 8%;">단백질</td>
+		<td style="width: 8%;">지방</td>
+		<td style="width: 8%;">알러지</td>
+		<td style="width: 7%;">출력여부</td>
 	</tr>
-	<tr>
+	<tr class="row2">
 		<td>
 			${result.no}
 			<input type="hidden" name="no" value=${result.no}>
@@ -52,7 +52,7 @@
 		</td>
 	</tr>
 </table>
-<button id="editBtn" type="button">수정하기</button>
+<button class="btn1" id="editBtn" type="button">수정하기</button>
 
 <script>
 	$(function(){

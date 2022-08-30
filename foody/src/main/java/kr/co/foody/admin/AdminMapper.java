@@ -18,4 +18,7 @@ public interface AdminMapper {
 	List<Map> exitUserWithMonth();
 	int exitUserCount();
 	
+	//관리자 로그인 스텝1
+	AdminVO adminLogin1(AdminVO vo);
+	
 }

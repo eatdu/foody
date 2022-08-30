@@ -2,18 +2,25 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script>
-function del(no){
-	if (confirm("탈퇴하시겠습니까?")){
-		$.ajax({
-			url : '/foody/user/exit.do?no='+no,
-			success : function(res){
-				if(res.trim() == '1'){
-					alert('탈퇴완료');
-				}	    					
-			}
-		})
-	}
+var target = document.querySelectorAll('.userInfoModifyBtn');
+var btnPopClose = document.querySelectorAll('.pop_wrap .btn_close');
+var targetID;
+
+// 팝업 열기
+for(var i = 0; i < target.length; i++){
+  target[i].addEventListener('click', function(){
+    targetID = this.getAttribute('href');
+    document.querySelector(targetID).style.display = 'block';
+  });
+}
+
+// 팝업 닫기
+for(var j = 0; j < target.length; j++){
+  btnPopClose[j].addEventListener('click', function(){
+    this.parentNode.parentNode.style.display = 'none';
+  });
 }
 </script>
 <style>
@@ -42,9 +49,38 @@ function del(no){
 		color:white;
 		background-color:#6A6D6F;
 	}	
+	.btn_close{
+		width: 150px;height: 45px;
+		background-color:white;
+		border-color:#6A6D6F;
+		border-radius:5px;
+		font-size:20px;
+		color:#6A6D6F;
+		font-weight: bolder;
+		border-width: thin;
+	}
+	.btn_close:hover{
+		color:white;
+		background-color:#6A6D6F;
+	}	
 	.modifyCon{
 		margin-left:1300px;
 		margin-top:14px;
+	}
+	*{margin:0; padding:0;}
+	.pop_wrap{position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,.5); font-size:0; text-align:center;}
+	.pop_wrap:after{display:inline-block; height:100%; vertical-align:middle; content:'';}
+	.pop_wrap .pop_inner{display:inline-block; padding:20px 30px; background:#fff; width:200px; vertical-align:middle; font-size:15px;}
+	.wrap{padding:10px;}
+	.userInfoModifyBtn{
+		width: 150px;height: 45px;
+		background-color:white;
+		border-color:#6A6D6F;
+		border-radius:5px;
+		font-size:20px;
+		color:#6A6D6F;
+		font-weight: bolder;
+		border-width: thin;
 	}
 </style>
 <div class="loginInfo">
@@ -132,8 +168,30 @@ function del(no){
 				</tr>
 			</table>
 			<div class="modifyCon">
-				<button type="button" class="submitBtn" id="userInfoModify" onclick="location.href='/foody/user/modify.do'">회원정보수정</button>
-				<button type="button" class="submitBtn" id="userExit" onclick="location.href='/foody/user/exit.do'">탈퇴하기</button>
+				<div class="wrap">
+					<a href="#pop_info_1" class="userInfoModifyBtn">회원정보수정</a>
+					<a href="#pop_info_2" class="userInfoModifyBtn">탈퇴하기</a>
+					<div id="pop_info_1" class="pop_wrap" style="display:none;">
+						<div class="pop_inner">
+							<form method="post" id="modifyPwdCheck" name="pwdCheck" action="/foody/user/modifyPwdCheck.do">
+							<input type="hidden" name="email" value="${loginInfo.email}">
+								<input type="password" id="pwdCheck" name="pwd" placeholder="비밀번호">
+							</form>
+							<button type="button" class="submitBtn" id="userInfoModify" onclick="$('#modifyPwdCheck').submit();">회원정보수정</button>
+							<button type="button" class="btn_close">닫기</button>
+						</div>
+					</div>
+					<div id="pop_info_2" class="pop_wrap" style="display:none;">
+						<div class="pop_inner">
+							<form method="post" id="exitPwdCheck" name="pwd" action="/foody/user/exitPwdCheck.do">
+							<input type="hidden" name="email" value="${loginInfo.email}">
+								<input type="password" id="pwdCheck" name="pwd" placeholder="비밀번호">
+							</form>
+							<button type="button" class="submitBtn" id="userExit" onclick="$('#exitPwdCheck').submit();">탈퇴하기</button>
+							<button type="button" class="btn_close">닫기</button>
+						</div>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>

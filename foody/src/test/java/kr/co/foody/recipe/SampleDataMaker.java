@@ -27,21 +27,34 @@ public class SampleDataMaker {
 	RecipeMapper mapper;
 	
 	@Test
+	public void tipMaker() {
+		//2648
+		for (int no = 177; no <= 500; no++) {
+			RecipeVO vo = mapper.view(no);
+			if (vo == null || vo.getTip() != null) continue;
+			Map map = new HashMap();
+			map.put("no", no);
+			map.put("tip", "맛있게 드세요~!!^^");
+			mapper.copyThumbnail(map);
+		}
+	}
+	
+	//@Test
 	public void imgDownloader() {
-//		for (int no = 4; no <= 500; no++) {
-//			RecipeVO vo = mapper.view(no);
+//		for (int no = 11; no <= 2648; no++) {
+//			ProcessVO vo = mapper.selectProcess(no);
 //			if (vo == null) continue;
 //			Map map = new HashMap();
 //			map.put("no", no);
-//			map.put("thumbnail", vo.getThumbnail());
+//			map.put("photo", vo.getPhoto());
 //			mapper.copyThumbnail(map);
 //		}
 		
 		List<Integer> errorList = new ArrayList<Integer>();
-		for (int no = 4; no <= 500; no++) {
-			RecipeVO vo = mapper.view(no);
-			if (vo == null) continue;
-			String url = vo.getThumbnail();
+		for (int no = 11; no <= 2648; no++) {
+			ProcessVO vo = mapper.selectProcess(no);
+			if (vo == null || "".equals(vo.getPhoto())) continue;
+			String url = vo.getPhoto();
 			String realPath = "C:\\Users\\tjoeun-jr-902-10\\git\\foody\\foody\\src\\main\\webapp\\upload\\";
 			String ext = "jpg";
 			String fileName = new Date().getTime() + "";
@@ -49,7 +62,7 @@ public class SampleDataMaker {
 				DownloadImg.saveImage(url, realPath, fileName, ext);
 				Map map = new HashMap();
 				map.put("no", no);
-				map.put("thumbnail", fileName + "." + ext);
+				map.put("photo", fileName + "." + ext);
 				mapper.copyThumbnail(map);
 			} catch (Exception e) {
 				e.printStackTrace();

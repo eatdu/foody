@@ -66,4 +66,5 @@ public interface RecipeMapper {
 	int updateComment2(Map map);
 	int updatePwd(int no);
 	int copyThumbnail(Map map);
+	ProcessVO selectProcess(int no);
 }

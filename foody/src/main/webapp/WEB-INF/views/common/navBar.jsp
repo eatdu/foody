@@ -65,7 +65,7 @@
   			<ul class="menu">
   				<li><a href="/foody/recipe/main.do" class="parent"><span>메인</span></a></li>
 				<li><a href="/foody/recipe/search.do" class="parent"><span>상세검색</span></a></li>
-				<li><a href="" class="parent"><span>게시판</span></a>
+				<li><a href="/foody/board/index.do" class="parent"><span>게시판</span></a>
 					<div class="standard_left">
 					<ul>
 						<li><a href="/foody/board/index.do"><span>자유</span></a></li>
@@ -73,7 +73,7 @@
 					</ul>
 					</div>
 				</li>
-				<li><a href="" class="parent"><span>마이페이지</span></a></li>
+				<li><a href="/foody/mypage/mypage.do" class="parent"><span>마이페이지</span></a></li>
 			</ul>
 		</div>
 		<!--//gnb-->

@@ -495,9 +495,11 @@
 	</delete>
 	
 	<!-- 샘플 데이터 생성용 -->
-	
+	<select id="selectProcess" parameterType="int" resultType="kr.co.foody.recipe.ProcessVO">
+		select * from process where no = #{no}
+	</select>
 	<update id="copyThumbnail" parameterType="map">
-		update recipe set thumbnail = #{thumbnail}
+		update recipe set tip = #{tip}
 		where no = #{no}
 	</update>
 	

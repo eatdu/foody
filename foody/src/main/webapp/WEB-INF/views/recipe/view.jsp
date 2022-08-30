@@ -37,6 +37,7 @@
 	  href="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.css"
 	/>
 	
+	<script src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 	<script src="https://canvasjs.com/assets/script/jquery.canvasjs.min.js"></script>
 	<script type="text/javascript">
@@ -369,7 +370,7 @@
 	</div>
 	
 	<!-- 포토리뷰 -->
-	<h2 class="sub_title">포토 리뷰</h2>
+	<h2 class="sub_title">포토 리뷰</h2><br>
 	<div class="swiper mySwiper">
 		<div class="swiper-wrapper">
 			<c:forEach var="vo" items="${comment.list}" varStatus="idx">

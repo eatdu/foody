@@ -12,7 +12,7 @@
 		INSERT INTO user (
 			name, birth, nik_name, selfi, email, tel, pwd, zipcode, addr1, addr2, height, weight, activity, intro
 		) VALUES (
-			#{name}, #{birth}, #{nik_name}, #{selfi}, #{email}, #{tel}, #{pwd}, #{zipcode}, #{addr1}, #{addr2}, #{height}, #{weight}, #{activity}, #{intro}
+			#{name}, #{birth}, #{nik_name}, #{selfi}, #{email}, #{tel}, md5(#{pwd}), #{zipcode}, #{addr1}, #{addr2}, #{height}, #{weight}, #{activity}, #{intro}
 		)
 		<!-- 회원데이터 저장후 해당 no가져오기 -->
 		<selectKey keyProperty="no" resultType="int" order="AFTER">
@@ -42,7 +42,7 @@
 	
 	<!-- 로그인 체크 -->
 	<select id="loginCheck" parameterType="kr.co.foody.user.UserVO" resultType="kr.co.foody.user.UserVO">
-		SELECT * FROM user WHERE email=#{email} AND pwd=#{pwd} AND user.exit=0
+		SELECT * FROM user WHERE email=#{email} AND pwd = md5(#{pwd}) AND user.exit=0
 	</select>
 	
 	<!-- 이메일 중복체크 -->
@@ -127,7 +127,7 @@
 				selfi=#{selfi},	
 			</if>
 				nik_name=#{nik_name}, tel=#{tel}, zipcode=#{zipcode}, addr1=#{addr1}
-				,addr2=#{addr2}, intro=#{intro}, height=#{height}, weight=#{weight}, activity=#{activity}
+				,addr2=#{addr2}, intro=#{intro}, height=#{height}, weight=#{weight}, activity=#{activity}, selfi=#{selfi}
 		WHERE no=#{no}
 	</update>
 	
@@ -151,6 +151,11 @@
 		FROM prefer 
 		WHERE user_no=#{user_no}
 	</delete>
+	
+	<!-- 회원 프로필사진 업데이트 -->
+	<update id="userProfileDelete" parameterType="int">
+		update user set user.selfi=null where user.no = #{user_no}
+	</update>
 	
 	<!-- 회원탈퇴 -->
 	<update id="userExit" parameterType="int">
@@ -184,8 +189,3 @@
 	</select>
 
 </mapper>
-
-
-
-
-

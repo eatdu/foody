@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import kr.co.foody.constants.RecipeCategory;
+import kr.co.foody.user.UserMapper;
 import kr.co.foody.user.UserVO;
 
 @Service
@@ -18,20 +19,23 @@ public class MypageServiceImpl implements MypageService {
 	
 	@Autowired
 	MypageMapper mapper;
-
+	@Autowired
+	UserMapper umapper;
 
 	@Override
 	public Map<String, Object> mypage(HttpSession sess) {
 		UserVO uv = (UserVO)sess.getAttribute("loginInfo");
-		int userRecipeCount = mapper.userRecipeCount(uv.getNo());
-		int userBookmarkCount = mapper.userBookmarkCount(uv.getNo());
-		int userTotalViewCount = mapper.userTotalViewCount(uv.getNo());
-		int userCommentCount = mapper.userCommentCount(uv.getNo());
+		UserVO uvl = umapper.selectOne(uv.getNo());
+		Integer userRecipeCount = mapper.userRecipeCount(uv.getNo());
+		Integer userBookmarkCount = mapper.userBookmarkCount(uv.getNo());
+		Integer userTotalViewCount = mapper.userTotalViewCount(uv.getNo());
+		Integer userCommentCount = mapper.userCommentCount(uv.getNo());
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("userRecipeCount", userRecipeCount);
 		map.put("userBookmarkCount", userBookmarkCount);
 		map.put("userTotalViewCount", userTotalViewCount);
 		map.put("userCommentCount", userCommentCount);
+		map.put("uv", uvl);
 		return map;
 	}
 
@@ -41,7 +45,7 @@ public class MypageServiceImpl implements MypageService {
 		UserVO uv = (UserVO)sess.getAttribute("loginInfo");
 		vo.setUser_no(uv.getNo());
 		int totalCount = mapper.myRecipeCount(vo.getUser_no());
-		vo.pagingProcess(12,totalCount);
+		vo.pagingProcess(15,totalCount);
 		List<MypageVO> myRecipeList = mapper.myRecipe(vo);
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("myList", myRecipeList);
@@ -53,7 +57,7 @@ public class MypageServiceImpl implements MypageService {
 		UserVO uv = (UserVO)sess.getAttribute("loginInfo");
 		vo.setUser_no(uv.getNo());
 		int totalCount = mapper.recentRecipeCount(vo.getUser_no());
-		vo.pagingProcess(12,totalCount);
+		vo.pagingProcess(15,totalCount);
 		List<MypageVO> recentRecipeList = mapper.recentRecipe(vo);
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("recipeList", recentRecipeList);
@@ -65,7 +69,7 @@ public class MypageServiceImpl implements MypageService {
 		UserVO uv = (UserVO)sess.getAttribute("loginInfo");
 		vo.setUser_no(uv.getNo());
 		int totalCount = mapper.likeRecipeCount(vo.getUser_no());
-		vo.pagingProcess(12,totalCount);
+		vo.pagingProcess(15,totalCount);
 		List<MypageVO> likeRecipeList = mapper.likeRecipe(vo);
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("likeList", likeRecipeList);
@@ -75,6 +79,7 @@ public class MypageServiceImpl implements MypageService {
 	@Override
 	public Map<String, Object> userInfo(HttpSession sess) {
 		UserVO uv = (UserVO)sess.getAttribute("loginInfo");
+		UserVO uvl = umapper.selectOne(uv.getNo());
 		// 회원의 주민번호 7번째 자리를 가져온다
 		String gVal = uv.getBirth().substring(6, 7);
 		// 기본값으로 21 / 비교한 값(성별)이 1,3 이면 남성(22) 
@@ -98,6 +103,7 @@ public class MypageServiceImpl implements MypageService {
 		map.put("allergy", allergy);
 		map.put("prefer", prefer);
 		map.put("cal", cal);
+		map.put("uv", uvl);
 		
 		return map;
 	}

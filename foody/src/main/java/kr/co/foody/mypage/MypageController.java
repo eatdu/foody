@@ -54,4 +54,9 @@ public class MypageController {
 			return "common/alert";
 		}
 	}
+	
+	@GetMapping("/mypage/test.do")
+	public String myInfo() {
+		return "/mypage/test";
+	}
 }

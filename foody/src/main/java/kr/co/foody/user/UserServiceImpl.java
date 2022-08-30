@@ -188,35 +188,35 @@ public class UserServiceImpl implements UserService {
 		map.put("userInfo", uvl);
 		map.put("allergy", aHtml);
 		map.put("prefer", pHtml);
+		map.put("uvl", uvl);
 		
 		return map;
 	}
 	
 	@Override // 회원정보수정
-	public boolean userInfoUpdate(UserVO uvo, HttpServletRequest req) {
+	public int userInfoUpdate(UserVO uvo, HttpServletRequest req) {
 		int result = 0;
 		try {
 			mapper.modifyUserInfo(uvo);
+			mapper.userProfileDelete(uvo.getNo());
 			mapper.userAllergyDelete(uvo.getNo());
 			mapper.userPreferDelete(uvo.getNo());
-			String[] prefer_no = req.getParameterValues("prefer_no");
-			if(prefer_no.length >= 0) {
-				for(int i=0; i<prefer_no.length; i++) {
-					uvo.setPrefer_no(Integer.parseInt(prefer_no[i]));
-					mapper.userPrefer(uvo);
-				}
-			}
-			result++;
-			String[] allergy_no = req.getParameterValues("allergy_no");
-			if(allergy_no.length >= 0) {
+			try {
+				
+				String[] allergy_no = req.getParameterValues("allergy_no");
 				for(int i=0; i<allergy_no.length; i++) {
 					uvo.setAllergy_no(Integer.parseInt(allergy_no[i]));
 					mapper.userAllergy(uvo);
 				}
+			} catch (Exception e) {}
+			String[] prefer_no = req.getParameterValues("prefer_no");
+			for(int i=0; i<prefer_no.length; i++) {
+				uvo.setPrefer_no(Integer.parseInt(prefer_no[i]));
+				mapper.userPrefer(uvo);
 			}
 			result++;
 		} catch (Exception e) {e.printStackTrace();}
-		return result == 2 ? true : false;
+		return result;
 	}
 
 	@Override

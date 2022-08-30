@@ -68,7 +68,7 @@ $(function(){
 		display: inline-block;
 	}
 	#dashBoard .container {
-		height: 400px;
+		height: 350px;
 		width: 48%;
 		background-color: #FAF4C0;
 		margin: 10px 10px 10px 10px;
@@ -80,11 +80,13 @@ $(function(){
 		margin: 10px auto;
 		opercity: 0.7;
 	}
+	.list{margin-top:-35px;}
+	.email,.nik_namd,.namd,.write_reicpe,.write_comment,.regdate,.print{width:250px;}
 </style>
 <link rel="stylesheet" type="text/css" href="/foody/resources/css/leftMenu.css">
 </head>
 <body>
-<%@ include file="../admin/leftMenu.jsp" %>
+<%@ include file="../admin/leftMenu.jsp"%>
 <div class="adminContainer">
 <div class="title"><h1>회원 목록</h1></div>
 	<div id="dashBoard" >
@@ -102,58 +104,51 @@ $(function(){
 	<div class="sub" style="margin:30px 0 0 0;">
 	    <div class="size" >
 	        <div class="bbs">
-	            <table class="list" id="userList">
-	                <colgroup>
-	                    <col width="10%"/>
-	                    <col width="10%"/>
-	                    <col width="10%"/>
-	                    <col width="10%"/>
-	                    <col width="10%"/>
-	                    <col width="10%"/>
-	                    <col width="10%"/>
-	                </colgroup>
-	                <thead>
-	                    <tr>
-	                        <th>이메일</th>
-	                        <th>닉네임</th>
-	                        <th>이름</th>
-	                        <th>작성한 레시피</th>
-	                        <th>작성한 댓글</th>
-	                        <th>가입일</th>
-	                        <th>상태</th>
-	                    </tr>
-	                </thead>
-	                <tbody>
-	                <c:if test="${empty data.userList}">
-                        <tr>
-                            <td class="first" colspan="5">등록된 글이 없습니다.</td>
-                        </tr>
-                    </c:if>
-					<c:forEach var="list" items="${data.userList}" varStatus="status">
-	                     <tr>
-	                     	<td>${list.email}</td>
-	                     	<td>${list.nik_name}</td>
-	                     	<td>${list.name}</td>
-	                     	<td>${list.recipe_count}</td>
-	                     	<td>${list.comment_count}</td>
-	                     	<td><fmt:formatDate value="${list.regdate}" pattern="yyyy-MM-dd"/></td>
-	                     	<td>
-	                     		<c:if test="${list.exit eq 0}">가입</c:if>
-	                     		<c:if test="${list.exit eq 1}">탈퇴</c:if>
-	                     	</td>
-	                     </tr>
-					</c:forEach>
-	            	</tbody>
-	            </table>
+	        	<div class="abc">
+		            <table class="list" id="userList">
+		                <thead>
+		                    <tr>
+		                        <th class="email">이메일</th>
+		                        <th class="nik_namd">닉네임</th>
+		                        <th class="namd">이름</th>
+		                        <th class="write_reicpe">작성한 레시피</th>
+		                        <th class="write_comment">작성한 댓글</th>
+		                        <th class="regdate">가입일</th>
+		                        <th class="print">상태</th>
+		                    </tr>
+		                </thead>
+		                <tbody>
+		                <c:if test="${empty data.userList}">
+	                        <tr>
+	                            <td class="first" colspan="5">등록된 글이 없습니다.</td>
+	                        </tr>
+	                    </c:if>
+						<c:forEach var="list" items="${data.userList}" varStatus="status">
+		                     <tr>
+		                     	<td>${list.email}</td>
+		                     	<td>${list.nik_name}</td>
+		                     	<td>${list.name}</td>
+		                     	<td>${list.recipe_count}</td>
+		                     	<td>${list.comment_count}</td>
+		                     	<td><fmt:formatDate value="${list.regdate}" pattern="yyyy-MM-dd"/></td>
+		                     	<td>
+		                     		<c:if test="${list.exit eq 0}">가입</c:if>
+		                     		<c:if test="${list.exit eq 1}">탈퇴</c:if>
+		                     	</td>
+		                     </tr>
+						</c:forEach>
+		            	</tbody>
+		            </table>
+		        </div>
 	            <!-- 페이징처리 -->
-	            <div class="pagenate clear">
+	            <div class="pagenate clear" style="display: inline-block;margin-left: 44%;">
 	               <ul class='paging'>
 	               		<c:if test="${data.prev == true}">
 	                		<div>${data.startPage}</div>
 	                		<li><a href="userList.do?page=${data.startPage-1}&stype=${param.stype}&sword=${param.sword}"><-</a>
 	                	</c:if>
 	                	<c:forEach var="num" begin="${data.startPage}" end="${data.endPage}">
-	                    <li><a href='userList.do?page=${num}&stype=${param.stype}&sword=${param.sword}' 
+	                    <li style="float:left;width:30px;"><a href='userList.do?page=${num}&stype=${param.stype}&sword=${param.sword}' 
 	                	<c:if test="${data.page == num}"> class='current' </c:if>>${num}</a></li>
 	                </c:forEach>
 	                <c:if test="${data.next == true}">
@@ -165,6 +160,7 @@ $(function(){
 	            <!-- 검색조건/키워드 -->
                 <div class="bbsSearch">
                     <form method="get" name="searchForm" id="searchForm" action="">
+                        <div style="padding-bottom: 10px;float:right;margin-right:108px;">
                         <span class="srchSelect">
                             <select id="stype" name="stype" class="dSelect" title="검색분류 선택">
                                 <option value="all">이메일+이름</option>
@@ -173,10 +169,11 @@ $(function(){
                                 <option value="nik_name">닉네임</option>
                             </select>
                         </span>
-                        <span class="searchWord">
-                            <input type="text" id="sword" name="sword" value="${param.sword}" title="검색어 입력">
-                            <input type="button" id="" value="검색" title="검색">
-                        </span>
+	                        <span class="searchWord" >
+	                            <input type="text" id="sword" name="sword" value="${param.sword}" title="검색어 입력">
+	                            <!-- <input type="button" id="" value="검색" title="검색"> -->
+	                        </span>
+                        </div>
                     </form>
                 </div>
 	        </div> 

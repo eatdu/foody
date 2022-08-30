@@ -169,7 +169,7 @@
                     <div class="view">
                         <div class="title">
                             <dl>
-                                <dt>${data.title }</dt>
+                                <dt>${data.title}</dt>
                                 <dd class="date">
                                 	<fmt:formatDate pattern="yyyy-MM-dd HH:mm" value="${data.regdate }"/>
                                 </dd>

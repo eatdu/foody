@@ -198,8 +198,8 @@ td.head{
 			기간: 
 			<select id="selectDate" name="date">
 				<option value='1'>1일</option>
-				<option value='7' <c:if test="${mode eq 1}">selected</c:if>>1주</option>
-				<option value='30' <c:if test="${mode != 1}">selected</c:if>>1개월</option>
+				<option value='7' <c:if test="${mode != 0}">selected</c:if>>1주</option>
+				<option value='30' <c:if test="${mode eq 0}">selected</c:if>>1개월</option>
 				<option value='90'>3개월</option>
 				<option value='180'>6개월</option>
 				<option value='365'>1년</option>

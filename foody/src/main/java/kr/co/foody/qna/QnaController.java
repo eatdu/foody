@@ -81,6 +81,7 @@ public class QnaController {
 	}
 	
 	// 답변처리
+	/*
 	@PostMapping("/board/qna_reply.do")
 	public String reply(QnaVO vo, Model model, HttpServletRequest req) {
 		
@@ -98,6 +99,7 @@ public class QnaController {
 			return "common/alert";
 		}
 	}
+	*/
 	
 	// 상세보기
 	@GetMapping("/board/qna_view.do")

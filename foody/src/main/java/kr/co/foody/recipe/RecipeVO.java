@@ -32,7 +32,7 @@ public class RecipeVO {
  	private int viewcount;
  	
  	//정렬기준
- 	private int bookmark;
+ 	private Integer bookmark;
  	private double star;
  	private int reply;
  	

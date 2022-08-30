@@ -220,13 +220,13 @@
 	    <div class="size">
 	        <h3 class="sub_title">회원수정</h3>
 	        <form name="frm" id="frm" action="modify.do" method="post" enctype="multipart/form-data">
-	        <input type="hidden" name="no" value="${modify.uvl.no}">
+	        <input type="hidden" name="no" value="${loginInfo.no}">
 	        <input type="hidden" name="selfi">
 	        <div >
-		        <c:if test="${!empty modify.uvl.selfi}">
-					<img id="imgmodify" src="/foody/upload/${modify.uvl.selfi}" style="width: 175px;height: 175px;border-radius:50%;">
+		        <c:if test="${!empty loginInfo.selfi}">
+					<img id="imgmodify" src="/foody/upload/${loginInfo.selfi}" style="width: 175px;height: 175px;border-radius:50%;">
 				</c:if>
-				<c:if test="${empty modify.uvl.selfi}">
+				<c:if test="${empty loginInfo.selfi}">
 					<img id="imgmodify" src="/foody/img/basic_profile.png" style="width: 175px;height: 175px;border-radius:50%;">
 				</c:if>
 			</div>

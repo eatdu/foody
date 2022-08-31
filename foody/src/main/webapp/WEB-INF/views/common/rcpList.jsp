@@ -11,7 +11,7 @@
 	<div class="orderBy" style='float: right;'>
 		<select id='orderBy' onchange="movePage('${result.title}', ${result.curNo}, ${result.areaNo}, '${sType}', '${keyword}');">
 			<option value="regdate"<c:if test="${result.orderBy eq 'regdate'}"> selected</c:if>>최신순</option>
-			<option value="star"<c:if test="${result.orderBy eq 'star'}"> selected</c:if>>별점순</option>
+			<option value="avgstar"<c:if test="${result.orderBy eq 'avgstar'}"> selected</c:if>>별점순</option>
 			<option value="viewcount"<c:if test="${result.orderBy eq 'viewcount'}"> selected</c:if>>조회순</option>
 			<option value="reply"<c:if test="${result.orderBy eq 'reply'}"> selected</c:if>>댓글순</option>
 		</select>
@@ -27,7 +27,7 @@
 				<td class="imgCell" colspan='2'>
 				<div height=150px style='border-radius: 15px; position: relative; max-height:150px; align-items:center; overflow:hidden; display: flex; justify-content:center;'>
 					<div class="rcpImg">
-					<img class="thumbnail" width='100%' src="${l1.thumbnail}">
+					<img class="thumbnail" width='100%' src="/foody/upload/${l1.thumbnail}" />
 					</div>
 					<div class="intro">${l1.intro}</div>
 				</div>
@@ -43,7 +43,7 @@
 					<img class="" width='20px' src="/foody/img/heart.png">
 					${l1.bookmark} 
 					<img class="" width='20px' src="/foody/img/star.png">
-					${l1.star}
+					${l1.avgStar}
 				</div>
 				</td>
 			</tr>
@@ -88,6 +88,15 @@ $(".rcpCard").mouseleave(function(){
 	$(this).find(".intro").hide();
 	$(this).find(".thumbnail").css("opacity", 1.0);
 })
-
+$(function(){
+    $('.thumbnail').each(function(idx, item){
+    	var url = "/foody/resources/img/processImg.png";
+    	console.log(item.complete);
+    	console.log(item.src);
+    	console.log(item);
+    	if(item.complete == true) return; 
+    	//item.src = url;
+    });
+});
 </script>
 

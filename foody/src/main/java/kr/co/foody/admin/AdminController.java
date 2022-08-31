@@ -2,6 +2,7 @@ package kr.co.foody.admin;
 
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -88,6 +89,7 @@ public class AdminController {
 	public String main(Model model, HttpSession sess) {
 		svc.userReport(sess);
 		svc.rcpCount(null, sess);
+		svc.commentCount(sess);
 		return "admin/main";
 	}
 	//레시피 목록 조회 페이지
@@ -114,7 +116,7 @@ public class AdminController {
 	//@PostMapping("/admin/deleteRcp.do")
 	
 	
-	
+
 	//재료 조작 페이지
 	@GetMapping("/admin/ingre.do")
 	public String ingre(Model model) {
@@ -162,12 +164,53 @@ public class AdminController {
 		model.addAttribute("data", Qservice.getQna(vo));
 		return "admin/qna";
 	}
+	// QnA 게시판 답변 팝업창
+	@GetMapping("/admin/reply.do")
+	public String reply(QnaVO vo, Model model) {
+		model.addAttribute("data", Qservice.view(vo.getNo()));
+		return "admin/reply";
+	}
+	// QnA 게시판 답변 등록처리
+	@PostMapping("/admin/reply.do")
+	public String reply(QnaVO vo, Model model, HttpSession sess, HttpServletRequest req) {
+		HttpSession session = req.getSession();
+		AdminVO av = (AdminVO)session.getAttribute("adminInfo");
+		vo.setManager_no(av.getNo());
+		
+		if (Qservice.reply(vo) == 1) {
+			model.addAttribute("msg", "답변 등록 완료");
+			return "common/alertClose";
+		} else {
+			model.addAttribute("msg", "답변 등록 실패");
+			return "common/alertClose";
+		}
+	}
+	
 	// 댓글목록 조회
 	@GetMapping("/admin/comment.do")
 	public String getComment(CommentVO vo, Model model) {
 		model.addAttribute("comment", Cservice.wholeList(vo));
 		return "admin/comment";
 	}
+	// 댓글목록 팝업창
+	@PostMapping("/admin/comment.do")
+	public String controlComment(CommentVO vo, Model model) {
+		model.addAttribute("comment", Cservice.wholeList(vo));
+		return "admin/comment";
+	}
+	// 댓글 삭제
+	@GetMapping("/admin/delete.do")
+	public String delete(CommentVO vo, Model model, @RequestParam int no) {
+		if (Cservice.delete(no) == 1) {
+			model.addAttribute("msg", "댓글 삭제 완료");
+			model.addAttribute("url", "comment.do");
+			return "common/alert";
+		} else {
+			model.addAttribute("msg", "댓글 삭제 실패");
+			return "common/alert";
+		}
+	}
+	
 	// 회원목록 조회
 	@GetMapping("/admin/userList.do")
 	public String userList(Model model, UserVO vo, HttpSession sess) {

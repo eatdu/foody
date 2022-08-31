@@ -20,6 +20,8 @@ public class QnaVO {
 	private int ono;
 	private int depth;
 	private String user_name;
+	private int qna_no;
+	private String answer;
 	
 	private String stype;
 	private String sword;
@@ -32,6 +34,7 @@ public class QnaVO {
 	public QnaVO() {
 		this.page = 1;
 		this.pageRow = 10;
+		this.response = -1;
 	}
 	
 	public QnaVO(int page, int pageRow) {

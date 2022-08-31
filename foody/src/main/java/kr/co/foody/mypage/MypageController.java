@@ -6,12 +6,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+
+import kr.co.foody.recipe.RecipeVO;
+import kr.co.foody.user.UserService;
+import kr.co.foody.user.UserVO;
 
 @Controller
 public class MypageController {
 
 	@Autowired
 	MypageService service;
+	@Autowired
+	UserService uService;
 	
 	@GetMapping("/mypage/mypage.do")
 	public String mypage(Model model, HttpSession sess) {
@@ -53,5 +60,10 @@ public class MypageController {
 			model.addAttribute("msg", "삭제실패");
 			return "common/alert";
 		}
+	}
+	
+	@GetMapping("/mypage/test.do")
+	public String myInfo() {
+		return "/mypage/test";
 	}
 }

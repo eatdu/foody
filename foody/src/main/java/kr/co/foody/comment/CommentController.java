@@ -28,9 +28,9 @@ public class CommentController {
 	
 	@PostMapping("/comment/insert.do")
 	public String insert(CommentVO vo, Model model,
-						@RequestParam MultipartFile uploadFile, HttpServletRequest req) {
+						@RequestParam(value="uploadFile", required = false) MultipartFile uploadFile, HttpServletRequest req) {
 		
-		if (!uploadFile.isEmpty()) {
+		if (uploadFile != null && !uploadFile.isEmpty()) {
 			// 파일명 구하기
 			String org = uploadFile.getOriginalFilename(); // 사용자가 첨부한 첨부파일명
 			String ext = org.substring(org.lastIndexOf(".")); // 확장자 추출
@@ -63,8 +63,8 @@ public class CommentController {
 	}
 	
 	@GetMapping("/comment/delete.do")
-	public String delete(CommentVO vo, Model model) {
-		model.addAttribute("result", service.delete(vo));
+	public String delete(CommentVO vo, Model model, @RequestParam int no) {
+		model.addAttribute("result", service.delete(no));
 		return "common/return";
 	}
 	

@@ -115,20 +115,13 @@ $( function() {
 }
 #modal .ingreArea{
     width: 50%;
-    height: 50%;
+    height: 70%;
     float: left;
-    background: antiquewhite;
 }
 #modal .processArea{
     width: 50%;
-    height: 50%;
+    height: 70%;
     float: right;
-    background: aqua;
-}
-#modal .endArea{
-	width: 100%;
-    height: 20%;
-    background: white;
 }
 #bbs {
 	width: 90%;
@@ -158,6 +151,41 @@ $( function() {
 }
 td.head{
 	background-color: white;
+}
+
+div.thumbnail{
+    height: 80%;
+    width: 20%;
+}
+table.rcpDetail {
+	border-collapse: separate;
+	border-spacing: 0;
+	text-align: center;
+	line-height: 1.5;
+	border-top: 1px solid #ccc;
+	border-left: 1px solid #ccc;
+    margin: 5%;
+    width: 90%;
+}
+table.rcpDetail th {
+	padding: 6px;
+	font-weight: bold;
+	vertical-align: top;
+	border-right: 1px solid #ccc;
+	border-bottom: 1px solid #ccc;
+	border-top: 1px solid #fff;
+	border-left: 1px solid #fff;
+	background: #eee;
+}
+table.rcpDetail th.head{
+    background: #8C8C8C;
+    color: #fff;
+}
+table.rcpDetail td {
+	padding: 6px;
+	vertical-align: top;
+	border-right: 1px solid #ccc;
+	border-bottom: 1px solid #ccc;
 }
 
 </style>
@@ -198,8 +226,8 @@ td.head{
 			기간: 
 			<select id="selectDate" name="date">
 				<option value='1'>1일</option>
-				<option value='7' <c:if test="${mode eq 1}">selected</c:if>>1주</option>
-				<option value='30' <c:if test="${mode != 1}">selected</c:if>>1개월</option>
+				<option value='7' <c:if test="${mode != 0}">selected</c:if>>1주</option>
+				<option value='30' <c:if test="${mode eq 0}">selected</c:if>>1개월</option>
 				<option value='90'>3개월</option>
 				<option value='180'>6개월</option>
 				<option value='365'>1년</option>

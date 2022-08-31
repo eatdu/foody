@@ -9,6 +9,7 @@
 	        <col width="80px" />
 	        <col width="*" />
 	        <col width="100px" />
+	        <col width="200px" />
 	        <col width="100px" />
 	    </colgroup>
 	    <tbody>
@@ -24,7 +25,7 @@
                	<td class="txt_l" style="text-align:left">
                		<!-- 답변 들여쓰기 -->
 	               	<c:forEach begin="1" end="${list.depth}">&nbsp;&nbsp;&nbsp;</c:forEach>
-	               	<c:if test="${list.depth > 0}"><img src="/foody/img/answer_icon.gif"></c:if>
+	               	<c:if test="${list.depth > 0}"><img src="/foody/img/comment_icon.gif"></c:if>
 	                ${list.content}</a>
                		<td style="text-align: right; width:100px;">
                		<c:if test="${loginInfo.no == list.user_no}">
@@ -33,7 +34,7 @@
 	               	</td>
                	</td>
                	<td class="writer" style="text-align:center;">
-                   ${list.user_name}
+                   ${list.user_nik_name}
                	</td>
                	<td class="date" style="width:150px;">
                	<fmt:formatDate pattern="yyyy-MM-dd HH:mm" value="${list.regdate}" />
@@ -49,7 +50,7 @@
 	                    onfocus="this.placeholder=''" onblur="this.placeholder='댓글을 입력해 주세요.'"
 	                    style="height:50px; width:100%;"></textarea>
 	                    <div class="btnSet" style="text-align:right;">
-	                    	<a class="btn" href="javascript:insert_reCmt(${list.no});">저장 </a>
+	                    	<a class="btn" href="javascript:insert_reCmt(${list.no});">저장</a>
 	                    </div>
 	             </form>
                 </td>

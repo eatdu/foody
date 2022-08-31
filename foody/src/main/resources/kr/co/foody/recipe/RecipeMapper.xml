@@ -218,7 +218,7 @@
 			(
 			SELECT @ROWNUM := @ROWNUM + 1 AS rownum, result.*
 			FROM (select @rownum := 0) r, (
-				SELECT recipe.*, IFNULL(bk.bmkCnt, 0) bookmark, IFNULL(s.star, 0) star,
+				SELECT recipe.*, IFNULL(bk.bmkCnt, 0) bookmark,
 					(SELECT count(*)
 					 FROM comment
 					 WHERE
@@ -266,16 +266,19 @@
 						) a
 					GROUP BY rcpno
 					) b
+					 
 					LEFT JOIN (SELECT recipe_no, COUNT(*) bmkCnt
 						FROM feedback
 						WHERE bookmark = 1
 						GROUP BY recipe_no) bk
 						ON b.rcpno = bk.recipe_no
+					<!--
 					LEFT JOIN (SELECT recipe_no, AVG(star) star
 						FROM feedback
 						WHERE star != -1
 						GROUP BY recipe_no) s
 						ON b.rcpno = s.recipe_no
+					 -->
 				WHERE b.rcpno = recipe.no
 					AND print = 0
 				<if test='rcpCateArr != null'>
@@ -479,8 +482,30 @@
 		WHERE no = #{no}
 	</update>
 	
+	<!-- 찜 관련 -->
+	<!-- 유저가 찜했는지 조회 -->
+	<select id="getBmk" parameterType="map" resultType="int">
+		SELECT bookmark FROM feedback WHERE recipe_no=#{no} AND user_no=#{user_no}
+	</select>
+		<!-- 찜 인서트 -->
+	<insert id="insertBmk" parameterType="kr.co.foody.recipe.RecipeVO">
+		INSERT INTO feedback(recipe_no, user_no, bookmark)
+		VALUES (#{no}, #{user_no}, 1)
+	</insert>
+	<!-- 찜 해제 -->
+	<delete id="deleteBmk" parameterType="kr.co.foody.recipe.RecipeVO">
+		DELETE FROM feedback WHERE recipe_no={no} AND user_no={user_no} AND bookmark=1
+	</delete>
 	
 	<!-- 샘플 데이터 생성용 -->
+	<select id="selectProcess" parameterType="int" resultType="kr.co.foody.recipe.ProcessVO">
+		select * from process where no = #{no}
+	</select>
+	<update id="copyThumbnail" parameterType="map">
+		update recipe set tip = #{tip}
+		where no = #{no}
+	</update>
+	
 	<!-- 랜덤 회원정보 인서트 -->
 	<insert id="insertRandomUser" parameterType="map">
 		insert into user(email, nik_name, name, birth, tel, pwd, intro, height, weight)
@@ -507,8 +532,8 @@
 		
 	<!-- 랜덤 가입일자 업데이트 -->
 	<update id="randomReg" parameterType="int">
-		update recipe set regdate = (
-				SELECT FROM_UNIXTIME(FLOOR(unix_timestamp('2022-08-20 00:00:00')+(RAND()*(unix_timestamp('2022-08-31 00:00:00')-unix_timestamp('2022-08-20 00:00:00'))))) rand
+		update comment set regdate = (
+				SELECT FROM_UNIXTIME(FLOOR(unix_timestamp('2022-03-01 00:00:00')+(RAND()*(unix_timestamp('2022-08-31 00:00:00')-unix_timestamp('2022-03-01 00:00:00'))))) rand
 				)
 		where no = #{no};
 	</update>
@@ -516,6 +541,23 @@
 	<!-- 랜덤 레시피 작성자 업데이트 -->
 	<update id="randomRcpUser" parameterType="map">
 		update recipe set user_no = #{userNo}
+		where no = #{no}
+	</update>
+	
+	<!-- 랜덤 댓글 생성기 -->
+	<insert id="insertComment" parameterType="map">
+		insert into comment(user_no, board_no, tablename, content)
+		values (#{userNo}, #{boardNo}, "board", "댓글입니다.");
+	</insert>
+	<!-- 랜덤 댓글 gno부여 -->
+	<update id="updateComment2" parameterType="map">
+		update comment set gno = #{gno}
+		where no = #{gno}
+	</update>
+	
+	<!-- 비밀번호 암호화 -->
+	<update id="updatePwd" parameterType="int">
+		update user set pwd = md5("test1234")
 		where no = #{no}
 	</update>
 </mapper>

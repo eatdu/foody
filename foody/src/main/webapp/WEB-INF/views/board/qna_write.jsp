@@ -37,7 +37,7 @@
                             <th>질문유형</th>
                             <td>
 	                            <select id="qtype" name="qtype" class="qtype" title="질문유형 선택">
-	                                <option value="1">이용방법</option>
+	                                <option value="1">레시피검색/등록</option>
 	                                <option value="2">회원정보</option>
 	                                <option value="3">기타</option>
 	                            </select>

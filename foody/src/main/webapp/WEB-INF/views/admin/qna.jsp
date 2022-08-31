@@ -12,14 +12,39 @@
 <title>관리자 QnA 페이지</title>
 
 <script>
-function openModal(){
-	$('.modal').plainModal('open');
-}
+	/*
+	function openModal(){
+		$('.modal').plainModal('open');
+	}
+	
+	$('.txt_l').on('click', function() {
+		$()
+	})
+	*/
 
-$('.txt_l').on('click', function() {
-	$()
-})
-
+	function openReply(no) {
+		var url = "/foody/admin/reply.do?no="+no;
+		var name = "replyForm";
+		var option = "width = 800, height = 600, top = 100, left = 200, location = no"
+		window.open(url, name, option);
+	}
+	
+	/*
+	// 댓글 리스트
+	function getComment(page) {
+		$.ajax({
+			url: "/foody/admin/",
+			data: {
+				board_no: ${data.no},
+				tablename: 'board',
+				page: page
+			},
+			success: function(res) {
+				$("#commentArea").html(res);
+			}
+		});
+	}
+	*/
 
 </script>
 
@@ -42,7 +67,7 @@ div.adminMenu {
 <%@ include file="../admin/leftMenu.jsp" %>
 <div class="adminContainer">
 <div class="title"><h1>QnA 게시판</h1></div>
-	<!-- 모달영역 -->
+	<!-- 모달영역
 	<div class="modal">
 		<div class="view">
             <c:forEach items="${data.list}" var="list" varStatus="status">
@@ -63,7 +88,7 @@ div.adminMenu {
         		</div>
         	</div>
     </div>
-    <!-- 모달영역 -->
+     -->
     
 	<div class="qna_list">
             <div class="size">
@@ -72,18 +97,19 @@ div.adminMenu {
 	                <div class="search">
 		                <ul class="byPeriod" style="display:flex;">
 			                <li>기간별&nbsp;&nbsp;|&nbsp;&nbsp;</li>
-			                <li><label><input type="radio" id="entire" name="period" value="all" checked/>전체</label></li>
-			                <li><label><input type="radio" id="day" name="period" value="1 day"/>1일</label></li>
-			                <li><label><input type="radio" id="week" name="period" value="1 week"/>1주</label></li>
-			                <li><label><input type="radio" id="month" name="period" value="1 month"/>1개월</label></li>
-			                <li><label><input type="radio" id="3months" name="period" value="3 month"/>3개월</label></li>
-			                <li><label><input type="radio" id="6months" name="period" value="6 month"/>6개월</label></li>
-			                <li><label><input type="radio" id="year" name="period" value="1 year"/>1년</label></li>
+			                <li><label><input type="radio" id="all" name="period" value="all" checked/>전체</label></li>
+			                <li><label><input type="radio" id="day" name="period" value="1 day" <c:if test="${param.period=='1 day'}"> checked</c:if>/>1일</label></li>
+			                <li><label><input type="radio" id="week" name="period" value="1 week" <c:if test="${param.period=='1 week'}"> checked</c:if>/>1주</label></li>
+			                <li><label><input type="radio" id="month" name="period" value="1 month" <c:if test="${param.period=='1 month'}"> checked</c:if>/>1개월</label></li>
+			                <li><label><input type="radio" id="3months" name="period" value="3 month" <c:if test="${param.period=='3 month'}"> checked</c:if>/>3개월</label></li>
+			                <li><label><input type="radio" id="6months" name="period" value="6 month" <c:if test="${param.period=='6 month'}"> checked</c:if>/>6개월</label></li>
+			                <li><label><input type="radio" id="year" name="period" value="1 year" <c:if test="${param.period=='1 year'}"> checked</c:if>/>1년</label></li>
 		                </ul>
 		                <ul class="byResponsed" style="display:flex;">
 			                <li>답변 여부&nbsp;&nbsp;|&nbsp;&nbsp;</li>
-			                <li><label><input type="radio" id="notResponsed" name="response" value="0" checked/>답변 미완료건</label></li>
-			                <li><label><input type="radio" id="responsed" name="response" value="1"/>답변 완료건</label></li>
+			                <li><label><input type="radio" id="all" name="response" value="-1" checked/>전체</label></li>
+			                <li><label><input type="radio" id="notResponse" name="response" value="0" <c:if test="${param.response=='0'}"> checked</c:if>/>답변 미완료건</label></li>
+			                <li><label><input type="radio" id="response" name="response" value="1" <c:if test="${param.response=='1'}"> checked</c:if>/>답변 완료건</label></li>
 		                </ul>
 	                </div>
 	                <div class="bbsSearch" align="left">
@@ -97,8 +123,9 @@ div.adminMenu {
 	                    </span>
 	                    <span class="searchWord">
 	                        <input type="text" id="sword" name="sword" value="${param.sword}" title="검색어 입력">
-	                        <input type="button" id="" value="검색" title="검색">
+	                        <!--  <input type="button" id="" value="검색" title="검색"> -->
 	                    </span>
+	                    <input type="submit" id="" value="검색" style="height:32px; box-sizing:border-box; border:0; line-height:32px; background-color:#fff; border:1px solid #c7c8cc; vertical-align:middle;">
 	                </div>
 	                </form>
                     <table class="list">
@@ -147,15 +174,17 @@ div.adminMenu {
 	                                	<!-- 답변 들여쓰기 -->
 	                                	<c:forEach begin="1" end="${list.depth}">&nbsp;&nbsp;&nbsp;</c:forEach>
 	                                	<c:if test="${list.depth > 0}"><img src="/foody/img/answer_icon.gif"></c:if>
-	                                    <a href="javascript:openModal();">${list.title}</a>
+	                                    <a href="javascript:openReply(${list.no})">${list.title}</a>
+	                                    
                                 </td>
                                 <td class="writer">
-                                    ${list.user_name}
+                                    <c:if test="${list.manager_no != 0}">관리자</c:if>
+                                    <c:if test="${list.manager_no == 0}">${list.user_name}</c:if>
                                 </td>
                                 <td>
 	                                <c:if test="${list.response > 0}">완료
 	                                </c:if>
-	                                <c:if test="${list.response == 0}">미완료
+	                                <c:if test="${list.response == 0 && list.depth == 0}">미완료
 	                                </c:if>
                                 </td>
                             </tr>
@@ -169,14 +198,14 @@ div.adminMenu {
                         <!-- prev 버튼 있는 경우 -->
                         <c:if test="${data.prev == true}">
                         		<!-- prev 버튼 클릭시 stype, sword 값을 그대로 가지고 이전 페이지로 이동 -->
-                        		<li><a href="index.do?page=${data.startPage-1}&stype=${param.stype}&sword=${param.sword}"><-</a>
+                        		<li><a href="qna.do?page=${data.startPage-1}&stype=${param.stype}&sword=${param.sword}"><-</a>
                         	</c:if>
                         	<c:forEach var="num" begin="${data.startPage}" end="${data.endPage}">
-	                            <li><a href='index.do?page=${num}&stype=${param.stype}&sword=${param.sword}'
+	                            <li><a href='qna.do?page=${num}&stype=${param.stype}&sword=${param.sword}'
 	                            <c:if test="${qnaVO.page == num}">class='current'</c:if>>${num}</a></li>
 	                        </c:forEach>
 	                        <c:if test="${data.next == true}">
-                        		<li><a href="index.do?page=${data.endPage+1}&stype=${param.stype}&sword=${param.sword}">-></a>
+                        		<li><a href="qna.do?page=${data.endPage+1}&stype=${param.stype}&sword=${param.sword}">-></a>
                         	</c:if>
                         </ul>
                     	</div>

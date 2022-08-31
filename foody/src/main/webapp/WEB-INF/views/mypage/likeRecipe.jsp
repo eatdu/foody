@@ -7,6 +7,8 @@
 <head>
 <meta charset="UTF-8">
 <style>
+	#container{text-align: center;}
+	#myRecipe{display: inline-block;}
 	a.btn{
 	    display:block;
 	    width:80px;
@@ -18,25 +20,58 @@
 	li{
 		display:inline-block;
 	}
+	.abc{
+	 	display: inline-block;
+	}
+	.paging{
+		margin-left:750px;
+		padding: 0 0 50px 0;
+	}
+	.recipeContaniner{
+	    width: 300px;
+  		height: 250px;
+  		background-color: #faf4c0;
+	}
+	.myRecipeList_li{
+		width:300px;height:380px;
+		background-color:#faf4c0;
+		margin-bottom:30px;
+		border-radius:10px;
+		position: relative;
+	}
+	.myRecipeName{
+		text-align:center;
+	}
+	.myRecipeThumb_img{
+		width:260px;height:250px;
+		border-radius:10px;
+	}
+	.feedback{float:right;}.recipeBookmark{margin-top:5px;}
+	.recipeIntro{margin-left:20px;}
+	.modify{
+		position: absolute;
+	    bottom: 0px;
+	    margin-left: 110px;
+	}
 </style>
 <title>즐겨찾기 레시피</title>
 </head>
 <body>
-<h2>즐겨찾기 레시피</h2>
 <div id="container">
 	<div id="myRecipe">
 		<div id="reicpeView">
+			<div class="abc">
 			<ul class="myRecipeList_ul">
 				<c:forEach var="recipe" items="${likeRecipe.likeList}">
-					<li class="myRecipeList_li" style="width:300px;height:400px;">
-						<div class="myRecipeName" style="text-align:center;">${recipe.name}</div>
+					<li class="myRecipeList_li">
+						<div class="myRecipeName">${recipe.name}</div>
 						<div class="myRecipeThumb">
 							<a href="/foody/recipe/view.do?no=${recipe.no}" class="recipeLink">
-								<img class="myRecipeThumb_img" style="width:300px;height:250px;" src="${recipe.thumbnail}">
+								<img class="myRecipeThumb_img" src="/foody/upload/${recipe.thumbnail}">
 							</a>
 						</div>
-						<div class="feedback" style="float:right;">
-								<span class="recipeBookmark" style="margin-top:5px;"><img src="/foody/img/heart.png" style="width:25px;height:25px;">${recipe.bookmark}</span>
+						<div class="feedback">
+								<span class="recipeBookmark"><img src="/foody/img/heart.png" style="width:25px;height:25px;">${recipe.bookmark}</span>
 								<span class="recipeComment"><img src="/foody/img/comment.png" style="width:15px;height:15px;margin:5px;">${recipe.comment_count}</span>
 						</div>
 						<div class="recipeInfo">
@@ -46,6 +81,7 @@
 					</li>
 				</c:forEach>
 			</ul>
+			</div>
 			<!-- 페이지 처리 -->
 	        <div class="pagenate clear">
 	            <ul class='paging'>

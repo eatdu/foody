@@ -135,7 +135,6 @@ public class UserServiceImpl implements UserService {
 	@Override // 회원정보 수정페이지 출력
 	public Map<String, Object> modify(HttpSession sess) {
 		UserVO uv = (UserVO)sess.getAttribute("loginInfo");
-		
 		UserVO uvl = mapper.selectOne(uv.getNo());
 		
 		// 회원가입시 유저가 선택한 알레르기
@@ -193,33 +192,32 @@ public class UserServiceImpl implements UserService {
 	}
 	
 	@Override // 회원정보수정
-	public boolean userInfoUpdate(UserVO uvo, HttpServletRequest req) {
+	public int userInfoUpdate(UserVO uvo, HttpServletRequest req, HttpSession sess, boolean fileDel) {
 		int result = 0;
 		try {
+			if (!fileDel) mapper.userProfileDelete(uvo.getNo());
 			mapper.modifyUserInfo(uvo);
 			mapper.userAllergyDelete(uvo.getNo());
 			mapper.userPreferDelete(uvo.getNo());
-			String[] prefer_no = req.getParameterValues("prefer_no");
-			if(prefer_no.length >= 0) {
-				for(int i=0; i<prefer_no.length; i++) {
-					uvo.setPrefer_no(Integer.parseInt(prefer_no[i]));
-					mapper.userPrefer(uvo);
-				}
-			}
-			result++;
-			String[] allergy_no = req.getParameterValues("allergy_no");
-			if(allergy_no.length >= 0) {
+			try {
+				
+				String[] allergy_no = req.getParameterValues("allergy_no");
 				for(int i=0; i<allergy_no.length; i++) {
 					uvo.setAllergy_no(Integer.parseInt(allergy_no[i]));
 					mapper.userAllergy(uvo);
 				}
+			} catch (Exception e) {}
+			String[] prefer_no = req.getParameterValues("prefer_no");
+			for(int i=0; i<prefer_no.length; i++) {
+				uvo.setPrefer_no(Integer.parseInt(prefer_no[i]));
+				mapper.userPrefer(uvo);
 			}
 			result++;
 		} catch (Exception e) {e.printStackTrace();}
-		return result == 2 ? true : false;
+		return result;
 	}
 
-	@Override
+	@Override // 회원탈퇴
 	public boolean userExit(HttpSession sess) {
 		UserVO uv = (UserVO) sess.getAttribute("loginInfo");
 		try {
@@ -227,6 +225,15 @@ public class UserServiceImpl implements UserService {
 			mapper.userPreferDelete(uv.getNo());
 		} catch(Exception e) {}
 		return mapper.userExit(uv.getNo()) > 0 ? true : false;
+	}
+
+	@Override
+	public boolean pwdCheck(UserVO vo, HttpSession sess) {
+		boolean r = false;
+		if(mapper.loginCheck(vo) != null) {
+			r = true;
+		}
+		return r;
 	}
 
 

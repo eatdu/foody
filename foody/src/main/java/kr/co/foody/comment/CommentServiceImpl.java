@@ -33,8 +33,8 @@ public class CommentServiceImpl implements CommentService {
 	}
 
 	@Override // 댓글 삭제
-	public int delete(CommentVO vo) {
-		return mapper.delete(vo.getNo());
+	public int delete(int no) {
+		return mapper.delete(no);
 	}
 
 	@Override // 해당 글의 댓글목록
@@ -101,5 +101,10 @@ public class CommentServiceImpl implements CommentService {
 	@Override // 댓글수정 못함 (나중에 추가)
 	public int update(CommentVO vo) {
 		return mapper.update(vo);
+	}
+
+	@Override
+	public List<CommentVO> selectPhotoReview(int no) {
+		return mapper.selectPhotoReview(no);
 	}
 }

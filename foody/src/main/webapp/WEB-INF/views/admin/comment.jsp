@@ -13,15 +13,15 @@
 <title>관리자 댓글 목록 페이지</title>
 
 <script>
-
-	function openModal(){
-		$('.modal').plainModal('open');
-	}
 	
-	$('.txt_l').on('click', function() {
-		$()
-	})
+	//댓글 삭제
+	function commentDel(no) {
+		if (confirm('정말로 삭제하시겠습니까?')) {
+			location.href='delete.do?no='+no;
+		}
+	}
 
+	
 </script>
 
 <style>
@@ -43,7 +43,7 @@ div.adminMenu {
 <%@ include file="../admin/leftMenu.jsp" %>
 <div class="adminContainer">
 <div class="title"><h1>댓글 목록 조회</h1></div>
-	<!-- 모달영역 -->
+	<!-- 모달영역
 	<div class="modal">
 		<div class="view">
             <div class="title">
@@ -61,7 +61,7 @@ div.adminMenu {
         	</div>
         	</div>
     </div>
-    <!-- 모달영역 -->
+    -->
     
     <div class="comment_list">
             <div class="size">
@@ -87,19 +87,14 @@ div.adminMenu {
 		                </ul> -->
 	                </div>
 	                <div class="orderBy">
-		                <!-- <select id="orderBy">
-							<option value="recent">최신순</option>
-							<option value="old">오래된순</option>
-							<option value="writer">작성자순</option>
-						</select> -->
 		                <ul class="orderBy" style="display:flex;">
 			                <li>정렬순&nbsp;&nbsp;|&nbsp;&nbsp;</li>
-			                <li><label><input type="radio" id="recent" name="align" value="recent" checked />최신등록순</label></li>
+			                <li><label><input type="radio" id="recent" name="align" value="recent" checked/>최신등록순</label></li>
 			                <li><label><input type="radio" id="old" name="align" value="old" <c:if test="${param.align=='old'}"> checked</c:if>/>오래된순</label></li>
 			                <li><label><input type="radio" id="writer" name="align" value="writer" <c:if test="${param.align=='writer'}"> checked</c:if>/>작성자순</label></li>
 		                </ul>
 		            </div>
-	                <div class="bbsSearch" style="float:left;">
+	                <div class="bbsSearch" align="left;">
 	                    <span class="srchSelect">
 	                        <select id="stype" name="stype" class="dSelect" title="검색분류 선택">
 	                            <option value="content" <c:if test="${param.stype=='content'}">selected</c:if>>댓글내용</option>
@@ -124,14 +119,16 @@ div.adminMenu {
 					        <col width="200px" />
 					        <col width="*" />
 					        <col width="100px" />
+					        <col width="200px" />
 					    </colgroup>
 					    <thead>
                             <tr>
                                 <th>번호</th>
                                 <th>작성일시</th>
-                                <th>작성글 제목</th>
+                                <th>원글 제목</th>
                                 <th>댓글 내용</th>
                                 <th>작성자</th>
+                                <th>삭제/비공개</th>
                                 <!-- <th>신고확인 여부</th> -->
                             </tr>
 					    </thead>
@@ -159,11 +156,15 @@ div.adminMenu {
 				               	<td class="txt_l" style="text-align:left">
 				               		<!-- 답변 들여쓰기 -->
 					               	<c:forEach begin="1" end="${list.depth}">&nbsp;&nbsp;&nbsp;</c:forEach>
-					               	<c:if test="${list.depth > 0}"><img src="/foody/img/answer_icon.gif"></c:if>
+					               	<c:if test="${list.depth > 0}"><img src="/foody/img/comment_icon.gif"></c:if>
 					                ${list.content}</a>
 				               	</td>
 				               	<td class="writer" style="text-align:center;">
 				                		${list.user_name}
+				               	</td>
+				               	<td class="commentDel" style="text-align: center;">
+				                		<a href="javascript:del(${list.no});">[삭제]</a>
+				                		<!-- <input type="radio" id="all" name="period" value="all" />비공개 -->
 				               	</td>
 				            </tr>
 						</c:forEach>

@@ -1,6 +1,9 @@
 package kr.co.foody.recipe;
 
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
@@ -11,7 +14,9 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
+import kr.co.foody.comment.CommentMapper;
 import lombok.extern.log4j.Log4j;
+import util.DownloadImg;
 
 @WebAppConfiguration
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -21,6 +26,83 @@ public class SampleDataMaker {
 
 	@Autowired
 	RecipeMapper mapper;
+	@Autowired
+	CommentMapper commentMapper;
+	
+	//@Test
+	public void tipMaker() {
+		//2648
+		for (int no = 177; no <= 500; no++) {
+			RecipeVO vo = mapper.view(no);
+			if (vo == null || vo.getTip() != null) continue;
+			Map map = new HashMap();
+			map.put("no", no);
+			map.put("tip", "맛있게 드세요~!!^^");
+			mapper.copyThumbnail(map);
+		}
+	}
+	
+	//@Test
+	public void imgDownloader() {
+//		for (int no = 11; no <= 2648; no++) {
+//			ProcessVO vo = mapper.selectProcess(no);
+//			if (vo == null) continue;
+//			Map map = new HashMap();
+//			map.put("no", no);
+//			map.put("photo", vo.getPhoto());
+//			mapper.copyThumbnail(map);
+//		}
+		
+		List<Integer> errorList = new ArrayList<Integer>();
+		for (int no = 11; no <= 2648; no++) {
+			ProcessVO vo = mapper.selectProcess(no);
+			if (vo == null || "".equals(vo.getPhoto())) continue;
+			String url = vo.getPhoto();
+			String realPath = "C:\\Users\\tjoeun-jr-902-10\\git\\foody\\foody\\src\\main\\webapp\\upload\\";
+			String ext = "jpg";
+			String fileName = new Date().getTime() + "";
+			try {
+				DownloadImg.saveImage(url, realPath, fileName, ext);
+				Map map = new HashMap();
+				map.put("no", no);
+				map.put("photo", fileName + "." + ext);
+				mapper.copyThumbnail(map);
+			} catch (Exception e) {
+				e.printStackTrace();
+				errorList.add(no);
+			}
+		}
+		System.out.println(errorList);
+	}
+	
+	
+	//@Test
+	public void updatePwd() {
+		for(int i = 23; i < 122; i++) {
+			mapper.updatePwd(i);
+		}
+	}
+	
+	//@Test
+	public void randomComment2() {
+		for(int i = 5057; i < 5197; i++) {
+			Map map = new HashMap();
+			map.put("gno", i);
+			mapper.updateComment2(map);
+		}
+	}
+	
+	//@Test
+	public void randomComment() {
+		for(int boardNo = 1; boardNo <= 14; boardNo++) {
+			for(int i = 0; i < 10; i++) {
+				Map map = new HashMap();
+				map.put("boardNo", boardNo);
+				map.put("userNo", 22 + (int)(Math.random() * 100));
+				mapper.insertComment(map);
+			}
+		}
+	}
 	
 	//@Test
 	public void randomRecent() {
@@ -36,7 +118,7 @@ public class SampleDataMaker {
 		}
 	}
 	
-	@Test
+	//@Test
 	public void randomRcpUser() {
 		System.out.println(Math.random());
 //		for(int i = 351; i <= 500; i++) {
@@ -50,36 +132,41 @@ public class SampleDataMaker {
 	
 	//@Test
 	public void randomReg() {
-		for (int i=351; i<=500; i++) {
+		for (int i=56; i<=5196; i++) {
 			mapper.randomReg(i);
 		}
 	}
 	
 	//@Test
 	public void feedbackMaker() {
-		// 회원번호 - 21~120 / 레시피 번호 - 1~200
-		for (int userNo = 21; userNo <= 120; userNo++) {
-			double bmkProb = Math.random();
-			double starProb = Math.random();
-			for (int rcpNo = 1; rcpNo<= 200; rcpNo++) {
-				int bmk = 0;
-				int star = -1;
-				Map user = new HashMap();
-				if (Math.random() < bmkProb) {
-					bmk = 1;
-				}
-				if (Math.random() < starProb + 0.2) {
-					star = (int)(Math.random() * 11) * 5;
-				}
-				user.put("userNo", userNo);
-				user.put("rcpNo", rcpNo);
-				user.put("bmk", bmk);
-				user.put("star", star);
-				if(bmk != 0 && star != -1) {
-					mapper.insertFeedback(user);
-				}
-			}
+		for (int rcpNo = 11; rcpNo<= 500; rcpNo++) {
+			commentMapper.updateAvgstar(rcpNo);
 		}
+		
+		// 회원번호 - 22~121 / 레시피 번호 - 1~200
+//		for (int userNo = 22; userNo <= 121; userNo++) {
+//			double bmkProb = Math.random();
+//			double starProb = Math.random();
+//			for (int rcpNo = 201; rcpNo<= 500; rcpNo++) {
+//				int bmk = 0;
+//				int star = -1;
+//				Map user = new HashMap();
+//				if (Math.random() < bmkProb) {
+//					bmk = 1;
+//				}
+//				if (Math.random() < starProb + 0.2) {
+//					star = (int)(Math.random() * 3 + 3) * 10;
+//				}
+//				user.put("userNo", userNo);
+//				user.put("rcpNo", rcpNo);
+//				user.put("bmk", bmk);
+//				user.put("star", star);
+//				if(bmk != 0 || star != -1) {
+//					//System.out.println(user);
+//					mapper.insertFeedback(user);
+//				}
+//			}
+//		}
 	}
 	
 	public String telMaker() {
@@ -145,8 +232,8 @@ public class SampleDataMaker {
 				Map user = new HashMap();
 				user.put("userNo", i);
 				user.put("preferFood", a[k]);
-				//System.out.println(user);
-				mapper.insertAllergyUser(user);
+				System.out.println(user);
+				//mapper.insertAllergyUser(user);
 			}
 		}
 	}

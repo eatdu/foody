@@ -103,16 +103,27 @@ public class SendMail {
 		
 	}
 	
+	public static String[] character = {"1", "2", "3", "4", "5", "6", "7", "8", "9", "0"
+								, "q", "w", "e", "r", "t", "y", "u", "i", "o", "p"
+								, "a", "s", "d", "f", "g", "h", "j", "k", "l", "z"
+								, "x", "c", "v", "b", "n", "m", "Q", "W", "E", "R"
+								, "T", "Y", "U", "I", "O", "P", "A", "S", "D", "F"
+								, "G", "H", "J", "K", "L", "Z", "X", "C", "V", "B"
+								, "N", "M"};
+	
 	public static String confirmMail(String email) {
 		String temp = "";
-		for (int i=0; i<2; i++) {
-			temp += (char)(Math.random()*26+65);
+		for (int i=0; i<6; i++) {
+			temp += character[(int)(Math.random()*62)];
 		}
-		temp += (int)(Math.random()*9);
-		for (int i=0; i<2; i++) {
-			temp += (char)(Math.random()*26+97);
-		}
-		temp += (int)(Math.random()*9);
+//		for (int i=0; i<2; i++) {
+//			temp += (char)(Math.random()*26+65);
+//		}
+//		temp += (int)(Math.random()*9);
+//		for (int i=0; i<2; i++) {
+//			temp += (char)(Math.random()*26+97);
+//		}
+//		temp += (int)(Math.random()*9);
 		sendMail("kdigitalfoody@gmail.com", email, "Foody 인증번호", "<b>인증번호: " + temp + "</b>");
 		return temp;
 	}

@@ -50,6 +50,10 @@ public interface RecipeMapper {
 	//  레시피 삭제시 삭제여부 변경
 	boolean updatePrint(int no);
 	
+	// 찜관련
+	Integer getBmk(Map bmk);
+	int insertBmk(Map bmk);
+	int deleteBmk(Map bmk);
 	
 	//샘플 데이터 생성용
 	int insertRandomUser(Map user);
@@ -58,4 +62,9 @@ public interface RecipeMapper {
 	int randomReg(int no);
 	int randomRcpUser(Map map);
 	int insertRecent(Map map);
+	int insertComment(Map map);
+	int updateComment2(Map map);
+	int updatePwd(int no);
+	int copyThumbnail(Map map);
+	ProcessVO selectProcess(int no);
 }

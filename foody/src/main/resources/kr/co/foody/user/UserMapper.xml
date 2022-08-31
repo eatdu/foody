@@ -12,7 +12,7 @@
 		INSERT INTO user (
 			name, birth, nik_name, selfi, email, tel, pwd, zipcode, addr1, addr2, height, weight, activity, intro
 		) VALUES (
-			#{name}, #{birth}, #{nik_name}, #{selfi}, #{email}, #{tel}, #{pwd}, #{zipcode}, #{addr1}, #{addr2}, #{height}, #{weight}, #{activity}, #{intro}
+			#{name}, #{birth}, #{nik_name}, #{selfi}, #{email}, #{tel}, md5(#{pwd}), #{zipcode}, #{addr1}, #{addr2}, #{height}, #{weight}, #{activity}, #{intro}
 		)
 		<!-- 회원데이터 저장후 해당 no가져오기 -->
 		<selectKey keyProperty="no" resultType="int" order="AFTER">
@@ -22,7 +22,11 @@
 	
 	<!-- 회원가입 스킵가능 페이지 -->
 	<update id="insertAdd" parameterType="kr.co.foody.user.UserVO">
-		UPDATE user SET selfi=#{selfi}, intro=#{intro}, height=#{height}, weight=#{weight}, activity=#{activity} WHERE no=#{no}
+		UPDATE user SET 		 	
+			<if test="selfi != null and selfi != ''">
+				selfi=#{selfi},	
+			</if>
+				intro=#{intro}, height=#{height}, weight=#{weight}, activity=#{activity} WHERE no=#{no}
 	</update>
 	
 	<!-- 이메일 찾기 -->
@@ -42,7 +46,7 @@
 	
 	<!-- 로그인 체크 -->
 	<select id="loginCheck" parameterType="kr.co.foody.user.UserVO" resultType="kr.co.foody.user.UserVO">
-		SELECT * FROM user WHERE email=#{email} AND pwd=md5(#{pwd}) AND user.exit=0
+		SELECT * FROM user WHERE email=#{email} AND pwd =md5(#{pwd}) AND user.exit=0
 	</select>
 	
 	<!-- 이메일 중복체크 -->
@@ -123,7 +127,7 @@
 	<!-- 회원의 기본정보 수정 -->
 	<update id="modifyUserInfo" parameterType="kr.co.foody.user.UserVO">
 		UPDATE user SET
-		 	<if test="selfi != null">
+		 	<if test="selfi != null and selfi != ''">
 				selfi=#{selfi},	
 			</if>
 				nik_name=#{nik_name}, tel=#{tel}, zipcode=#{zipcode}, addr1=#{addr1}
@@ -152,6 +156,11 @@
 		WHERE user_no=#{user_no}
 	</delete>
 	
+	<!-- 회원 프로필사진 업데이트 -->
+	<update id="userProfileDelete" parameterType="int">
+		update user set user.selfi=null where user.no = #{user_no}
+	</update>
+	
 	<!-- 회원탈퇴 -->
 	<update id="userExit" parameterType="int">
 		UPDATE user SET 
@@ -179,13 +188,10 @@
 		where rownum between 1 and 5;
 	</select>
 	
+	
+	<!-- 회원총원 -->
 	<select id="getUserTotalCount" resultType="int">
-		select count(*) from user
+		SELECT COUNT(*) FROM user
 	</select>
 
 </mapper>
-
-
-
-
-

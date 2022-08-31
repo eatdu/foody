@@ -32,15 +32,20 @@ public class RecipeVO {
  	private int viewcount;
  	
  	//정렬기준
- 	private int bookmark;
+ 	private Integer bookmark;
  	private double star;
  	private int reply;
+ 	private int avgStar;
  	
  	//관리자에서 요청한 경우
  	private boolean admin;
  	
  	public double getStar() {
  		return (int)(star * 10) / 100.0;
+ 	}
+ 	
+ 	public double getAvgStar() {
+ 		return avgStar / 10.0;
  	}
  	
 }

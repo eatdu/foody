@@ -92,7 +92,6 @@ public class RecipeServiceImpl implements RecipeService {
 		}
 		  	sumKcal = sumCarbo + sumProtein + sumFat;
 		
-		
 		datamap.put("recipe", recipe);
 		datamap.put("recipeType", typeName);
 		datamap.put("user",mapper.userView(recipe.getUser_no()));
@@ -308,5 +307,15 @@ public class RecipeServiceImpl implements RecipeService {
 		}
 		System.out.println(cri);
 		return result;
+	}
+
+	@Override
+	public int insertBmk(Map bmk) {
+		return mapper.insertBmk(bmk);
+	}
+
+	@Override
+	public int deleteBmk(Map bmk) {
+		return mapper.deleteBmk(bmk);
 	}
 }

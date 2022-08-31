@@ -27,10 +27,10 @@ public interface MypageMapper {
 	int deleteRecipe(int no);
 	
 	// 마이페이지 정보
-	int userRecipeCount(int no); 
-	int userBookmarkCount(int no); 
-	int userTotalViewCount(int no); 
-	int userCommentCount(int no); 
+	Integer userRecipeCount(int no); 
+	Integer userBookmarkCount(int no); 
+	Integer userTotalViewCount(int no); 
+	Integer userCommentCount(int no); 
 	
 }
 	

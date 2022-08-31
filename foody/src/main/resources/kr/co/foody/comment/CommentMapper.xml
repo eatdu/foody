@@ -26,7 +26,7 @@
 	<!-- 새로운 별점 등록시 평균별점 업뎃 -->
 	<update id="updateAvgstar" parameterType="int">
 		update recipe set
-		avgStar = (select avg(star) from feedback where recipe_no=#{recipe_no})
+		avgStar = (select avg(star) from feedback where recipe_no=#{recipe_no} and star != -1)
 		where no=#{recipe_no}
 	</update>
 	
@@ -56,10 +56,10 @@
 	<!-- 해당 글에 달린 댓글목록 조회 -->
 	<select id="list" parameterType="kr.co.foody.comment.CommentVO" resultType="kr.co.foody.comment.CommentVO">
 		select *,
-			(select name from user where no=comment.user_no) as user_name
+			(select nik_name from user where no=comment.user_no) as user_nik_name
 		from comment
 		where board_no = #{board_no} and tablename = #{tablename}
-		order by gno desc, ono asc
+		order by gno desc, ono asc, regdate desc
 		limit ${startIdx}, ${pageRow}
 	</select>
 	
@@ -130,5 +130,10 @@
 	<delete id="delete" parameterType="int">
 		delete from comment where no=#{no}
 	</delete>
+	
+	<!-- 포토 리뷰 -->
+	<select id="selectPhotoReview" parameterType="int" resultType="kr.co.foody.comment.CommentVO">
+		select * from recipe.comment where board_no = #{no} and photo is not null;
+	</select>
 
 </mapper>

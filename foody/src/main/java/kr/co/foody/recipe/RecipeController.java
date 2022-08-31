@@ -1,8 +1,7 @@
-package kr.co.foody.recipe;
+ package kr.co.foody.recipe;
 
 import java.io.File;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -21,11 +20,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import kr.co.foody.admin.AdminService;
-import kr.co.foody.board.BoardVO;
 import kr.co.foody.comment.CommentService;
 import kr.co.foody.comment.CommentVO;
 import kr.co.foody.constants.IngredientCategory;
 import kr.co.foody.constants.RecipeCategory;
+import kr.co.foody.user.UserService;
 import kr.co.foody.user.UserVO;
 
 @Controller
@@ -39,6 +38,10 @@ public class RecipeController {
 	IngredientService service2;
 	@Autowired
 	CommentService cservice;
+	@Autowired
+	RecipeMapper mapper;
+	@Autowired
+	UserService uService;
 
 	@GetMapping("/recipe/write.do")
 	public String write() {
@@ -168,6 +171,7 @@ public class RecipeController {
 		cvo.setBoard_no(recipeNo);
 		cvo.setTablename("recipe");
 		model.addAttribute("comment", cservice.index(cvo)); // 레시피에 대한 포토리뷰
+		model.addAttribute("photoComment", cservice.selectPhotoReview(vo.getNo()) ); // 사진 있는 리뷰만 따로
 		
 		//관리자페이지에서 접속한 경우 실행되는 코드
 		if (vo.isAdmin()) {
@@ -349,4 +353,23 @@ public class RecipeController {
 		model.addAttribute("comment", cservice.index(vo)); // 레시피 글에 대한 댓글리뷰
 		return "common/comment";
 	}
+	
+	@GetMapping("/recipe/processBmk.do")
+	@ResponseBody
+	public String processBmk(Map bmk, Model model) {
+		
+		Integer a = mapper.getBmk(bmk);
+		if (a == null || a == 0) {
+			if(mapper.insertBmk(bmk) > 0) {
+				return "insert";
+			}
+		} else {
+			if(mapper.deleteBmk(bmk) > 0) {
+				return "delete";
+			}
+		}
+		return "fail";
+	}
+
+	
 }

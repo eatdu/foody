@@ -67,7 +67,7 @@
 						<div class="myRecipeName">${recipe.name}</div>
 						<div class="myRecipeThumb">
 							<a href="/foody/recipe/view.do?no=${recipe.no}" class="recipeLink">
-								<img class="myRecipeThumb_img" src="${recipe.thumbnail}">
+								<img class="myRecipeThumb_img" src="/foody/upload/${recipe.thumbnail}">
 							</a>
 						</div>
 						<div class="feedback">

@@ -2,7 +2,6 @@
 
 import java.io.File;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -21,11 +20,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import kr.co.foody.admin.AdminService;
-import kr.co.foody.board.BoardVO;
 import kr.co.foody.comment.CommentService;
 import kr.co.foody.comment.CommentVO;
 import kr.co.foody.constants.IngredientCategory;
 import kr.co.foody.constants.RecipeCategory;
+import kr.co.foody.user.UserService;
 import kr.co.foody.user.UserVO;
 
 @Controller
@@ -41,6 +40,8 @@ public class RecipeController {
 	CommentService cservice;
 	@Autowired
 	RecipeMapper mapper;
+	@Autowired
+	UserService uService;
 
 	@GetMapping("/recipe/write.do")
 	public String write() {

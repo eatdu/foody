@@ -184,8 +184,10 @@
 		where rownum between 1 and 5;
 	</select>
 	
+	
+	<!-- 회원총원 -->
 	<select id="getUserTotalCount" resultType="int">
-		select count(*) from user
+		SELECT COUNT(*) FROM user
 	</select>
 
 </mapper>

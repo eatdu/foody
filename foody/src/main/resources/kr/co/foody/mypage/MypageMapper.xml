@@ -12,7 +12,6 @@
 		AND recipe.print = 0
 		ORDER BY bookmark DESC
 	    LIMIT ${startIdx}, ${pageRow}
-	    
 	</select>
 	<select id="myRecipeCount" resultType="int" parameterType="int">
 		SELECT COUNT(*) FROM recipe
@@ -86,15 +85,23 @@
 	
 	<!-- 회원이 작성한 레시피 수 -->
 	<select id="userRecipeCount" parameterType="int" resultType="int">
-		SELECT COUNT(no) AS urcount FROM recipe WHERE user_no = #{user_no}
+		SELECT COUNT(no) AS urcount 
+		FROM recipe 
+		WHERE user_no = #{user_no} 
+		AND print = 0
 	</select>
 	<!-- 회원이 받은 총 북마크 수 -->
 	<select id="userBookmarkCount" parameterType="int" resultType="int">
-		SELECT COUNT(bookmark) AS ubcount FROM feedback WHERE user_no = #{user_no}
+		SELECT COUNT(bookmark) AS ubcount 
+		FROM feedback 
+		WHERE user_no = #{user_no} 
 	</select>
 	<!-- 회원의 레시피가 받은 조회수 -->
 	<select id="userTotalViewCount" parameterType="int" resultType="int">
-		SELECT SUM(viewcount) AS utvcount FROM recipe WHERE user_no = #{user_no}
+		SELECT SUM(viewcount) AS utvcount 
+		FROM recipe 
+		WHERE user_no = #{user_no} 
+		AND print = 0
 	</select>
 	<!-- 회원의 레시피가 받은 댓글수 -->
 	<select id="userCommentCount" parameterType="int" resultType="int">
@@ -103,6 +110,7 @@
 			FROM comment WHERE board_no = recipe.no)) AS uccount 
 		FROM recipe 
 		WHERE user_no = #{user_no}
+		AND print = 0
 	</select>
 		
 		

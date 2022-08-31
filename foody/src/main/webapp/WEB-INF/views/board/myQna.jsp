@@ -93,8 +93,6 @@
                             <tr class="faq_a${list.no}" style="display:none; width:100%;">
 				                <td style="text-align: center;"></td>
                                 <td class="txt_l" style="text-align: left;">
-	                                	<c:forEach begin="1" end="${list.depth }">&nbsp;&nbsp;&nbsp;</c:forEach>
-	                                	<c:if test="${list.depth > 0 }"><img src="/foody/img/answer_icon.gif"></c:if>
 	                                    ${list.content}</a>
                                 </td>
                                 <td></td>

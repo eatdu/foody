@@ -137,9 +137,9 @@ public class SampleDataMaker {
 		}
 	}
 	
-	@Test
+	//@Test
 	public void feedbackMaker() {
-		for (int rcpNo = 1; rcpNo<= 500; rcpNo++) {
+		for (int rcpNo = 11; rcpNo<= 500; rcpNo++) {
 			commentMapper.updateAvgstar(rcpNo);
 		}
 		
@@ -232,8 +232,8 @@ public class SampleDataMaker {
 				Map user = new HashMap();
 				user.put("userNo", i);
 				user.put("preferFood", a[k]);
-				//System.out.println(user);
-				mapper.insertAllergyUser(user);
+				System.out.println(user);
+				//mapper.insertAllergyUser(user);
 			}
 		}
 	}

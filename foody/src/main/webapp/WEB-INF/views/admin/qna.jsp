@@ -107,9 +107,9 @@ div.adminMenu {
 		                </ul>
 		                <ul class="byResponsed" style="display:flex;">
 			                <li>답변 여부&nbsp;&nbsp;|&nbsp;&nbsp;</li>
-			                <li><label><input type="radio" id="all" name="response" value="" checked/>전체</label></li>
-			                <li><label><input type="radio" id="notResponsed" name="response" value="0" <c:if test="${param.response=='0'}"> checked</c:if>/>답변 미완료건</label></li>
-			                <li><label><input type="radio" id="responsed" name="response" value="1" <c:if test="${param.response=='1'}"> checked</c:if>/>답변 완료건</label></li>
+			                <li><label><input type="radio" id="all" name="response" value="-1" checked/>전체</label></li>
+			                <li><label><input type="radio" id="notResponse" name="response" value="0" <c:if test="${param.response=='0'}"> checked</c:if>/>답변 미완료건</label></li>
+			                <li><label><input type="radio" id="response" name="response" value="1" <c:if test="${param.response=='1'}"> checked</c:if>/>답변 완료건</label></li>
 		                </ul>
 	                </div>
 	                <div class="bbsSearch" align="left">
@@ -178,9 +178,8 @@ div.adminMenu {
 	                                    
                                 </td>
                                 <td class="writer">
-                                    <c:if test="${list.manager_no != null}">관리자</c:if>
-                                    <c:if test="${list.manager_no == null}">
-                                    ${list.user_name}</c:if>
+                                    <c:if test="${list.manager_no != 0}">관리자</c:if>
+                                    <c:if test="${list.manager_no == 0}">${list.user_name}</c:if>
                                 </td>
                                 <td>
 	                                <c:if test="${list.response > 0}">완료

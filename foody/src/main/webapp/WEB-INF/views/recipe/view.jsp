@@ -26,7 +26,7 @@
 	}
 	div.reviewImg {
 		overflow: hidden;
-		height: 220px;
+		height: 164px;
 	    width: 20%;
 	    margin: 15px;
 		float: left;
@@ -34,20 +34,76 @@
 	.swiper-slide {
 		display: flex;
 	    justify-content: center;
-		max-height: 250px;
+		max-height: 200px;
 	}
 	div.reviewImg img{
 		width: 100%;
 	    object-fit: cover;
 	    height: 100%;
     }
+    div.swiper{
+    	width: 100%;
+    }
+    
+    /*페이지 레이아웃*/
+    div.greyBox{
+    	background: #EAEAEA;
+	    margin: 30px auto;
+	    width: 70%;
+	    border-radius: 60px;
+        padding: 10px;
+        color: #000;
+    }
+    div.whiteBox{
+        background: #fff;
+	    width: 90%;
+	    margin: 30px 5%;
+	    padding: 50px 0 30px 0;
+	    border-radius: 60px;
+	    display: flex;
+	    flex-direction: column;
+	    align-items: center;
+    }
+    div.thumbnailBox{
+		width: 400px;
+	    height: 350px;
+	    position: relative;
+    }
+    div.chart{width: 90%;}
+    div.chartContainer{height: 200px; width: 50%; float:left;}
+    div.processBox{width: 500px;}
+    div.sub{width: 80%;}
+    
+    
+    
+    textarea#content {height: 100px; width: 79%; float: left;}
+    input#uploadFile {width: 19%; float: right; margin-top: 15px;}
+    div.btnSet {text-align: center;float: right; width: 20%; font-size: 30px;  background: #B2CCFF;}
+    div.btnSet:hover {background: #4374D9; color: #fff;}
+    
+    h3.name{font-size: 24px;}
+    h3.title{font-size: 35px;}
+    
+    table.ingreTable{width: 80%;}
+    table.list{margin: auto; width: 90%;}
+    
+    img.processImg{width: 350px; height: 220px;}
+    
+    ul.paging li{
+   	    float: left;
+	    width: 40px;
+	    font-size: 16px;
+	    
+    }
 	</style>
 	
 	<!-- 포토리뷰 스와이퍼 css -->
 	<link
 	  rel="stylesheet"
-	  href="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.css"
-	/>
+	  href="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.css"/>
+	<link rel="stylesheet" href="/foody/css/reset.css"/>
+    <link rel="stylesheet" href="/foody/css/contents.css"/>
+	
 	<script src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script>
 	<script src="https://canvasjs.com/assets/script/jquery.canvasjs.min.js"></script>
 	<script type="text/javascript">
@@ -115,6 +171,8 @@
 			      prevEl: ".swiper-button-prev",
 			    }
 			});
+			
+			$(".swiper-slide").css("display", "flex");
 			
 			// 별점 등록
 			$(".getStar li a img").hover(function() { // 마우스오버 이벤트
@@ -273,181 +331,165 @@
 		});
 	</script>	
 	</head>
-	<body>
+<body>
 	<%@ include file="../common/navBar.jsp" %>
-	레시피 번호: ${recipe.no}<br><br><br>
-	
-	<!-- 경로수정 해야하는데 모르겠음 -->
-	<img src="/foody/upload/${recipe.thumbnail}" style="width:250px; height:140px;"><br><br>
-	<img src="/foody/upload/${user.selfi}" style="width:100px; height:100px; border-radius:50%;"><br>
-	이름: ${user.nik_name}<br><br>
-	
-	${recipe.name}<br>
-	${recipe.intro}<br>
-	
-	소요시간 ${recipe.time}분 이내<br>
-	분류: ${recipeType}<br>
-	총 제공량: ${recipe.serving}인분
-	<br><br><br>
-
-	재료:<br>
-	<c:forEach var="dataMap" items="${Ingredientlist}" varStatus="status">
-		<div id ="ingredientListView">
-			<c:if test="${dataMap.weight eq 0}">
-				<c:out value="${dataMap.name} (${dataMap.quantity})"/>
-			</c:if>
-			<c:if test="${dataMap.weight ne 0}">
-			<c:out value="${dataMap.name} ${dataMap.weight}g (${dataMap.quantity})"/>
-			</c:if>
-			<c:if test="${not empty loginUser}">
-				<c:forEach var="sessallergyNo" items="${sessAllergyNo}" varStatus="status">
-					<c:if test="${sessallergyNo eq dataMap.allergy_no}">
-							<span style="color:red;">
-								<c:out value="알러지 주의!!"/>
-							</span>
-					</c:if>
-				</c:forEach>
-			</c:if>
-			<c:if test="${empty loginUser}">
-				<c:if test="${dataMap.allergy_no ne 0}">
-						<span style="color:red;">
-							<c:out value="알러지 주의!!"/>
-						</span>
-				</c:if>
-			</c:if>
+	<div class="container">
+	<div class="greyBox">
+		<div class="whiteBox" style="margin-top: 60px;">
+			<div class="thumbnailBox">
+				<img src="/foody/upload/${recipe.thumbnail}" style="width: 100%; height: 300px;"><br><br>
+				<img src="/foody/upload/${user.selfi}" style="border-radius: 50%; position: absolute; bottom: 0px; left: 37.5%; background: #fff; width: 100px; height: 100px;"><br>
+			</div>
+			<h3 class="name">${user.nik_name}</h3>
+			<h3 class="title">${recipe.name}</h3>
+			${recipe.intro}<br>
+			소요시간: ${recipe.time}분 이내<br>
+			분류: ${recipeType}
 		</div>
-		<c:if test="${not empty dataMap.detail}">
-			<div style="font-size:5px;" >
-				<c:out value="(참고:${dataMap.detail})"/>
-			</div>
-		</c:if>
-		<br>
-	</c:forEach>
-	
-	<br><br><br>
-	칼로리 및 영양정보(1인 제공량 기준):<br>
-	열량: ${sumKcal}kcal  탄수화물: ${sumCarbo}kcal   단백질:${sumProtein}kcal  지방:${sumFat}kcal 
-	<br><br><br>
-	<div id="chartContainer" style="height: 200px; width: 50%;"></div>
-	<br>
-	<div id="chartContainer2" style="height: 200px; width: 50%;"></div>
-	<br>
-	
-	조리과정:
-	<c:forEach var="dataMap" items="${processlist}" varStatus="status">
-		<p><c:out value="Step${dataMap.order_no}"/>
-		
-		<c:if test="${not empty dataMap.photo}">
-		<img src = "<c:out value="/foody/upload/${dataMap.photo}"/>" style="width:250px; height:140px;">
-		</c:if>
-		
-		<c:if test="${empty dataMap.photo}">
-		<img src = "<c:out value="/foody/resources/img/processImg.png"/>" style="width:250px; height:140px;">
-		</c:if>
-		
-		<c:out value="${dataMap.content}"/></p>
-	</c:forEach>
-	
-	<br><br>
-	
-	완성 사진:
-	<br>
-	<c:if test="${not empty recipe.addedpicture1}">
-		<img src = "<c:out value="${recipe.addedpicture1}"/>" style="width:250px; height:140px;">
-	</c:if>
-	<c:if test="${empty recipe.addedpicture1}">
-		<img src = "<c:out value="/foody/resources/img/processImg.png"/>" style="width:250px; height:140px;">
-	</c:if>
-	
-	<c:if test="${not empty recipe.addedpicture2}">
-		<img src = "<c:out value="${recipe.addedpicture2}"/>" style="width:250px; height:140px;">
-	</c:if>
-	<c:if test="${empty recipe.addedpicture2}">
-		<img src = "<c:out value="/foody/resources/img/processImg.png"/>" style="width:250px; height:140px;">
-	</c:if>
-	
-	<!-- 찜하기 -->
-	<div class="getBookmark">
-		<c:if test="${!empty loginInfo}">
-			<c:if test="${recipe.bookmark eq 1}">
-				<img id="heartImg" src="/foody/img/heart.png">
-	   		 	<a href="javascript:processBmk();">찜해제</a>
-	    		</c:if>
-			<c:if test="${recipe.bookmark eq 0 or empty recipe.bookmark}">
-				<img id="heartImg2" src="/foody/img/empty_heart.png">
-	   		 	<a href="javascript:processBmk();">찜하기</a>
-	    		</c:if>
-	    </c:if>
-	</div>
-	
-	<!-- 포토리뷰 -->
-	<h2 class="sub_title">포토 리뷰</h2>
-	<div class="swiper mySwiper">
-		<div class="swiper-wrapper">
-			<div class="swiper-slide" style="display: inline-block;"> 
-			<c:forEach var="vo" items="${photoComment}" varStatus="idx">
-				<div class="reviewImg">
-					<img class="" width='100%' src="/foody/upload/${vo.photo}">
-				</div>
-			<c:if test="${idx.count % 4 == 0 && !idx.last}">
-			</div>
-			<div class="swiper-slide" style="display: inline-block;">
-			</c:if>
+		<div class="whiteBox">
+			<h3 class="name">재료</h3>(${recipe.serving}인분 기준)
+			<table class="ingreTable">
+				<tr>
+					<td style="width: 35%;">재료</td>
+					<td style="width: 15%;">중량</td>
+					<td style="width: 35%;">재료</td>
+					<td style="width: 15%;">중량</td>
+				</tr>
+				<tr>
+					<c:forEach var="dataMap" items="${Ingredientlist}" varStatus="status">
+					<td>
+						${dataMap.name} <c:if test="${not empty dataMap.detail}">(${dataMap.detail})</c:if>
+							<c:if test="${not empty loginUser}">
+			
+								</c:if>
+								<c:if test="${empty loginUser}">
+									<c:if test="${dataMap.allergy_no ne 0}">
+											<span style="color:red;">
+												<c:out value="알러지 주의!!"/>
+											</span>
+									</c:if>
+								</c:if>
+					</td>
+					<td>
+						<c:if test="${dataMap.weight eq 0}">
+							${dataMap.quantity}
+						</c:if>
+						<c:if test="${dataMap.weight ne 0}">
+							${dataMap.weight}g (${dataMap.quantity})
+						</c:if>
+					</td>
+				<c:if test="${status.count % 2 eq 0}">
+				</tr>
+				<tr>
+				</c:if>
+					</c:forEach>
+				</tr>
+			</table>
+			<br>
+			<h3 class="name">칼로리 및 영양정보</h3>(1인 제공량 기준)
+			<table style="font-size: 17px;">
+				<tr>
+					<th style="width: 25%;">열량</th>
+					<th style="width: 25%;">탄수화물</th>
+					<th style="width: 25%;">단백질</th>
+					<th style="width: 25%;">지방</th>
+				</tr>
+				<tr>
+					<td>${sumKcal} kcal</td>
+					<td>${sumCarbo}g</td>
+					<td>${sumProtein}g</td>
+					<td>${sumFat}g</td>
+				</tr>
+			</table>
+			<br>
+			<div class="chart">
+				<div class="chartContainer" id="chartContainer"></div>
+				<div class="chartContainer" id="chartContainer2"></div>
+			</div>			
+		</div>
+		<div class="whiteBox">
+			<div class="processBox">
+			<h3 class="name">조리과정</h3>
+			<c:forEach var="dataMap" items="${processlist}" varStatus="status">
+				<c:if test="${not empty dataMap.photo}">
+				<img class="processImg" src="/foody/upload/${dataMap.photo}">
+				</c:if>
+				<c:if test="${empty dataMap.photo}">
+				<img class="processImg" src="/foody/resources/img/processImg.png">
+				</c:if>
+				<h4>Step${dataMap.order_no}</h4>
+				${dataMap.content}"<br>
 			</c:forEach>
 			</div>
+			<h3 class="name">완성 사진</h3>
+			<c:if test="${not empty recipe.addedpicture1}">
+				<img class="processImg" src ="${recipe.addedpicture1}">
+			</c:if>
+			<c:if test="${not empty recipe.addedpicture2}">
+				<img class="processImg" src ="${recipe.addedpicture2}">
+			</c:if>
+			<c:if test="${empty recipe.addedpicture2 and empty recipe.addedpicture1}">
+				<img class="processImg" src = "/foody/upload/${recipe.thumbnail}" >
+			</c:if>
+			${recipe.tip}
 		</div>
-		<div class="swiper-button-next"></div>
-		<div class="swiper-button-prev"></div>
+		<div class="whiteBox">
+			<!-- 별점 -->
+			<h3 class="title">별점 ${recipe.avgStar}</h3> 
+            <ul class="getStar" style="display:flex;">
+       			<li style="list-style:none;" id="star1"><a href="#"><img src="/foody/img/star_icon.jpg"/></a></li>
+       			<li style="list-style:none;" id="star2"><a href="#"><img src="/foody/img/star_icon.jpg"/></a></li>
+       			<li style="list-style:none;" id="star3"><a href="#"><img src="/foody/img/star_icon.jpg"/></a></li>
+       			<li style="list-style:none;" id="star4"><a href="#"><img src="/foody/img/star_icon.jpg"/></a></li>
+       			<li style="list-style:none;" id="star5"><a href="#"><img src="/foody/img/star_icon.jpg"/></a></li>
+       		</ul>
+			<!-- 포토리뷰 -->
+			<h3 class="name">포토 리뷰</h3>
+			<div class="swiper mySwiper">
+				<div class="swiper-wrapper">
+					<div class="swiper-slide" style="display: inline-block;"> 
+					<c:forEach var="vo" items="${photoComment}" varStatus="idx">
+						<div class="reviewImg">
+							<img class="" width='100%' src="/foody/upload/${vo.photo}">
+						</div>
+					<c:if test="${idx.count % 4 == 0 && !idx.last}">
+					</div>
+					<div class="swiper-slide" style="display: inline-block;">
+					</c:if>
+					</c:forEach>
+					</div>
+				</div>
+				<div class="swiper-button-next"></div>
+				<div class="swiper-button-prev"></div>
+			</div>
+			<!-- 댓글 영역 -->
+			<div class="sub">
+           	<div class="size">
+          	<div class="bbs">
+           		<div class="comment">
+                	<form method="post" name="frm" id="frm" enctype="multipart/form-data" style="height: 110px;">
+                	<div class="formArea">
+                		<input type="hidden" id="starVal" name="star" value="0">
+                        <textarea name="content" id="content" placeholder="댓글리뷰를 남겨주세요."
+                        onfocus="this.placeholder=''" onblur="this.placeholder='댓글리뷰를 남겨주세요.'"
+                        style="height:100px;"></textarea>
+						<input type="file" name="uploadFile" id="uploadFile">
+                       	<a href="javascript:goSave();"><div class="btnSet" style="text-align:center;">저장</div></a>
+                    </div>
+                  	</form>
+              	<div class="comment1" style="width: 100%;">
+	                <h3 class="name" style="text-align: left;">댓글 리뷰</h3>
+                    <div id="commentArea"></div>
+                </div>
+           	</div>
+           	</div>
+           	</div>
 	</div>
-
-	<!-- 댓글 영역 -->
-	<div class="sub">
-            <div class="size">
-                <div class="bbs">
-                	<div class="comment">
-	                	<form method="post" name="frm" id="frm" enctype="multipart/form-data" >
-	                	<input type="hidden" id="starVal" name="star" value="0">
-	                        <table class="board_write">
-	                            <colgroup>
-	                                <col width="*" />
-	                                <col width="250px" />
-	                            </colgroup>
-	                            <tbody>
-	                            <tr>
-	                                <td>
-	                                    <textarea name="content" id="content" placeholder="댓글리뷰를 남겨주세요."
-	                                    onfocus="this.placeholder=''" onblur="this.placeholder='댓글리뷰를 남겨주세요.'"
-	                                    style="height:100px;"></textarea>
-	                                </td>
-	                                <td>
-		                                <ul class="getStar" style="display:flex;">
-					                			<li style="list-style:none;" id="star1"><a href="#"><img src="/foody/img/star_icon.jpg"/></a></li>
-					                			<li style="list-style:none;" id="star2"><a href="#"><img src="/foody/img/star_icon.jpg"/></a></li>
-					                			<li style="list-style:none;" id="star3"><a href="#"><img src="/foody/img/star_icon.jpg"/></a></li>
-					                			<li style="list-style:none;" id="star4"><a href="#"><img src="/foody/img/star_icon.jpg"/></a></li>
-					                			<li style="list-style:none;" id="star5"><a href="#"><img src="/foody/img/star_icon.jpg"/></a></li>
-				                			
-					                		</ul>
-					                		<br>
-										<input type="file" name="uploadFile" id="uploadFile">
-	                                     <div class="btnSet" style="text-align:left;">
-	                                        <a class="btn" href="javascript:goSave();">저장</a>
-	                                     </div>
-	                                </td>
-	                            </tr>
-	                            </tbody>
-	                        </table>
-	                   	</form>
-		                <h2 class="sub_title">댓글 리뷰</h2><br>
-                        <div id="commentArea"></div>
-                	</div>
-                	</div>
-                	</div>
-	</div>
-	<br>
-	요리 팁: ${recipe.tip}
-	
-	</body>
+			
+		</div>
+		</div>
+</div>
+</body>
 </html>
 
 

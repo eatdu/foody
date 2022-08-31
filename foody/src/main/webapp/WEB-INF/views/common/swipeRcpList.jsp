@@ -28,7 +28,7 @@
 					<img class="" width='20px' src="/foody/img/heart.png">
 					${l1.bookmark} 
 					<img class="" width='20px' src="/foody/img/star.png">
-					${l1.star}
+					${l1.avgStar}
 				</div>
 				</td>
 			</tr>

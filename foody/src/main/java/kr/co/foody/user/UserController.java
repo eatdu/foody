@@ -206,6 +206,9 @@ public class UserController {
 			sess.setAttribute("loginInfo", loginInfo);
 			model.addAttribute("msg", "업데이트 성공!!");
 			model.addAttribute("url", "/foody/mypage/mypage.do");
+			System.out.println("selfi: " + uvo.getSelfi());
+			System.out.println("equals: " + "".equals(uvo.getSelfi()));
+			System.out.println("isempty: " + uvo.getSelfi().isEmpty());
 			return "common/alert";
 		} else {
 			model.addAttribute("msg", "업데이트에 실패하였습니다.");

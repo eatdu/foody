@@ -14,6 +14,7 @@ public interface QnaMapper {
 	int updateResponse(int qna_no);
 	
 	int count(QnaVO vo);
+	int count_faq(QnaVO vo);
 	List<QnaVO> getFaq(QnaVO vo);
 	List<QnaVO> getQna(QnaVO vo);
 	

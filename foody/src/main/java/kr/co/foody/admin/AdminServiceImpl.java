@@ -7,11 +7,12 @@ import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
-import org.apache.ibatis.annotations.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
+import kr.co.foody.comment.CommentMapper;
+import kr.co.foody.comment.CommentVO;
 import kr.co.foody.constants.IngredientCategory;
 import kr.co.foody.constants.RecipeCategory;
 import kr.co.foody.recipe.IngredientMapper;
@@ -33,6 +34,8 @@ public class AdminServiceImpl implements AdminService {
 	AdminMapper adminMapper;
 	@Autowired
 	RecipeMapper rcpMapper;
+	@Autowired
+	CommentMapper commentMapper;
 	
 	// 재료 정보 관련
 	@Override
@@ -91,6 +94,22 @@ public class AdminServiceImpl implements AdminService {
 		return false;
 	}
 
+	//2. 메인 - 댓글 카운트
+	@Override
+	public void commentCount(HttpSession sess) {
+		CommentVO vo = new CommentVO();
+		Map result = new HashMap();
+		vo.setPeriod("all");
+		result.put("all", commentMapper.wholeCount(vo));
+		vo.setPeriod("1 month");
+		result.put("month", commentMapper.wholeCount(vo));
+		vo.setPeriod("1 week");
+		result.put("week", commentMapper.wholeCount(vo));
+		vo.setPeriod("1 day");
+		result.put("day", commentMapper.wholeCount(vo));
+		sess.setAttribute("cntCom", result);
+	}
+	
 	@Override
 	public Map<String, Object> userList(UserVO vo) {
 		int totalCount = adminMapper.userCount();
@@ -183,4 +202,6 @@ public class AdminServiceImpl implements AdminService {
 	public AdminVO adminLogin1(AdminVO vo) {
 		return adminMapper.adminLogin1(vo);
 	}
+
+
 }

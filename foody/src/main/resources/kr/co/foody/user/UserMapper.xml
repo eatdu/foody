@@ -22,7 +22,7 @@
 	
 	<!-- 회원가입 스킵가능 페이지 -->
 	<update id="insertAdd" parameterType="kr.co.foody.user.UserVO">
-		UPDATE user SET
+		UPDATE user SET 		 	
 			<if test="selfi != null and selfi != ''">
 				selfi=#{selfi},	
 			</if>

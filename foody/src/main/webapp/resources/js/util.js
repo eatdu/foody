@@ -199,7 +199,7 @@ function searchPrefer() {
 function searchBest() {
 	var data = {};
 	data.jsp = 'common/swipeRcpList';
-	data.orderBy = 'star';//별점
+	data.orderBy = 'avgstar';//별점
 	data.allergyChk = '1';
 
 	data.type = 'best'; //수정필요, 임시로 all 해놓음

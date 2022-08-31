@@ -45,6 +45,12 @@ public class RecipeController {
 
 		return "recipe/write";
 	}
+	
+	@GetMapping("/recipe/css.do")
+	public String css() {
+
+		return "recipe/NewFile2";
+	}
 
 	@PostMapping("/recipe/write.do")
 	public String insert(@RequestParam Map cri, HttpSession sess, Model model, HttpServletRequest req,

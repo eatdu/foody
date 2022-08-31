@@ -42,7 +42,7 @@
 	
 	<!-- 로그인 체크 -->
 	<select id="loginCheck" parameterType="kr.co.foody.user.UserVO" resultType="kr.co.foody.user.UserVO">
-		SELECT * FROM user WHERE email=#{email} AND pwd=#{pwd} AND user.exit=0
+		SELECT * FROM user WHERE email=#{email} AND pwd=md5(#{pwd}) AND user.exit=0
 	</select>
 	
 	<!-- 이메일 중복체크 -->

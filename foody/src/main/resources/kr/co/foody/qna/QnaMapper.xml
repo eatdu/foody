@@ -54,15 +54,15 @@
 		<if test="period != 'all' and period != null and period != ''">
 			regdate >= date_add(now(), interval -${period})
 		</if>
-		<if test="response != 0">
-			and response > 0
+		<if test="response != -1">
+			and response = ${response}
 		</if>
 		<if test="stype != null and stype != ''">
 			<if test="stype == 'title' or stype == 'content'">
 				and ${stype} like '%${sword}%'
 			</if>
 			<if test="stype == 'all'">
-				and title like '%${sword}%' or content like '%${sword}%'
+				and (title like '%${sword}%' or content like '%${sword}%')
 			</if>
 			<if test="stype == 'writer'">
 				and user_no in (select no from user where name like '%${sword}%') 
@@ -78,20 +78,20 @@
 	from qna
 	<where>
 		<if test="period != 'all' and period != null and period != ''">
-			regdate >= date_add(now(), interval -${period})
+			and regdate >= date_add(now(), interval -${period})
 		</if>
-		<if test="response != 0">
-			and response > 1
+		<if test="response != -1">
+			and response = ${response}
 		</if>
 		<if test="stype != null and stype != ''">
 			<if test="stype == 'title' or stype == 'content'">
 				and ${stype} like '%${sword}%'
 			</if>
 			<if test="stype == 'all'">
-				and title like '%${sword}%' or content like '%${sword}%'
+				and (title like '%${sword}%' or content like '%${sword}%')
 			</if>
 			<if test="stype == 'writer'">
-				and user_no in (select no from user where name like '%${sword}%') 
+				and user_no in (select no from user where name like '%${sword}%')
 			</if>
 		</if>
 	</where>

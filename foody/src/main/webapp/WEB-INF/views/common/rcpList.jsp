@@ -27,7 +27,7 @@
 				<td class="imgCell" colspan='2'>
 				<div height=150px style='border-radius: 15px; position: relative; max-height:150px; align-items:center; overflow:hidden; display: flex; justify-content:center;'>
 					<div class="rcpImg">
-					<img class="thumbnail" width='100%' src="${l1.thumbnail}">
+					<img class="thumbnail" width='100%' src="/foody/upload/${l1.thumbnail}" />
 					</div>
 					<div class="intro">${l1.intro}</div>
 				</div>
@@ -88,6 +88,15 @@ $(".rcpCard").mouseleave(function(){
 	$(this).find(".intro").hide();
 	$(this).find(".thumbnail").css("opacity", 1.0);
 })
-
+$(function(){
+    $('.thumbnail').each(function(idx, item){
+    	var url = "/foody/resources/img/processImg.png";
+    	console.log(item.complete);
+    	console.log(item.src);
+    	console.log(item);
+    	if(item.complete == true) return; 
+    	//item.src = url;
+    });
+});
 </script>
 

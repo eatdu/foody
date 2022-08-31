@@ -1,14 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ include file="../common/config.jsp" %>
 <%@ page import="java.util.*"%>
-
-<!DOCTYPE html>
-<html>
-	<head>
-		<meta charset="UTF-8">
-		<title>레시피 뷰</title>
-	</head>
+	<title>레시피 뷰</title>
 	
 	<!-- 별점 아이콘 css -->
 	<style>
@@ -263,11 +258,13 @@
 			$("#chartContainer2").CanvasJSChart(options);  
 		});
 	</script>	
+	</head>
 	<body>
+	<%@ include file="../common/navBar.jsp" %>
 	레시피 번호: ${recipe.no}<br><br><br>
 	
 	<!-- 경로수정 해야하는데 모르겠음 -->
-	<img src="${recipe.thumbnail}" style="width:250px; height:140px;"><br><br>
+	<img src="/foody/upload/${recipe.thumbnail}" style="width:250px; height:140px;"><br><br>
 	<img src="/foody/upload/${user.selfi}" style="width:100px; height:100px; border-radius:50%;"><br>
 	이름: ${user.nik_name}<br><br>
 	
@@ -327,7 +324,7 @@
 		<p><c:out value="Step${dataMap.order_no}"/>
 		
 		<c:if test="${not empty dataMap.photo}">
-		<img src = "<c:out value="${dataMap.photo}"/>" style="width:250px; height:140px;">
+		<img src = "<c:out value="/foody/upload/${dataMap.photo}"/>" style="width:250px; height:140px;">
 		</c:if>
 		
 		<c:if test="${empty dataMap.photo}">

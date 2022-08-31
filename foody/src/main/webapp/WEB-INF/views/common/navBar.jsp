@@ -19,9 +19,9 @@
 								<a style="font-size: 17px;">${loginInfo.nik_name}</a>
 								<br><a style="font-size: 17px;">${loginInfo.email}</a>
 							</div>
-							<a href="/foody/mypage/mypage.do"><button type="button" id="mypage">마이페이지</button></a>
-							<a href="/foody/user/logout.do"><button type="button" id="logout">로그아웃</button></a>
-							<a href="/foody/user/modify.do"><button type="button" id="modify">회원정보수정</button></a>
+							<a href="/foody/mypage/mypage.do"><button class="btn1" type="button" id="mypage">마이페이지</button></a>
+							<a href="/foody/user/logout.do"><button class="btn1" type="button" id="logout">로그아웃</button></a>
+							<a href="/foody/user/modify.do"><button class="btn1" type="button" id="modify">회원정보수정</button></a>
 						</div>
 					</c:if>
 					<c:if test="${!empty loginInfo and empty loginInfo.selfi}">
@@ -65,7 +65,7 @@
   			<ul class="menu">
   				<li><a href="/foody/recipe/main.do" class="parent"><span>메인</span></a></li>
 				<li><a href="/foody/recipe/search.do" class="parent"><span>상세검색</span></a></li>
-				<li><a href="" class="parent"><span>게시판</span></a>
+				<li><a href="/foody/board/index.do" class="parent"><span>게시판</span></a>
 					<div class="standard_left">
 					<ul>
 						<li><a href="/foody/board/index.do"><span>자유</span></a></li>
@@ -73,7 +73,7 @@
 					</ul>
 					</div>
 				</li>
-				<li><a href="" class="parent"><span>마이페이지</span></a></li>
+				<li><a href="/foody/mypage/mypage.do" class="parent"><span>마이페이지</span></a></li>
 			</ul>
 		</div>
 		<!--//gnb-->

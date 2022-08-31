@@ -34,6 +34,7 @@ public class QnaVO {
 	public QnaVO() {
 		this.page = 1;
 		this.pageRow = 10;
+		this.response = -1;
 	}
 	
 	public QnaVO(int page, int pageRow) {

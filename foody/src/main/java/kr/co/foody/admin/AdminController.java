@@ -177,7 +177,7 @@ public class AdminController {
 		vo.setManager_no(av.getNo());
 		
 		if (Qservice.reply(vo) == 1) {
-			model.addAttribute("msg", "답변 등록 완료.");
+			model.addAttribute("msg", "답변 등록 완료");
 			return "common/alertClose";
 		} else {
 			model.addAttribute("msg", "답변 등록 실패");

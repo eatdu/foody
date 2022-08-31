@@ -495,6 +495,14 @@
 	</delete>
 	
 	<!-- 샘플 데이터 생성용 -->
+	<select id="selectProcess" parameterType="int" resultType="kr.co.foody.recipe.ProcessVO">
+		select * from process where no = #{no}
+	</select>
+	<update id="copyThumbnail" parameterType="map">
+		update recipe set tip = #{tip}
+		where no = #{no}
+	</update>
+	
 	<!-- 랜덤 회원정보 인서트 -->
 	<insert id="insertRandomUser" parameterType="map">
 		insert into user(email, nik_name, name, birth, tel, pwd, intro, height, weight)

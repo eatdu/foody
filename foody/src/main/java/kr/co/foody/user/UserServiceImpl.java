@@ -22,6 +22,7 @@ public class UserServiceImpl implements UserService {
 	
 	@Override
 	public int insert(UserVO vo) { // 회원가입
+		
 		return mapper.insert(vo);
 	}
 
@@ -192,11 +193,11 @@ public class UserServiceImpl implements UserService {
 	}
 	
 	@Override // 회원정보수정
-	public int userInfoUpdate(UserVO uvo, HttpServletRequest req, HttpSession sess) {
+	public int userInfoUpdate(UserVO uvo, HttpServletRequest req, HttpSession sess, boolean selfiEmpty) {
 		int result = 0;
 		try {
+			if(!selfiEmpty) mapper.userProfileDelete(uvo.getNo());
 			mapper.modifyUserInfo(uvo);
-			mapper.userProfileDelete(uvo.getNo());
 			mapper.userAllergyDelete(uvo.getNo());
 			mapper.userPreferDelete(uvo.getNo());
 			try {

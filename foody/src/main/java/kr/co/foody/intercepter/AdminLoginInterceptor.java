@@ -13,14 +13,12 @@ import org.springframework.web.servlet.HandlerInterceptor;
 public class AdminLoginInterceptor implements HandlerInterceptor {
 
 	/*
-	 * preHandle		: 컨트롤러 실행 전
-	 * postHandle		: 컨트롤러 실행 후(view 리턴 전)
-	 * afterCompletion	: 뷰 실행 후 
+	 * preHandle : 컨트롤러 실행 전 postHandle : 컨트롤러 실행 후(view 리턴 전) afterCompletion : 뷰
+	 * 실행 후
 	 */
-	
+
 	@Override
-	public boolean preHandle(HttpServletRequest req, HttpServletResponse res, Object handler)
-			throws Exception {
+	public boolean preHandle(HttpServletRequest req, HttpServletResponse res, Object handler) throws Exception {
 		if (req.getSession().getAttribute("adminInfo") == null) {
 			res.setContentType("text/html;charset=utf-8");
 			PrintWriter out = res.getWriter();
@@ -30,7 +28,7 @@ public class AdminLoginInterceptor implements HandlerInterceptor {
 			out.println("</script>");
 			out.flush();
 			return false;
-		}
-		else return true; 
+		} else
+			return true;
 	}
 }

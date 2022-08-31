@@ -77,7 +77,7 @@
     
     
     textarea#content {height: 100px; width: 79%; float: left;}
-    input#uploadFile {width: 20%; float: right; margin-top: 15px;}
+    input#uploadFile {width: 19%; float: right; margin-top: 15px;}
     div.btnSet {text-align: center;float: right; width: 20%; font-size: 30px;  background: #B2CCFF;}
     div.btnSet:hover {background: #4374D9; color: #fff;}
     
@@ -100,8 +100,10 @@
 	<!-- 포토리뷰 스와이퍼 css -->
 	<link
 	  rel="stylesheet"
-	  href="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.css"
-	/>
+	  href="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.css"/>
+	<link rel="stylesheet" href="/foody/css/reset.css"/>
+    <link rel="stylesheet" href="/foody/css/contents.css"/>
+	
 	<script src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script>
 	<script src="https://canvasjs.com/assets/script/jquery.canvasjs.min.js"></script>
 	<script type="text/javascript">
@@ -472,7 +474,7 @@
                         onfocus="this.placeholder=''" onblur="this.placeholder='댓글리뷰를 남겨주세요.'"
                         style="height:100px;"></textarea>
 						<input type="file" name="uploadFile" id="uploadFile">
-                       	<a class="btn" href="javascript:goSave();"><div class="btnSet" style="text-align:center;">저장</div></a>
+                       	<a href="javascript:goSave();"><div class="btnSet" style="text-align:center;">저장</div></a>
                     </div>
                   	</form>
               	<div class="comment1" style="width: 100%;">

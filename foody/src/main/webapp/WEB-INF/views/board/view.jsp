@@ -82,7 +82,6 @@
 				formData.append("user_no",${loginInfo.no});
 				formData.append("board_no",${data.no});
 				formData.append("tablename","board");
-				formData.append("recipe_no",1);
 				console.log(JSON.stringify(formData));
 				
 				$.ajax ({
@@ -210,15 +209,7 @@
 	                                    style="height:100px;"></textarea>
 	                                </td>
 	                                <td>
-		                                <ul class="getStar" style="display:flex;">
-					                			<li style="list-style:none;" id="star1"><a href="#"><img src="/foody/img/star_icon.jpg"/></a></li>
-					                			<li style="list-style:none;" id="star2"><a href="#"><img src="/foody/img/star_icon.jpg"/></a></li>
-					                			<li style="list-style:none;" id="star3"><a href="#"><img src="/foody/img/star_icon.jpg"/></a></li>
-					                			<li style="list-style:none;" id="star4"><a href="#"><img src="/foody/img/star_icon.jpg"/></a></li>
-					                			<li style="list-style:none;" id="star5"><a href="#"><img src="/foody/img/star_icon.jpg"/></a></li>
-					                		</ul>
 					                		<br>
-										<input type="file" name="uploadFile" id="uploadFile">
 	                                     <div class="btnSet" style="text-align:left;">
 	                                        <a class="btn" href="javascript:goSave();">저장 </a>
 	                                     </div>

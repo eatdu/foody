@@ -64,7 +64,7 @@ public class QnaController {
 		
 		if (service.insert(vo) == 1) {
 			model.addAttribute("msg", "게시물이 저장되었습니다.");
-			model.addAttribute("url", "qna.do");
+			model.addAttribute("url", "myQna.do");
 			return "common/alert";
 		} else {
 			model.addAttribute("msg", "게시물을 저장할 수 없습니다.");

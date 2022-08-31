@@ -739,7 +739,7 @@
 			조리과정:
 			<div id="processList"></div>
 			<div style="height: 40px; width: 180px;">
-				<img id="addProcessButton" onclick="makeProcessDiv()" src="resources/img/추가버튼.png" style="height: 40px; width: 180px;">
+				<img id="addProcessButton" onclick="makeProcessDiv()" src="../resources/img/추가버튼.png" style="height: 40px; width: 180px;">
 			</div>
 			
 			요리사진:

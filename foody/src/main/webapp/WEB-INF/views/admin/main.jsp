@@ -99,7 +99,6 @@ body{
 			<br><a href="comment.do?period=1+day&align=recent&stype=content">오늘 새로 등록된 댓글 수: ${cntCom.day}</a>
 		</div>
 		<div class="container" id='qnaReport'>
-	
 		</div>
 	</div>
 </div>

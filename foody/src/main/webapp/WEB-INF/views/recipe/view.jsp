@@ -46,8 +46,9 @@
 	<!-- 포토리뷰 스와이퍼 css -->
 	<link
 	  rel="stylesheet"
-	  href="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.css"
-	/>
+	  href="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.css"/>
+	<link rel="stylesheet" href="/foody/css/reset.css"/>
+    <link rel="stylesheet" href="/foody/css/contents.css"/>
 	
 	<script src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script>
 	<script src="https://canvasjs.com/assets/script/jquery.canvasjs.min.js"></script>

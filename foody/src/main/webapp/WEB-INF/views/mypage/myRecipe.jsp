@@ -5,8 +5,6 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<script>
-</script>
 <style>
 	#container{text-align: center;}
 	#myRecipe{display: inline-block;}
@@ -49,12 +47,30 @@
 	}
 	.feedback{float:right;}.recipeBookmark{margin-top:5px;}
 	.recipeIntro{margin-left:20px;}
-	.modify{
-		position: absolute;
-	    bottom: 0px;
-	    margin-left: 110px;
+	*{margin:0; padding:0;}
+	.pop_wrap1{position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,.5); font-size:0; text-align:center;}
+	.pop_wrap1:after{display:inline-block; height:100%; vertical-align:middle; content:'';}
+	.pop_wrap2{position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,.5); font-size:0; text-align:center;}
+	.pop_wrap2:after{display:inline-block; height:100%; vertical-align:middle; content:'';}
+	.pop_wrap1 .pop_inner{display:inline-block; padding:20px 30px; background:#fff; width:200px; vertical-align:middle; font-size:15px;}
+	.pop_wrap2 .pop_inner{display:inline-block; padding:20px 30px; background:#fff; width:200px; vertical-align:middle; font-size:15px;}
+	.recipeModify{
+		width: 150px;height: 45px;
+		border-color:#6A6D6F;
+		border-radius:5px;
+		font-size:20px;
+		color:#6A6D6F;
+		font-weight: bolder;
+		border-width: thin;
 	}
 </style>
+<script>
+	function del(no) {
+		if (confirm('레시피를 삭제하시겠습니까?')) {
+			location.href='/foody/mypage/delete.do?no='+no;
+		}
+	}
+</script>
 <title>나의 레시피</title>
 </head>
 <body>
@@ -69,7 +85,7 @@
 							<div class="myRecipeName">${recipe.name}</div>
 							<div class="myRecipeThumb">
 								<a href="/foody/recipe/view.do?no=${recipe.no}" class="recipeLink">
-									<img class="myRecipeThumb_img" src="${recipe.thumbnail}">
+									<img class="myRecipeThumb_img" src="/foody/upload/${recipe.thumbnail}">
 								</a>
 							</div>
 							<div class="feedback">
@@ -81,9 +97,11 @@
 								<div class="recipeIntro" style="width:290px;">${recipe.intro}</div>
 								<div class="recipeTime">${recipe.time}분</div>
 							</div>
-							<div class="modify" style="text-align:center;">
-								<span class="recipeModify" style="font-size:20px;"><a href="/foody/recipe/modify.do?no=${recipe.no}">수정</a></span>
-								<span class="recipeDelete" style="font-size:20px;"><a href="/foody/mypage/delete.do?no=${recipe.no}">삭제</a></span>
+							<div class="modifyCon">
+								<div class="wrap">
+									<a href="/foody/recipe/modify.do?no=${recipe.no}" class="recipeModify" id="recipeModifyId">레시피수정</a>
+									<a href="javascript:del(${recipe.no});" class="recipeModify" id="recipeDeleteId">레시피삭제</a>
+								</div>
 							</div>
 						</li>
 					</c:forEach>
@@ -107,6 +125,23 @@
 	           	</c:if>
 	        	</ul>
 	        </div>
+	        
+	        
+	        
+	        
+	        
+	        
+	        
+	        
+	        
+	        
+	        
+	        
+	        
+	        
+	        
+	        
+	        
 		            <!-- 검색조건/키워드 -->
 	                <%-- <div class="bbsSearch">
 	                    <form method="get" name="searchForm" id="searchForm" action="">

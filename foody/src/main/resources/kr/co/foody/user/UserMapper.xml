@@ -22,7 +22,11 @@
 	
 	<!-- 회원가입 스킵가능 페이지 -->
 	<update id="insertAdd" parameterType="kr.co.foody.user.UserVO">
-		UPDATE user SET selfi=#{selfi}, intro=#{intro}, height=#{height}, weight=#{weight}, activity=#{activity} WHERE no=#{no}
+		UPDATE user SET 		 	
+			<if test="selfi != null and selfi != ''">
+				selfi=#{selfi},	
+			</if>
+				intro=#{intro}, height=#{height}, weight=#{weight}, activity=#{activity} WHERE no=#{no}
 	</update>
 	
 	<!-- 이메일 찾기 -->
@@ -123,11 +127,11 @@
 	<!-- 회원의 기본정보 수정 -->
 	<update id="modifyUserInfo" parameterType="kr.co.foody.user.UserVO">
 		UPDATE user SET
-		 	<if test="selfi != null">
+		 	<if test="selfi != null and selfi != ''">
 				selfi=#{selfi},	
 			</if>
 				nik_name=#{nik_name}, tel=#{tel}, zipcode=#{zipcode}, addr1=#{addr1}
-				,addr2=#{addr2}, intro=#{intro}, height=#{height}, weight=#{weight}, activity=#{activity}, selfi=#{selfi}
+				,addr2=#{addr2}, intro=#{intro}, height=#{height}, weight=#{weight}, activity=#{activity}
 		WHERE no=#{no}
 	</update>
 	
@@ -184,8 +188,10 @@
 		where rownum between 1 and 5;
 	</select>
 	
+	
+	<!-- 회원총원 -->
 	<select id="getUserTotalCount" resultType="int">
-		select count(*) from user
+		SELECT COUNT(*) FROM user
 	</select>
 
 </mapper>

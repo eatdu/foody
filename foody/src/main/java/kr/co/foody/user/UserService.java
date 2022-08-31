@@ -24,7 +24,7 @@ public interface UserService {
 	
 	Map<String, Object> modify(HttpSession sess);
 	
-	int userInfoUpdate(UserVO uvo, HttpServletRequest req, HttpSession sess);
+	int userInfoUpdate(UserVO uvo, HttpServletRequest req, HttpSession sess, boolean fileDel);
 	
 	boolean userExit(HttpSession sess);
 	

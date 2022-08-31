@@ -21,7 +21,7 @@
 							</div>
 							<a href="/foody/mypage/mypage.do"><button class="btn1" type="button" id="mypage">마이페이지</button></a>
 							<a href="/foody/user/logout.do"><button class="btn1" type="button" id="logout">로그아웃</button></a>
-							<a href="/foody/user/modify.do"><button class="btn1" type="button" id="modify">회원정보수정</button></a>
+							<a href="#pop_info_1" id="userInfoModify"><button class="btn1" type="button" id="userModify">회원정보수정</button></a>
 						</div>
 					</c:if>
 					<c:if test="${!empty loginInfo and empty loginInfo.selfi}">
@@ -37,7 +37,7 @@
 							</div>
 							<a href="/foody/mypage/mypage.do"><button class="btn1" type="button" id="mypage">마이페이지</button></a>
 							<a href="/foody/user/logout.do"><button class="btn1" type="button" id="logout">로그아웃</button></a>
-							<a href="/foody/user/modify.do"><button class="btn1" type="button" id="modify">회원정보수정</button></a>
+							<a href="#pop_info_1" id="userInfoModify"><button class="btn1" type="button" id="userModify">회원정보수정</button></a>
 						</div>
 					</c:if>
 					<c:if test="${empty loginInfo}">
@@ -59,7 +59,21 @@
 			</ul>
 		</div>
 		<!-- util : e --> 
-
+		<!-- 모달 비밀번호체크 -->
+		<div class="modifyCon">
+			<div class="wrap">
+				<div id="pop_info_1" class="pop_wrap" style="display:none;">
+					<div class="pop_inner">
+						<form method="post" id="modifyPwdCheck" name="pwdCheck" action="/foody/user/modifyPwdCheck.do">
+						<input type="hidden" name="email" value="${loginInfo.email}">
+							<input type="password" id="pwdCheck" name="pwd" placeholder="비밀번호">
+						</form>
+						<button type="button" class="submitBtn" onclick="$('#modifyPwdCheck').submit();">회원정보수정</button>
+						<button type="button" class="btn_close">닫기</button>
+					</div>
+				</div>
+			</div>
+		</div>
 		
 		<div id="menu">
   			<ul class="menu">
@@ -97,3 +111,38 @@
 	    }
     }
 </script>
+<script>
+	var target = document.querySelectorAll('#userInfoModify');
+	var btnPopClose = document.querySelectorAll('.pop_wrap .btn_close');
+	var targetID;
+	
+	// 팝업 열기
+	for(var i = 0; i < target.length; i++){
+	  target[i].addEventListener('click', function(){
+	    targetID = this.getAttribute('href');
+	    document.querySelector(targetID).style.display = 'block';
+	  });
+	}
+	
+	// 팝업 닫기
+	for(var j = 0; j < target.length; j++){
+	  btnPopClose[j].addEventListener('click', function(){
+	    this.parentNode.parentNode.style.display = 'none';
+	  });
+	}
+</script>
+<style>
+	*{margin:0; padding:0;}
+	.pop_wrap{position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,.5); font-size:0; text-align:center;}
+	.pop_wrap:after{display:inline-block; height:100%; vertical-align:middle; content:'';}
+	.pop_wrap .pop_inner{display:inline-block; padding:20px 30px; background:#fff; width:200px; vertical-align:middle; font-size:15px;}
+	.recipeModify{
+		width: 150px;height: 45px;
+		border-color:#6A6D6F;
+		border-radius:5px;
+		font-size:20px;
+		color:#6A6D6F;
+		font-weight: bolder;
+		border-width: thin;
+	}
+</style>

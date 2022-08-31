@@ -26,7 +26,7 @@
 	<!-- 새로운 별점 등록시 평균별점 업뎃 -->
 	<update id="updateAvgstar" parameterType="int">
 		update recipe set
-		avgStar = (select avg(star) from feedback where recipe_no=#{recipe_no})
+		avgStar = (select avg(star) from feedback where recipe_no=#{recipe_no} and star != -1)
 		where no=#{recipe_no}
 	</update>
 	

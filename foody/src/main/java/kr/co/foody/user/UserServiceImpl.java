@@ -217,7 +217,7 @@ public class UserServiceImpl implements UserService {
 		return result;
 	}
 
-	@Override
+	@Override // 회원탈퇴
 	public boolean userExit(HttpSession sess) {
 		UserVO uv = (UserVO) sess.getAttribute("loginInfo");
 		try {
@@ -225,6 +225,15 @@ public class UserServiceImpl implements UserService {
 			mapper.userPreferDelete(uv.getNo());
 		} catch(Exception e) {}
 		return mapper.userExit(uv.getNo()) > 0 ? true : false;
+	}
+
+	@Override
+	public boolean pwdCheck(UserVO vo, HttpSession sess) {
+		boolean r = false;
+		if(mapper.loginCheck(vo) != null) {
+			r = true;
+		}
+		return r;
 	}
 
 

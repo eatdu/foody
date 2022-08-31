@@ -88,23 +88,7 @@ $(function(){
 		float: left;
 		margin-right: 20px;
 	}
-	a { text-decoration:none !important }
-	a:visited {
- 		color : black;
-	}
-	a:hover {
-		color : red;
-		cursor: pointer;
-	}
-	a.category_item {
-		color: black;
-		font-size:20px;
-	}
-	a.category_item:hover {
-		color: red;
-		text-decoration: underline;
-	}
-	a:hover{ text-decoration:underline; color:#FF0000 }
+	
 	.container:hover {
 	    background: silver;
 	    border-radius: 50%;
@@ -126,6 +110,10 @@ $(function(){
 	}
 	.list_category{
 		margin-left:-825px;
+	}
+	.category_item{
+		font-size:20px;
+		cursor: pointer;
 	}
 	
 </style>

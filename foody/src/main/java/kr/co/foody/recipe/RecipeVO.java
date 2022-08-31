@@ -35,7 +35,7 @@ public class RecipeVO {
  	private Integer bookmark;
  	private double star;
  	private int reply;
- 	private int avgstar;
+ 	private int avgStar;
  	
  	//관리자에서 요청한 경우
  	private boolean admin;
@@ -44,5 +44,8 @@ public class RecipeVO {
  		return (int)(star * 10) / 100.0;
  	}
  	
+ 	public double getAvgStar() {
+ 		return avgStar / 10.0;
+ 	}
  	
 }

@@ -89,6 +89,7 @@ public class AdminController {
 	public String main(Model model, HttpSession sess) {
 		svc.userReport(sess);
 		svc.rcpCount(null, sess);
+		svc.commentCount(sess);
 		return "admin/main";
 	}
 	//레시피 목록 조회 페이지

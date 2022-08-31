@@ -19,6 +19,9 @@ public interface AdminService {
 	boolean userReport(HttpSession sess);
 	//레시피 통계 관련
 	boolean rcpCount(Map cri, HttpSession sess);
+	//댓글 통계 관련
+	void commentCount(HttpSession sess);
+	
 	
 	Map<String, Object> userList(UserVO vo);
 	//레시피 목록 조회

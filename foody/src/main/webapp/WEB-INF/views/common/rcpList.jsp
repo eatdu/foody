@@ -11,7 +11,7 @@
 	<div class="orderBy" style='float: right;'>
 		<select id='orderBy' onchange="movePage('${result.title}', ${result.curNo}, ${result.areaNo}, '${sType}', '${keyword}');">
 			<option value="regdate"<c:if test="${result.orderBy eq 'regdate'}"> selected</c:if>>최신순</option>
-			<option value="star"<c:if test="${result.orderBy eq 'star'}"> selected</c:if>>별점순</option>
+			<option value="avgstar"<c:if test="${result.orderBy eq 'avgstar'}"> selected</c:if>>별점순</option>
 			<option value="viewcount"<c:if test="${result.orderBy eq 'viewcount'}"> selected</c:if>>조회순</option>
 			<option value="reply"<c:if test="${result.orderBy eq 'reply'}"> selected</c:if>>댓글순</option>
 		</select>
@@ -43,7 +43,7 @@
 					<img class="" width='20px' src="/foody/img/heart.png">
 					${l1.bookmark} 
 					<img class="" width='20px' src="/foody/img/star.png">
-					${l1.star}
+					${l1.avgStar}
 				</div>
 				</td>
 			</tr>

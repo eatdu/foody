@@ -189,7 +189,8 @@ public class UserController {
 	@PostMapping("/user/modify.do") // 회원수정 업데이트
 	public String modify(UserVO uvo, Model model,HttpServletRequest req
 			, @RequestParam MultipartFile chooseFile, HttpSession sess) {
-		int a = service.userInfoUpdate(uvo, req, sess);
+		boolean fileDel = chooseFile.isEmpty();
+		int a = service.userInfoUpdate(uvo, req, sess, fileDel);
 		if((a == 0 || a == 1) && !chooseFile.isEmpty()) {
 			// 파일명 초기화
 			String org = chooseFile.getOriginalFilename();
@@ -207,6 +208,9 @@ public class UserController {
 			sess.setAttribute("loginInfo", loginInfo);
 			model.addAttribute("msg", "업데이트 성공!!");
 			model.addAttribute("url", "/foody/mypage/mypage.do");
+			System.out.println("selfi: " + uvo.getSelfi());
+			System.out.println("equals: " + "".equals(uvo.getSelfi()));
+			System.out.println("isempty: " + uvo.getSelfi().isEmpty());
 			return "common/alert";
 		} else {
 			model.addAttribute("msg", "업데이트에 실패하였습니다.");

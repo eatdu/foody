@@ -24,6 +24,23 @@
 		font-size: 100%;
 		
 	}
+	div.reviewImg {
+		overflow: hidden;
+		height: 220px;
+	    width: 20%;
+	    margin: 15px;
+		float: left;
+	}
+	.swiper-slide {
+		display: flex;
+	    justify-content: center;
+		max-height: 250px;
+	}
+	div.reviewImg img{
+		width: 100%;
+	    object-fit: cover;
+	    height: 100%;
+    }
 	</style>
 	
 	<!-- 포토리뷰 스와이퍼 css -->
@@ -31,7 +48,7 @@
 	  rel="stylesheet"
 	  href="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.css"
 	/>
-	
+	<script src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script>
 	<script src="https://canvasjs.com/assets/script/jquery.canvasjs.min.js"></script>
 	<script type="text/javascript">
 		var userNikname;
@@ -93,7 +110,6 @@
 			
 			// 댓글리뷰 스와이퍼
 			var swiper = new Swiper(".mySwiper", {
-				slidesPerView : 4,
 			    navigation: {
 			      nextEl: ".swiper-button-next",
 			      prevEl: ".swiper-button-prev",
@@ -368,25 +384,17 @@
 	<h2 class="sub_title">포토 리뷰</h2>
 	<div class="swiper mySwiper">
 		<div class="swiper-wrapper">
-			<c:forEach var="vo" items="${comment.list}" varStatus="idx">
-			<div class="swiper-slide"> 
-				<div class='reviewCard'>
-				<table class="rcpTable" style='table-layout:fixed'>
-					<tr>
-						<td class="imgCell">
-							<div height=150px; style='border-radius:15px; position:relative; max-height:150px; align-items:center; overflow:hidden; display:flex; justify-content:center;'>
-								<div class="reviewImg">
-									<c:if test="${!empty vo.photo}">
-									<img class="" width='100%' src="/foody/upload/${vo.photo}">
-									</c:if>
-								</div>
-							</div>
-						</td>
-					</tr>
-				</table>
+			<div class="swiper-slide" style="display: inline-block;"> 
+			<c:forEach var="vo" items="${photoComment}" varStatus="idx">
+				<div class="reviewImg">
+					<img class="" width='100%' src="/foody/upload/${vo.photo}">
 				</div>
+			<c:if test="${idx.count % 4 == 0 && !idx.last}">
 			</div>
+			<div class="swiper-slide" style="display: inline-block;">
+			</c:if>
 			</c:forEach>
+			</div>
 		</div>
 		<div class="swiper-button-next"></div>
 		<div class="swiper-button-prev"></div>

@@ -102,4 +102,9 @@ public class CommentServiceImpl implements CommentService {
 	public int update(CommentVO vo) {
 		return mapper.update(vo);
 	}
+
+	@Override
+	public List<CommentVO> selectPhotoReview(int no) {
+		return mapper.selectPhotoReview(no);
+	}
 }

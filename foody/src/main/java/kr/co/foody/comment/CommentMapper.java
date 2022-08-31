@@ -25,4 +25,5 @@ public interface CommentMapper {
 	int wholeCount(CommentVO vo); // 관리자 전체 댓글수 조회
 	List<CommentVO> wholeList(CommentVO vo); // 관리자 전체 댓글목록 조회
 	
+	List<CommentVO> selectPhotoReview(int no);  //게시글 번호로 조회하여 사진 있는 댓글만 리스트로 리턴
 }

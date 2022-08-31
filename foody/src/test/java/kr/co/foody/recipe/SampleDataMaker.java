@@ -14,6 +14,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
+import kr.co.foody.comment.CommentMapper;
 import lombok.extern.log4j.Log4j;
 import util.DownloadImg;
 
@@ -25,8 +26,10 @@ public class SampleDataMaker {
 
 	@Autowired
 	RecipeMapper mapper;
+	@Autowired
+	CommentMapper commentMapper;
 	
-	@Test
+	//@Test
 	public void tipMaker() {
 		//2648
 		for (int no = 177; no <= 500; no++) {
@@ -134,31 +137,36 @@ public class SampleDataMaker {
 		}
 	}
 	
-	//@Test
+	@Test
 	public void feedbackMaker() {
-		// 회원번호 - 21~120 / 레시피 번호 - 1~200
-		for (int userNo = 21; userNo <= 120; userNo++) {
-			double bmkProb = Math.random();
-			double starProb = Math.random();
-			for (int rcpNo = 1; rcpNo<= 200; rcpNo++) {
-				int bmk = 0;
-				int star = -1;
-				Map user = new HashMap();
-				if (Math.random() < bmkProb) {
-					bmk = 1;
-				}
-				if (Math.random() < starProb + 0.2) {
-					star = (int)(Math.random() * 11) * 5;
-				}
-				user.put("userNo", userNo);
-				user.put("rcpNo", rcpNo);
-				user.put("bmk", bmk);
-				user.put("star", star);
-				if(bmk != 0 && star != -1) {
-					mapper.insertFeedback(user);
-				}
-			}
+		for (int rcpNo = 1; rcpNo<= 500; rcpNo++) {
+			commentMapper.updateAvgstar(rcpNo);
 		}
+		
+		// 회원번호 - 22~121 / 레시피 번호 - 1~200
+//		for (int userNo = 22; userNo <= 121; userNo++) {
+//			double bmkProb = Math.random();
+//			double starProb = Math.random();
+//			for (int rcpNo = 201; rcpNo<= 500; rcpNo++) {
+//				int bmk = 0;
+//				int star = -1;
+//				Map user = new HashMap();
+//				if (Math.random() < bmkProb) {
+//					bmk = 1;
+//				}
+//				if (Math.random() < starProb + 0.2) {
+//					star = (int)(Math.random() * 3 + 3) * 10;
+//				}
+//				user.put("userNo", userNo);
+//				user.put("rcpNo", rcpNo);
+//				user.put("bmk", bmk);
+//				user.put("star", star);
+//				if(bmk != 0 || star != -1) {
+//					//System.out.println(user);
+//					mapper.insertFeedback(user);
+//				}
+//			}
+//		}
 	}
 	
 	public String telMaker() {

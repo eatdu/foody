@@ -165,6 +165,7 @@ public class RecipeController {
 		cvo.setBoard_no(recipeNo);
 		cvo.setTablename("recipe");
 		model.addAttribute("comment", cservice.index(cvo)); // 레시피에 대한 포토리뷰
+		model.addAttribute("photoComment", cservice.selectPhotoReview(vo.getNo()) ); // 사진 있는 리뷰만 따로
 		
 		//관리자페이지에서 접속한 경우 실행되는 코드
 		if (vo.isAdmin()) {

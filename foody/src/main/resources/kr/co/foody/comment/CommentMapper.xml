@@ -130,5 +130,10 @@
 	<delete id="delete" parameterType="int">
 		delete from comment where no=#{no}
 	</delete>
+	
+	<!-- 포토 리뷰 -->
+	<select id="selectPhotoReview" parameterType="int" resultType="kr.co.foody.comment.CommentVO">
+		select * from recipe.comment where board_no = #{no} and photo is not null;
+	</select>
 
 </mapper>

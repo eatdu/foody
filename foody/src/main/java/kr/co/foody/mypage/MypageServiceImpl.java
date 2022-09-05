@@ -25,7 +25,6 @@ public class MypageServiceImpl implements MypageService {
 	@Override
 	public Map<String, Object> mypage(HttpSession sess) {
 		UserVO uv = (UserVO)sess.getAttribute("loginInfo");
-		System.out.println("유저vo!!!!!!!!!!!!!!!!!!!"+uv);
 		Integer userRecipeCount = mapper.userRecipeCount(uv.getNo());
 		Integer userBookmarkCount = mapper.userBookmarkCount(uv.getNo());
 		Integer userTotalViewCount = mapper.userTotalViewCount(uv.getNo());

@@ -187,8 +187,8 @@ public class UserController {
 	@PostMapping("/user/modify.do") // 회원수정 업데이트
 	public String modify(UserVO uvo, Model model,HttpServletRequest req
 			, @RequestParam MultipartFile chooseFile, HttpSession sess) {
-		boolean fileDel = chooseFile.isEmpty();
-		int a = service.userInfoUpdate(uvo, req, sess, fileDel);
+		boolean selfiEmpty = chooseFile.isEmpty();
+		int a = service.userInfoUpdate(uvo, req, sess, selfiEmpty);
 		if((a == 0 || a == 1) && !chooseFile.isEmpty()) {
 			// 파일명 초기화
 			String org = chooseFile.getOriginalFilename();
@@ -247,6 +247,8 @@ public class UserController {
 			vo.setSelfi(real);
 		}
 		if(service.signUpNext(vo) > 0) {
+			HttpSession sess = req.getSession();
+			sess.invalidate();
 			model.addAttribute("msg", "환영합니다.");
 			model.addAttribute("url", "login.do");
 			return "common/alert";

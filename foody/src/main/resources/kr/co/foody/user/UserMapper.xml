@@ -158,7 +158,7 @@
 	
 	<!-- 회원 프로필사진 업데이트 -->
 	<update id="userProfileDelete" parameterType="int">
-		update user set user.selfi=null where user.no = #{user_no}
+		UPDATE user SET user.selfi=null WHERE user.no = #{user_no}
 	</update>
 	
 	<!-- 회원탈퇴 -->

@@ -23,6 +23,12 @@
 			document.getElementById('preview').src = "";
 		}
 	}
+	function profileCancel() {
+		if (confirm('프로필등록을 취소하시겠습니까?')) {
+			alert("회원가입이 완료되었습니다.")
+			location.href='/foody/recipe/main.do';
+		}
+	}
 </script>
 <%@ include file="../common/config.jsp" %>
 <style type="text/css">
@@ -142,7 +148,7 @@
 	</form>
 	<div class="btnSet_clear">  
 		<div class="submitBtn">
-			<button type="button" id="goBackBtn" name="goBackBtn" onclick="history.back();">프로필등록취소</button>
+			<button type="button" id="goBackBtn" name="goBackBtn" onclick="profileCancel();">프로필등록취소</button>
 			<button type="button" id="goNextBtn" name="goNextBtn" onclick="goSave();">프로필등록완료</button>
 		</div>
 	</div>

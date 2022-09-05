@@ -423,10 +423,10 @@
 			</div>
 			<h3 class="name">완성 사진</h3>
 			<c:if test="${not empty recipe.addedpicture1}">
-				<img class="processImg" src ="${recipe.addedpicture1}">
+				<img class="processImg" src ="/foody/upload/${recipe.addedpicture1}">
 			</c:if>
 			<c:if test="${not empty recipe.addedpicture2}">
-				<img class="processImg" src ="${recipe.addedpicture2}">
+				<img class="processImg" src ="/foody/upload/${recipe.addedpicture2}">
 			</c:if>
 			<c:if test="${empty recipe.addedpicture2 and empty recipe.addedpicture1}">
 				<img class="processImg" src = "/foody/upload/${recipe.thumbnail}" >

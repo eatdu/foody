@@ -294,6 +294,12 @@ public class RecipeController {
 		return (String) cri.get("jsp");
 	}
 
+	@ResponseBody
+	@PostMapping(value = "searchApi.do", consumes = MediaType.APPLICATION_JSON_VALUE, produces = "application/json;charset=UTF-8")
+	public Map searchApi(@RequestBody Map cri, Model model, HttpSession sess) {
+		return service.search(cri, model, sess);
+	}
+
 	@PostMapping(value = "comboBox.do", consumes = MediaType.APPLICATION_JSON_VALUE, produces = "application/json;charset=UTF-8")
 	public String comboBox(@RequestBody Map cri, Model model) {
 		if (cri.get("name").equals("ingreCateDrop")) {

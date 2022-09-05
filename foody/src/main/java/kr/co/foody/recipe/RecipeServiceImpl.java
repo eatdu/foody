@@ -1,6 +1,7 @@
 package kr.co.foody.recipe;
 
 import java.math.BigDecimal;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -263,8 +264,8 @@ public class RecipeServiceImpl implements RecipeService {
 			int pageNo = (int)cri.get("pageNo");
 			
 			//sql로 넘길것 : rno 검색조건
-			int startRno = (pageNo - 1) * 12 + 1;
-			int endRno = pageNo * 12;
+			int startRno = (pageNo - 1) * 12;
+			int endRno = 12;
 			cri.put("startRno", startRno);
 			cri.put("endRno", endRno);
 
@@ -293,17 +294,21 @@ public class RecipeServiceImpl implements RecipeService {
 			
 		} else if (cri.get("type").equals("best")) {
 			//인기레시피 - 인기순 정렬
-			cri.put("startRno", 1);
+			cri.put("startRno", 0);
 			cri.put("endRno", 20);
 			result.put("list", mapper.selectWithFilter(cri));
 		} else if (cri.get("type").equals("prefer")) {
+			LocalTime t1 = LocalTime.now();
 			//추천레시피 - 개인 선호도 필터
 			if (sess.getAttribute("loginInfo") != null && ((List)sess.getAttribute("preferNo")).size() != 0 ) {
 				cri.put("rcpCateArr", sess.getAttribute("preferNo"));
 			}
-			cri.put("startRno", 1);
+			cri.put("startRno", 0);
 			cri.put("endRno", 20);
 			result.put("list", mapper.selectWithFilter(cri));
+			LocalTime t2 = LocalTime.now();
+			System.out.println("t1: " + t1);
+			System.out.println("t2: " + t2);
 		}
 		System.out.println(cri);
 		return result;

@@ -189,8 +189,8 @@ function search(data, targetId){
 					+	"</div>"
 					+	"<div id='list" + res.areaNo + "'>"
 					+		"<div class='orderBy' style='float: right;'>"
-					+			"<select id='orderBy' onchange='movePage('" + res.title + "', " + res.curNo + ", " + res.areaNo + ");'>";
-					+				"<option value='regdate' "
+					+			"<select id='orderBy' onchange='movePage(\"" + res.title + "\", " + res.curNo + ", " + res.areaNo + ");'>"
+					+				"<option value='regdate' ";
 				if (res.orderBy == 'regdate') {
 					html += 'selected';
 				}

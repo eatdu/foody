@@ -29,6 +29,14 @@ public class SampleDataMaker {
 	@Autowired
 	CommentMapper commentMapper;
 	
+	@Test
+	public void bmkMaker() {
+		for (int no = 224; no <= 500; no++) {
+			mapper.updateBmk(no);
+			mapper.updateRpl(no);
+		}
+	}
+	
 	//@Test
 	public void tipMaker() {
 		//2648

@@ -213,11 +213,6 @@
 	
 	<!-- 0. 재료 단어, 재료 분류, 음식 분류, 알러지 필터 모두 적용 -->
 	<select id='selectWithFilter' parameterType="map" resultType="kr.co.foody.recipe.RecipeVO">
-		SELECT *
-		FROM 
-			(
-			SELECT @ROWNUM := @ROWNUM + 1 AS rownum, result.*
-			FROM (select @rownum := 0) r, (
 				SELECT recipe.*, IFNULL(bk.bmkCnt, 0) bookmark,
 					(SELECT count(*)
 					 FROM comment
@@ -302,10 +297,7 @@
 				</if>
 				ORDER BY 
 					${orderBy} DESC
-				) result
-			) result2
-		WHERE rownum BETWEEN #{startRno} AND #{endRno}
-		ORDER BY rownum
+				LIMIT 0, 12
 	</select>
 	
 	<!-- 1. 재료분류, 키워드중 한가지 조건이 걸린 경우 + (재료분류 or 재료키워드), 요리분류 -->

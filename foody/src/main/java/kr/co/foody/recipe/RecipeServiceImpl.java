@@ -197,10 +197,10 @@ public class RecipeServiceImpl implements RecipeService {
 		String title2 = "";
 		String html = "";
 		//로그인 한 경우 알러지 조건 추가
-		if (sess.getAttribute("loginInfo") != null
-				&& ((List)sess.getAttribute("allergyNo")).size() != 0 
-				&& cri.get("allergyChk").equals("1")) {
-			cri.put("allergyArr", sess.getAttribute("allergyNo"));
+		if (sess.getAttribute("loginInfo") != null // 로그인이 되어있고
+				&& ((List)sess.getAttribute("allergyNo")).size() != 0 // 세션에 저장된 알러지no가 값이 있고
+				&& cri.get("allergyChk").equals("1")) { // util.js에서 해당 회원의 알러지의 값이 1이면 
+			cri.put("allergyArr", sess.getAttribute("allergyNo")); // search메소드의 매개변수 (Map)cri에 담아준다
 		}
 		//검색어 배열을 sql날리기 위해 재조합
 		if (cri.get("keywordArr") != null) {

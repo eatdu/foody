@@ -20,34 +20,34 @@ public class UserServiceImpl implements UserService {
 	@Autowired
 	UserMapper mapper;
 	
-	@Override
-	public int insert(UserVO vo) { // 회원가입
+	@Override // 회원가입
+	public int insert(UserVO vo) { 
 		
 		return mapper.insert(vo);
 	}
 
-	@Override
-	public UserVO selectOne(int no) { // 미정
+	@Override // 한명의 회원 정보 조회
+	public UserVO selectOne(int no) { 
 		return mapper.selectOne(no);
 	}
 
-	@Override
-	public int emailDupCheck(String email) { // 이메일 중복체크
+	@Override // 이메일 중복체크
+	public int emailDupCheck(String email) { 
 		return mapper.emailDupCheck(email);
 	}
 	
-	@Override
-	public int nik_nameDupCheck(String nik_name) { // 닉네임 중복체크
+	@Override // 닉네임 중복체크
+	public int nik_nameDupCheck(String nik_name) { 
 		return mapper.nik_nameDupCheck(nik_name);
 	}
 
-	@Override
-	public int telDupCheck(String tel) { // 전화번호 중복체크
+	@Override // 전화번호 중복체크
+	public int telDupCheck(String tel) { 
 		return mapper.telDupCheck(tel);
 	}
 	
-	@Override
-	public boolean loginCheck(UserVO vo, HttpSession sess) { // 로그인성공시 세션에 회원데이터 저장
+	@Override // 로그인성공시 세션에 회원데이터 저장
+	public boolean loginCheck(UserVO vo, HttpSession sess) { 
 		boolean r = false;
 		UserVO loginInfo = mapper.loginCheck(vo);
 		if(mapper.loginCheck(vo) != null) {
@@ -77,8 +77,8 @@ public class UserServiceImpl implements UserService {
 		return r;
 	}
 
-	@Override
-	public UserVO findEmail(UserVO vo) { // 이메일 찾기
+	@Override // 이메일 찾기
+	public UserVO findEmail(UserVO vo) { 
 		return mapper.findEmail(vo);
 	}
 
@@ -108,27 +108,27 @@ public class UserServiceImpl implements UserService {
 //		}
 //	}
 
-	@Override
+	@Override // 선호음식 조회
 	public int prefer(UserVO vo) { 
 		return mapper.prefer(vo);
 	}
 
-	@Override
+	@Override // 추가정보 업데이트
 	public int signUpNext(UserVO vo) {
 		return mapper.insertAdd(vo);
 	}
 
-	@Override
+	@Override // 알러지 조회
 	public int userAllergy(UserVO vo) {
 		return mapper.userAllergy(vo);
 	}
 	
-	@Override
+	@Override // 회원 선호음식 조회
 	public int userPrefer(UserVO vo) {
 		return mapper.userPrefer(vo);
 	}
 
-	@Override
+	@Override // 회원 알러지 조회
 	public List<UserVO> getAllergy() {
 		return mapper.getAllergy();
 	}
@@ -201,7 +201,6 @@ public class UserServiceImpl implements UserService {
 			mapper.userAllergyDelete(uvo.getNo());
 			mapper.userPreferDelete(uvo.getNo());
 			try {
-				
 				String[] allergy_no = req.getParameterValues("allergy_no");
 				for(int i=0; i<allergy_no.length; i++) {
 					uvo.setAllergy_no(Integer.parseInt(allergy_no[i]));
@@ -228,7 +227,7 @@ public class UserServiceImpl implements UserService {
 		return mapper.userExit(uv.getNo()) > 0 ? true : false;
 	}
 
-	@Override
+	@Override // 회원 비밀번호 체크
 	public boolean pwdCheck(UserVO vo, HttpSession sess) {
 		boolean r = false;
 		if(mapper.loginCheck(vo) != null) {

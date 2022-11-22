@@ -7,7 +7,7 @@ function getMyRecipe(page) {
 	$.ajax({
 		url: "/foody/mypage/myRecipe",
 		type: "get",
-		dataType: "html",
+		dataType: "JSON",
 		data: {
 			page: page
 		},
@@ -156,7 +156,7 @@ $(function(){
 						<td class="userComment">
 							즐겨찾기된 나의 레시피 : ${mypage.userBookmarkCount}
 						</td>
-					</tr>
+					</tr> 
 					<tr>
 						<td rowspan="2">
 							email : ${loginInfo.email}

@@ -8,19 +8,25 @@
 		<a href="view.do?no=${l1.no}">
 		<div class='rcpCard'>
 		<table class="rcpTable" style='table-layout:fixed'>
+			<colgroup>
+				<col width='25%'/>
+				<col width='75%'/>
+			</colgroup>
+			<tr><th colspan='2' style="font-size: 15px; color: black;">${l1.name}</th></tr>
 			<tr>
 				<td class="imgCell" colspan='2'>
 				<div height=150px style='border-radius: 15px; position: relative; max-height:150px; align-items:center; overflow:hidden; display: flex; justify-content:center;'>
 					<div class="rcpImg">
-					<img class="thumbnail" width='100%' src="/foody/upload/${l1.thumbnail}">
+					<img class="thumbnail" width='100%' src="/foody/upload/${l1.thumbnail}" />
 					</div>
 					<div class="intro">${l1.intro}</div>
 				</div>
 				</td>
 			</tr>
 			<tr>
-				<td colspan='2'>
-				<div class="icons">
+				<td><div class="timename">${l1.time}분</span></td>
+				<td>
+				<div class="timename">
 					<img class="" width='20px' src="/foody/resources/img/viewcnt.png">
 					${l1.viewcount}
 					<img class="" width='20px' src="/foody/resources/img/reply.png">
@@ -31,10 +37,6 @@
 					${l1.avgStar}
 				</div>
 				</td>
-			</tr>
-			<tr class="">
-				<td><div class="timename">${l1.name}</div></td>
-				<td><div class="timename">${l1.time}분</div></td>
 			</tr>
 		</table>
 		</div>

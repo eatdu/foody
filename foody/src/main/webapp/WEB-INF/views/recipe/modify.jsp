@@ -678,7 +678,7 @@
 									+'<div id="Imagebutton'+pNum+'" onclick="clickevent('+pNum+')" style="padding-top:0px; height: 140px; width: 220px; float:left; background-color:#ECECEC; text-align: center;">'
 					
 					<c:if test="${not empty dataMap.photo}">					
-						append_str  +='<img id="processImg'+pNum+'" src="<c:out value="${dataMap.photo}"/>" style="height: 140px; width: 220px; object-fit: cover;">'
+						append_str  +='<img id="processImg'+pNum+'" src="<c:out value="/foody/upload/${dataMap.photo}"/>" style="height: 140px; width: 220px; object-fit: cover;">'
 									+'</div>'
 									+'<textarea name="content" id="processText'+pNum+'" rows="5" cols="30" style="height: 140px; padding:0px; resize:none;">${dataMap.content}</textarea>'
 					</c:if>

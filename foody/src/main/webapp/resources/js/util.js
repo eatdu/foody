@@ -158,7 +158,7 @@ function updateIngre(){
 		function(result){
 			if(result == true) {
 				alert("재료 정보 수정에 성공하였습니다.");
-				$("#ingreInfoArea").empty().append("조회할 재료를 선택해주세요.");
+				$("#ingreInfoArea").empty().append("재료 정보 수정에 성공하였습니다.\n조회할 재료를 선택해주세요.");
 			} else alert("재료 수정 실패");
 		}
 	);
@@ -177,10 +177,225 @@ function rcpOpen(no){
 function search(data, targetId){
 	
 	sendAjax(
-		"/foody/search.do",
+		"/foody/searchApi.do",
 		data,
-		function(result){
-			$("#" + targetId).html(result);
+		function(res){
+			if(data.type == 'common'){
+				var html = "";
+				html += "<div class='title' style='text-align: left;float: left;'>"
+					+		"<h1 style='font-size:20px;'>"
+					+	 		"<a id='arrow$" + res.areaNo + "' href='javascript:' onclick='rcpClose(" + res.areaNo + ", this);'>▼</a>" + res.title2 + " 레시피는 총 " + res.count + " 개가 있습니다."
+					+		"</h1>"
+					+	"</div>"
+					+	"<div id='list" + res.areaNo + "'>"
+					+		"<div class='orderBy' style='float: right;'>"
+					+			"<select id='orderBy' onchange='movePage('" + res.title + "', " + res.curNo + ", " + res.areaNo + ");'>";
+					+				"<option value='regdate' "
+				if (res.orderBy == 'regdate') {
+					html += 'selected';
+				}
+				html += ">최신순</option>";
+				html += "<option value='avgstar' ";
+				if (res.orderBy == 'avgstar') {
+					html += 'selected';
+				}
+				html += ">별점순</option>";
+				html += "<option value='viewcount' ";
+				if (res.orderBy == 'viewcount') {
+					html += 'selected';
+				}
+				html += ">조회순</option>";
+				html += "<option value='reply' ";
+				if (res.orderBy == 'reply') {
+					html += 'selected';
+				}
+				html += ">댓글순</option>"
+					+ 			"</select>"
+					+		"</div>"
+					+	"<input type='hidden' id='title' value='" + res.title + "'>"
+					+		"<div class='row'>";
+				console.log(res);
+				res.list.forEach(function(rcp, idx){
+					html += "<a href='view.do?no=" + rcp.no + "'>"
+						+		"<div class='rcpCard'>"
+						+			"<table class='rcpTable' style='table-layout:fixed'>"
+						+				"<colgroup>"
+						+					"<col width='25%'/>"
+						+					"<col width='75%'/>"
+						+				"</colgroup>"
+						+				"<tr><th colspan='2' style='font-size: 15px; color: black;'>" + rcp.name + "</th></tr>"
+						+ 				"<tr>"
+						+					"<td class='imgCell' colspan='2'>"
+						+						"<div height=150px style='border-radius: 15px; position: relative; max-height:150px; align-items:center; overflow:hidden; display: flex; justify-content:center;'>"
+						+							"<div class='rcpImg'>"
+						+								"<img class='thumbnail' width='100%' src='/foody/upload/" + rcp.thumbnail + "' />"
+						+							"</div>"
+						+							"<div class='intro'>" + rcp.intro + "</div>"
+						+						"</div>"
+						+					"</td>"
+						+				"</tr>"
+						+				"<tr>"
+						+					"<td><div class='timename'>" + rcp.time + "분</span></td>"
+						+					"<td>"
+						+						"<div class='timename'>"
+						+							"<img width='20px' src='/foody/resources/img/viewcnt.png'>" + rcp.viewcount
+						+							"<img width='20px' src='/foody/resources/img/reply.png'>" + rcp.reply
+						+							"<img width='20px' src='/foody/img/heart.png'>" + rcp.bookmark
+						+							"<img width='20px' src='/foody/img/star.png'>" + rcp.avgStar
+						+						"</div>"
+						+					"</td>"
+						+				"</tr>"
+						+			"</table>"
+						+		"</div>"
+						+	"</a>";
+					if ((idx + 1) % 4 == 0 && idx != 11) {
+						html += "</div>"
+							+	"<div class='row'>";
+					}
+				});
+				html += "</div>"
+					+	"<div id='bbs'>"
+					+		"<div class='page'>";
+				for(var idx = 0; idx < res.paging.length; idx++){
+					if(res.prev == true && idx == 0) {
+						html += "<a href='javascript:movePage(\"" + res.title + "\"," + (res.paging[idx] - 1) + ", " + res.areaNo + ");'>앞으로</a>";
+					}
+					if(res.paging[idx] == res.curNo) {
+						html += "<strong href='javascript:movePage(\"" + res.title + "\", " + res.paging[idx] + ", " + res.areaNo + ");'>" + res.paging[idx] + "</strong>";
+					}
+					if(res.paging[idx] != res.curNo) {
+						html += "<a href='javascript:movePage(\"" + res.title + "\", " + res.paging[idx] + ", " + res.areaNo + ");'>" + res.paging[idx] + "</a>";
+					}
+					if(res.next == true && idx == res.paging.length - 1) {
+						html += "<a href='javascript:movePage(\"" + res.title + "\", " + (res.paging[idx] + 1) + ", " + res.areaNo + ");'>다음으로</a>";
+					}
+				}
+				html += "</div></div></div>";
+				$("#" + targetId).html(html);
+				$(".rcpCard").hover(function(){
+					$(this).find(".intro").show();
+					$(this).find(".thumbnail").css("opacity", 0.7);
+				});
+				$(".rcpCard").mouseleave(function(){
+					$(this).find(".intro").hide();
+					$(this).find(".thumbnail").css("opacity", 1.0);
+				});
+			}
+			if(data.type == 'prefer') {
+
+				var html = "";
+				html += "<h4 class='titlesm tc'>--- " + res.title + "---</h4>"
+					+		"<div class='swiper mySwiper'>"
+					+			"<div class='swiper-wrapper'>"
+					+				"<div class='swiper-slide'>";
+				res.list.forEach(function(rcp, idx){
+					html += "<a href='view.do?no=" + rcp.no + "'>"
+						+		"<div class='rcpCard'>"
+						+			"<table class='rcpTable' style='table-layout:fixed'>"
+						+				"<colgroup>"
+						+					"<col width='25%'/>"
+						+					"<col width='75%'/>"
+						+				"</colgroup>"
+						+				"<tr><th colspan='2' style='font-size: 15px; color: black;'>" + rcp.name + "</th></tr>"
+						+				"<tr>"
+						+					"<td class='imgCell' colspan='2'>"
+						+						"<div height=150px style='border-radius: 15px; position: relative; max-height:150px; align-items:center; overflow:hidden; display: flex; justify-content:center;'>"
+						+							"<div class='rcpImg'>"
+						+								"<img class='thumbnail' width='100%' src='/foody/upload/" + rcp.thumbnail + "' />"
+						+							"</div>"
+						+							"<div class='intro'>" + rcp.intro + "</div>"
+						+						"</div>"
+						+					"</td>"
+						+				"</tr>"
+						+				"<tr>"
+						+					"<td><div class='timename'>" + rcp.time + "분</span></td>"
+						+					"<td>"
+						+						"<div class='timename'>"
+						+							"<img width='20px' src='/foody/resources/img/viewcnt.png'>" + rcp.viewcount
+						+							"<img width='20px' src='/foody/resources/img/reply.png'>" + rcp.reply
+						+							"<img width='20px' src='/foody/img/heart.png'>" + rcp.bookmark
+						+							"<img width='20px' src='/foody/img/star.png'>" + rcp.avgStar
+						+						"</div>"
+						+					"</td>"
+						+				"</tr>"
+						+			"</table>"
+						+		"</div>"
+						+	"</a>";
+					if((idx + 1) % 4 == 0 && idx != 19){
+						html += "</div>"
+							+	"<div class='swiper-slide'>";
+					}
+				});
+				html += "</div></div>"
+					+	"<div class='swiper-button-next'></div>"
+					+	"<div class='swiper-button-prev'></div>"
+					+"</div>";
+				$("#" + targetId).html(html);
+				var swiper = new Swiper(".mySwiper", {
+					navigation: {
+					  nextEl: ".swiper-button-next",
+					  prevEl: ".swiper-button-prev",
+					},
+				  });
+				$(".rcpCard").hover(function(){
+					$(this).find(".intro").show();
+					$(this).find(".thumbnail").css("opacity", 0.7);
+				})
+				$(".rcpCard").mouseleave(function(){
+					$(this).find(".intro").hide();
+					$(this).find(".thumbnail").css("opacity", 1.0);
+				})
+			}
+			if(data.type == 'best'){
+				var html = "";
+				html += "<h4 class='titlesm tc'>--- " + res.title + "---</h4>"
+					+		"<div class='swiper mySwiper'>"
+					+			"<div class='swiper-wrapper'>"
+					+				"<div class='swiper-slide'>";
+				res.list.forEach(function(rcp, idx){
+					html += "<a href='view.do?no=" + rcp.no + "'>"
+						+		"<div class='rcpCard'>"
+						+			"<table class='rcpTable' style='table-layout:fixed'>"
+						+				"<colgroup>"
+						+					"<col width='25%'/>"
+						+					"<col width='75%'/>"
+						+				"</colgroup>"
+						+				"<tr><th colspan='2' style='font-size: 15px; color: black;'>" + rcp.name + "</th></tr>"
+						+				"<tr>"
+						+					"<td class='imgCell' colspan='2'>"
+						+						"<div height=150px style='border-radius: 15px; position: relative; max-height:150px; align-items:center; overflow:hidden; display: flex; justify-content:center;'>"
+						+							"<div class='rcpImg'>"
+						+								"<img class='thumbnail' width='100%' src='/foody/upload/" + rcp.thumbnail + "' />"
+						+							"</div>"
+						+							"<div class='intro'>" + rcp.intro + "</div>"
+						+						"</div>"
+						+					"</td>"
+						+				"</tr>"
+						+				"<tr>"
+						+					"<td><div class='timename'>" + rcp.time + "분</span></td>"
+						+					"<td>"
+						+						"<div class='timename'>"
+						+							"<img width='20px' src='/foody/resources/img/viewcnt.png'>" + rcp.viewcount
+						+							"<img width='20px' src='/foody/resources/img/reply.png'>" + rcp.reply
+						+							"<img width='20px' src='/foody/img/heart.png'>" + rcp.bookmark
+						+							"<img width='20px' src='/foody/img/star.png'>" + rcp.avgStar
+						+						"</div>"
+						+					"</td>"
+						+				"</tr>"
+						+			"</table>"
+						+		"</div>"
+						+	"</a>";
+					if((idx + 1) % 4 == 0 && idx != 19){
+						html += "</div>"
+							+	"<div class='swiper-slide'>";
+					}
+				});
+				html += "</div></div>"
+					+	"<div class='swiper-button-next'></div>"
+					+	"<div class='swiper-button-prev'></div>"
+					+"</div>";
+				$("#" + targetId).html(html);
+			}
 		}
 	);
 }

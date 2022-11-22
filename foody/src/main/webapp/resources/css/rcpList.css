@@ -32,7 +32,7 @@
 
 .rcpTable {
 	margin: auto;
-	margin-top: 20px;
+	margin-top: 15px;
 	width: 250px;
     height: 220px;
 }
@@ -43,12 +43,12 @@
 	height: 40px;
 }
 .rcpTable .timename{
-	width: 100px;
+	width: 90%;
 	height: 30px;
 	border-radius: 15px;
     font-weight: bold;
     font-size: 13px;
-    background: #CEF279;
+    background: #B2EBF4;
     margin: auto;
     color: black;
     display: flex;
@@ -98,7 +98,7 @@ table.search {
     position: relative;
     border-radius: 12px;
     height: 24px;
-    background: #CEF279;
+    background: #B2EBF4;
     font-weight: bold;
     color: black;
 }

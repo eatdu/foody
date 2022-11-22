@@ -261,19 +261,11 @@
 						) a
 					GROUP BY rcpno
 					) b
-					 
 					LEFT JOIN (SELECT recipe_no, COUNT(*) bmkCnt
 						FROM feedback
 						WHERE bookmark = 1
 						GROUP BY recipe_no) bk
 						ON b.rcpno = bk.recipe_no
-					<!--
-					LEFT JOIN (SELECT recipe_no, AVG(star) star
-						FROM feedback
-						WHERE star != -1
-						GROUP BY recipe_no) s
-						ON b.rcpno = s.recipe_no
-					 -->
 				WHERE b.rcpno = recipe.no
 					AND print = 0
 				<if test='rcpCateArr != null'>
@@ -298,6 +290,7 @@
 				ORDER BY 
 					${orderBy} DESC
 				LIMIT 0, 12
+					${orderBy} DESC LIMIT #{startRno}, #{endRno}
 	</select>
 	
 	<!-- 1. 재료분류, 키워드중 한가지 조건이 걸린 경우 + (재료분류 or 재료키워드), 요리분류 -->

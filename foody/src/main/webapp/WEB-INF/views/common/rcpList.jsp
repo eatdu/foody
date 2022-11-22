@@ -23,6 +23,11 @@
 		<a href="view.do?no=${l1.no}">
 		<div class='rcpCard'>
 		<table class="rcpTable" style='table-layout:fixed'>
+			<colgroup>
+				<col width='25%'/>
+				<col width='75%'/>
+			</colgroup>
+			<tr><th colspan='2' style="font-size: 15px; color: black;">${l1.name}</th></tr>
 			<tr>
 				<td class="imgCell" colspan='2'>
 				<div height=150px style='border-radius: 15px; position: relative; max-height:150px; align-items:center; overflow:hidden; display: flex; justify-content:center;'>
@@ -34,8 +39,9 @@
 				</td>
 			</tr>
 			<tr>
-				<td colspan='2'>
-				<div class="icons">
+				<td><div class="timename">${l1.time}분</span></td>
+				<td>
+				<div class="timename">
 					<img class="" width='20px' src="/foody/resources/img/viewcnt.png">
 					${l1.viewcount}
 					<img class="" width='20px' src="/foody/resources/img/reply.png">
@@ -46,10 +52,6 @@
 					${l1.avgStar}
 				</div>
 				</td>
-			</tr>
-			<tr>
-				<td><div class="timename">${l1.name}</span></td>
-				<td><div class="timename">${l1.time}분</span></td>
 			</tr>
 		</table>
 		</div>
@@ -83,11 +85,11 @@
 $(".rcpCard").hover(function(){
 	$(this).find(".intro").show();
 	$(this).find(".thumbnail").css("opacity", 0.7);
-})
+});
 $(".rcpCard").mouseleave(function(){
 	$(this).find(".intro").hide();
 	$(this).find(".thumbnail").css("opacity", 1.0);
-})
+});
 $(function(){
     $('.thumbnail').each(function(idx, item){
     	var url = "/foody/resources/img/processImg.png";
@@ -95,7 +97,6 @@ $(function(){
     	console.log(item.src);
     	console.log(item);
     	if(item.complete == true) return; 
-    	//item.src = url;
     });
 });
 </script>

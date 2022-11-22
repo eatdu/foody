@@ -213,84 +213,71 @@
 	
 	<!-- 0. 재료 단어, 재료 분류, 음식 분류, 알러지 필터 모두 적용 -->
 	<select id='selectWithFilter' parameterType="map" resultType="kr.co.foody.recipe.RecipeVO">
-				SELECT recipe.*, IFNULL(bk.bmkCnt, 0) bookmark,
-					(SELECT count(*)
-					 FROM comment
-					 WHERE
-					 	recipe.no = comment.board_no
-					 	AND comment.tablename = 'recipe'
-					) reply
-				FROM recipe,
-					(
-					SELECT a.rcpno
-					<if test='allergyArr != null'>
-						, sum(algF) algCnt
-					</if>
-					<if test='keywordArr != null'>
-			        	, sum(keyF) keyCnt
-			        </if>
-			        <if test='ingreCateArr != null'>
-			        	, sum(icateF) icateCnt
-			        </if>
-					FROM 
-						(
-						SELECT map.recipe_no rcpno
-						<if test='allergyArr != null'>
-			 				, (ingre.allergy_no IN (
-			 			<foreach collection="allergyArr" item="no" separator=",">
-			 				#{no}
-			 			</foreach>
-			 				)) algF
-			 			</if>
-			 			<if test='keywordArr != null'>
-			 				, (ingre.no IN (
-			 			<foreach collection="keywordArr" item="no" separator=",">
-			 				#{no}
-			 			</foreach>
-			 				)) keyF
-			 			</if>
-			 			<if test='ingreCateArr != null'>
-			 				, (ingre.large_cate IN (
-			 			<foreach collection="ingreCateArr" item="no" separator=",">
-			 				#{no}
-			 			</foreach>
-			 				)) icateF
-			 			</if>
-						FROM ingre_recipe_map map, ingre
-						WHERE ingre.no = map.ingredient_no
-						) a
-					GROUP BY rcpno
-					) b
-					LEFT JOIN (SELECT recipe_no, COUNT(*) bmkCnt
-						FROM feedback
-						WHERE bookmark = 1
-						GROUP BY recipe_no) bk
-						ON b.rcpno = bk.recipe_no
-				WHERE b.rcpno = recipe.no
-					AND print = 0
-				<if test='rcpCateArr != null'>
-					AND recipe.type IN (
-				<foreach collection="rcpCateArr" item="no" separator=",">
-					#{no}
-				</foreach>
-					)
-				</if>
-			    <if test='allergyArr != null'>
-				    AND algCnt = 0
-			    </if>
-			    <if test='keywordArr != null'>
-				    AND keyCnt > 0
-			    </if>
-			    <if test='ingreCateArr != null'>
-				    AND icateCnt > 0
-				</if>
-				<if test='rKeyword != null'>
-					AND name LIKE "%${rKeyword}%"
-				</if>
-				ORDER BY 
-					${orderBy} DESC
-				LIMIT 0, 12
-					${orderBy} DESC LIMIT #{startRno}, #{endRno}
+		SELECT recipe.*
+		FROM recipe,
+			(
+			SELECT a.rcpno
+			<if test='allergyArr != null'>
+				, sum(algF) algCnt
+			</if>
+			<if test='keywordArr != null'>
+	        	, sum(keyF) keyCnt
+	        </if>
+	        <if test='ingreCateArr != null'>
+	        	, sum(icateF) icateCnt
+	        </if>
+			FROM 
+				(
+				SELECT map.recipe_no rcpno
+				<if test='allergyArr != null'>
+	 				, (ingre.allergy_no IN (
+	 			<foreach collection="allergyArr" item="no" separator=",">
+	 				#{no}
+	 			</foreach>
+	 				)) algF
+	 			</if>
+	 			<if test='keywordArr != null'>
+	 				, (ingre.no IN (
+	 			<foreach collection="keywordArr" item="no" separator=",">
+	 				#{no}
+	 			</foreach>
+	 				)) keyF
+	 			</if>
+	 			<if test='ingreCateArr != null'>
+	 				, (ingre.large_cate IN (
+	 			<foreach collection="ingreCateArr" item="no" separator=",">
+	 				#{no}
+	 			</foreach>
+	 				)) icateF
+	 			</if>
+				FROM ingre_recipe_map map, ingre
+				WHERE ingre.no = map.ingredient_no
+				) a
+			GROUP BY rcpno
+			) b
+		WHERE b.rcpno = recipe.no
+			AND print = 0
+		<if test='rcpCateArr != null'>
+			AND recipe.type IN (
+		<foreach collection="rcpCateArr" item="no" separator=",">
+			#{no}
+		</foreach>
+			)
+		</if>
+	    <if test='allergyArr != null'>
+		    AND algCnt = 0
+	    </if>
+	    <if test='keywordArr != null'>
+		    AND keyCnt > 0
+	    </if>
+	    <if test='ingreCateArr != null'>
+		    AND icateCnt > 0
+		</if>
+		<if test='rKeyword != null'>
+			AND name LIKE "%${rKeyword}%"
+		</if>
+		ORDER BY 
+			${orderBy} DESC LIMIT #{startRno}, #{endRno}
 	</select>
 	
 	<!-- 1. 재료분류, 키워드중 한가지 조건이 걸린 경우 + (재료분류 or 재료키워드), 요리분류 -->
@@ -468,6 +455,31 @@
 	</update>
 	
 	<!-- 찜 관련 -->
+	<!-- 레시피 찜 횟수 레시피 테이블에 업데이트 -->
+	<update id="updateBmk" parameterType="int">
+		UPDATE recipe 
+		SET bookmark = (
+				SELECT COUNT(*)
+	            FROM feedback
+	            WHERE recipe_no = #{no}
+					AND bookmark = 1
+				GROUP BY recipe_no
+                )
+		WHERE no = #{no};
+	</update>
+	<!-- 레시피 댓글 수 레시피 테이블에 업데이트 -->
+	<update id="updateRpl" parameterType="int">
+		UPDATE recipe 
+		SET reply = (
+				SELECT COUNT(*)
+	            FROM comment
+	            WHERE board_no = #{no}
+					AND tablename = 'recipe'
+				GROUP BY board_no
+                )
+		WHERE no = #{no};
+	</update>
+	
 	<!-- 유저가 찜했는지 조회 -->
 	<select id="getBmk" parameterType="map" resultType="int">
 		SELECT bookmark FROM feedback WHERE recipe_no=#{no} AND user_no=#{user_no}

@@ -39,6 +39,8 @@ public interface RecipeMapper {
 	
 	List<Integer> selectIngreNo(String str);
 	
+	int updateBmk(int no);
+	int updateRpl(int no);
 	
 	//관리자 관련 메소드
 	//  총 레시피 개수 집계

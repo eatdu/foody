@@ -80,6 +80,7 @@
   				<li><a href="/foody/recipe/main.do" class="parent"><span>메인</span></a></li>
   				<li><a href="/foody/recipe/introduce.do" class="parent"><span>Foody 소개</span></a></li>
 				<li><a href="/foody/recipe/search.do" class="parent"><span>상세검색</span></a></li>
+				<li><a href="/foody/es.do" class="parent"><span>상세검색-ES</span></a></li>
 				<li><a href="/foody/board/index.do" class="parent"><span>게시판</span></a>
 					<div class="standard_left">
 					<ul>

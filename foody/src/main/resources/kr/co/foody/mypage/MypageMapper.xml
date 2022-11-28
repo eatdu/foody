@@ -10,7 +10,6 @@
 		FROM recipe 
 		WHERE recipe.user_no=#{user_no} 
 		AND recipe.print = 0
-		ORDER BY bookmark DESC
 	    LIMIT ${startIdx}, ${pageRow}
 	</select>
 	<select id="myRecipeCount" resultType="int" parameterType="int">
@@ -29,7 +28,6 @@
 			on a.no = b.recipe_no
 		WHERE b.user_no = #{user_no}
 		AND a.print = 0
-		ORDER BY bookmark DESC
 	    LIMIT ${startIdx}, ${pageRow}
 	</select>
 	<select id="recentRecipeCount" resultType="int" parameterType="int">
@@ -49,7 +47,6 @@
 			ON a.no = b.recipe_no
 		WHERE b.user_no = #{user_no}
 		AND a.print = 0
-		ORDER BY bookmark DESC
 	    LIMIT ${startIdx}, ${pageRow}
 	</select>
 	<select id="likeRecipeCount" resultType="int" parameterType="int">
@@ -107,7 +104,8 @@
 	<select id="userCommentCount" parameterType="int" resultType="int">
 		SELECT SUM(
 			(SELECT COUNT(board_no) 
-			FROM comment WHERE board_no = recipe.no)) AS uccount 
+				FROM comment 
+			WHERE board_no = recipe.no)) AS uccount 
 		FROM recipe 
 		WHERE user_no = #{user_no}
 		AND print = 0

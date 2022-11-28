@@ -212,7 +212,7 @@ public class UserController {
 			System.out.println("equals: " + "".equals(uvo.getSelfi()));
 			System.out.println("isempty: " + uvo.getSelfi().isEmpty());
 			return "common/alert";
-		} else {
+		} else {  
 			model.addAttribute("msg", "업데이트에 실패하였습니다.");
 			return "common/alert";
 		}

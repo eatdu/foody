@@ -22,7 +22,7 @@ public class MypageServiceImpl implements MypageService {
 	@Autowired
 	UserMapper umapper;
 
-	@Override
+	@Override // 마이페이지 메인 정보 조회
 	public Map<String, Object> mypage(HttpSession sess) {
 		UserVO uv = (UserVO)sess.getAttribute("loginInfo");
 		Integer userRecipeCount = mapper.userRecipeCount(uv.getNo());
@@ -30,51 +30,51 @@ public class MypageServiceImpl implements MypageService {
 		Integer userTotalViewCount = mapper.userTotalViewCount(uv.getNo());
 		Integer userCommentCount = mapper.userCommentCount(uv.getNo());
 		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("userRecipeCount", userRecipeCount);
-		map.put("userBookmarkCount", userBookmarkCount);
-		map.put("userTotalViewCount", userTotalViewCount);
-		map.put("userCommentCount", userCommentCount);
+		map.put("userRecipeCount", userRecipeCount); // 회원이 작성한 레시피 카운트
+		map.put("userBookmarkCount", userBookmarkCount); // 회원의 레시피에 달린 북마크 카운트
+		map.put("userTotalViewCount", userTotalViewCount); // 회원의 레피시들의 조회수 카운트
+		map.put("userCommentCount", userCommentCount); // 회원의 레시피에 달린 댓글 카운트
 		return map;
 	}
 
 	
-	@Override
+	@Override // 내가 작성한 레시피 정보 조회
 	public Map<String, Object> myRecipe(HttpSession sess, MypageVO vo) {
 		UserVO uv = (UserVO)sess.getAttribute("loginInfo");
 		vo.setUser_no(uv.getNo());
 		int totalCount = mapper.myRecipeCount(vo.getUser_no());
-		vo.pagingProcess(15,totalCount);
+		vo.pagingProcess(15,totalCount); // 페이지당 15개의 리스트 , total레시피수(페이징)
 		List<MypageVO> myRecipeList = mapper.myRecipe(vo);
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("myList", myRecipeList);
 		return map;
 	}
 	
-	@Override
+	@Override // 최근 본 레시피 정보 조회
 	public Map<String, Object> recentRecipe(HttpSession sess, MypageVO vo) {
 		UserVO uv = (UserVO)sess.getAttribute("loginInfo");
 		vo.setUser_no(uv.getNo());
 		int totalCount = mapper.recentRecipeCount(vo.getUser_no());
-		vo.pagingProcess(15,totalCount);
+		vo.pagingProcess(15,totalCount); // 페이지당 15개의 리스트 , total레시피수(페이징)
 		List<MypageVO> recentRecipeList = mapper.recentRecipe(vo);
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("recipeList", recentRecipeList);
 		return map;
 	}
 	
-	@Override
+	@Override // 찜한 레시피 정보 조회
 	public Map<String, Object> likeRecipe(HttpSession sess, MypageVO vo) {
 		UserVO uv = (UserVO)sess.getAttribute("loginInfo");
 		vo.setUser_no(uv.getNo());
 		int totalCount = mapper.likeRecipeCount(vo.getUser_no());
-		vo.pagingProcess(15,totalCount);
+		vo.pagingProcess(15,totalCount); // 페이지당 15개의 리스트 , total레시피수(페이징)
 		List<MypageVO> likeRecipeList = mapper.likeRecipe(vo);
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("likeList", likeRecipeList);
 		return map;
 	}
 
-	@Override
+	@Override // 회원정보 조회 페이지
 	public Map<String, Object> userInfo(HttpSession sess) {
 		UserVO uv = (UserVO)sess.getAttribute("loginInfo");
 		UserVO uvl = umapper.selectOne(uv.getNo());
@@ -106,7 +106,7 @@ public class MypageServiceImpl implements MypageService {
 		return map;
 	}
 
-	@Override
+	@Override // 레시피 삭제
 	public boolean deleteRecipe(int no) {
 		return mapper.deleteRecipe(no) > 0 ? true : false;
 	}

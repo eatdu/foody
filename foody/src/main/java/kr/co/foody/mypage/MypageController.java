@@ -20,37 +20,37 @@ public class MypageController {
 	@Autowired
 	UserService uService;
 	
-	@GetMapping("/mypage/mypage.do")
+	@GetMapping("/mypage/mypage.do") // 마이페이지 이동
 	public String mypage(Model model, HttpSession sess) {
 		model.addAttribute("mypage", service.mypage(sess));
 		return "/mypage/mypage";
 	}
 	
-	@GetMapping("mypage/myRecipe")
+	@GetMapping("mypage/myRecipe") // 나의 레시피 페이지 호출
 	public String myRecipe(Model model, HttpSession sess, MypageVO vo) {
 		model.addAttribute("myRecipe", service.myRecipe(sess,vo));
 		return "/mypage/myRecipe";
 	}
 	
-	@GetMapping("mypage/recentRecipe")
+	@GetMapping("mypage/recentRecipe") // 최근 본 레시피 페이지 호출
 	public String recentRecipe(Model model, HttpSession sess, MypageVO vo) {
 		model.addAttribute("recentRecipe", service.recentRecipe(sess,vo));	
 		return "/mypage/recentRecipe";
 	}
 	
-	@GetMapping("mypage/likeRecipe")
+	@GetMapping("mypage/likeRecipe") // 찜한 레시피 페이지 호출
 	public String likeRecipe(Model model, HttpSession sess, MypageVO vo) {
 		model.addAttribute("likeRecipe", service.likeRecipe(sess,vo));
 		return "/mypage/likeRecipe";
 	}
 	
-	@GetMapping("mypage/myInfo")
+	@GetMapping("mypage/myInfo") // 회원 정보 페이지 호출
 	public String myInfo(Model model, HttpSession sess) {
 		model.addAttribute("myInfo", service.userInfo(sess));
 		return "/mypage/myInfo";
 	}
 	
-	@GetMapping("/mypage/delete.do")
+	@GetMapping("/mypage/delete.do") // 회원 자신의 레시피 삭제
 	public String deleteRecipe(Model model, int no) {
 		if(service.deleteRecipe(no)) {
 			model.addAttribute("msg", "레시피가 삭제되었습니다.");
@@ -62,7 +62,7 @@ public class MypageController {
 		}
 	}
 	
-	@GetMapping("/mypage/test.do")
+	@GetMapping("/mypage/test.do") // test
 	public String myInfo() {
 		return "/mypage/test";
 	}

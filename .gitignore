@@ -3,6 +3,7 @@
 .springBeans
 .settings/
 target/
+servlet-context.xml
 
 # Compiled class file
 *.class

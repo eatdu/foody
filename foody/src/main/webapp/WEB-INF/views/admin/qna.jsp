@@ -93,26 +93,30 @@ div.adminMenu {
 	<div class="qna_list">
             <div class="size">
                 <div class="bbs">
-	                <form method="get" name="searchForm" id="searchForm" action="qna.do">
 	                <div class="search">
+	                <form method="get" name="searchForm" id="searchForm" action="qna.do">
+	                <!-- 관리자 검색조건 -->
+	                <div class="byPeriod">
 		                <ul class="byPeriod" style="display:flex;">
 			                <li>기간별&nbsp;&nbsp;|&nbsp;&nbsp;</li>
-			                <li><label><input type="radio" id="all" name="period" value="all" checked/>전체</label></li>
-			                <li><label><input type="radio" id="day" name="period" value="1 day" <c:if test="${param.period=='1 day'}"> checked</c:if>/>1일</label></li>
-			                <li><label><input type="radio" id="week" name="period" value="1 week" <c:if test="${param.period=='1 week'}"> checked</c:if>/>1주</label></li>
-			                <li><label><input type="radio" id="month" name="period" value="1 month" <c:if test="${param.period=='1 month'}"> checked</c:if>/>1개월</label></li>
-			                <li><label><input type="radio" id="3months" name="period" value="3 month" <c:if test="${param.period=='3 month'}"> checked</c:if>/>3개월</label></li>
-			                <li><label><input type="radio" id="6months" name="period" value="6 month" <c:if test="${param.period=='6 month'}"> checked</c:if>/>6개월</label></li>
+			                <li><label><input type="radio" id="all" name="period" value="all" checked/>전체&nbsp;&nbsp;</label></li>
+			                <li><label><input type="radio" id="day" name="period" value="1 day" <c:if test="${param.period=='1 day'}"> checked</c:if>/>1일&nbsp;&nbsp;</label></li>
+			                <li><label><input type="radio" id="week" name="period" value="1 week" <c:if test="${param.period=='1 week'}"> checked</c:if>/>1주&nbsp;&nbsp;</label></li>
+			                <li><label><input type="radio" id="month" name="period" value="1 month" <c:if test="${param.period=='1 month'}"> checked</c:if>/>1개월&nbsp;&nbsp;</label></li>
+			                <li><label><input type="radio" id="3months" name="period" value="3 month" <c:if test="${param.period=='3 month'}"> checked</c:if>/>3개월&nbsp;&nbsp;</label></li>
+			                <li><label><input type="radio" id="6months" name="period" value="6 month" <c:if test="${param.period=='6 month'}"> checked</c:if>/>6개월&nbsp;&nbsp;</label></li>
 			                <li><label><input type="radio" id="year" name="period" value="1 year" <c:if test="${param.period=='1 year'}"> checked</c:if>/>1년</label></li>
 		                </ul>
+	                </div>
+	                <div class="byResponsed">
 		                <ul class="byResponsed" style="display:flex;">
 			                <li>답변 여부&nbsp;&nbsp;|&nbsp;&nbsp;</li>
-			                <li><label><input type="radio" id="all" name="response" value="-1" checked/>전체</label></li>
-			                <li><label><input type="radio" id="notResponse" name="response" value="0" <c:if test="${param.response=='0'}"> checked</c:if>/>답변 미완료건</label></li>
-			                <li><label><input type="radio" id="response" name="response" value="1" <c:if test="${param.response=='1'}"> checked</c:if>/>답변 완료건</label></li>
+			                <li><label><input type="radio" id="all" name="response" value="-1" checked/>전체&nbsp;&nbsp;</label></li>
+			                <li><label><input type="radio" id="notResponse" name="response" value="0" <c:if test="${param.response=='0'}"> checked</c:if>/>답변 미완료건&nbsp;&nbsp;</label></li>
+			                <li><label><input type="radio" id="response" name="response" value="1" <c:if test="${param.response=='1'}"> checked</c:if>/>답변 완료건&nbsp;&nbsp;</label></li>
 		                </ul>
 	                </div>
-	                <div class="bbsSearch" align="left">
+	                <div class="bbsSearch" style="display:flex;">
 	                    <span class="srchSelect">
 	                        <select id="stype" name="stype" class="dSelect" title="검색분류 선택">
 	                            <option value="all">제목+내용</option>
@@ -128,8 +132,11 @@ div.adminMenu {
 	                    <input type="submit" id="" value="검색" style="height:32px; box-sizing:border-box; border:0; line-height:32px; background-color:#fff; border:1px solid #c7c8cc; vertical-align:middle;">
 	                </div>
 	                </form>
+	                </div>
+	                
+	                <!-- 전체 QnA목록 -->
+	                <p><span><strong>총 ${data.totalCount}개</strong>  |  ${qnaVO.page}/${data.totalPage}페이지</span></p>
                     <table class="list">
-                    <p><span><strong>총 ${data.totalCount}개</strong>  |  ${qnaVO.page}/${data.totalPage}페이지</span></p>
                     <!-- boardVO.page 대신 param.page도 가능하지만 1페이지일 때 안 나옴 -->
                         <caption><strong></strong></caption>
                         <colgroup>
@@ -209,7 +216,6 @@ div.adminMenu {
                         	</c:if>
                         </ul>
                     	</div>
-               	</div>
                	
                	
           	</div>

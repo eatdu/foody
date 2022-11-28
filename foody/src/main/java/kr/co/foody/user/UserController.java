@@ -153,7 +153,9 @@ public class UserController {
 				model.addAttribute("url", "login.do");
 			} else {
 				HttpSession sess = req.getSession();
+				System.out.println(sess);
 				sess.setAttribute("signUp", vo);
+				System.out.println(vo);
 				model.addAttribute("msg", "회원가입되었습니다 추가정보를 입력하세요.");
 				model.addAttribute("url", "signUpNext.do");
 			}

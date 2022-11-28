@@ -31,6 +31,7 @@ public class CommentVO {
 	private String sword;
 	private String period;
 	private String align;
+	private int print;
 	
 	private int startIdx;
 	private int page;

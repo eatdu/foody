@@ -1,5 +1,8 @@
 package kr.co.foody.qna;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,6 +10,8 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
+import kr.co.foody.board.BoardMapper;
+import kr.co.foody.board.BoardVO;
 import kr.co.foody.comment.CommentMapper;
 import kr.co.foody.comment.CommentVO;
 import lombok.extern.log4j.Log4j;
@@ -18,12 +23,25 @@ import lombok.extern.log4j.Log4j;
 public class QnaMapperTests {
 
 	@Autowired
+	private BoardMapper bmapper;
+	@Autowired
 	private QnaMapper mapper;
 	@Autowired
 	private CommentMapper Cmapper;
 	
 	//@Test
-	public void insert() { // 행삽입
+	public void insert() {
+		for(int i = 0; i<110; i++) {
+			BoardVO vo = new BoardVO();
+			vo.setUser_no(22 + (int)(Math.random() * 100));
+			vo.setTitle("자유게시판 제목입니다.");
+			vo.setContent("내용입니다.");
+			bmapper.insert(vo);
+		}
+	}
+	
+	//@Test
+	public void insertQna() { // 행삽입
 		QnaVO vo = new QnaVO();
 		vo.setUser_no(23);
 		vo.setQtype(3);
@@ -47,8 +65,4 @@ public class QnaMapperTests {
 		Cmapper.insert(vo);
 		
 	}
-
-	
-	
-	
 }

@@ -16,7 +16,7 @@ public class BoardServiceImpl implements BoardService {
 	BoardMapper mapper;
 	
 	@Override
-	public int insert(BoardVO vo) {
+	public int insert(BoardVO vo) { // 등록처리
 		return mapper.insert(vo);
 	}
 	
@@ -37,12 +37,10 @@ public class BoardServiceImpl implements BoardService {
 		boolean prev = startPage > 1 ? true : false; // prev 버튼
 		boolean next = endPage < totalPage ? true : false; // next 버튼
 		
-		
 		Map map = new HashMap();
 		map.put("totalCount", totalCount);
 		map.put("totalPage", totalPage);
 		map.put("list", list);
-		
 		map.put("endPage", endPage);
 		map.put("startPage", startPage);
 		map.put("prev", prev);
@@ -52,21 +50,21 @@ public class BoardServiceImpl implements BoardService {
 	}
 	
 	@Override
-	public BoardVO view(int no) {
+	public BoardVO view(int no) { // 상세글 보기
 		mapper.updateViewcount(no);
 		return mapper.view(no);
 	}
 	@Override
-	public BoardVO edit(int no) {
+	public BoardVO edit(int no) { // 수정폼에 상세글 가져오기
 		return mapper.view(no);
 	}
 	
 	@Override
-	public int update(BoardVO vo) {
+	public int update(BoardVO vo) { // 수정처리
 		return mapper.update(vo);
 	}
 	@Override
-	public boolean delete(int no) {
+	public boolean delete(int no) { // 삭제처리
 		return mapper.delete(no);
 	}
 	

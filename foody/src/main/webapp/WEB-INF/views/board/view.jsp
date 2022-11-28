@@ -2,11 +2,11 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ page import="java.net.*"%>
 <%@ include file="../common/config.jsp" %>
     <link rel="stylesheet" href="/foody/css/reset.css"/>
     <link rel="stylesheet" href="/foody/css/contents.css"/>
     <title>게시판 상세</title>
-
 
 <style>
 	.getStar li a img {
@@ -14,6 +14,10 @@
 		max-height: 25px;
 		max-width: 25px;
 		}
+		
+	.paging > a {
+		text-align: center;
+	}
 </style>
 
 <script>
@@ -39,10 +43,12 @@
 			}
 		});
 	}
-	
-	// 별점 등록
 	$(function() {
 		getComment(1);
+	});
+	
+	/* // 별점 등록
+	$(function() {
 		
 		$(".getStar li a img").hover(function() { // 마우스오버 이벤트
 			var idx = $(this).index(".getStar li a img"); // 오버한 객체의 인덱스값(배열)
@@ -67,7 +73,7 @@
 			
 			$("#starVal").val(idx+1); // 히든에 내가 클릭한 인덱스+1 (별점은 1부터 시작)
 		})	
-	});
+	}); */
 	
 	// 댓글 저장
 	function goSave() {
@@ -119,7 +125,16 @@
 	
 	// 답글 클릭시 답글입력창 아래에 보여주기
 	function addBox(no) {
-		$(".add_reCmt"+no).toggle();
+		<c:if test="${empty loginInfo}">
+			if (confirm('로그인 후 이용 가능합니다. 로그인 페이지로 이동하시겠습니까?') == true) {
+				location.href='/foody/user/login.do';
+			} else {
+				false;
+			};
+		</c:if>
+		<c:if test="${!empty loginInfo}">
+			$(".add_reCmt"+no).toggle();
+		</c:if>
 	}
 
 	// 대댓글 저장
@@ -178,14 +193,16 @@
                         <dl class="file">
                             <dt>첨부파일 </dt>
                             <dd>
-                            <img src="/foody/upload/${data.filename_real}" style="width:100px; height:100px;">
-                            <a href="/foody/common/download.jsp?oName=${URLEncoder.encode(data.filename_org, 'UTF-8')}&sName=${data.filename_real}"
-                            target="_blank">${data.filename_org} </a></dd>
+                            <c:if test="${data.filename_org != null}">
+                            <img src="/foody/img/ico_file.png"/>
+                            </c:if>
+                            <a href="/foody/common/download.jsp?oName=${URLEncoder.encode(data.filename_org, 'UTF-8')}
+                            		&sName=${data.filename_real}" target="_blank">${data.filename_org} </a></dd>
                         </dl>
                         <div class="btnSet clear">
                             <div class="fl_l">
                             <a href="index.do" class="btn">목록으로</a>
-                            <c:if test="${!empty loginInfo}">
+                            <c:if test="${loginInfo.no == data.user_no}">
 	                            <a href="edit.do?no=${data.no}" class="btn">수정</a>
 	                            <a href="javascript:del(${data.no});" class="btn">삭제</a>
                             </c:if>
@@ -195,7 +212,7 @@
                 	<!-- 댓글 영역 -->
                 	<div class="comment">
 	                	<form method="post" name="frm" id="frm" enctype="multipart/form-data" >
-	                	<input type="hidden" id="starVal" name="star" value="0">
+	                	<!-- <input type="hidden" id="starVal" name="star" value="0"> -->
 	                        <table class="board_write">
 	                            <colgroup>
 	                                <col width="*" />
@@ -222,6 +239,8 @@
                         <div id="commentArea"></div>
                 	</div>
                 	</div>
+                	<div class="blank" style="height:50px;">
+                </div>
             	</div>
         	</div>
 </body>

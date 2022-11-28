@@ -2,14 +2,20 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-    
-<p style="text-align: right;"><span><strong>총 ${comment.totalCount}개</strong>  |  ${commentVO.page}/${comment.totalPage}페이지</span></p>
+
+<style>
+
+
+</style>
+
+<p style="text-align: left;"><span><strong>총 ${comment.totalCount}개</strong>  |  ${commentVO.page}/${comment.totalPage}페이지</span></p>
+	<div class="blank" style="height:20px"></div>
 	<table class="list">
 	    <colgroup>
-	        <col width="80px" />
+	        <col width="60px" />
 	        <col width="*" />
 	        <col width="100px" />
-	        <col width="200px" />
+	        <col width="120px" />
 	        <col width="100px" />
 	    </colgroup>
 	    <tbody>
@@ -22,11 +28,18 @@
 		<c:forEach items="${comment.list}" var="list" varStatus="status">
             <tr>
                	<td>${comment.totalCount - status.index - (commentVO.page - 1) * commentVO.pageRow}</td>
-               	<td class="txt_l" style="text-align:left">
-               		<!-- 답변 들여쓰기 -->
+               	<td class="txt_l" style="<c:if test="${list.print == 1}"> color:lightgray;</c:if> text-align:left;">
+               		<!-- 댓글 들여쓰기 -->
 	               	<c:forEach begin="1" end="${list.depth}">&nbsp;&nbsp;&nbsp;</c:forEach>
-	               	<c:if test="${list.depth > 0}"><img src="/foody/img/comment_icon.gif"></c:if>
-	                ${list.content}</a>
+		               	<c:if test="${list.depth > 0}">
+		               		<img src="/foody/img/comment_icon.gif">
+		               	</c:if>
+               		<c:if test="${list.print == 0}">
+		                ${list.content}
+               		</c:if>
+               		<c:if test="${list.print == 1}">
+               			삭제된 댓글입니다.
+               		</c:if>
                		<td style="text-align: right; width:100px;">
                		<c:if test="${loginInfo.no == list.user_no}">
 	               		<a href="javascript:commentDel(${list.no});">[삭제]</a></c:if>
@@ -60,19 +73,20 @@
         
         </tbody>
  	</table>
- 	
+ 	<div class="blank" style="height:20px">
+ 	</div>
         <!-- 페이지 처리 -->
-        <div class="paging">
+        <div class="paging" style="text-align: center;">
             <!-- prev 버튼 있는 경우 -->
             <c:if test="${comment.prev == true}">
            		<!-- prev 버튼 클릭시 -->
-           		<a href="javascript:getComment(${comment.startPage-1})">prev </a>
+           		<a href="javascript:getComment(${comment.startPage-1})">《</a>
            	</c:if>
             <c:forEach var="num" begin="${comment.startPage}" end="${comment.endPage}">
                 <a href='javascript:getComment(${num})'>
                 <c:if test='javascript:getComment(${commentVO.page == num})'>class='current'</c:if>${num} </a>
             </c:forEach>
             <c:if test="${data.next == true}">
-           		<a href="javascript:getComment(${comment.endPage+1})">next</a>
+           		<a href="javascript:getComment(${comment.endPage+1})">》</a>
            	</c:if>
         </div>

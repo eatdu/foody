@@ -90,11 +90,26 @@ public class BoardController {
 	
 	// 수정처리
 	@PostMapping("board/update.do")
-	public String update(BoardVO vo, Model model) { 
+	public String update(BoardVO vo, Model model,
+			@RequestParam MultipartFile file,
+			HttpServletRequest req) {
+		
+		if (!file.isEmpty()) {  
+			String org = file.getOriginalFilename();
+			String ext = org.substring(org.lastIndexOf("."));
+			String real = new Date().getTime()+ext;
+			
+			String path = req.getRealPath("/upload/");
+			try {
+				file.transferTo(new File(path+real)); // 파일 저장
+			} catch (Exception e) {}
+			vo.setFilename_org(org);
+			vo.setFilename_real(real);
+		}
 		
 		if (service.update(vo) == 1) {
 			model.addAttribute("msg", "게시물이 수정되었습니다.");
-			model.addAttribute("url", "index.do");
+			model.addAttribute("url", "view.do?no="+vo.getNo());
 			return "common/alert";
 		} else {
 			model.addAttribute("msg", "게시물을 수정할 수 없습니다.");

@@ -154,7 +154,6 @@ public class AdminController {
 	
 	@Autowired
 	QnaService Qservice;
-	
 	@Autowired
 	CommentService Cservice;
 	
@@ -199,16 +198,18 @@ public class AdminController {
 		return "admin/comment";
 	}
 	// 댓글 삭제
-	@GetMapping("/admin/delete.do")
+	@GetMapping("/admin/commentDelete.do")
 	public String delete(CommentVO vo, Model model, @RequestParam int no) {
-		if (Cservice.delete(no) == 1) {
-			model.addAttribute("msg", "댓글 삭제 완료");
-			model.addAttribute("url", "comment.do");
-			return "common/alert";
-		} else {
-			model.addAttribute("msg", "댓글 삭제 실패");
-			return "common/alert";
-		}
+		model.addAttribute("result", Cservice.printUpdate(no));
+		return "common/return";
+//		if (Cservice.printUpdate(no) == 1) {
+//			model.addAttribute("msg", "댓글 삭제 완료");
+//			model.addAttribute("url", "comment.do");
+//			return "common/alert";
+//		} else {
+//			model.addAttribute("msg", "댓글 삭제 실패");
+//			return "common/alert";
+//		}
 	}
 	
 	// 회원목록 조회

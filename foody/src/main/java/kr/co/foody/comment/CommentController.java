@@ -20,12 +20,14 @@ public class CommentController {
 	@Autowired
 	CommentService service;
 	
+	// 댓글 목록 조회
 	@GetMapping("/comment/list.do")
 	public String list(CommentVO vo, Model model) {
 		model.addAttribute("comment", service.index(vo));
 		return "common/comment";
 	}
 	
+	// 댓글 등록
 	@PostMapping("/comment/insert.do")
 	public String insert(CommentVO vo, Model model,
 						@RequestParam(value="uploadFile", required = false) MultipartFile uploadFile, HttpServletRequest req) {
@@ -49,6 +51,7 @@ public class CommentController {
 		return "common/return";
 	}
 	
+	// 대댓글 등록
 	@PostMapping("/comment/insert_reCmt.do")
 	public String insert_reCmt(CommentVO vo, Model model) {
 		
@@ -56,15 +59,16 @@ public class CommentController {
 		return "common/return";
 	}
 	
-	@PostMapping("/comment/update.do")
-	public String update(CommentVO vo, Model model) {
-		model.addAttribute("result", service.update(vo));
-		return "common/return";
-	}
+//	@PostMapping("/comment/update.do")
+//	public String update(CommentVO vo, Model model) {
+//		model.addAttribute("result", service.update(vo));
+//		return "common/return";
+//	}
 	
+	// 댓글 삭제
 	@GetMapping("/comment/delete.do")
 	public String delete(CommentVO vo, Model model, @RequestParam int no) {
-		model.addAttribute("result", service.delete(no));
+		model.addAttribute("result", service.printUpdate(no));
 		return "common/return";
 	}
 	

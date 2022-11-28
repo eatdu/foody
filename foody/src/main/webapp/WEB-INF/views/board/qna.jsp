@@ -9,8 +9,7 @@
 <script>
 
 	function showAnswer(no) {
-		
-		$(".faq_a"+no).slideToggle(300);
+		$(".faq_a"+no).slideToggle(800, "linear");
 	}
 	
 	function goWrite() {
@@ -49,6 +48,8 @@
 				<a href="/foody/board/myQna.do">1:1 문의</a></li>
 		</ul>
 	</div>
+	<div class="blank" style="height:50px;">
+	</div>
 <div class="qna_list">
             <div class="size">
                 <div class="bbs">
@@ -74,12 +75,10 @@
 						<c:forEach items="${data.list}" var="list" varStatus="status">
                             <tr class="faq_q" onclick="javascript:showAnswer(${list.no});">
                                 <td style="text-align: center;">Q.</td>
-                                <td class="txt_l" style="text-align: left;">
-                                    ${list.title}</a>
+                                <td class="txt_l" style="text-align: left;">${list.title}
                                 </td>
-                                
                             </tr>
-                            <tr class="faq_a${list.no}" style="display:none; width:100%;">
+                            <tr class="faq_a${list.no}" style="display:none; width:100%; background-color: #F7FA89;">
 				                <td style="text-align: center;">A.</td>
                                 <td class="txt_l" style="text-align: left;">${list.answer}
                                 </td>
@@ -88,20 +87,19 @@
                         </tbody>
                     </table>
                     <!-- 페이지 처리 -->
-                    
                     <div class="pagenate clear">
                         <ul class='paging'>
                         <!-- prev 버튼 있는 경우 -->
                         <c:if test="${data.prev == true}">
                         		<!-- prev 버튼 클릭시 stype, sword 값을 그대로 가지고 이전 페이지로 이동 -->
-                        		<li><a href="qna.do?page=${data.startPage-1}&stype=${param.stype}&sword=${param.sword}"><-</a>
+                        		<li><a href="qna.do?page=${data.startPage-1}&stype=${param.stype}&sword=${param.sword}">《</a>
                         	</c:if>
                         	<c:forEach var="num" begin="${data.startPage}" end="${data.endPage}">
 	                            <li><a href='qna.do?page=${num}&stype=${param.stype}&sword=${param.sword}'
 	                            <c:if test="${qnaVO.page == num}">class='current'</c:if>>${num}</a></li>
 	                        </c:forEach>
 	                        <c:if test="${data.next == true}">
-                        		<li><a href="qna.do?page=${data.endPage+1}&stype=${param.stype}&sword=${param.sword}">-></a>
+                        		<li><a href="qna.do?page=${data.endPage+1}&stype=${param.stype}&sword=${param.sword}">》</a>
                         	</c:if>
                         </ul>
                     	</div>

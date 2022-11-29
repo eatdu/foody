@@ -172,7 +172,7 @@
 											$("#addedIngredientList").append(
 												'<span class="addedSpan"'
 												+' data-no="'+data[i].no+'" data-name="'+data[i].name+'"'
-												+' data-carbo="'+data[i].carbo+'" data-protein="'+data[i].protein+'" data-fat="'+data[i].fat+'"'
+ 												+' data-carbo="'+data[i].carbo+'" data-protein="'+data[i].protein+'" data-fat="'+data[i].fat+'"'
 												+' data-carbokcal="'+data[i].carbo+'"data-proteinkcal="'+data[i].protein+'" data-fatkcal="'+data[i].fat+'"'
 												+' data-allergy="'+data[i].allergy_no+'">'
 												+data[i].name+'('+data[i].detail+')'
@@ -328,7 +328,7 @@
 												sel_ingre[i].dataset.proteinkcal = sel_protein;
 												sel_ingre[i].dataset.fatkcal = sel_fat;
 											}
-										}
+ 										}
 										kcalUpdate();
 									});
 									num++;
@@ -385,7 +385,7 @@
 				
 				options={
 					title: {
-						text:userNickname+" 님의 하루 권장 칼로리: "+${cal}+"kcal"
+ 						text:userNickname+" 님의 하루 권장 칼로리: "+${cal}+"kcal"
 					},
 					data: [{
 						type: "doughnut",
@@ -758,7 +758,3 @@
 	</body>
 
 </html>
-
-
-
-

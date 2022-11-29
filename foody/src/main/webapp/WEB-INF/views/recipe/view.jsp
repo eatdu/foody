@@ -360,12 +360,20 @@
 					<td>
 						${dataMap.name} <c:if test="${not empty dataMap.detail}">(${dataMap.detail})</c:if>
 							<c:if test="${not empty loginUser}">
-			
-								</c:if>
+					
+							<c:forEach var="sessallergyNo" items="${sessAllergyNo}">
+									<c:if test="${sessallergyNo eq dataMap.allergy_no}">
+										<span style="color:red;">
+											<c:out value="(알러지 주의)"/>
+										</span>
+									</c:if>
+								</c:forEach>
+								
+							</c:if>
 								<c:if test="${empty loginUser}">
 									<c:if test="${dataMap.allergy_no ne 0}">
 											<span style="color:red;">
-												<c:out value="알러지 주의!!"/>
+												<c:out value="(알러지 주의)"/>
 											</span>
 									</c:if>
 								</c:if>

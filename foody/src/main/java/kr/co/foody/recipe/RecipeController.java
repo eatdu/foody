@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -43,6 +44,11 @@ public class RecipeController {
 	@Autowired
 	UserService uService;
 
+	@GetMapping("recipe/introduce.do")
+	public String introduce() {
+		return "introduce";
+	}
+		
 	@GetMapping("/recipe/write.do")
 	public String write() {
 
@@ -287,10 +293,12 @@ public class RecipeController {
 		model.addAttribute("result", service.search(cri, model, sess));
 		return (String) cri.get("jsp");
 	}
-
+	
+	@CrossOrigin
 	@ResponseBody
 	@PostMapping(value = "searchApi.do", consumes = MediaType.APPLICATION_JSON_VALUE, produces = "application/json;charset=UTF-8")
 	public Map searchApi(@RequestBody Map cri, Model model, HttpSession sess) {
+		System.out.println(cri);
 		return service.search(cri, model, sess);
 	}
 

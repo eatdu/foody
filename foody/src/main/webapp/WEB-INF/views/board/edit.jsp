@@ -26,7 +26,7 @@
 <%@ include file="../common/navBar.jsp" %>
         <div class="sub">
             <div class="size">
-                <h3 class="sub_title">게시판</h3>
+                <h3 class="sub_title">게시글 수정</h3>
                 <div class="bbs">
                 <form method="post" name="frm" id="frm" action="update.do" enctype="multipart/form-data" >
                     <input type="hidden" name="no" value="${data.no}"/>
@@ -48,7 +48,7 @@
                             <th>첨부파일</th>
                             <td>
                             	${data.filename_org}
-                                <input type="file" name="file">
+                                <input type="file" name="file" id="file">
                             </td>
                         </tr>
                         </tbody>

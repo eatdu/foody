@@ -1,5 +1,6 @@
 package kr.co.foody.admin;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -53,15 +54,22 @@ public class AdminController {
 	//관리자 1차 로그인 - 아이디, 비밀번호
 	@ResponseBody
 	@PostMapping(value = "/admin/login1.do", consumes = MediaType.APPLICATION_JSON_VALUE, produces = "application/json;charset=UTF-8")
-	public boolean login1(@RequestBody AdminVO vo, Model model, HttpSession sess) {
+	public Map login1(@RequestBody AdminVO vo, Model model, HttpSession sess) {
 		System.out.println(vo);
 		AdminVO result = service.adminLogin1(vo);
 		if (result != null) {
 			String confirm = SendMail.confirmMail(result.getEmail());
 			sess.setAttribute("confirm", confirm);
 			sess.setAttribute("adminInfoTemp", result);
-			return true;
-		} else return false; 
+			Map map = new HashMap();
+			map.put("confirm", confirm);
+			map.put("result", true);
+			return map;
+		} else {
+			Map map = new HashMap();
+			map.put("result", false);
+			return map; 
+		}
 	}
 	//관리자 2차 로그인 - 이메일 인증번호 입력
 	@ResponseBody
@@ -154,7 +162,6 @@ public class AdminController {
 	
 	@Autowired
 	QnaService Qservice;
-	
 	@Autowired
 	CommentService Cservice;
 	
@@ -199,16 +206,18 @@ public class AdminController {
 		return "admin/comment";
 	}
 	// 댓글 삭제
-	@GetMapping("/admin/delete.do")
+	@GetMapping("/admin/commentDelete.do")
 	public String delete(CommentVO vo, Model model, @RequestParam int no) {
-		if (Cservice.delete(no) == 1) {
-			model.addAttribute("msg", "댓글 삭제 완료");
-			model.addAttribute("url", "comment.do");
-			return "common/alert";
-		} else {
-			model.addAttribute("msg", "댓글 삭제 실패");
-			return "common/alert";
-		}
+		model.addAttribute("result", Cservice.printUpdate(no));
+		return "common/return";
+//		if (Cservice.printUpdate(no) == 1) {
+//			model.addAttribute("msg", "댓글 삭제 완료");
+//			model.addAttribute("url", "comment.do");
+//			return "common/alert";
+//		} else {
+//			model.addAttribute("msg", "댓글 삭제 실패");
+//			return "common/alert";
+//		}
 	}
 	
 	// 회원목록 조회

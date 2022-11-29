@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.foody.es.ESMapper">
+
+	<!-- no로 레시피 조회 -->
+	<select id="selectByNo" parameterType="int" resultType="map">
+		select * from recipe where no=#{no}
+	</select>
+	
+	<!-- no로 재료 조회 -->
+	<select id="findIngresByNo" parameterType="int" resultType="map">
+		select * from ingre_recipe_map
+			left outer join ingre
+ 			on ingre.no = ingre_recipe_map.ingredient_no
+		where recipe_no = #{no};
+	</select>
+
+</mapper>

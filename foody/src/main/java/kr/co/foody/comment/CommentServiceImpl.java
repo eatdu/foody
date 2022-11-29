@@ -18,24 +18,25 @@ public class CommentServiceImpl implements CommentService {
 	@Override // 댓글 등록
 	public int insert(CommentVO vo) {
 		int r = mapper.insert(vo);
-		if (r == 1) mapper.gnoUpdate(vo.getNo()); // 등록되면 gno를 no로 업뎃
-		if (mapper.getStar(vo)) mapper.updateAvgstar(vo.getRecipe_no());
+		if (r == 1) mapper.gnoUpdate(vo.getNo()); // 등록되면 selectKey로 받아 온 no로 gno를 업뎃
+		if (mapper.getStar(vo)) mapper.updateAvgstar(vo.getRecipe_no()); // 별점 등록 후 레시피no의 별점 평균을 업뎃
+		System.out.println(r);
 		return r;
 	}
 	
 	@Override // 대댓글 등록
 	public int insert_reCmt(CommentVO vo) {
-		mapper.onoUpdate(vo);
-		vo.setOno(vo.getOno()+1);
+		mapper.onoUpdate(vo); // 기존 대댓글의 ono 업뎃
+		vo.setOno(vo.getOno()+1); // 신규 대댓글의 ono,depth 업뎃
 		vo.setDepth(vo.getDepth()+1);
 		int r = mapper.insert_reCmt(vo);
 		return r;
 	}
 
-	@Override // 댓글 삭제
-	public int delete(int no) {
-		return mapper.delete(no);
-	}
+//	@Override // 댓글 삭제
+//	public int delete(int no) {
+//		return mapper.delete(no);
+//	}
 
 	@Override // 해당 글의 댓글목록
 	public Map index(CommentVO vo) {
@@ -68,6 +69,17 @@ public class CommentServiceImpl implements CommentService {
 		return map;
 	}
 
+	@Override
+	public List<CommentVO> selectPhotoReview(int no) { // 포토 리뷰만
+		return mapper.selectPhotoReview(no);
+	}
+	
+	@Override
+	public int printUpdate(int no) { // 댓글 삭제
+		return mapper.printUpdate(no);
+	}
+	
+	
 	@Override // 관리자 전체 댓글목록
 	public Map wholeList(CommentVO vo) {
 		int totalCount = mapper.wholeCount(vo); // 총게시물수
@@ -98,13 +110,10 @@ public class CommentServiceImpl implements CommentService {
 		return map;
 	}
 
-	@Override // 댓글수정 못함 (나중에 추가)
-	public int update(CommentVO vo) {
-		return mapper.update(vo);
-	}
+	
+//	@Override // 댓글 수정 (추후 수정)
+//	public int update(CommentVO vo) {
+//		return mapper.update(vo);
+//	}
 
-	@Override
-	public List<CommentVO> selectPhotoReview(int no) {
-		return mapper.selectPhotoReview(no);
-	}
 }

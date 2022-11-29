@@ -23,7 +23,7 @@
 				title like '%${sword}%' or content like '%${sword}%'
 			</if>
 			<if test="stype == 'writer'">
-				user_no in (select no from user where name like '%${sword}%')
+				user_no in (select no from user where nik_name like '%${sword}%')
 			</if>
 		</if>
 	</where>
@@ -32,7 +32,7 @@
 <!-- 전체 게시글 조회 -->
 <select id="list" parameterType="kr.co.foody.board.BoardVO" resultType="kr.co.foody.board.BoardVO">
 	select *,
-		(select name from user where no = board.user_no) as user_name,
+		(select nik_name from user where no = board.user_no) as writer,
 		(select count(*) from comment where board_no = board.no and tablename = 'board') as comment_count
 	from board
 	<where>
@@ -44,7 +44,7 @@
 				title like '%${sword}%' or content like '%${sword}%'
 			</if>
 			<if test="stype == 'writer'">
-				user_no in (select no from user where name like '%${sword}%') 
+				user_no in (select no from user where nik_name like '%${sword}%') 
 			</if>
 			
 		</if>

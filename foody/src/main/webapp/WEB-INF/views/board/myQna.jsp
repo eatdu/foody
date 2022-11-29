@@ -10,7 +10,6 @@
 
 	function showAnswer(no) {
 		$(".faq_a"+no).slideToggle("slow");
-		
 	}
 	
 	function goWrite() {
@@ -110,14 +109,14 @@
                         <!-- prev 버튼 있는 경우 -->
                         <c:if test="${myQna.prev == true}">
                         		<!-- prev 버튼 클릭시 stype, sword 값을 그대로 가지고 이전 페이지로 이동 -->
-                        		<li><a href="index.do?page=${myQna.startPage-1}&stype=${param.stype}&sword=${param.sword}"><-</a>
+                        		<li><a href="index.do?page=${myQna.startPage-1}&stype=${param.stype}&sword=${param.sword}">《</a>
                         	</c:if>
                         	<c:forEach var="num" begin="${myQna.startPage}" end="${myQna.endPage}">
 	                            <li><a href='index.do?page=${num}&stype=${param.stype}&sword=${param.sword}'
 	                            <c:if test="${qnaVO.page == num}">class='current'</c:if>>${num}</a></li>
 	                        </c:forEach>
 	                        <c:if test="${myQna.next == true}">
-                        		<li><a href="index.do?page=${myQna.endPage+1}&stype=${param.stype}&sword=${param.sword}">-></a>
+                        		<li><a href="index.do?page=${myQna.endPage+1}&stype=${param.stype}&sword=${param.sword}">》</a>
                         	</c:if>
                         </ul>
                     	</div>

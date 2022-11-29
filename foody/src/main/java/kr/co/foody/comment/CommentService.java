@@ -6,13 +6,14 @@ import java.util.Map;
 public interface CommentService {
 
 	int insert(CommentVO vo);
-	int update(CommentVO vo);
-	int delete(int no);
 	Map index(CommentVO vo);
-	Map wholeList(CommentVO vo);
+	Map wholeList(CommentVO vo); // 관리자 전체 댓글목록 조회
 	int insert_reCmt(CommentVO vo);
+
+	List<CommentVO> selectPhotoReview(int no); // 포토리뷰만 조회
 	
-	//게시글 번호로 사진 있는 리뷰만 리턴
-	List<CommentVO> selectPhotoReview(int no);
+	int printUpdate(int no); // 댓글 삭제
 	
+	// int update(CommentVO vo);
+	// int delete(int no);
 }

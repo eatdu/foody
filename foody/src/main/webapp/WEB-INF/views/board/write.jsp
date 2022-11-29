@@ -27,7 +27,7 @@
 <%@ include file="../common/navBar.jsp" %>
         <div class="sub">
             <div class="size">
-                <h3 class="sub_title">게시판</h3>
+                <h3 class="sub_title">게시물 등록</h3>
                 <div class="bbs">
                 <form method="post" name="frm" id="frm" action="insert.do" enctype="multipart/form-data" >
                 <input type="hidden" name="user_no" value="${loginInfo.no}">

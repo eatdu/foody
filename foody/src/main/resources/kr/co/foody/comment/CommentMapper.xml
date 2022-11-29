@@ -63,6 +63,18 @@
 		limit ${startIdx}, ${pageRow}
 	</select>
 	
+	<!-- 포토 리뷰 -->
+	<select id="selectPhotoReview" parameterType="int" resultType="kr.co.foody.comment.CommentVO">
+		select * from recipe.comment where board_no = #{no} and photo is not null
+	</select>
+	
+	<!-- 사용자가 댓글 삭제시 print 컬럼 업뎃 -->
+	<update id="printUpdate" parameterType="int">
+		update recipe.comment set print=1 where no = #{no}
+	</update>
+	
+	
+	<!-- 관리자: 댓글 관리 -->
 	<!-- 관리자 전체 댓글개수 조회 -->
 	<select id="wholeCount" parameterType="kr.co.foody.comment.CommentVO" resultType="int">
 		select count(*) from comment
@@ -116,7 +128,14 @@
 		limit ${startIdx}, ${pageRow}
 	</select>
 	
-	<!-- 댓글 수정 -->
+	<!-- 관리자가 댓글 DB에서 삭제 -->
+	<delete id="delete" parameterType="int">
+		delete from comment where no=#{no}
+	</delete>
+	
+	
+	<!-- 추후 예정 -->
+	<!-- 댓글 수정 추후 -->
 	<update id="update" parameterType="kr.co.foody.comment.CommentVO">
 		update comment set
 			content = #{content}, updatedate = #{updatedate}
@@ -125,15 +144,5 @@
 			</if>
 		where no = #{no}
 	</update>
-	
-	<!-- 댓글 삭제 -->
-	<delete id="delete" parameterType="int">
-		delete from comment where no=#{no}
-	</delete>
-	
-	<!-- 포토 리뷰 -->
-	<select id="selectPhotoReview" parameterType="int" resultType="kr.co.foody.comment.CommentVO">
-		select * from recipe.comment where board_no = #{no} and photo is not null;
-	</select>
 
 </mapper>

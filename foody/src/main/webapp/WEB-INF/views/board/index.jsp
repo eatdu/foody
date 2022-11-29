@@ -17,7 +17,6 @@
 			location.href='write.do';
 		</c:if>
 	}
-	
 </script>
 
 
@@ -36,8 +35,8 @@
                         <colgroup>
                             <col width="80px" />
                             <col width="*" />
-                            <col width="100px" />
-                            <col width="100px" />
+                            <col width="120px" />
+                            <col width="80px" />
                             <col width="200px" />
                         </colgroup>
                         <thead>
@@ -63,7 +62,7 @@
                                     <a href="view.do?no=${list.no}">${list.title} [${list.comment_count}]</a>
                                 </td>
                                 <td class="writer">
-                                    ${list.user_name}
+                                    ${list.writer}
                                 </td>
                                 <td> ${list.viewcount}</td>
                                 <td class="date">
@@ -82,14 +81,14 @@
                         <ul class='paging'>
                         	<c:if test="${data.prev == true}">
                         		<!-- prev 버튼 클릭시 stype, sword 값을 그대로 가지고 이전 페이지로 이동 -->
-                        		<li><a href="index.do?page=${data.startPage-1}&stype=${param.stype}&sword=${param.sword}">prev</a>
+                        		<li><a href="index.do?page=${data.startPage-1}&stype=${param.stype}&sword=${param.sword}">《</a>
                         	</c:if>
                         	<c:forEach var="num" begin="${data.startPage}" end="${data.endPage}">
 	                            <li><a href='index.do?page=${num}&stype=${param.stype}&sword=${param.sword}'
 	                            <c:if test="${boardVO.page == num}">class='current'</c:if>>${num}</a></li>
 	                        </c:forEach>
 	                        <c:if test="${data.next == true}">
-                        		<li><a href="index.do?page=${data.endPage+1}&stype=${param.stype}&sword=${param.sword}">next</a>
+                        		<li><a href="index.do?page=${data.endPage+1}&stype=${param.stype}&sword=${param.sword}">》</a>
                         	</c:if>
                         </ul>
                     </div>
@@ -112,6 +111,8 @@
                         </form>
                     </div>
                     
+                </div>
+                <div class="blank" style="height:80px;">
                 </div>
             </div>
         </div>

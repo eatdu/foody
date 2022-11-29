@@ -17,7 +17,13 @@
 	//댓글 삭제
 	function commentDel(no) {
 		if (confirm('정말로 삭제하시겠습니까?')) {
-			location.href='delete.do?no='+no;
+			$.ajax({
+				url: '/foody/admin/commentDelete.do?no='+no,
+				success: function(res) {
+					alert('댓글이 정상적으로 삭제되었습니다.');
+					location.reload();
+				}
+			});
 		}
 	}
 
@@ -72,12 +78,12 @@ div.adminMenu {
 	                <div class="byPeriod">
 		                <ul class="byPeriod" style="display:flex;">
 			                <li>기간별&nbsp;&nbsp;|&nbsp;&nbsp;</li>
-			                <li><label><input type="radio" id="all" name="period" value="all" checked/>전체</label></li>
-			                <li><label><input type="radio" id="day" name="period" value="1 day" <c:if test="${param.period=='1 day'}"> checked</c:if>/>1일</label></li>
-			                <li><label><input type="radio" id="week" name="period" value="1 week" <c:if test="${param.period=='1 week'}"> checked</c:if>/>1주</label></li>
-			                <li><label><input type="radio" id="month" name="period" value="1 month" <c:if test="${param.period=='1 month'}"> checked</c:if>/>1개월</label></li>
-			                <li><label><input type="radio" id="3months" name="period" value="3 month" <c:if test="${param.period=='3 month'}"> checked</c:if>/>3개월</label></li>
-			                <li><label><input type="radio" id="6months" name="period" value="6 month" <c:if test="${param.period=='6 month'}"> checked</c:if>/>6개월</label></li>
+			                <li><label><input type="radio" id="all" name="period" value="all" checked/>전체&nbsp;&nbsp;</label></li>
+			                <li><label><input type="radio" id="day" name="period" value="1 day" <c:if test="${param.period=='1 day'}"> checked</c:if>/>1일&nbsp;&nbsp;</label></li>
+			                <li><label><input type="radio" id="week" name="period" value="1 week" <c:if test="${param.period=='1 week'}"> checked</c:if>/>1주&nbsp;&nbsp;</label></li>
+			                <li><label><input type="radio" id="month" name="period" value="1 month" <c:if test="${param.period=='1 month'}"> checked</c:if>/>1개월&nbsp;&nbsp;</label></li>
+			                <li><label><input type="radio" id="3months" name="period" value="3 month" <c:if test="${param.period=='3 month'}"> checked</c:if>/>3개월&nbsp;&nbsp;</label></li>
+			                <li><label><input type="radio" id="6months" name="period" value="6 month" <c:if test="${param.period=='6 month'}"> checked</c:if>/>6개월&nbsp;&nbsp;</label></li>
 			                <li><label><input type="radio" id="year" name="period" value="1 year" <c:if test="${param.period=='1 year'}"> checked</c:if>/>1년</label></li>
 		                </ul>
 		                <!--  <ul class="byResponsed" style="display:flex;">
@@ -89,12 +95,12 @@ div.adminMenu {
 	                <div class="orderBy">
 		                <ul class="orderBy" style="display:flex;">
 			                <li>정렬순&nbsp;&nbsp;|&nbsp;&nbsp;</li>
-			                <li><label><input type="radio" id="recent" name="align" value="recent" checked/>최신등록순</label></li>
-			                <li><label><input type="radio" id="old" name="align" value="old" <c:if test="${param.align=='old'}"> checked</c:if>/>오래된순</label></li>
+			                <li><label><input type="radio" id="recent" name="align" value="recent" checked/>최신등록순&nbsp;&nbsp;</label></li>
+			                <li><label><input type="radio" id="old" name="align" value="old" <c:if test="${param.align=='old'}"> checked</c:if>/>오래된순&nbsp;&nbsp;</label></li>
 			                <li><label><input type="radio" id="writer" name="align" value="writer" <c:if test="${param.align=='writer'}"> checked</c:if>/>작성자순</label></li>
 		                </ul>
 		            </div>
-	                <div class="bbsSearch" align="left;">
+	                <div class="bbsSearch" style="display:flex;">
 	                    <span class="srchSelect">
 	                        <select id="stype" name="stype" class="dSelect" title="검색분류 선택">
 	                            <option value="content" <c:if test="${param.stype=='content'}">selected</c:if>>댓글내용</option>
@@ -112,7 +118,7 @@ div.adminMenu {
 	                
 	                <!-- 전체 댓글목록 -->
 				    <p><span><strong>총 ${comment.totalCount}개</strong>  |  ${commentVO.page}/${comment.totalPage}페이지</span></p>
-					<table class="list">
+					<table class="list" id="list">
 					    <colgroup>
 					        <col width="80px" />
 					        <col width="200" />
@@ -128,7 +134,7 @@ div.adminMenu {
                                 <th>원글 제목</th>
                                 <th>댓글 내용</th>
                                 <th>작성자</th>
-                                <th>삭제/비공개</th>
+                                <th>삭제여부</th>
                                 <!-- <th>신고확인 여부</th> -->
                             </tr>
 					    </thead>
@@ -156,14 +162,22 @@ div.adminMenu {
 				               	<td class="txt_l" style="text-align:left">
 				               		<!-- 답변 들여쓰기 -->
 					               	<c:forEach begin="1" end="${list.depth}">&nbsp;&nbsp;&nbsp;</c:forEach>
-					               	<c:if test="${list.depth > 0}"><img src="/foody/img/comment_icon.gif"></c:if>
+					               	<c:if test="${list.depth > 0}">
+					               		<img src="/foody/img/comment_icon.gif">
+					               	</c:if>
 					                ${list.content}</a>
 				               	</td>
 				               	<td class="writer" style="text-align:center;">
 				                		${list.user_name}
 				               	</td>
 				               	<td class="commentDel" style="text-align: center;">
-				                		<a href="javascript:del(${list.no});">[삭제]</a>
+				               		<c:if test="${list.print == 0}">
+		                					X
+				                			<a href="javascript:commentDel(${list.no});">[삭제]</a>
+               						</c:if>
+               						<c:if test="${list.print == 1}">
+               							O
+            							</c:if>
 				                		<!-- <input type="radio" id="all" name="period" value="all" />비공개 -->
 				               	</td>
 				            </tr>
@@ -179,14 +193,14 @@ div.adminMenu {
 			            <!-- prev 버튼 있는 경우 -->
 			            <c:if test="${comment.prev == true}">
 			           		<!-- prev 버튼 클릭시 -->
-			           		<li><a href="comment.do?page=${comment.startPage-1}&stype=${param.stype}&sword=${param.sword}">prev</a>
+			           		<li><a href="comment.do?period=${param.period}&align=${param.align}&page=${comment.startPage-1}&stype=${param.stype}&sword=${param.sword}">《</a>
 			           	</c:if>
 			            <c:forEach var="num" begin="${comment.startPage}" end="${comment.endPage}">
-			                <li><a href='comment.do?page=${num}&stype=${param.stype}&sword=${param.sword}'
+			                <li><a href='comment.do?period=${param.period}&align=${param.align}&page=${num}&stype=${param.stype}&sword=${param.sword}'
 			                <c:if test='${commentVO.page == num})'>class='current'</c:if>>${num}</a></li>
 			            </c:forEach>
 			            <c:if test="${comment.next == true}">
-			           		<li><a href="comment.do?page=${comment.endPage+1}&stype=${param.stype}&sword=${param.sword}">next</a>
+			           		<li><a href="comment.do?period=${param.period}&align=${param.align}&page=${comment.endPage+1}&stype=${param.stype}&sword=${param.sword}">》</a>
 			           	</c:if>
 				        </ul>
 			        </div>
